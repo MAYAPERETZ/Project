@@ -61,11 +61,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void actionPerformed(ActionEvent e) {
   		 
   	   	 mainUI.editor.open();	 
-  	     mainUI.mainPane.editTabbedPane.setVisible(true);
-	   	 
-	   	 mainUI.mainPane.validate();
-	   	 mainUI.mainPane.repaint(); 
-
+  	     mainUI.getMainPane().setCurrentTab(mainUI.getMainPane().getEditTabbedPane());
 	  }
    
    }      

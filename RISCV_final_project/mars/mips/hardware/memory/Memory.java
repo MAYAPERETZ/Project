@@ -1141,7 +1141,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  
     	  private final boolean isInAnyBlockTable(Number address) {
     		  for(BlockTable table : this) {
-    			  if(table.inSegment(address));
+    			  if(table.inSegment(address))
     		  		return true;
     		  }
     		  return false;

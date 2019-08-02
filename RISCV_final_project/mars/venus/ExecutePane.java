@@ -87,6 +87,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          textSegment.setVisible(true);
          dataSegment.setVisible(true);
          labelValues.setVisible(labelWindowVisible);
+         EventQueue.invokeLater(() -> {
+             int fullWidth = this.getSize().width - this.getInsets().left - this.getInsets().right;
+             int fullHeight = this.getSize().height - this.getInsets().top - this.getInsets().bottom;
+             int halfHeight = fullHeight/2;
+             Dimension textDim = new Dimension((int)(fullWidth*.75),halfHeight);
+             Dimension dataDim = new Dimension((int)(fullWidth),halfHeight);
+             Dimension lablDim = new Dimension((int)(fullWidth*.25), halfHeight);
+             Dimension textFullDim = new Dimension((int)(fullWidth), halfHeight);
+             dataSegment.setBounds(0,textDim.height+1, dataDim.width, dataDim.height);
+             if (labelWindowVisible) {
+                 textSegment.setBounds(0, 0, textDim.width, textDim.height);
+                 labelValues.setBounds(textDim.width+1, 0, lablDim.width, lablDim.height);
+             }
+             else {
+                 textSegment.setBounds(0, 0, textFullDim.width, textFullDim.height);
+                 labelValues.setBounds(0, 0, 0, 0);
+             }
+         });
 
       }
    	

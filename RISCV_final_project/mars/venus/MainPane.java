@@ -98,7 +98,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
 
       public void setCurrentTab(JComponent jComponent){
-            jTabbedPane.setSelectedComponent(jComponent);
+           jTabbedPane.setSelectedComponent(jComponent);
       }
 
    }

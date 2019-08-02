@@ -6,6 +6,8 @@ import mars.mips.hardware.*;
 import mars.mips.hardware.memory.Memory;
 import mars.mips.hardware.memory.MemoryAccessNotice;
 import mars.mips.instructions.GenMath;
+import org.pushingpixels.substance.api.UiThreadingViolationException;
+import org.pushingpixels.trident.callback.UIThreadTimelineCallbackAdapter;
 
 import static mars.util.Math2.*;
 import static mars.mips.instructions.GenMath.*;
@@ -277,8 +279,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
          // STEP 2:  Set the combo box appropriately.  This will also display the 
       	// first chunk of addresses from that segment.
-         baseAddressSelector.setSelectedIndex(desiredComboBoxIndex);
-         ((CustomComboBoxModel) baseAddressSelector.getModel()).forceComboBoxUpdate(desiredComboBoxIndex);
+         try {
+            baseAddressSelector.setSelectedIndex(desiredComboBoxIndex);
+         }
+         catch (UiThreadingViolationException e){
+            //do nothing
+         }
+            ((CustomComboBoxModel) baseAddressSelector.getModel()).forceComboBoxUpdate(desiredComboBoxIndex);
          baseAddressButtons[desiredComboBoxIndex].getActionListeners()[0].actionPerformed(null);
       	// STEP 3:  Display memory chunk containing this address, which may be 
       	// different than the one just displayed.
@@ -1042,7 +1049,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                     isSelected, hasFocus, row, column);
          	
             cell.setHorizontalAlignment(SwingConstants.RIGHT);
-            int rowFirstAddress = Binary.stringToInt(table.getValueAt(row,ADDRESS_COLUMN).toString());
+            Number
+                    rowFirstAddress = Binary.stringToNumber(table.getValueAt(row,ADDRESS_COLUMN).toString());
             if (settings.getDataSegmentHighlighting() && addressHighlighting  && isEq(rowFirstAddress,addressRowFirstAddress)
             		&& isEq(column, addressColumn)) {
                cell.setBackground( settings.getColorSettingByPosition(Settings.DATASEGMENT_HIGHLIGHT_BACKGROUND) );

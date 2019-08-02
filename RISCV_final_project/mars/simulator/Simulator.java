@@ -529,7 +529,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        private class UpdateGUI implements Runnable {
           public void run() {
-            if (Globals.getGui().getRegistersPane().getCurrentTab() == 
+            if (Globals.getGui().getRegistersPane().getCurrentTab() ==
                                                      Globals.getGui().getMainPane().getExecutePane().getRegistersWindow()) {
                Globals.getGui().getMainPane().getExecutePane().getRegistersWindow().updateRegisters();
             } 
