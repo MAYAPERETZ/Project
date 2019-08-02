@@ -90,6 +90,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        public TextSegmentWindow(){
          super("Text Segment", true, false, true, true);
+         setFrameIcon(null);
          Simulator.getInstance().addObserver(this);
          Globals.getSettings().addObserver(this);
          contentPane = this.getContentPane();
