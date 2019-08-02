@@ -251,7 +251,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 */
        public void clearWindow() {
           	 panel.removeAll();
-     
       }
    
    	
@@ -324,13 +323,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             	}
         	 }
          }
-         catch(NullPointerException exception) {
-        	 
-         }
-        	
+         catch(NullPointerException exception) {}
       }
-   
-   
+
        public synchronized void updateCodes() {
       	 	ArrayList sourceStatementList = Globals.program.getMachineList();
 
@@ -348,9 +343,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	   }
       
      } 	
-           
-        
-       
+
        
    
      	/** Required by Observer interface.  Called when notified by an Observable that we are registered with.
@@ -490,9 +483,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public int getBreakpointCount() {
          int breakpointCount = 0;
          for(int i=0; i < data.length; i++){
-            if (((Boolean)data[i][BREAK_COLUMN]).booleanValue()) {
+            if (((Boolean)data[i][BREAK_COLUMN]).booleanValue())
                breakpointCount++;
-            }
          }		 
          return breakpointCount;
       }
@@ -512,9 +504,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         	 x = 0;
          breakpointCount = 0;
          for(int i=0; i < data.length; i++){
-            if (((Boolean)data[i][BREAK_COLUMN]).booleanValue()) {
+            if (((Boolean)data[i][BREAK_COLUMN]).booleanValue())
                breakpoints[breakpointCount++] = intAddresses[i];
-            }
          }
          Arrays.sort(breakpoints);
          return breakpoints;
@@ -669,9 +660,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             													 (int)sourceCell.getX()+1,
             													 (int)sourceCell.getY()+1, 1, false);
          MouseListener[] mouseListeners = table.getMouseListeners();
-         for (int i=0; i<mouseListeners.length; i++) {
+         for (int i=0; i<mouseListeners.length; i++)
             mouseListeners[i].mousePressed(fakeMouseEvent);
-         }
       }
    	
    

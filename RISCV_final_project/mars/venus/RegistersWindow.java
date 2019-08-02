@@ -56,20 +56,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private static final int NUMBER_COLUMN = 1;
       private static final int VALUE_COLUMN = 2;
       private static Settings settings;
-      
+
       
    /**
      *  Constructor which sets up a fresh window with a table that contains the register values.
      **/
    
        public RegistersWindow(){
-
          Simulator.getInstance().addObserver(this);
          
 			settings = Globals.getSettings();
          this.highlighting = false;
          table = new MyTippedJTable(new RegTableModel(setupWindow()));
-         table.setRowHeight(table.getRowHeight() + 10);
+
+
          table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(25);
          table.getColumnModel().getColumn(NUMBER_COLUMN).setPreferredWidth(25);
          table.getColumnModel().getColumn(VALUE_COLUMN).setPreferredWidth(60);
@@ -79,15 +79,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          table.getColumnModel().getColumn(VALUE_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.CENTER));
          setLayout(new BorderLayout(0, 0));
          JScrollPane scrollPane = new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+           EventQueue.invokeLater(new Runnable() {
+                                      @Override
+                                      public void run() {
+                                          table.setRowHeight(Globals.getGui().registersPane.regsTab.getHeight() / table.getRowCount());
+
+                                      }
+                                  });
          scrollPane.setBorder(null);
-         table.setBackground(new Color(51, 51, 51));
-         scrollPane.getViewport().setBackground(new Color(51, 51, 51));
          table.setShowVerticalLines(false);
-         table.setGridColor(Color.BLACK);
          this.add(scrollPane);
-         table.setFont(new Font("Arial",Font.BOLD,14));
-         
-         
+         table.setFont(new Font("Arial",Font.BOLD,12));
+
+
        }
     
     /**

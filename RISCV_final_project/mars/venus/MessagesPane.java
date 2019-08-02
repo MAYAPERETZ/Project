@@ -1,4 +1,5 @@
    package mars.venus;
+   import javafx.scene.layout.BorderPane;
    import mars.*;
    import javax.swing.*;
    import javax.swing.text.*;
@@ -46,9 +47,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   *   @author Team JSpim
   **/
 
-    public class MessagesPane extends CustomTabbedPane{
+    public class MessagesPane extends JInternalFrame{
       JTextArea assemble, run;
       JPanel assembleTab, runTab;
+      private JTabbedPane jTabbedPane;
       
       
    	// These constants are designed to keep scrolled contents of the 
@@ -65,12 +67,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      **/
    
        public MessagesPane() {
-         super();
+         super("Data Segment", true, false, true, true);
+         setFrameIcon(null);
          this.setMinimumSize(new Dimension(0,0));
          assemble= new JTextArea();
          run= new JTextArea();
          assemble.setEditable(false); 
          run.setEditable(false);
+         jTabbedPane = new JTabbedPane();
       	// Set both text areas to mono font.  For assemble
       	// pane, will make messages more readable.  For run
       	// pane, will allow properly aligned "text graphics"
@@ -151,25 +155,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          runTab = new JPanel(new BorderLayout());
          runTab.add(new JScrollPane(run, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED, 
                        ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED), BorderLayout.CENTER);
-        
-         insertTab("messages.png",
-        		 "Messages", assembleTab);
-         insertTab("console.png", 
-       		  "Console", runTab);
+
+         jTabbedPane.addTab("Messeges", assembleTab);
+         jTabbedPane.addTab("Console", runTab);
+
          
          ButtonListener clearButtListener = new ButtonListener() {
          
 			@Override
 			public void buttonListener() {
-				if(getCurrentTab() == assembleTab)
+				if(jTabbedPane.getSelectedComponent() == assembleTab)
 				   assemble.setText("");
 				else
                   run.setText("");
 			}
          };
-		
-         insertControlButton( new CustomButton("icons8_erase_32px.png",
-        							clearButtListener));         
+         add(jTabbedPane, BorderLayout.CENTER);
+         add(new CustomButton("icons8_erase_32px.png",
+        							clearButtListener), BorderLayout.WEST);
+         setVisible(true);
       }
    	
     
@@ -273,7 +277,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
          }
          assemble.setCaretPosition(assemble.getDocument().getLength());
-	     setCurrentTab(assembleTab);
+	     jTabbedPane.setSelectedComponent(assembleTab);
       }
    	
       /**
@@ -292,7 +296,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          SwingUtilities.invokeLater(
                 new Runnable() { 
                    public void run() { 
-                	 setCurrentTab(runTab);
+                	 jTabbedPane.setSelectedComponent(runTab);
               //       setSelectedComponent(runTab);
                      run.append(mess);
                   // can do some crude cutting here.  If the document gets "very large", 
@@ -314,13 +318,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * Make the assembler message tab current (up front)
    	 */
        public void selectMarsMessageTab() {
-    	   setCurrentTab(assembleTab);
+    	   jTabbedPane.setSelectedComponent(assembleTab);
       }
    	/**
    	 * Make the runtime message tab current (up front)
    	 */   	
        public void selectRunMessageTab() {
-    	   setCurrentTab(runTab);
+    	   jTabbedPane.setSelectedComponent(runTab);
       }
    
     	/**
@@ -367,7 +371,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  
    	  ////////////////////////////////////////////////////////////////////////////
    	  // Thread class for obtaining user input in the Run I/O window (MessagesPane)
-   	  // Written by Ricardo Fernández Pascual [rfernandez@ditec.um.es] December 2009.
+   	  // Written by Ricardo Fernï¿½ndez Pascual [rfernandez@ditec.um.es] December 2009.
        class Asker implements Runnable {
          ArrayBlockingQueue<String> resultQueue = new ArrayBlockingQueue<String>(1);
          int initialPos;
@@ -442,7 +446,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
             };
           public void run() { // must be invoked from the GUI thread
-        	setCurrentTab(runTab);
+        	jTabbedPane.setSelectedComponent(runTab);
             run.setEditable(true);
             run.requestFocusInWindow();
             run.setCaretPosition(run.getDocument().getLength());

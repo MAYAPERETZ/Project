@@ -136,9 +136,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       this.editor = new Editor(this);
       contentPane = new javax.swing.JPanel();
       toolBarPanel = new javax.swing.JPanel();
-      contentPane.setBackground(Color.BLACK);
-      toolBarPanel.setBackground(new Color(111, 111, 111));
-      toolBarPanel.setBorder(new MatteBorder(0, 0, 2, 0, (Color) new Color(51, 153, 255)));
       observable = new NewObservable();
       
       double screenWidth  = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -171,14 +168,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 			}
     });
-   
-   	//  image courtesy of NASA/JPL.  
+
+   	//  image courtesy of NASA/JPL.
      /* URL im = this.getClass().getResource(Globals.imagesPath+"RedMars16.gif");
       if (im == null) {
          System.out.println("Internal Error: images folder or file not found");
          System.exit(0);
-      }				
-    */	
+      }
+    */
 
       registersTab = new RegistersWindow();
       coprocessor1Tab = new Coprocessor1Window();
@@ -319,12 +316,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         Class cs = this.getClass(); 
         try {
            fileNewAction = new FileNewAction("New", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_file_25px_3.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "new_file.png"))),
                                            "Create a new file for editing", new Integer(KeyEvent.VK_N),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);		
            fileOpenAction = new FileOpenAction("Open ...", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_open_folder_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "open_document.png"))),
               									  "Open a file for editing", new Integer(KeyEvent.VK_O),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
@@ -337,13 +334,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                            "Close all open files", new Integer(KeyEvent.VK_L),
               									  null, mainUI, observable);	
            fileSaveAction = new FileSaveAction("Save", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_save_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "save.png"))),
               									  "Save the current file", new Integer(KeyEvent.VK_S),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
            
            fileSaveAsAction = new FileSaveAsAction("Save as ...", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_save_as_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "save_as.png"))),
               									  "Save current file with different name", new Integer(KeyEvent.VK_A),
               									  null, mainUI, observable);	
            fileSaveAllAction = new FileSaveAllAction("Save All", null,
@@ -364,32 +361,32 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               	                         "Exit", new Integer(KeyEvent.VK_X),
               									  null, mainUI, observable);	
            editUndoAction = new EditUndoAction("Undo", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_undo_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "undo.png"))),
               									  "Undo last edit", new Integer(KeyEvent.VK_U),
                                            KeyStroke.getKeyStroke( KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editRedoAction = new EditRedoAction("Redo", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_redo_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "redo.png"))),
               									  "Redo last edit", new Integer(KeyEvent.VK_R),
                                            KeyStroke.getKeyStroke( KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);			
            editCutAction = new EditCutAction("Cut", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_cut_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "cut.png"))),
               									  "Cut", new Integer(KeyEvent.VK_C),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_X, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editCopyAction = new EditCopyAction("Copy", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_copy_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "copy.png"))),
               									  "Copy", new Integer(KeyEvent.VK_O),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editPasteAction = new EditPasteAction("Paste", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_paste_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "paste.png"))),
               									  "Paste", new Integer(KeyEvent.VK_P),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editFindReplaceAction = new EditFindReplaceAction("Find/Replace", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_search_property_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "find_and_replace.png"))),
               									  "Find/Replace", new Integer(KeyEvent.VK_F),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
@@ -399,37 +396,37 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               									  KeyStroke.getKeyStroke( KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
            runAssembleAction = new RunAssembleAction("Assemble",  
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_puzzle_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "assemble.png"))),
               									  "Assemble the current file and clear breakpoints", new Integer(KeyEvent.VK_A),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F3, 0), 
               									  mainUI, observable);			
            runGoAction = new RunGoAction("Go", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "play.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "play_button.png"))),
               									  "Run the current program", new Integer(KeyEvent.VK_G),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F5, 0),
               									  mainUI, observable);	
            runStepAction = new RunStepAction("Step", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_next_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "resume_button.png"))),
               									  "Run one step at a time", new Integer(KeyEvent.VK_T),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F7, 0),
               									  mainUI, observable);	
            runBackstepAction = new RunBackstepAction("Backstep", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_previous_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "previous.png"))),
               									  "Undo the last step", new Integer(KeyEvent.VK_B),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F8, 0), 
               									  mainUI, observable);	
            runPauseAction = new RunPauseAction("Pause", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "pause.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "circled_pause.png"))),
               									  "Pause the currently running program", new Integer(KeyEvent.VK_P),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F9, 0), 
               									  mainUI, observable);	
            runStopAction = new RunStopAction("Stop", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_stop_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "stop_circled.png"))),
               									  "Stop the currently running program", new Integer(KeyEvent.VK_S),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F11, 0), 
               									  mainUI, observable);
            runResetAction = new RunResetAction("Reset", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_rewind_25px.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "rewind_button.png"))),
               									  "Reset MIPS memory and registers", new Integer(KeyEvent.VK_R),
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F12,0),
               									  mainUI, observable);	

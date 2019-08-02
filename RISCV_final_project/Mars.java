@@ -1,10 +1,8 @@
-import javax.swing.UIManager;
+import javax.swing.*;
 
-import com.sun.xml.internal.ws.wsdl.parser.InaccessibleWSDLException;
-
-import mars.mips.hardware.MemoryConfigurations;
-import mars.util.Binary;
 import mars.venus.GUI;
+import mars.venus.GuiAction;
+import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 
 /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -68,12 +66,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	        }
     	        //</editor-fold>
 
-    	        /* Create and display the form */
-    	        java.awt.EventQueue.invokeLater(new Runnable() {
-    	            public void run() {
-    	                new GUI("RISC-V Simulator").setVisible(true);
-    	            }
-    	        }); 	   
+			 JFrame.setDefaultLookAndFeelDecorated(true);
+			 SwingUtilities.invokeLater(() -> {
+				 try {
+					 UIManager.setLookAndFeel("org.pushingpixels.substance.api.skin.SubstanceBusinessBlackSteelLookAndFeel");
+				 } catch (Exception e) {
+					 System.out.println("Substance Graphite failed to initialize");
+				 }
+				 GUI w = new GUI("RISC-V Simulator");
+				 w.setVisible(true);
+			 });
     		 
     	    }
    } 

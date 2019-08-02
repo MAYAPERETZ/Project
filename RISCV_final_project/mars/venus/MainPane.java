@@ -1,5 +1,6 @@
 package mars.venus;
 import javax.swing.*;
+import java.awt.*;
 
 
 	
@@ -37,25 +38,32 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	  *   @author Maya Peretz
 	  **/
 
-    public class MainPane extends CustomTabbedPane{
+    public class MainPane extends JInternalFrame{
       EditPane editTab;
       ExecutePane executeTab;
       EditTabbedPane editTabbedPane;
       private GUI mainUI;
+      private JTabbedPane jTabbedPane;
     /**
       *  Constructor for the MainPane class. 
    	**/
    	
        public MainPane(GUI mainUI2, Editor editor, RegistersWindow regs,
                        Coprocessor1Window cop1Regs,Coprocessor0Window cop0Regs){
-    	 super();
+           super("Data Segment", true, false, true, true);
+           setFrameIcon(null);
          this.mainUI = mainUI2;
-   
          editTabbedPane = new EditTabbedPane(mainUI2, editor, this);
          executeTab = new ExecutePane(mainUI2, regs, cop1Regs, cop0Regs);
-     
-         insertTab("edit_file.png","Editor",  editTabbedPane);
-         insertTab("exe.png", "Execute", executeTab);
+         jTabbedPane = new JTabbedPane();
+         add(jTabbedPane);
+         jTabbedPane.addTab("Editor", editTabbedPane);
+         jTabbedPane.addTab("Execute", executeTab);
+         setPreferredSize(new Dimension(700, 500));
+         setMaximumSize(new Dimension(700, 500));
+         setMinimumSize(new Dimension(700, 500));
+         setMaximizable(true);
+         setVisible(true);
          
       }
       
@@ -88,6 +96,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public ExecutePane getExecutePane() {
          return executeTab;
       }
-      
+
+      public void setCurrentTab(JComponent jComponent){
+            jTabbedPane.setSelectedComponent(jComponent);
+      }
 
    }

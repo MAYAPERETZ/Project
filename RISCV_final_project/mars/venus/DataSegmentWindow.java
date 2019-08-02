@@ -216,9 +216,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	*/
       void selectCellForAddress(int address) {
          Point rowColumn = displayCellForAddress(address);
-         if (rowColumn==null) {
+         if (rowColumn==null)
             return;
-         }
+
          Rectangle addressCell = dataTable.getCellRect(rowColumn.x, rowColumn.y, true);
          // Select the memory address cell by generating a fake Mouse Pressed event within its
       	// extent and explicitly invoking the table's mouse listener.
@@ -227,9 +227,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             													 (int)addressCell.getX()+1,
             													 (int)addressCell.getY()+1, 1, false);
          MouseListener[] mouseListeners = dataTable.getMouseListeners();
-         for (int i=0; i<mouseListeners.length; i++) {
+         for (int i=0; i<mouseListeners.length; i++)
             mouseListeners[i].mousePressed(fakeMouseEvent);
-         }
+
       }
    
      /**
@@ -239,9 +239,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	*/   	 
       void highlightCellForAddress(Number address) {
          Point rowColumn = displayCellForAddress(address);
-         if (rowColumn==null || rowColumn.x < 0 || rowColumn.y < 0) {
+         if (rowColumn==null || rowColumn.x < 0 || rowColumn.y < 0)
             return;
-         }
+
          this.addressRow = rowColumn.x;
          this.addressColumn = rowColumn.y; 
          this.addressRowFirstAddress = Binary.stringToNumber(dataTable.getValueAt(this.addressRow,ADDRESS_COLUMN).toString());
@@ -271,10 +271,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	
          // STEP 1: Determine which data segment contains this address.  
          int desiredComboBoxIndex = getBaseAddressIndexForAddress(address);
-         if (desiredComboBoxIndex < 0) {
+         if (desiredComboBoxIndex < 0)
             // It is not a data segment address so good bye!
             return null;
-         }
+
          // STEP 2:  Set the combo box appropriately.  This will also display the 
       	// first chunk of addresses from that segment.
          baseAddressSelector.setSelectedIndex(desiredComboBoxIndex);
@@ -383,15 +383,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// same table as the static (0x10010000) so all are "Memory.inDataSegment()". 
       private int getBaseAddressIndexForAddress(Number address) {
          int desiredComboBoxIndex = -1; // assume not a data address.
-         if (Memory.getInstance().getKernelDataTable().inSegment(address)) {
+         if (Memory.getInstance().getKernelDataTable().inSegment(address))
             return KERNEL_DATA_BASE_ADDRESS_INDEX;
-         } 
-         else if (Memory.getInstance().getMemoryMapTable().inSegment(address)) {
+         else if (Memory.getInstance().getMemoryMapTable().inSegment(address))
             return MMIO_BASE_ADDRESS_INDEX;
-         } 
-         else if (Memory.getInstance().getTextTable().inSegment(address)) { // DPS. 8-July-2013
+         else if (Memory.getInstance().getTextTable().inSegment(address))  // DPS. 8-July-2013
             return TEXT_BASE_ADDRESS_INDEX;
-         }
+
          Number shortDistance = (MemoryConfigurations.getCurrentComputingArchitecture() == 32) ?  0x7fffffff : 0x7fffffffffffffffL;
          Number thisDistance;
       	// Check distance from .extern base.  Cannot be below it
@@ -449,9 +447,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
          }
          String [] names = new String[NUMBER_OF_COLUMNS];
-         for (int i=0; i<NUMBER_OF_COLUMNS; i++) {
+         for (int i=0; i<NUMBER_OF_COLUMNS; i++)
             names[i] = getHeaderStringForColumn(i, addressBase);
-         }
+
          dataTable= new MyTippedJTable(new DataTableModel(dataData, names));
       	// Do not allow user to re-order columns; column order corresponds to MIPS memory order
          dataTable.getTableHeader().setReorderingAllowed(false);
@@ -575,9 +573,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
       public void updateCell(Number address, Number value) {
          Number offset = sub(address, this.firstAddress);
-         if (isLtz(offset) || !isLt(MEMORY_CHUNK_SIZE, offset)) { // out of range
+         if (isLtz(offset) || !isLt(MEMORY_CHUNK_SIZE, offset)) // out of range
             return;
-         }
+
          int row = div(offset,NumberS_PER_ROW).intValue();
          int column = GenMath.add(div(rem(offset, NumberS_PER_ROW),NumberS_PER_VALUE), 1).intValue(); // column 0 reserved for address
          int valueBase = Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase();
@@ -639,9 +637,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          int valueBase = Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase();
          TableModel dataModel = dataTable.getModel();
          for (int row=0; row<NUMBER_OF_ROWS; row++) {
-            for (int column=1; column<NUMBER_OF_COLUMNS; column++) {
+            for (int column=1; column<NUMBER_OF_COLUMNS; column++)
                ((DataTableModel)dataModel).setDisplayAndModelValueAt(NumberDisplayBaseChooser.formatIntNumber(0, valueBase),row,column);
-            }
+
          }
          disableAllButtons();
       }
@@ -959,12 +957,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
-            if (col != ADDRESS_COLUMN && !asciiDisplay) { 
+            if (col != ADDRESS_COLUMN && !asciiDisplay)
                return true;
-            } 
-            else {
+            else
                return false;
-            }
+
          }
       
       

@@ -68,7 +68,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                     Globals.getSettings().getDisplayAddressesInHex());
          valueDisplayBase = new NumberDisplayBaseChooser("Hexadecimal Values",
                                     Globals.getSettings().getDisplayValuesInHex());//VenusUI.DEFAULT_NUMBER_BASE);
-         setBackground(new Color(51, 51, 51));
          addressDisplayBase.setToolTipText("If checked, displays all memory addresses in hexadecimal.  Otherwise, decimal.");
          valueDisplayBase.setToolTipText("If checked, displays all memory and register contents in hexadecimal.  Otherwise, decimal.");
          NumberDisplayBaseChooser[] choosers = { addressDisplayBase, valueDisplayBase };

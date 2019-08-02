@@ -65,7 +65,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          setOpaque(true);
          setBorder(null);
       //   setEnabled(false);
-         this.setBackground(new Color(81, 81,81));
          this.mainUI = mainUI2;
          this.editor = editor;
          this.fileOpener = new FileOpener(editor);

@@ -6,7 +6,6 @@
    import mars.util.*;
    import java.util.*;
 
-import jdk.nashorn.internal.objects.Global;
 
 import java.io.*;
 import java.math.BigInteger;

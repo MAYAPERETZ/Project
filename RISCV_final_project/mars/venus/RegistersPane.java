@@ -1,5 +1,6 @@
    package mars.venus;
 
+import javax.swing.*;
 import java.awt.Color;
 
 /*
@@ -36,10 +37,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	  *   @version August 2005
 	  **/
 
-    public class RegistersPane extends CustomTabbedPane{
+    public class RegistersPane extends JInternalFrame {
       RegistersWindow regsTab;
 	  Coprocessor1Window cop1Tab;
 	  Coprocessor0Window cop0Tab;
+	  private JTabbedPane jTabbedPane;
    	
       private GUI mainUI;
 
@@ -49,7 +51,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        public RegistersPane(GUI mainUI2, RegistersWindow regs, Coprocessor1Window cop1,
 		                      Coprocessor0Window cop0){
-    	   super();
+		   super("Data Segment", true, false, true, true);
+		   setFrameIcon(null);
     	   this.mainUI = mainUI2;
     	   regsTab = regs;
     	   cop1Tab = cop1;
@@ -57,9 +60,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	   regsTab.setVisible(true);
     	   cop1Tab.setVisible(true);
     	   cop0Tab.setVisible(true);
-    	   insertTab(null, "Registers",  regsTab);
-    	   insertTab(null, "Coproc 1",  cop1Tab);
-    	   insertTab(null, "Coproc 0",  cop0Tab);
+    	   jTabbedPane = new JTabbedPane();
+    	   jTabbedPane.addTab( "Registers",  regsTab);
+    	   jTabbedPane.addTab("Coproc 1",  cop1Tab);
+    	   jTabbedPane.addTab( "Coproc 0",  cop0Tab);
+    	   add(jTabbedPane);
+    	   setVisible(true);
 
       }
    	
@@ -87,4 +93,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public Coprocessor0Window getCoprocessor0Window() {
          return cop0Tab;
       }
+
+       public void setCurrentTab(JComponent jComponent){
+       		jTabbedPane.setSelectedComponent(jComponent);
+	   }
 }

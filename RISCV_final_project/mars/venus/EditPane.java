@@ -67,7 +67,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
       public EditPane(GUI appFrame){
          super(new BorderLayout());
-         setBackground(new Color(51, 51, 51));
          this.mainUI = appFrame;
       	// user.dir, user's current working directory, is guaranteed to have a value
          currentDirectoryPath = System.getProperty("user.dir");
