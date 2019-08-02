@@ -1,5 +1,4 @@
    package mars.venus;
-   import javafx.scene.layout.BorderPane;
    import mars.*;
    import javax.swing.*;
    import javax.swing.text.*;
@@ -9,9 +8,8 @@
    import javax.swing.event.DocumentListener;
    import javax.swing.undo.UndoableEdit;
    import mars.simulator.Simulator;
-import mars.venus.CustomButton.ButtonListener;
 
-import javax.swing.event.DocumentEvent;
+   import javax.swing.event.DocumentEvent;
    import javax.swing.text.Position.Bias;
 
 /*
@@ -159,20 +157,43 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          jTabbedPane.addTab("Messeges", assembleTab);
          jTabbedPane.addTab("Console", runTab);
 
-         
-         ButtonListener clearButtListener = new ButtonListener() {
-         
-			@Override
-			public void buttonListener() {
-				if(jTabbedPane.getSelectedComponent() == assembleTab)
-				   assemble.setText("");
-				else
-                  run.setText("");
-			}
-         };
+         class EraseButton extends JButton{
+             private JPanel panel;
+             private EraseButton(){
+                 super();
+                 this.setOpaque(false);
+                 setFocusable(false);
+                 setContentAreaFilled(false);
+                 setBorderPainted(false);
+                 setAction(new EraseAction());
+                 this.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().getImage(
+                         getClass().getResource(Globals.imagesPath +"icons8_erase_32px.png"))));
+                 panel = new JPanel();
+                 panel.setLayout(new GridBagLayout());
+                 GridBagConstraints c = new GridBagConstraints();
+                 c.fill = GridBagConstraints.CENTER;
+                 panel.add(this);
+                 this.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+             }
+
+             private JPanel getButton(){
+                 return panel;
+             }
+
+             class EraseAction extends AbstractAction{
+
+                 @Override
+                 public void actionPerformed(ActionEvent e) {
+                     if(jTabbedPane.getSelectedComponent() == assembleTab)
+                         assemble.setText("");
+                     else
+                         run.setText("");
+                 }
+             }
+         }
+
          add(jTabbedPane, BorderLayout.CENTER);
-         add(new CustomButton("icons8_erase_32px.png",
-        							clearButtListener), BorderLayout.WEST);
+         add((new EraseButton()).getButton() , BorderLayout.WEST);
          setVisible(true);
       }
    	
