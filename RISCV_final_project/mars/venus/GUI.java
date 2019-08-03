@@ -291,21 +291,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       
    }
     
-    
-    public void addIconifiedToToolBar(Component component) {
- 	   	toolBar.add(component);
-		toolBarPanel.validate();
-		toolBarPanel.repaint();
-	
- 	   
-    }
-    
-    public void removeIconifiedFromToolBar(Component component) {
- 	   toolBar.remove(component);
- 	   toolBarPanel.validate();
- 	   toolBarPanel.repaint();
-    }
-	
+
  /*
   * Action objects are used instead of action listeners because one can be easily shared between
   * a menu item and a toolbar button.  Does nice things like disable both if the action is
