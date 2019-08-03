@@ -980,8 +980,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          public Class getColumnClass(int c) {
             return getValueAt(0, c).getClass();
          }
-      
-      
         /*
          * Update cell contents in table model.  This method should be called
       	* only when user edits cell, so input validation has to be done.  If

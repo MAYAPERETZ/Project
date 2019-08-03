@@ -127,7 +127,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             instructionSet.populate();    
             symbolTable = new SymbolTable("global");
             initialized = true;
-            debug = true; 
+            debug = false;
 				memory.clear(); // will establish memory configuration from setting
          }
       }

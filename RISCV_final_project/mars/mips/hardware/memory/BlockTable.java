@@ -145,6 +145,11 @@ public class BlockTable extends AbstractBlockTable{
             		 and(destValue, neg(sll(0xFF, sub(numOfBytes-8, sll(NumberPosInDest, 3))))));
     }
 
-	
+	static class DataBlockTable extends BlockTable{
+
+		DataBlockTable(int tableLen, Number baseAddress) {
+			super(tableLen, baseAddress);
+		}
+	}
  
 }

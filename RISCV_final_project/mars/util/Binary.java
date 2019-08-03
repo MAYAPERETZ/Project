@@ -388,8 +388,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             //   (2) starts with Ox or 0X,
             //   (3) last 8 characters are valid hex digits.
                work = work.toLowerCase();
-               if ((work.length() == 10 || work.length() == 18) && work.startsWith("0x")) 
-            	   result = Integer.parseInt(work.substring(2), 16);
+               if ((work.length() == 10) && work.startsWith("0x"))
+                   try {
+                       result = Integer.parseInt(work.substring(2), 16);
+                   } catch (NumberFormatException numberFormatException){
+                       result = Integer.parseUnsignedInt(work.substring(2), 16);
+                   }
                else if (!work.startsWith("0x")) 
             	   result = (int)Long.parseLong(s); 
                /*  End of the Jose Paredes code */ 

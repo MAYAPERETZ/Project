@@ -616,10 +616,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          
          if(tables.isInAnyBlockTable(address)) {
             	for(BlockTable table : tables) {
-           	 	if(table.inSegment(address)) {
-           		 	value = table.fetchWordFromTable(address, false, shift);
-           		 	break;
-           	 	}
+                    if(table.inSegment(address)) {
+                        if (!(table instanceof BlockTable.DataBlockTable)) {
+                            value = table.fetchWordFromTable(address, false, shift);
+                            break;
+                        } else{
+                            // DEVELOPER: PLEASE USE getStatement() TO READ FROM KERNEL TEXT SEGMENT...
+                            throw new AddressErrorException(
+                                    "DEVELOPER: You must use getStatement() to read from kernel text segment!",
+                                    Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+                        }
+                    }
            }
        	 }
          else if (textBlockTable.inSegment(address)) {
@@ -634,13 +641,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   "Cannot read directly from text segment!", 
                   Exceptions.ADDRESS_EXCEPTION_LOAD, address);
             }
-         }  
-         else if (kernelDataBlockTable.inSegment(address)) {
-           // DEVELOPER: PLEASE USE getStatement() TO READ FROM KERNEL TEXT SEGMENT...
-            throw new AddressErrorException(
-                    "DEVELOPER: You must use getStatement() to read from kernel text segment!",
-               	  Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         } 
+         }
          else  // falls outside Mars addressing range
             throw new AddressErrorException("address out of range ", 
                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
@@ -788,8 +789,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
          }
     	 if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-    		 return get(address.intValue(), 4);
-    	 return get(address.longValue(), 4);   
+    		 return get(address.intValue(), 4, false);
+    	 return get(address.longValue(), 4, false);
        } 
    
    
@@ -1130,7 +1131,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     		  super(Arrays.asList(  
         				  (new BlockTable(BLOCK_TABLE_LENGTH, 
         						  MemoryConfigurations.getDefaultDataBaseAddress())), // data table
-        				  (new BlockTable(BLOCK_TABLE_LENGTH,
+        				  (new BlockTable.DataBlockTable(BLOCK_TABLE_LENGTH,
         						  MemoryConfigurations.getDefaultKernelDataBaseAddress())),   // kernel data table
         				  ( new StackBlockTable(-BLOCK_TABLE_LENGTH, 
         						  MemoryConfigurations.getDefaultStackBaseAddress())), // stack table
@@ -1146,11 +1147,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     		  }
     		  return false;
     	  }
-    	  
-    	  private final void reset() {
-    		  for(BlockTable table : this)
-    			  table.reset();
-    	  }
+
     	  
       }
    	   	
