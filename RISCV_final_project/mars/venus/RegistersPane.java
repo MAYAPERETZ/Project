@@ -1,7 +1,6 @@
    package mars.venus;
 
 import javax.swing.*;
-import java.awt.Color;
 
 /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -51,7 +50,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        public RegistersPane(GUI mainUI2, RegistersWindow regs, Coprocessor1Window cop1,
 		                      Coprocessor0Window cop0){
-		   super("Data Segment", true, false, true, true);
+		   super("Data Segment", true, false, false, false);
 		   setFrameIcon(null);
     	   this.mainUI = mainUI2;
     	   regsTab = regs;

@@ -37,12 +37,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
  
-    public class SyscallPrintIntBinary extends AbstractSyscall {
+    public class SyscallPrintNumberBinary extends AbstractSyscall {
    /**
     * Build an instance of the Print Integer syscall.  Default service number
     * is 1 and name is "PrintInt".
     */
-       public SyscallPrintIntBinary() {
+       public SyscallPrintNumberBinary() {
          super(35, "PrintIntBinary");
       }
       
@@ -50,6 +50,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Performs syscall function to print on the console the integer stored in $a0, in hexadecimal format.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         SystemIO.printString(Binary.intToBinaryString(RV32IRegisters.getValue(4)));
+         SystemIO.printString(Binary.numberToBinaryString(RV32IRegisters.getValue(4)));
       }
    }

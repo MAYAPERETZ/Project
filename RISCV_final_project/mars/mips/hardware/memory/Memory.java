@@ -1,4 +1,5 @@
    package mars.mips.hardware.memory;
+   import jdk.jfr.Unsigned;
    import mars.*;
    import mars.simulator.*;
    import mars.mips.hardware.AccessNotice;
@@ -73,7 +74,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   
     /** highest address accessible in kernel mode. **/
       public static Number kernelHighAddress = MemoryConfigurations.getDefaultKernelHighAddress(); //0xffffffff;
-   
+
     /** MIPS word length in bytes. **/
     // NOTE:  Much of the code is hardwired for 4 byte words.  Refactoring this is low priority.
       public static final int WORD_LENGTH_BYTES = 4;
@@ -205,9 +206,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 */
    	 
        public void clear() {
-         setConfiguration();
-         initialize();
-}
+           initialize();
+           setConfiguration();
+       }
    
      /**
      * Sets current memory configuration for simulated MIPS.  Configuration is 
@@ -938,7 +939,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             this.addObserver(obs,kernelTextBlockTable.getBaseAddress(),  getStackTable().getBaseAddress());
          } 
              catch (AddressErrorException aee) {
-               System.out.println("Internal Error in Memory.addObserver: "+aee); 
+               //System.out.println("Internal Error in Memory.addObserver: "+aee);
             }
       }
     

@@ -1,4 +1,5 @@
    package mars.mips.hardware;
+   import jdk.jfr.Unsigned;
    import mars.Globals;
 
 import java.util.*;
@@ -78,7 +79,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          };
    	
       // Default configuration comes from SPIM
-      private static Number[] configuration32 = { 
+      private static Number[] configuration32 = {
          0x00400000, // .text Base Address
          0x10000000, // Data Segment base address
          0x10000000, // .extern Base Address
@@ -128,7 +129,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	*/      
       
       // Default configuration comes from SPIM
-      private static Number[] configuration64 = { 
+      private static Number[] configuration64 = {
          0x0000000000400000L, // .text Base Address
          0x0000000010000000L, // Data Segment base address
          0x0000000010000000L, // .extern Base Address
@@ -138,14 +139,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          0x0000003fffffeff0L, // stack pointer $sp (from SPIM not MIPS)
          0x0000003ffffffff0L, // stack base address
          0x0000003fffffffffL, // highest address in user space
-         0x0000040000000000L, // lowest address in kernel space
-         0x0000040000000000L, // .ktext base address
-         0x0000040000000180L, // exception handler address
-         0x0000050000000000L, // .kdata base address
-         0x00000ffff0000000L, // MMIO base address
+         0x8000000000000000L, // lowest address in kernel space
+         0x8000000000000000L, // .ktext base address
+         0x8000000000001800L, // exception handler address
+         0x9000000000000000L, // .kdata base address
+         0xffff000000000000L, // MMIO base address
          0xffffffffffffffffL, // highest address in kernel (and memory)
          0x0000003fffffffffL, // data segment limit address
-         0x000000000fffffffL, // text limit address
+         0x00000000fffffffcL, // text limit address
          0xffffffefffffffffL, // kernel data segment limit address
          0x8ffffffffffffffcL, // kernel text limit address
          0x0000000010040000L, // stack limit address
@@ -338,7 +339,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static Number getDefaultMemoryMapBaseAddress() {
          return configuration32[13];
       }
-   
+
+
        public static Number getDefaultKernelHighAddress () {
          return configuration32[14];
       }   

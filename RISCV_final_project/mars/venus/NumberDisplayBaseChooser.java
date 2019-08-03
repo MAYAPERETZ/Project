@@ -136,7 +136,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 
        public static String formatUnsignedLong(long value, int base) {
            if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
-              return Binary.NumberToHexString(Long.parseLong(Long.toUnsignedString(value)), "64");
+               String st = "";
+               try {
+                   st = Binary.NumberToHexString(Long.parseLong(Long.toUnsignedString(value)), "64");
+               }catch(NumberFormatException nfe){
+                   st =  Binary.NumberToHexString(Long.parseUnsignedLong(Long.toUnsignedString(value)), "64");
+               }
+               return st;
            } 
            else {
               return Binary.unsignedLongToLongString(value);

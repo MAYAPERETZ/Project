@@ -5,11 +5,8 @@
    import mars.*;
    import mars.util.*;
    import java.util.*;
+   import java.io.*;
 
-
-import java.io.*;
-import java.math.BigInteger;
-	
 	/*
 Copyright (c) 2003-2013,  Pete Sanderson and Kenneth Vollmar
 
@@ -923,7 +920,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   {
-                     findAndSimulateSyscall(RV32IRegisters.getValue(2),statement);
+                     findAndSimulateSyscall(RV32IRegisters.getValue(2).intValue(),statement);
                   }
                }));
          /*instructionList.add(
@@ -1116,7 +1113,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                      float add1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
                      float add2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
                      float sum = add1 + add2;
@@ -1149,7 +1146,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          		Exceptions.FLOATING_POINT_UNDERFLOW);
                      }
                      else
-                         Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(diff), statement);
+                         Coprocessor1.updateRegisterWithExecptions(operands[0].intValue(), Coprocessor1.round(diff), statement);
 
                   }
                }));
@@ -1161,7 +1158,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                      float mul1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
                      float mul2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
                      float prod = mul1 * mul2;
@@ -1176,7 +1173,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                      float div1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
                      float div2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
                      if(div2 == 0){
@@ -1197,7 +1194,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                      float value = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
                      int floatSqrt = 0;
                      if ((Coprocessor1.getIntValue(operands[1])&0x80000000) == 1 ) { 
@@ -2332,12 +2329,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                      try
                      {
-                        Coprocessor1.updateRegister((int)operands[0],
+                        Coprocessor1.updateRegister(operands[0],
                             Globals.memory.getWord(
-                            RV32IRegisters.getValue(((int)operands[2])) + operands[1]));
+                            RV32IRegisters.getValue(operands[2]).intValue() + operands[1].intValue()
+                            ).intValue());
                      } 
                          catch (AddressErrorException e)
                         {
@@ -2355,11 +2353,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                      try
                      {
-                        Globals.memory.setWord((int)
-                        	RV32IRegisters.getValue(((int)operands[2])) + operands[1],
+                        Globals.memory.setWord(
+                        	RV32IRegisters.getValue(operands[2]).intValue() + operands[1].intValue(),
                             Coprocessor1.getIntValue(operands[0]));
                      } 
                          catch (AddressErrorException e)
@@ -2376,12 +2374,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       int firstOperand = Coprocessor1.getIntValue(operands[1]);
                       int secondOperand = Coprocessor1.getIntValue(operands[2]);
                       int newspfp = ((firstOperand&0x80000000)|(secondOperand&0x7fffffff));
-                      Coprocessor1.updateRegister(operands[0], newspfp);
+                      Coprocessor1.updateRegister(operands[0].intValue(), newspfp);
                         
                    }
                     
@@ -2394,12 +2392,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       int firstOperand = Coprocessor1.getIntValue(operands[1]);
                       int secondOperand = Coprocessor1.getIntValue(operands[2]);
                       int newspfp = (((~firstOperand)&0x80000000)|(secondOperand&0x7fffffff));
-                      Coprocessor1.updateRegister(operands[0], newspfp);
+                      Coprocessor1.updateRegister(operands[0].intValue(), newspfp);
                         
                    }
                     
@@ -2412,7 +2410,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       int firstOperand = Coprocessor1.getIntValue(operands[1]);
                       int secondOperand = Coprocessor1.getIntValue(operands[2]);
@@ -2430,10 +2428,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       Coprocessor1.updateRegister(operands[0], 
-                    		  Integer.min((int)operands[1], (int)operands[2]));
+                    		  Integer.min(operands[1].intValue(), operands[2].intValue()));
                         
                    }
                     
@@ -2446,10 +2444,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       Coprocessor1.updateRegister(operands[0], 
-                    		  Integer.max((int)operands[1], (int)operands[2]));
+                    		  Integer.max(operands[1].intValue(), operands[2].intValue()));
                         
                    }
                     
@@ -2462,10 +2460,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
-                     
-                      Coprocessor1.updateRegister(operands[0], operands[1]);
-                        
+                      Number[] operands = statement.getOperands();
+                      Coprocessor1.updateRegister(operands[0], operands[1].intValue());
                    }
                     
                 }));
@@ -2478,7 +2474,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       int equals = (Binary.highOrderLongToInt(operands[1]) == 
                     		  Binary.highOrderLongToInt(operands[2]))? 1 : 0;
@@ -2495,7 +2491,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       int equals = (Binary.highOrderLongToInt(operands[1])
                     		  < Binary.highOrderLongToInt(operands[2]))? 1 : 0;
@@ -2512,7 +2508,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       int equals = (Binary.highOrderLongToInt(operands[1]) <=
                     		  Binary.highOrderLongToInt(operands[2]))? 1 : 0;
@@ -2530,7 +2526,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                       float rs1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
                   
                       Coprocessor1.updateRegister(operands[0], Coprocessor1.getFclass(rs1));
@@ -2547,24 +2543,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                   //   if (operands[0]%2==1) {
                    //     throw new ProcessingException(statement, "first register must be even-numbered");
                  //  }
                   	// IF statement added by DPS 13-July-2011.
-                     if (!Globals.memory.doublewordAligned(RV32IRegisters.getValue(operands[2])
-                    		 + Binary.signExtend(operands[1], 12, 32))) {
+                     if (!Globals.memory.doublewordAligned(RV32IRegisters.getValue(operands[2]).longValue()
+                    		 + Binary.signExtend(operands[1].longValue(), 12, 32))) {
                         throw new ProcessingException(statement,
                            new AddressErrorException("address not aligned on doubleword boundary ",
-                           Exceptions.ADDRESS_EXCEPTION_LOAD, RV32IRegisters.getValue(operands[2]) +
-                           Binary.signExtend(operands[1], 12, 32)));
+                           Exceptions.ADDRESS_EXCEPTION_LOAD, RV32IRegisters.getValue(operands[2]).longValue() +
+                           Binary.signExtend(operands[1].longValue(), 12, 64)));
                      }
                                     
                      try
                      {
                         Coprocessor1.updateRegister(operands[0],
-                            Globals.memory.getDoubleWord((int)
-                            (RV32IRegisters.getValue(operands[2]) + Binary.signExtend(operands[1], 12, 32))));
+                            Globals.memory.getDoubleWord(
+                            (RV32IRegisters.getValue(operands[2]).longValue()
+                                    + Binary.signExtend(operands[1].longValue(), 12, 64))).longValue());
                       //  Coprocessor1.updateRegister(operands[0]+1,
                       //      Globals.memory.getWord(
                       //      RV32IRegisters.getValue(operands[2]) + operands[1] + 4));
@@ -2585,22 +2582,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                {
                    public void simulate(ProgramStatement statement) throws ProcessingException
                   { 
-                     long[] operands = statement.getOperands();
+                     Number[] operands = statement.getOperands();
                    //  if (operands[0]%2==1) {
                    //     throw new ProcessingException(statement, "first register must be even-numbered");
                    //  }
                   	// IF statement added by DPS 13-July-2011.
-                     if (!Globals.memory.doublewordAligned(RV32IRegisters.getValue(operands[2]) + 
-                    		 Binary.signExtend(operands[1], 12, 32))) {
+                     if (!Globals.memory.doublewordAligned(RV32IRegisters.getValue(operands[2]).longValue() +
+                    		 Binary.signExtend(operands[1].longValue(), 12, 64))) {
                         throw new ProcessingException(statement,
                            new AddressErrorException("address not aligned on doubleword boundary ",
-                           Exceptions.ADDRESS_EXCEPTION_STORE, RV32IRegisters.getValue(operands[2]) + 
-                           Binary.signExtend(operands[1], 12, 32)));
+                           Exceptions.ADDRESS_EXCEPTION_STORE, RV32IRegisters.getValue(operands[2]).longValue() +
+                           Binary.signExtend(operands[1].longValue(), 12, 32)));
                      }
                      try
                      {
                         Globals.memory.setDoubleWord((int)
-                            (RV32IRegisters.getValue(operands[2]) + Binary.signExtend(operands[1], 12, 32)),
+                            (RV32IRegisters.getValue(operands[2]).longValue()
+                                    + Binary.signExtend(operands[1].longValue(), 12, 64)),
                             Coprocessor1.getIntValue(operands[0]));
                      //   Globals.memory.setWord(
                      //       RV32IRegisters.getValue(operands[2]) + operands[1] + 4,
@@ -2621,7 +2619,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();     
+                      Number[] operands = statement.getOperands();
                       long firstOperand = Coprocessor1.getLongValue(operands[1]);
                       long secondOperand = Coprocessor1.getLongValue(operands[2]);
                       long newspfp = ((firstOperand&0x8000000000000000L)|(secondOperand&0x7fffffffffffffffL));
@@ -2638,7 +2636,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                        long[] operands = statement.getOperands();     
+                        Number[] operands = statement.getOperands();
                         long firstOperand = Coprocessor1.getLongValue(operands[1]);
                         long secondOperand = Coprocessor1.getLongValue(operands[2]);
                         long newspfp = ((~(firstOperand&0x8000000000000000L))|(secondOperand&0x7fffffffffffffffL));
@@ -2656,7 +2654,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                       long firstOperand = Coprocessor1.getLongValue(operands[1]);
                       long secondOperand = Coprocessor1.getLongValue(operands[2]);
                       long newspfp = (((firstOperand^secondOperand)&0x8000000000000000L)|(secondOperand&0x7fffffffffffffffL));
@@ -2673,26 +2671,26 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       Coprocessor1.updateRegister(operands[0], 
-                    		  Long.min(operands[1], operands[2]));
+                    		  Long.min(operands[1].longValue(), operands[2].longValue()));
                         
                    }
                     
                 }));	
          instructionList.add(
                  new R_type("fmax.d ft1,ft2,ft3",
-                 "Floating-point Maximum, Single-Presicion.",
+                 "Floating-point Maximum, Double-Presicion.",
                  "0010101tttttsssss001fffff1010011",
                  new SimulationCode()
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
                       Coprocessor1.updateRegister(operands[0], 
-                    		  Long.max(operands[1], operands[2]));
+                    		  Long.max(operands[1].longValue(), operands[2].longValue()));
                         
                    }
                     
@@ -2721,9 +2719,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
-                      int equals = (operands[1] == operands[2])? 1 : 0;
+                      int equals = (operands[1].doubleValue() == operands[2].doubleValue())? 1 : 0;
                     	  Coprocessor1.updateRegister(operands[0], equals);
                         
                    }
@@ -2737,9 +2735,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
-                      int equals = (operands[1] < operands[2])? 1 : 0;
+                      int equals = (operands[1].doubleValue() < operands[2].doubleValue())? 1 : 0;
                     	  Coprocessor1.updateRegister(operands[0], equals);
                         
                    }
@@ -2753,9 +2751,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                      
-                      int equals = (operands[1] <= operands[2])? 1 : 0;
+                      int equals = (operands[1].doubleValue() <= operands[2].doubleValue())? 1 : 0;
                     	  Coprocessor1.updateRegister(operands[0], equals);
                         
                    }
@@ -2770,12 +2768,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 {
                     public void simulate(ProgramStatement statement) throws ProcessingException
                    { 
-                      long[] operands = statement.getOperands();
+                      Number[] operands = statement.getOperands();
                       double rs1 = Double.longBitsToDouble(Coprocessor1.getIntValue(operands[1]));
                   
                       Coprocessor1.updateRegister(operands[0], Coprocessor1.getFclass(rs1));
                    }
                 }));
+
+          instructionList.add(
+                  new R_type.WithRmFeild("fadd.d ft1,ft2,ft3",
+                          "Floating-point Add, Single-Precision. Set ft1 to single-precision floating point value of ft2 plus ft3",
+                          "0000001tttttsssssxxxfffff1010011",
+                          new SimulationCode()
+                          {
+                              public void simulate(ProgramStatement statement) throws ProcessingException
+                              {
+                                  Number[] operands = statement.getOperands();
+                                  double add1 = Double.longBitsToDouble(Coprocessor1.getLongValue(operands[1]));
+                                  double add2 = Double.longBitsToDouble(Coprocessor1.getLongValue(operands[2]));
+                                  double sum = add1 + add2;
+                                  // overflow detected when sum is positive or negative infinity.
+                                  if (Double.isInfinite(sum)) {
+                                      Coprocessor1.updateRegister(operands[0], Coprocessor1.round(sum));
+                                      throw new FloatingPointException(statement,"Floating-point Arithmetic Overflow",
+                                              Exceptions.FLOATING_POINT_OVERFLOW);
+                                  }
+
+                                  Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum), statement);
+
+                              }
+                          }));
          
       	////////////////////////////  THE TRAP INSTRUCTIONS & ERET  ////////////////////////////
         /* 

@@ -1,10 +1,9 @@
    package mars.util;
 	import mars.Globals;
-import mars.mips.hardware.MemoryConfiguration;
-import mars.mips.hardware.MemoryConfigurations;
+    import mars.mips.hardware.MemoryConfigurations;
+    import mars.venus.NumberDisplayBaseChooser;
 
-import java.math.BigInteger;
-import java.util.*;
+    import java.util.*;
 
 	
 	/*
@@ -48,7 +47,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                    {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
     // Use this to produce String equivalent of unsigned int value (add it to int value, result is long)
       private static final long UNSIGNED_BASE = (long)0x7FFFFFFF + (long)0x7FFFFFFF +(long)2; //0xFFFFFFFF+1
-   
+
+      public static Number toUnsignedNumber(Number value){
+          return Binary.stringToNumber(NumberDisplayBaseChooser.formatUnsignedNumber(value, 10));
+      }
     /**
      * Translate int value into a String consisting of '1's and '0's.
      * 
@@ -100,7 +102,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static String longToBinaryString(long value) {
          return toBinaryString(value,64);
       }
-   
+
+
+       public static String numberToBinaryString(Number value){
+           if(value instanceof Long)
+               return longToBinaryString(value.longValue());
+           return intToBinaryString(value.intValue());
+       }
    
     /**
      * Translate String consisting of '1's and '0's into an int value having that binary representation.
@@ -310,8 +318,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
        public static String NumberToHexString(Number value, String hexLength) {
 
-    	   String leadingZero = new String("0");
-           String leadingX = new String("0x");
+    	   String leadingZero = "0";
+           String leadingX = "0x";
            String t = (value instanceof Long)? Long.toHexString(value.longValue()) : Integer.toHexString(value.intValue());
            while (t.length() < (Integer.parseInt(hexLength)/4))
              t = leadingZero.concat(t);      
@@ -372,39 +380,93 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     		   return stringToLong(s); 
     		return stringToInt(s);
        }
-     
-      public static int stringToInt(String s) throws NumberFormatException {
-         String work = new String(s);
-         int result = 0;
-       // First, use Integer.decode().  This will validate most, but it flags
-       // valid hex two's complement values as exceptions.  We'll catch those and
-       // do our own validation.
-         try {
-            result = Integer.parseInt(s);
-         } 
-             catch (NumberFormatException nfe) {
+
+    /**
+     * Attempt to validate given string whose characters represent a 32 bit integer.
+     * Integer.decode() is insufficient because it will not allow incorporation of
+     * hex two's complement (i.e. 0x80...0 through 0xff...f).  Allows
+     * optional negative (-) sign but no embedded spaces.
+     *
+     * @param s candidate string
+     * @return returns int value represented by given string
+     * @throws NumberFormatException if string cannot be translated into an int
+     */
+
+    public static int stringToInt(String s) throws NumberFormatException {
+        String work = new String(s);
+        int result = 0;
+        // First, use Integer.decode().  This will validate most, but it flags
+        // valid hex two's complement values as exceptions.  We'll catch those and
+        // do our own validation.
+        try {
+            result = Integer.decode(s).intValue();
+        }
+        catch (NumberFormatException nfe) {
             // Multistep process toward validation of hex two's complement. 3-step test:
             //   (1) exactly 10 characters long,
             //   (2) starts with Ox or 0X,
             //   (3) last 8 characters are valid hex digits.
-               work = work.toLowerCase();
-               if ((work.length() == 10) && work.startsWith("0x"))
-                   try {
-                       result = Integer.parseInt(work.substring(2), 16);
-                   } catch (NumberFormatException numberFormatException){
-                       result = Integer.parseUnsignedInt(work.substring(2), 16);
-                   }
-               else if (!work.startsWith("0x")) 
-            	   result = (int)Long.parseLong(s); 
-               /*  End of the Jose Paredes code */ 
-               else 
-                  throw new NumberFormatException();
+            work = work.toLowerCase();
+            if (work.length() == 10 && work.startsWith("0x")) {
+                String bitString = "";
+                int index;
+                // while testing characters, build bit string to set up for binaryStringToInt
+                for (int i=2; i<10; i++) {
+                    index = Arrays.binarySearch(chars, work.charAt(i));
+                    if (index < 0) {
+                        throw new NumberFormatException();
+                    }
+                    bitString = bitString + intToBinaryString(index,4);
+                }
+                result = binaryStringToInt(bitString);
             }
-         
-         return result;
-      }
-   
-   
+               /*  The following "else" composed by Jose Baiocchi Paredes, Oct 2009.  This new code
+                   will correctly translate a string representing an unsigned decimal (not hex)
+               	 value whose signed value is negative.  This is the decimal equivalent of the
+               	 "then" case just above.  The method was not used in this context until Release 3.6
+               	 when background highlighting of the Data Segment was added.  Caused exceptions
+               	 under certain conditions.
+                */
+            else if (!work.startsWith("0x")) {
+                result = 0;
+                for (int i=0; i<work.length(); i++) {
+                    char c = work.charAt(i);
+                    if ('0' <= c && c <='9') {
+                        result *= 10;
+                        result += c - '0';
+                    }
+                    else {
+                        throw new NumberFormatException();
+                    }
+                }
+            }
+            /*  End of the Jose Paredes code */
+            else {
+                throw new NumberFormatException();
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Translate int value into a String consisting of '1's and '0's.
+     *
+     * @param value The int value to convert.
+     * @param length The number of bit positions, starting at least significant, to process.
+     * @return String consisting of '1' and '0' characters corresponding to the requested binary sequence.
+     **/
+
+    public static String intToBinaryString(int value, int length) {
+        char[] result = new char[length];
+        int index = length-1;
+        for (int i=0; i<length; i++) {
+            result[index] = (bitValue(value,i)==1) ? '1' : '0';
+            index--;
+        }
+        return new String(result);
+    }
+
+
     /**
      * Attempt to validate given string whose characters represent a 64 bit long.
      * Long.decode() is insufficient because it will not allow incorporation of
@@ -462,7 +524,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static int highOrderLongToInt(long longValue) {
          return (int) (longValue >> 32);  // high order 32 bits
       }
-   	
+
+        public static int highOrderLongToInt(Number longValue) {
+            return (int) (longValue.longValue() >> 32);  // high order 32 bits
+        }
    	
     	/**
    	  *  Returns int representing the bit values of the low order 32 bits of given

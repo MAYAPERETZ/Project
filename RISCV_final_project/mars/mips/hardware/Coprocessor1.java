@@ -353,12 +353,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
    	  **/
    	
-       public static long getLongValue(long reg) 
+       public static long getLongValue(Number reg)
                                      {
        //  if (reg % 2 != 0) {
        //     throw new InvalidRegisterAccessException();
        //  } 
-         return registers.get((int)reg).getValue().longValue();
+         return registers.get(reg.intValue()).getValue().longValue();
       }
    
    
@@ -383,9 +383,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @param val The desired int value for the register.
    	  **/
    	  
-       public static Number updateRegister(long num, long val) {
+       public static Number updateRegister(Number num, long val) {
          Number old = 0;
-         int num2 = (int)num;
+         int num2 = num.intValue();
         
          old = (Globals.getSettings().getBackSteppingEnabled())
                         ? Globals.program.getBackStepper().addCoprocessor1Restore(num2 , registers.get(num2).setValue(val).longValue())
@@ -403,9 +403,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            return old;
         }
       
-       public static Number updateRegisterWithExecptions(long num,  Number val, ProgramStatement statement) throws FloatingPointException {
+       public static Number updateRegisterWithExecptions(Number num,  Number val, ProgramStatement statement) throws FloatingPointException {
            Number old = 0;
-           int num2 = (int)num;
+           int num2 = num.intValue();
            float floatVal = Float.intBitsToFloat(val.intValue());        
            
            if(Coprocessor1.isUnderflow(floatVal, Coprocessor1.getFclass(floatVal))) {
@@ -436,8 +436,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @return The int value of the given register.
    	  **/
    	
-       public static int getIntValue(long num){
-         return (int) registers.get((int)num).getValue();
+       public static int getIntValue(Number num){
+         return registers.get(num.intValue()).getValue().intValue();
       }
       		
       	/**

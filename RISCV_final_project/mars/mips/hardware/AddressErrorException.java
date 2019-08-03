@@ -1,4 +1,5 @@
 package mars.mips.hardware;
+import mars.Globals;
 import mars.util.*;
 
 /*
@@ -49,14 +50,17 @@ public class AddressErrorException extends Exception {
     
    public AddressErrorException(String message, int exceptType, long addr) {
 	   super(message+Binary.currentNumToHexString(addr));
-	   System.out.println(message);
+	   if (Globals.debug)
+	       System.out.println(message+Binary.currentNumToHexString(addr));
+
       address = addr;
 		type = exceptType;
    }
 
    public AddressErrorException(String message, int exceptType, Number addr) {
 	   super(message+Binary.currentNumToHexString(addr));
-	   System.out.println(message);
+       if (Globals.debug)
+           System.out.println(message+Binary.currentNumToHexString(addr));
 	   address = (MemoryConfigurations.getCurrentComputingArchitecture() == 32)? addr.intValue() : addr.longValue();
 	   type = exceptType;
    }

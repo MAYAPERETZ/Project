@@ -1,7 +1,7 @@
    package mars.mips.instructions.syscalls;
+   import mars.mips.instructions.GenMath;
    import mars.util.*;
    import mars.mips.hardware.*;
-   import mars.simulator.*;
    import mars.*;
 
 /*
@@ -55,11 +55,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * and $a2 specifies length.  Number of characters written is returned in $v0, starting in MARS 3.7. 
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         int byteAddress = RV32IRegisters.getValue(5); // source of characters to write to file
+         Number byteAddress = RV32IRegisters.getValue(5); // source of characters to write to file
          byte b = 0;
-         int reqLength = RV32IRegisters.getValue(6); // user-requested length
+         int reqLength = RV32IRegisters.getValue(6).intValue(); // user-requested length
          int index = 0;
-         byte myBuffer[] = new byte[RV32IRegisters.getValue(6) + 1]; // specified length plus null termination
+         byte myBuffer[] = new byte[RV32IRegisters.getValue(6).intValue() + 1]; // specified length plus null termination
          try
          {
             b = (byte) Globals.memory.getByte(byteAddress);                            
@@ -67,7 +67,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                  // while (index < reqLength && b != 0) // Stop at requested length OR null byte
             {
                myBuffer[index++] = b;
-               byteAddress++;
+               GenMath.add(byteAddress, 1);
                b = (byte) Globals.memory.getByte(byteAddress);
             }
                               
@@ -78,9 +78,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                throw new ProcessingException(statement, e);
             }
          int retValue = SystemIO.writeToFile(
-                                 RV32IRegisters.getValue(4), // fd
+                                 RV32IRegisters.getValue(4).intValue(), // fd
                                  myBuffer, // buffer
-                                 RV32IRegisters.getValue(6)); // length
+                                 RV32IRegisters.getValue(6).intValue()); // length
          RV32IRegisters.updateRegister(2, retValue); // set returned value in register
 
          // Getting rid of processing exception.  It is the responsibility of the

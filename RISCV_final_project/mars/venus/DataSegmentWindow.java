@@ -7,7 +7,6 @@ import mars.mips.hardware.memory.Memory;
 import mars.mips.hardware.memory.MemoryAccessNotice;
 import mars.mips.instructions.GenMath;
 import org.pushingpixels.substance.api.UiThreadingViolationException;
-import org.pushingpixels.trident.callback.UIThreadTimelineCallbackAdapter;
 
 import static mars.util.Math2.*;
 import static mars.mips.instructions.GenMath.*;
@@ -16,7 +15,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 import javax.swing.table.*;
-import javax.swing.border.*;
 import javax.swing.event.*;
 
 /*
@@ -374,7 +372,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private String[] createBaseAddressLabelsArray(Number[] baseAddressArray, String[] descriptions) {
          String[] baseAddressChoices = new String[baseAddressArray.length];
          for (int i=0; i<baseAddressChoices.length; i++) {
-            baseAddressChoices[i] =  (isEq(baseAddressArray[i], -1)
+            baseAddressChoices[i] =  (!isEq(baseAddressArray[i], -1)
                                             ? mars.util.Binary.currentNumToHexString(baseAddressArray[i])
                									  : "")
                									  +descriptions[i];
@@ -539,7 +537,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             ((DataTableModel)dataModel).setDisplayAndModelValueAt(NumberDisplayBaseChooser.formatUnsignedNumber(address, addressBase),row,ADDRESS_COLUMN);
             for (int column=1; column<NUMBER_OF_COLUMNS; column++) {
                try {
-                  ((DataTableModel)dataModel).setDisplayAndModelValueAt(NumberDisplayBaseChooser.formatNumber(Globals.memory.getWordNoNotify(address), valueBase),row,column);
+                  ((DataTableModel)dataModel).setDisplayAndModelValueAt(NumberDisplayBaseChooser.formatUnsignedNumber(Globals.memory.getWordNoNotify(address), valueBase),row,column);
                } 
                   catch (AddressErrorException aee) {
                      // Bit of a hack here.  Memory will throw an exception if you try to read directly from text segment when the
@@ -566,7 +564,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 							// With 4.4, I added the above IF statement to work with the text segment but inadvertently removed this line!
 							// Now it becomes the "else" part, executed when not in text segment.  DPS 8-July-2014.
                      else {
-                        ((DataTableModel)dataModel).setDisplayAndModelValueAt(NumberDisplayBaseChooser.formatNumber(0, valueBase),row,column);
+                        ((DataTableModel)dataModel).setDisplayAndModelValueAt(NumberDisplayBaseChooser.formatNumber((Number)0, valueBase),row,column);
                      }
                   }
                address = GenMath.add(address, NumberS_PER_VALUE);
@@ -835,6 +833,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	//
    	// PrevButton and NextButton are enabled/disabled appropriately.
    	//
+
+
       private Number setFirstAddressAndPrevNextButtonEnableStatus(Number lowAddress) {
          Number lowLimit = (userOrKernelMode==USER_MODE) ? min(min(Globals.memory.getInstance().getTextTable().getBaseAddress(),
             													 Globals.memory.getInstance().getDataTable().getBaseAddress()),
@@ -842,6 +842,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                                       : Globals.memory.getInstance().getKernelDataTable().getBaseAddress();
          Number highLimit= (userOrKernelMode==USER_MODE) ? Globals.memory.userHighAddress
                                                       : Globals.memory.kernelHighAddress;
+
          if (!isLt(lowLimit, lowAddress)) {
             lowAddress = lowLimit;
             prevButton.setEnabled(false);

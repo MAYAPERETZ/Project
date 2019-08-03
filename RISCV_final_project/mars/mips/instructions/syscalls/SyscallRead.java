@@ -50,8 +50,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
       
    /**
-   * Performs syscall function to read from file descriptor given in $a0.  $a1 specifies buffer
-   * and $a2 specifies length.  Number of characters read is returned in $v0 (starting MARS 3.7). 
+   * Performs syscall function to read from file descriptor given in a0.  a1 specifies buffer
+   * and a2 specifies length.  Number of characters read is returned in v0 (starting MARS 3.7).
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
          int byteAddress = RV32IRegisters.getValue(5); // destination of characters read from file

@@ -1,4 +1,5 @@
    package mars.mips.instructions.syscalls;
+   import mars.mips.instructions.GenMath;
    import mars.util.*;
    import mars.mips.hardware.*;
 	import mars.simulator.*;
@@ -72,17 +73,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           // Returns in $v0: a "file descriptor" in the range 0 to SystemIO.SYSCALL_MAXFILES-1,
           // or -1 if error
          String filename = new String(); // = "";
-         int byteAddress = RV32IRegisters.getValue(4);
+         Number byteAddress = RV32IRegisters.getValue(4);
          char ch[] = { ' '}; // Need an array to convert to String
          try
          {
-            ch[0] = (char) Globals.memory.getByte(byteAddress);
+            ch[0] = (char) Globals.memory.getByte(byteAddress).byteValue();
             while (ch[0] != 0) // only uses single location ch[0]
             {
                filename = filename.concat(new String(ch)); // parameter to String constructor is a char[] array
-               byteAddress++;
+               GenMath.add(byteAddress, 1);
                ch[0] = (char) Globals.memory.getByte(
-                                        byteAddress);
+                                        byteAddress).byteValue();
             }
          } 
              catch (AddressErrorException e)
@@ -90,7 +91,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                throw new ProcessingException(statement, e);
             }
          int retValue = SystemIO.openFile(filename,
-                                 RV32IRegisters.getValue(5));
+                                 RV32IRegisters.getValue(5).intValue());
          RV32IRegisters.updateRegister(2, retValue); // set returned fd value in register
 			
 			// GETTING RID OF PROCESSING EXCEPTION.  IT IS THE RESPONSIBILITY OF THE

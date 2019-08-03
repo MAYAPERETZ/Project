@@ -121,7 +121,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  **/
    	
        public static Number getValue(Number num){
-    	   return regFile.get((int)num.intValue()).getValue();
+    	   return regFile.get(num.intValue()).getValue();
        }
        
        

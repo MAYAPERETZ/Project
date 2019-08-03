@@ -56,7 +56,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
                try
                {
-                  Thread.sleep(RV32IRegisters.getValue(4)); // units of milliseconds  1000 millisec = 1 sec.
+                  Thread.sleep(RV32IRegisters.getValue(4).intValue()); // units of milliseconds  1000 millisec = 1 sec.
                }
                catch (InterruptedException e)
                {

@@ -37,12 +37,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  */
  
-    public class SyscallPrintInt extends AbstractSyscall {
+    public class SyscallPrintNumber extends AbstractSyscall {
    /**
     * Build an instance of the Print Integer syscall.  Default service number
     * is 1 and name is "PrintInt".
     */
-       public SyscallPrintInt() {
+       public SyscallPrintNumber() {
          super(1, "PrintInt");
       }
       
@@ -50,7 +50,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Performs syscall function to print on the console the integer stored in $a0.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         SystemIO.printString(
-             new Integer(RV32IRegisters.getValue(4)).toString());
+         SystemIO.printString((RV32IRegisters.getValue(4)).toString());
       }
    }

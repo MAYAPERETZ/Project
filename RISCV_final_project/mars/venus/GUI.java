@@ -10,23 +10,11 @@ package mars.venus;
  * @author XXX
  */
 import mars.*;
-import mars.mips.dump.*;
-import mars.venus.*;
-
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.MatteBorder;
-
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.event.*;
-
-import java.io.*;
 import java.net.*;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.ReentrantLock;
-import javafx.scene.control.Skin;
+
 /*
 Copyright (c) 2003-2013,  Pete Sanderson and Kenneth Vollmar
 
@@ -130,164 +118,123 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	**/     
 
     public GUI(String s) {
-      super(s);
-      mainUI = this;
-      Globals.setGui(this);
-      this.editor = new Editor(this);
-      contentPane = new javax.swing.JPanel();
-      toolBarPanel = new javax.swing.JPanel();
-      observable = new NewObservable();
-      
-      double screenWidth  = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-      double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-      // basically give up some screen space if running at 800 x 600
-      double messageWidthPct = (screenWidth<1000.0)? 0.69 : 0.74;
-      double messageHeightPct = (screenWidth<1000.0)? 0.17 : 0.15;
-      double mainWidthPct = (screenWidth<1000.0)? 0.69 : 0.74;
-      double mainHeightPct = (screenWidth<1000.0)? 0.60 : 0.58;
-      double registersWidthPct = (screenWidth<1000.0)? 0.20 : 0.244;
-      double registersHeightPct = (screenWidth<1000.0)? 0.95 : 0.88;
-      
-      // invoke only after toolBar has created and initialized
-      
-	
-      Dimension messagesPanePreferredSize = new Dimension((int)(screenWidth*messageWidthPct),(int)(screenHeight*messageHeightPct)); 
-      Dimension mainPanePreferredSize = new Dimension((int)(screenWidth*mainWidthPct),(int)(screenHeight*mainHeightPct));
-      Dimension registersPanePreferredSize = new Dimension((int)(screenWidth*registersWidthPct)
-    		  ,(int)(screenHeight*registersHeightPct));
+        super(s);
+        mainUI = this;
+        Globals.setGui(this);
+        this.editor = new Editor(this);
+        observable = new NewObservable();
 
-      Globals.initialize(true);
-      
-      EventQueue.invokeLater(new Runnable() {
-  		
-			@Override
-			public void run() {
-			      double toolBarHeightPct = (screenWidth<1000.0)? 0.05 : toolBar.getHeight();
-			      Dimension toolBarPanePreferredSize = new Dimension((int)(screenWidth*0.70),(int)(toolBarHeightPct));
-			      toolBarPanel.setPreferredSize(toolBarPanePreferredSize);
+        double screenWidth  = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+        double screenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+        // basically give up some screen space if running at 800 x 600
+        double messageWidthPct = (screenWidth<1000.0)? 0.67 : 0.73;
+        double messageHeightPct = (screenWidth<1000.0)? 0.12 : 0.15;
+        double mainWidthPct = (screenWidth<1000.0)? 0.67 : 0.73;
+        double mainHeightPct = (screenWidth<1000.0)? 0.60 : 0.65;
+        double registersWidthPct = (screenWidth<1000.0)? 0.18 : 0.22;
+        double registersHeightPct = (screenWidth<1000.0)? 0.72 : 0.80;
 
-			}
-    });
+        Dimension messagesPanePreferredSize = new Dimension((int)(screenWidth*messageWidthPct),(int)(screenHeight*messageHeightPct));
+        Dimension mainPanePreferredSize = new Dimension((int)(screenWidth*mainWidthPct),(int)(screenHeight*mainHeightPct));
+        Dimension registersPanePreferredSize = new Dimension((int)(screenWidth*registersWidthPct),(int)(screenHeight*registersHeightPct));
 
-   	//  image courtesy of NASA/JPL.
-     /* URL im = this.getClass().getResource(Globals.imagesPath+"RedMars16.gif");
-      if (im == null) {
-         System.out.println("Internal Error: images folder or file not found");
-         System.exit(0);
-      }
-    */
+        // the "restore" size (window control button that toggles with maximize)
+        // I want to keep it large, with enough room for user to get handles
+        //this.setSize((int)(screenWidth*.8),(int)(screenHeight*.8));
 
-      registersTab = new RegistersWindow();
-      coprocessor1Tab = new Coprocessor1Window();
-      coprocessor0Tab = new Coprocessor0Window();
-      registersPane = new RegistersPane(mainUI, registersTab,coprocessor1Tab, coprocessor0Tab);
-      registersPane.setPreferredSize(registersPanePreferredSize);
-      mainPane = new MainPane(mainUI, editor, registersTab, coprocessor1Tab, coprocessor0Tab);   	
-      mainPane.setPreferredSize(mainPanePreferredSize);
-      messagesPane= new MessagesPane();
-      messagesPane.setPreferredSize(messagesPanePreferredSize);
-      
-      // due to dependencies, do not set up menu/toolbar until now.
-      this.createActionObjects();
-      menu= this.setUpMenuBar();
-      this.setJMenuBar(menu);
-   	
-      toolbar= this.setUpToolBar();
-      javax.swing.GroupLayout gl_toolBar = new javax.swing.GroupLayout(toolBarPanel);
-      toolBarPanel.setLayout(gl_toolBar);
-      gl_toolBar.setHorizontalGroup(
-          gl_toolBar.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(gl_toolBar.createSequentialGroup()
-              .addComponent(toolbar, 0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addGap(4))
-          .addGap(4)
-      );
-      gl_toolBar.setVerticalGroup(
-          gl_toolBar.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(toolbar,javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-      );
-     
-   
-      FileStatus.reset();
-   	// The following has side effect of establishing menu state
-      FileStatus.set(FileStatus.NO_FILE);  
-   				
-      // This is invoked when opening the app.  It will set the app to
-      // appear at full screen size.
-      this.addWindowListener(
-             new WindowAdapter() {
-                public void windowOpened(WindowEvent e) {
-                  mainUI.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-               }
-            });
-   
-     // This is invoked when exiting the app through the X icon.  It will in turn
-     // check for unsaved edits before exiting.
-      this.addWindowListener(
-             new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                  if (mainUI.editor.closeAll()) {
-                     System.exit(0);
-                  } 
-               }
-            });
-   			
+        Globals.initialize(true);
 
-     	// The following will handle the windowClosing event properly in the 
-     	// situation where user Cancels out of "save edits?" dialog.  By default,
-     	// the GUI frame will be hidden but I want it to do nothing.
-        javax.swing.GroupLayout gl_contentPane = new javax.swing.GroupLayout(contentPane);
-        gl_contentPane.setHorizontalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_contentPane.createSequentialGroup()
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        				.addGroup(gl_contentPane.createSequentialGroup()
-        					.addGap(4)
-        					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        						.addComponent(toolBarPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-        						.addGroup(gl_contentPane.createSequentialGroup()
-        						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        						.addComponent(mainPane,GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-        						.addComponent(messagesPane, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-        						.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-        						.addComponent(registersPane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE,
-        								Short.MAX_VALUE)
-        						.addGap(4)))))));
-        
-        gl_contentPane.setVerticalGroup(
-        	gl_contentPane.createParallelGroup(Alignment.LEADING)
-        		.addGroup(gl_contentPane.createSequentialGroup()
-        				.addComponent(toolBarPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE)
-        			.addGap(4)
-        			.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-        				.addGroup(gl_contentPane.createSequentialGroup()
-        					.addComponent(mainPane, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-        					.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-        					.addComponent(messagesPane, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-        					.addComponent(registersPane, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
-        					.addGap(4)
-        ));
-        contentPane.setLayout(gl_contentPane);
+        //  image courtesy of NASA/JPL.
+        URL im = this.getClass().getResource(Globals.imagesPath+"RedMars16.gif");
+        if (im == null) {
+            System.out.println("Internal Error: images folder or file not found");
+            System.exit(0);
+        }
+        Image mars = Toolkit.getDefaultToolkit().getImage(im);
+        this.setIconImage(mars);
+        // Everything in frame will be arranged on JPanel "center", which is only frame component.
+        // "center" has BorderLayout and 2 major components:
+        //   -- panel (jp) on North with 2 components
+        //      1. toolbar
+        //      2. run speed slider.
+        //   -- split pane (horizonSplitter) in center with 2 components side-by-side
+        //      1. split pane (splitter) with 2 components stacked
+        //         a. main pane, with 2 tabs (edit, execute)
+        //         b. messages pane with 2 tabs (mars, run I/O)
+        //      2. registers pane with 3 tabs (register file, coproc 0, coproc 1)
+        // I should probably run this breakdown out to full detail.  The components are created
+        // roughly in bottom-up order; some are created in component constructors and thus are
+        // not visible here.
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(contentPane, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE,  Short.MAX_VALUE)
-                .addGap(4)	
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(contentPane, javax.swing.GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-              )
-      );
-      
-       getContentPane().setLayout(layout);
-      
-      
-      this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-      this.pack();
+        registersTab = new RegistersWindow();
+        coprocessor1Tab = new Coprocessor1Window();
+        coprocessor0Tab = new Coprocessor0Window();
+        registersPane = new RegistersPane(mainUI, registersTab,coprocessor1Tab, coprocessor0Tab);
+        registersPane.setPreferredSize(registersPanePreferredSize);
+
+        //Insets defaultTabInsets = (Insets)UIManager.get("TabbedPane.tabInsets");
+        //UIManager.put("TabbedPane.tabInsets", new Insets(1, 1, 1, 1));
+        mainPane = new MainPane(mainUI, editor, registersTab, coprocessor1Tab, coprocessor0Tab);
+        //UIManager.put("TabbedPane.tabInsets", defaultTabInsets);
+
+        mainPane.setPreferredSize(mainPanePreferredSize);
+        messagesPane= new MessagesPane();
+        messagesPane.setPreferredSize(messagesPanePreferredSize);
+        splitter= new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPane, messagesPane);
+        splitter.setOneTouchExpandable(true);
+        splitter.resetToPreferredSizes();
+        horizonSplitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitter, registersPane);
+        horizonSplitter.setOneTouchExpandable(true);
+        horizonSplitter.resetToPreferredSizes();
+
+        // due to dependencies, do not set up menu/toolbar until now.
+        this.createActionObjects();
+        menu= this.setUpMenuBar();
+        this.setJMenuBar(menu);
+
+        toolbar= this.setUpToolBar();
+
+        JPanel jp = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        jp.add(toolbar);
+        JPanel center= new JPanel(new BorderLayout());
+        center.add(jp, BorderLayout.NORTH);
+        center.add(horizonSplitter);
+
+
+
+        this.getContentPane().add(center);
+
+        FileStatus.reset();
+        // The following has side effect of establishing menu state
+        FileStatus.set(FileStatus.NO_FILE);
+
+        // This is invoked when opening the app.  It will set the app to
+        // appear at full screen size.
+        this.addWindowListener(
+                new WindowAdapter() {
+                    public void windowOpened(WindowEvent e) {
+                        mainUI.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    }
+                });
+
+        // This is invoked when exiting the app through the X icon.  It will in turn
+        // check for unsaved edits before exiting.
+        this.addWindowListener(
+                new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                        if (mainUI.editor.closeAll()) {
+                            System.exit(0);
+                        }
+                    }
+                });
+
+        // The following will handle the windowClosing event properly in the
+        // situation where user Cancels out of "save edits?" dialog.  By default,
+        // the GUI frame will be hidden but I want it to do nothing.
+        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        this.pack();
+        this.setVisible(true);
       
    }
     

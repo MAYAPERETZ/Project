@@ -50,7 +50,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        public MainPane(GUI mainUI2, Editor editor, RegistersWindow regs,
                        Coprocessor1Window cop1Regs,Coprocessor0Window cop0Regs){
-           super("Data Segment", true, false, true, true);
+           super("Data Segment", true, false, false, false);
            setFrameIcon(null);
          this.mainUI = mainUI2;
          editTabbedPane = new EditTabbedPane(mainUI2, editor, this);

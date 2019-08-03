@@ -1,4 +1,5 @@
 package mars.mips.hardware.memory;
+import mars.mips.hardware.MemoryConfigurations;
 import mars.util.Math2;
 
 abstract class AbstractBlockTable {
@@ -18,17 +19,21 @@ abstract class AbstractBlockTable {
 	}
 	
 	void setBaseAddress(Number getCurrentConfBase) {
-		limitAddress = getCurrentConfBase;
+		baseAddress = getCurrentConfBase;
 	}
 
 	abstract void setLimitAddress(Number getCurrentConfLimit);
 	
 	public Number getLimitAddress() {
-		return limitAddress;
+		if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+			return limitAddress.intValue();
+		return limitAddress.longValue();
 	}
 	
 	public Number getBaseAddress() {
-		return baseAddress;
+		if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+			return baseAddress.intValue();
+		return baseAddress.longValue();
 	}
 	
 

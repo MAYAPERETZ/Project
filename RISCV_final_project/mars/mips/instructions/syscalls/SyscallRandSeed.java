@@ -55,12 +55,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           //   $a1 = seed for pseudorandom number generator.
           // Result: No values are returned. Sets the seed of the underlying Java pseudorandom number generator.
 
-          Integer index = new Integer(RV32IRegisters.getValue(4));
+          Number index = RV32IRegisters.getValue(4);
 			 Random stream = (Random) RandomStreams.randomStreams.get(index);
           if (stream == null) {
-			    RandomStreams.randomStreams.put(index, new Random(RV32IRegisters.getValue(5)));
+			    RandomStreams.randomStreams.put(index, new Random(RV32IRegisters.getValue(5).longValue()));
 			 } else {
-			    stream.setSeed(RV32IRegisters.getValue(5));
+			    stream.setSeed(RV32IRegisters.getValue(5).longValue());
 			 }
        }
 

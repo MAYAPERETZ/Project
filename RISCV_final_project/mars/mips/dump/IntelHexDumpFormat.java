@@ -2,8 +2,8 @@
 
    import mars.Globals;
    import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
-
+   import mars.mips.hardware.memory.Memory;
+   import static mars.mips.instructions.GenMath.*;
 import java.io.*;
 
 /**
@@ -33,13 +33,13 @@ import java.io.*;
    *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
    *  @throws IOException if error occurs during file output.
    */
-       public void dumpMemoryRange(File file, long firstAddress, long lastAddress)
+       public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
           throws AddressErrorException, IOException {
             PrintStream out = new PrintStream(new FileOutputStream(file));
             String string = null;
             try {
                for (long address = firstAddress; address <= lastAddress; address += Memory.WORD_LENGTH_BYTES) {
-                  Long temp = Globals.memory.getRawWordOrNull(address);
+                  Number temp = Globals.memory.getRawWordOrNull(address);
                   if (temp == null) 
                      break;
                   string = Long.toHexString(temp.intValue());
@@ -53,7 +53,7 @@ import java.io.*;
                   String chksum;
                   int tmp_chksum = 0;
                   tmp_chksum += 4;
-                  tmp_chksum += 0xFF & (address-firstAddress);
+                  tmp_chksum += 0xFF & sub(address, firstAddress);
                   tmp_chksum += 0xFF & ((address-firstAddress)>>8);
                   tmp_chksum += 0xFF & temp.intValue();
                   tmp_chksum += 0xFF & (temp.intValue()>>8);

@@ -9,10 +9,9 @@ import mars.mips.hardware.memory.MemoryAccessNotice;
 import mars.simulator.*;
    import java.io.*;
    import java.util.*;
-   import java.awt.*;
 
 // KENV 9/8/2004
-import javax.swing.*;
+
 
 
 /*
@@ -662,7 +661,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   // display float (and double, if applicable) in hex
                   out.print(
                            Binary.binaryStringToHexString(
-                                          Binary.intToBinaryString(ivalue)));							
+                                          Binary.numberToBinaryString(ivalue)));
                   if (hasDouble) {
                      out.println("\t"+
                               Binary.binaryStringToHexString(

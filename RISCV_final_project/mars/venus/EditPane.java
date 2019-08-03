@@ -142,7 +142,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          
          showLineNumbers = new JCheckBox("Show Line Numbers");
          showLineNumbers.setFont(new Font("Arial", Font.PLAIN, 11));
-         showLineNumbers.setForeground(new Color(255, 255, 255));
+         showLineNumbers.setForeground(new Color(76, 76, 76));
          showLineNumbers.setOpaque(false);
          showLineNumbers.setToolTipText("If checked, will display line number for each line of text.");
          showLineNumbers.setEnabled(false);
@@ -180,7 +180,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          editInfo.setBorder(null);
          caretPositionLabel = new JLabel();
          caretPositionLabel.setFont(new Font("Arial", Font.PLAIN, 11));
-         caretPositionLabel.setForeground(new Color(255, 255, 255));
+         caretPositionLabel.setForeground(new Color(76, 76, 76));
          caretPositionLabel.setOpaque(false);
          caretPositionLabel.setToolTipText("Tracks the current position of the text editing cursor.");
          displayCaretPosition(new Point());

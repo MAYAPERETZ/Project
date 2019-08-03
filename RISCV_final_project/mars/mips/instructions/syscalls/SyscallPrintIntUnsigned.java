@@ -51,7 +51,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * The value is treated as unsigned.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         SystemIO.printString(
-                    Binary.unsignedIntToIntString(RV32IRegisters.getValue(4)));
+         SystemIO.printString(""+
+                    Binary.toUnsignedNumber(RV32IRegisters.getValue(4)));
       }
    }

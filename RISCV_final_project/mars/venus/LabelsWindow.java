@@ -133,6 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
              catch (NumberFormatException nfe) {
                sortState = 0;
             }
+         setFrameIcon(null);
          columnNames = sortColumnHeadings[sortState]; 
          tableSortComparator = tableSortingComparators[sortState];
          labelsWindow = this;
@@ -506,8 +507,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   columnNames = sortColumnHeadings[sortState];   
                   Globals.getSettings().setLabelSortState(new Integer(sortState).toString());
                   setupTable();
-                  Globals.getGui().getMainPane().getExecutePane().setLabelWindowVisibility(false);
-                  Globals.getGui().getMainPane().getExecutePane().setLabelWindowVisibility(true);		
+                 //Globals.getGui().getMainPane().getExecutePane().setLabelWindowVisibility(false);
+                  //Globals.getGui().getMainPane().getExecutePane().setLabelWindowVisibility(true);
                }
                 public void mouseEntered(MouseEvent e) {}
                 public void mouseExited(MouseEvent e) {}

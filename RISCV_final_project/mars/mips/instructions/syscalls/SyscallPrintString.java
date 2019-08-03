@@ -1,4 +1,5 @@
    package mars.mips.instructions.syscalls;
+   import mars.mips.instructions.GenMath;
    import mars.util.*;
    import mars.mips.hardware.*;
 	import mars.*;
@@ -49,17 +50,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Performs syscall function to print string stored starting at address in $a0.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         int byteAddress = RV32IRegisters.getValue(4);
+         Number byteAddress = RV32IRegisters.getValue(4);
          char ch = 0;
          try
          {
-            ch = (char) Globals.memory.getByte(byteAddress);
+             if (Globals.memory.getByte(byteAddress) instanceof Long)
+                ch = (char) Globals.memory.getByte(byteAddress).longValue();
+             else
+                 ch = (char) Globals.memory.getByte(byteAddress).intValue();
                               // won't stop until NULL byte reached!
             while (ch != 0)
             {
                SystemIO.printString(new Character(ch).toString());
-               byteAddress++;
-               ch = (char) Globals.memory.getByte(byteAddress);
+               GenMath.add(byteAddress, 1);
+                if (Globals.memory.getByte(byteAddress) instanceof Long)
+                    ch = (char) Globals.memory.getByte(byteAddress).longValue();
+                else
+                    ch = (char) Globals.memory.getByte(byteAddress).intValue();
             }
          } 
              catch (AddressErrorException e)

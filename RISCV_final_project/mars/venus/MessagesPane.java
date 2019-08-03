@@ -65,7 +65,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      **/
    
        public MessagesPane() {
-         super("Data Segment", true, false, true, true);
+         super("Data Segment", true, false, false, false);
          setFrameIcon(null);
          this.setMinimumSize(new Dimension(0,0));
          assemble= new JTextArea();

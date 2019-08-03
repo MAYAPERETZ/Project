@@ -48,8 +48,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private static final HashMap segmentBoundMap = new HashMap();
       
       private static final String[] segmentNames = { ".text", ".data" };
-      private static long[] baseAddresses = new long[2];
-      private static long[] limitAddresses = new long[2];
+      private static Number[] baseAddresses = new Number[2];
+      private static Number[] limitAddresses = new Number[2];
    
    
       /**
@@ -90,7 +90,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    		 * @param segments Array of Strings containing segment names (".text", ".data")
    		 * @return Array of int containing corresponding base addresses.
    		 */
-       public static long[] getBaseAddresses(String[] segments) {
+       public static Number[] getBaseAddresses(String[] segments) {
          baseAddresses[0] = Memory.getInstance().getTextTable().getBaseAddress();
          baseAddresses[1] = Memory.getInstance().getDataTable().getBaseAddress();
          return baseAddresses;
@@ -105,7 +105,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    		 * @param segments Array of Strings containing segment names (".text", ".data")
    		 * @return Array of int containing corresponding limit addresses.
    		 */   
-       public static long[] getLimitAddresses(String[] segments) {
+       public static Number[] getLimitAddresses(String[] segments) {
          limitAddresses[0] = Memory.getInstance().getTextTable().getLimitAddress();
          limitAddresses[1] = Memory.getInstance().getDataTable().getLimitAddress();
          return limitAddresses;
