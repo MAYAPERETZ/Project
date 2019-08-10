@@ -2,7 +2,7 @@ package mars.mips.instructions;
 import java.util.function.BiFunction;
 
 
-public class R_M  extends R_type{
+public class R_M  extends R_type.RVI{
 
 	public R_M(String example, String description, String funct3,
 			SimulationCode simCode) {

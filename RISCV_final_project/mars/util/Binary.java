@@ -1,6 +1,7 @@
    package mars.util;
 	import mars.Globals;
     import mars.mips.hardware.MemoryConfigurations;
+    import mars.mips.instructions.GenMath;
     import mars.venus.NumberDisplayBaseChooser;
 
     import java.util.*;
@@ -722,9 +723,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          return false; // default
       }
    
-       public static long signExtend(long val, int operandsLen, int totalBits) {
+       public static Number signExtend(Number val, int operandsLen, int totalBits) {
     	   int shift = totalBits - operandsLen;
-    	   return (val << shift >> shift);
+    	   return GenMath.sra(GenMath.sll(val, shift), shift);
        }
        
        

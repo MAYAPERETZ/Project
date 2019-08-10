@@ -7,7 +7,6 @@ import mars.mips.hardware.memory.Memory;
 import mars.mips.hardware.memory.MemoryAccessNotice;
 import mars.mips.instructions.GenMath;
 import org.pushingpixels.substance.api.UiThreadingViolationException;
-
 import static mars.util.Math2.*;
 import static mars.mips.instructions.GenMath.*;
 import javax.swing.*;
@@ -159,12 +158,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          baseAddressSelector.setSelectedIndex(defaultBaseAddressIndex);
          baseAddressSelector.setToolTipText("Base address for data segment display");
          baseAddressSelector.addActionListener(
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent e) {
-                   // trigger action listener for associated invisible button.
-                     baseAddressButtons[baseAddressSelector.getSelectedIndex()].getActionListeners()[0].actionPerformed(null);
-                  }
-               });
+                 e -> {
+                  // trigger action listener for associated invisible button.
+                    baseAddressButtons[baseAddressSelector.getSelectedIndex()].getActionListeners()[0].actionPerformed(null);
+                 });
          JPanel navButtons = new JPanel(new GridLayout(1,4));
          navButtons.add(prevButton);
          navButtons.add(nextButton);
@@ -172,13 +169,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          features.add(baseAddressSelector);
          asciiDisplayCheckBox = new JCheckBox("ASCII", asciiDisplay);
          asciiDisplayCheckBox.setToolTipText("Display data segment values in ASCII (overrides Hexadecimal Values setting)");
-         asciiDisplayCheckBox.addItemListener( 
-               new ItemListener() {
-                  public void itemStateChanged(ItemEvent e) {
-                     asciiDisplay = (e.getStateChange() == ItemEvent.SELECTED);
-                     DataSegmentWindow.this.updateValues();
-                  }
-               });
+         asciiDisplayCheckBox.addItemListener(
+                 e -> {
+                    asciiDisplay = (e.getStateChange() == ItemEvent.SELECTED);
+                    DataSegmentWindow.this.updateValues();
+                 });
          features.add(asciiDisplayCheckBox);
          addButtonActionListenersAndInitialize();
          for (int i=0; i<choosers.length; i++) {
@@ -733,88 +728,74 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   }
                });
       	
-         stakButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = USER_MODE;
-                  	// get $sp stack pointer, but guard against it having value below data segment
-                     if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-                    	 firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                    			 ,RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER).intValue());
-                     else
-                    	 firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                    			 ,RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER).longValue());
-                     // See comment above for gloButton...
-                     firstAddress = sub(firstAddress, rem(firstAddress, NumberS_PER_ROW));
-                     homeAddress = Globals.memory.getInstance().getStackTable().getBaseAddress();
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               });
+         stakButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = USER_MODE;
+                    // get $sp stack pointer, but guard against it having value below data segment
+                    if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+                       firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
+                                ,RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER).intValue());
+                    else
+                       firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
+                                ,RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER).longValue());
+                    // See comment above for gloButton...
+                    firstAddress = sub(firstAddress, rem(firstAddress, NumberS_PER_ROW));
+                    homeAddress = Globals.memory.getInstance().getStackTable().getBaseAddress();
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       
-         heapButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = USER_MODE;
-                     homeAddress = Globals.memory.heapBaseAddress;
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(homeAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               });
+         heapButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = USER_MODE;
+                    homeAddress = Globals.memory.heapBaseAddress;
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(homeAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       
-         extnButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = USER_MODE;
-                     homeAddress = Globals.memory.externBaseAddress;
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(homeAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               }); 
+         extnButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = USER_MODE;
+                    homeAddress = Globals.memory.externBaseAddress;
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(homeAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       			     			
-         kernButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = KERNEL_MODE;
-                     homeAddress = Globals.memory.getInstance().getKernelDataTable().getBaseAddress();
-                     firstAddress = homeAddress;
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               });
+         kernButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = KERNEL_MODE;
+                    homeAddress = Globals.memory.getInstance().getKernelDataTable().getBaseAddress();
+                    firstAddress = homeAddress;
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       			     			
-         mmioButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = KERNEL_MODE;
-                     homeAddress = Globals.memory.getMemoryMapTable().getBaseAddress();
-                     firstAddress = homeAddress;
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               });      
+         mmioButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = KERNEL_MODE;
+                    homeAddress = Globals.memory.getMemoryMapTable().getBaseAddress();
+                    firstAddress = homeAddress;
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       
-         textButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = USER_MODE;
-                     homeAddress = Globals.memory.getInstance().getTextTable().getBaseAddress();
-                     firstAddress = homeAddress;
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               });      
+         textButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = USER_MODE;
+                    homeAddress = Globals.memory.getInstance().getTextTable().getBaseAddress();
+                    firstAddress = homeAddress;
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       	
-         dataButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = USER_MODE;
-                     homeAddress = Globals.memory.getInstance().getDataTable().getBaseAddress();
-                     firstAddress = homeAddress;
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               });    
+         dataButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = USER_MODE;
+                    homeAddress = Globals.memory.getInstance().getDataTable().getBaseAddress();
+                    firstAddress = homeAddress;
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       			
       	// NOTE: action listeners for prevButton and nextButton are now in their
       	//       specialized inner classes at the bottom of this listing.  DPS 20 July 2008  			

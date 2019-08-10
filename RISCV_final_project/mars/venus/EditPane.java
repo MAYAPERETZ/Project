@@ -8,7 +8,6 @@
    import java.awt.*;
    import java.awt.event.*;
    import javax.swing.undo.*;
-   import java.text.*;
    import java.util.*;
    import java.io.*;
 
@@ -158,23 +157,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	
       	// Listener fires when "Show Line Numbers" check box is clicked.
          showLineNumbers.addItemListener(
-               new ItemListener() {
-                  public void itemStateChanged(ItemEvent e) {
-                     if (showLineNumbers.isSelected()) {
-                        lineNumbers.setText(getLineNumbersList(sourceCode.getDocument()));
-                        lineNumbers.setVisible(true);
-                     } 
-                     else {
-                        lineNumbers.setText("");
-                        lineNumbers.setVisible(false);
-                     }
-                     sourceCode.revalidate(); // added 16 Jan 2012 to assure label redrawn.
-                     Globals.getSettings().setEditorLineNumbersDisplayed(showLineNumbers.isSelected());
-                  	// needed because caret disappears when checkbox clicked
-                     sourceCode.setCaretVisible(true); 
-                     sourceCode.requestFocusInWindow();
-                  }
-               });
+                 e -> {
+                    if (showLineNumbers.isSelected()) {
+                       lineNumbers.setText(getLineNumbersList(sourceCode.getDocument()));
+                       lineNumbers.setVisible(true);
+                    }
+                    else {
+                       lineNumbers.setText("");
+                       lineNumbers.setVisible(false);
+                    }
+                    sourceCode.revalidate(); // added 16 Jan 2012 to assure label redrawn.
+                    Globals.getSettings().setEditorLineNumbersDisplayed(showLineNumbers.isSelected());
+                     // needed because caret disappears when checkbox clicked
+                    sourceCode.setCaretVisible(true);
+                    sourceCode.requestFocusInWindow();
+                 });
       
          JPanel editInfo = new JPanel(new BorderLayout());
          editInfo.setBorder(null);
@@ -275,7 +272,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  Set the editing status for this EditPane's associated document.
    	 *  For the argument, use one of the constants from class FileStatus.
    	 *  
-   	 * @param FileStatus the status constant from class FileStatus
+   	 * @param fileStatus the status constant from class FileStatus
    	 */   
       public void setFileStatus(int fileStatus) {
          this.fileStatus.setFileStatus(fileStatus);
@@ -436,7 +433,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	/**
    	 *  enable or disable checkbox that controls display of line numbers 
    	 *
-   	 *  @param enable True to enable box, false to disable.
+   	 *  @param enabled True to enable box, false to disable.
    	 */   	 
       public void setShowLineNumbersEnabled(boolean enabled) {
          showLineNumbers.setEnabled(enabled);

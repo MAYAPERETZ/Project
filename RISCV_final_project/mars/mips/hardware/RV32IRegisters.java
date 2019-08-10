@@ -81,9 +81,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @param val The desired value for the register.
    	  **/
    	  
-       public static Number updateRegister(long num, Number val){
+       public static Number updateRegister(Number num, Number val){
            Number old = 0;
-           int num2 = (int)num;
+           int num2 = num.intValue();
            if(num2 > 0 && num2 < 32) {
                     old = ((Globals.getSettings().getBackSteppingEnabled())
                           ? Globals.program.getBackStepper().addRegisterFileRestore(num2, regFile.get(num2).setValue(val))

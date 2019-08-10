@@ -1,11 +1,9 @@
-   package mars.venus;
-   import mars.*;
-   import java.awt.*;
-   import java.awt.event.*;
-import java.util.Observable;
+package mars.venus;
 
+import java.awt.event.*;
+import java.util.Observable;
 import javax.swing.*;
-   import javax.swing.undo.*;
+
 	
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar

@@ -1,4 +1,5 @@
 package mars.mips.hardware;
+import mars.mips.instructions.R_type;
 import mars.util.*;
 import mars.Globals;
 import mars.ProgramStatement;
@@ -82,7 +83,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	// need to complete
     	
     	
-    	static enum AccruedExceptionFlagEncoding{
+    	enum AccruedExceptionFlagEncoding{
     		NV,
     		DZ,
     		OF,
@@ -96,69 +97,41 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         	NEGATIVE_NORMAL,
         	NEGATIVE_SUBNORMAL,
         	NEGATIVE_0,
-        	POSITIZE_0,
-        	POSITIZE_SUBNORMAL,
-        	POSITIZE_NORMAL,
-        	POSITIZE_INF,
+			 POSITIVE_0,
+			 POSITIVE_SUBNORMAL,
+			 POSITIVE_NORMAL,
+			 POSITIVE_INF,
         	sNan,
         	qNan
     	}
     	
-      private static ArrayList<Register> registers = new ArrayList<Register>(
-      		Arrays.asList(
-           new Register("ft0", 0, 0),  new Register("ft1", 1, 0),
-         	new Register("ft2", 2, 0),  new Register("ft3", 3, 0),
-         	new Register("ft4", 4, 0),  new Register("ft5", 5, 0),
-         	new Register("ft6", 6, 0),  new Register("ft7", 7, 0),
-         	new Register("fs0", 8, 0),  new Register("fs1", 9, 0),
-         	new Register("fa0", 10, 0),new Register("fa1", 11, 0), 
-         	new Register("fa2", 12, 0),new Register("fa3", 13, 0),
-         	new Register("fa4", 14, 0),new Register("fa5", 15, 0),
-         	new Register("fa6", 16, 0),new Register("fa7", 17, 0),
-         	new Register("fs2", 18, 0),new Register("fs3", 19, 0),
-         	new Register("fs4", 20, 0),new Register("fs5", 21, 0),
-         	new Register("fs6", 22, 0),new Register("fs7", 23, 0),
-         	new Register("fs8", 24, 0),new Register("fs9", 25, 0),
-         	new Register("fs10", 26, 0),new Register("fs11", 27, 0),
-         	new Register("ft8", 28, 0),new Register("ft9", 29, 0),
-         	new Register("ft10", 30, 0),new Register("ft11", 31, 0)
-           ));
-   	// The 8 condition flags will be stored in bits 0-7 for flags 0-7.
-      private static Register fcsr = new Register("fcsr",32, 0);	 
-    //  private static int numConditionFlags = 8;
-   	
-   	/**
-   	  *  Method for displaying the register values for debugging.
-   	  **/	 
-   		 
-    /*   public static void showRegisters(){
-         for (int i=0; i< registers.size(); i++){
-          
-            System.out.println("Name: " + registers.get(i).getName());
-            System.out.println("Number: " + registers.get(i).getNumber());
-            System.out.println("Value: " + registers.get(i).getValue());	
-            System.out.println(""); 
-         }
-      }
-      */
-   	/**
-   	  *  Sets the value of the FPU register given to the value given.
-   	  *   @param reg Register to set the value of.
-   	  *   @param val The desired float value for the register.
-   	  **/
-   	
-    //   public static void setRegisterToFloat(String reg, float val){
-    //     setRegister(getRegisterNumber(reg), val);
-     // }
-   
+      private static ArrayList<Register.FPRegister> registers = new ArrayList<>(
+			  Arrays.asList(
+					  new Register.FPRegister("ft0", 0, 0), new Register.FPRegister("ft1", 1, 0),
+					  new Register.FPRegister("ft2", 2, 0), new Register.FPRegister("ft3", 3, 0),
+					  new Register.FPRegister("ft4", 4, 0), new Register.FPRegister("ft5", 5, 0),
+					  new Register.FPRegister("ft6", 6, 0), new Register.FPRegister("ft7", 7, 0),
+					  new Register.FPRegister("fs0", 8, 0), new Register.FPRegister("fs1", 9, 0),
+					  new Register.FPRegister("fa0", 10, 0), new Register.FPRegister("fa1", 11, 0),
+					  new Register.FPRegister("fa2", 12, 0), new Register.FPRegister("fa3", 13, 0),
+					  new Register.FPRegister("fa4", 14, 0), new Register.FPRegister("fa5", 15, 0),
+					  new Register.FPRegister("fa6", 16, 0), new Register.FPRegister("fa7", 17, 0),
+					  new Register.FPRegister("fs2", 18, 0), new Register.FPRegister("fs3", 19, 0),
+					  new Register.FPRegister("fs4", 20, 0), new Register.FPRegister("fs5", 21, 0),
+					  new Register.FPRegister("fs6", 22, 0), new Register.FPRegister("fs7", 23, 0),
+					  new Register.FPRegister("fs8", 24, 0), new Register.FPRegister("fs9", 25, 0),
+					  new Register.FPRegister("fs10", 26, 0), new Register.FPRegister("fs11", 27, 0),
+					  new Register.FPRegister("ft8", 28, 0), new Register.FPRegister("ft9", 29, 0),
+					  new Register.FPRegister("ft10", 30, 0), new Register.FPRegister("ft11", 31, 0)
+			  ));
+      private static Register fcsr = new Register("fcsr",32, 0);
+
    
    	/**
    	  *  Sets the value of the FPU register given to the value given.
    	  *   @param reg Register to set the value of.
    	  *   @param val The desired float value for the register.
    	  **/
-      
-       
    	  
        public static void setRegister(int reg, float val){
          if(reg >= 0 && reg < registers.size()) {
@@ -167,33 +140,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             registers.get(reg).setValue(longVal);
          }
       }
-   
-   	/**
-   	  *  Sets the value of the FPU register given to the 32-bit
-   	  *  pattern given by the int parameter.
-   	  *   @param reg Register to set the value of.
-   	  *   @param val The desired int bit pattern for the register.
-   	  **/
-   	
-     //  public static void setRegisterToInt(String reg, int val){
-     //    setRegisterToInt(getRegisterNumber(reg), val);
-     // }
-   
-   
-   	/**
-   	  *  Sets the value of the FPU register given to the 32-bit
-   	  *  pattern given by the int parameter.
-   	  *   @param reg Register to set the value of.
-   	  *   @param val The desired int bit pattern for the register.
-   	  **/
-   	  
-      // public static void setRegisterToInt(int reg, long val){
-      //   if(reg >= 0 && reg < registers.size()) {
-      //      registers.get(reg).setValue(val);
-      //   }
-     // }
-   
-   
+
+
    	/**
    	  *  Sets the value of the FPU register given to the double value given.  The register
    	  *  must be even-numbered, and the low order 32 bits are placed in it.  The high order
@@ -203,29 +151,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
    	  **/
    	
-       public static void setRegister(int reg, double val) 
-                                    {
-         //if (reg % 2 != 0) {
-        //    throw new InvalidRegisterAccessException();
-        // } 
+       public static void setRegister(int reg, double val){
          long bits = Double.doubleToRawLongBits(val); 
          registers.get(reg).setValue(bits);  // high order 32 bits
       }
-   
-   
-   	/**
-   	  *  Sets the value of the FPU register given to the double value given.  The register
-   	  *  must be even-numbered, and the low order 32 bits are placed in it.  The high order
-   	  *  32 bits are placed in the (odd numbered) register that follows it.
-   	  *   @param reg Register to set the value of.
-   	  *   @param val The desired double value for the register.
-   	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
-   	  **/   
-      // public static void setRegisterPairToDouble(String reg, double val) 
-      //										throws InvalidRegisterAccessException {
-       //  setRegisterToDouble(getRegisterNumber(reg), val);
-     // }
-   
+
    	
    	/**
    	  *  Sets the value of the FPU register pair given to the long value containing 64 bit pattern
@@ -237,30 +167,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
    	  **/
    	
-       public static void setRegister(int reg, long val) 
-                                    {
-        // if (reg % 2 != 0) {
-        //    throw new InvalidRegisterAccessException();
-         //} 
-       // registers.get(reg+1).setValue(Binary.highOrderLongToInt(val));  // high order 32 bits
+       public static void setRegister(int reg, long val) {
         registers.get(reg).setValue(val); // low order 32 bits
       }
-   
-   
-   	/**
-   	  *  Sets the value of the FPU register pair given to the long value containing 64 bit pattern
-   	  *  given.  The register
-   	  *  must be even-numbered, and the low order 32 bits from the long are placed in it.  The high order
-   	  *  32 bits from the long are placed in the (odd numbered) register that follows it.
-   	  *   @param reg Register to set the value of.  Must be even register of even/odd pair.
-   	  *   @param val The desired long value containing the 64 bits for the register pair.
-   	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
-   	  **/   
-      // public static void setRegisterPairToLong(String reg, long val) 
-    //   										throws InvalidRegisterAccessException {
-     //    setRegisterPairToLong(getRegisterNumber(reg), val);
-     // }
-   
+
    
    	
    	/**
@@ -269,11 +179,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @return The  float value stored by that register.
    	  **/
    	
-       public static float getFloatValue(int reg){
+       public static Float getFloatValue(Number reg){
          float result = 0F;
-         if(reg >= 0 && reg < registers.size()) {
-            result = Float.intBitsToFloat((int) registers.get(reg).getValue());
-         }
+         if(reg.intValue() >= 0 && reg.intValue() < registers.size())
+            result = Float.intBitsToFloat(registers.get(reg.intValue()).getValue().intValue());
          return result;
       }
    	
@@ -284,50 +193,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @return The  float value stored by that register.
    	  **/
    	  		
-       public static float getFloatValue(String reg) {
+       public static float getFloatValueString(String reg) {
          return getFloatValue(getRegisterNumber(reg));
       }
-   
-   
-   	/**
-   	  *  Gets the 32-bit int bit pattern stored in the given FPU register.
-   	  *   @param reg Register to get the value of.
-   	  *   @return The int bit pattern stored by that register.
-   	  **/
-   	
-    /*   private static long getIntFromRegister(int reg){
-         long result = 0;
-         if(reg >= 0 && reg < registers.size()) {
-            result =  registers.get(reg).getValue();
-         }
-         return result;
-      }
-   	*/
-   	
-   	/**
-   	  *  Gets the 32-bit int bit pattern stored in the given FPU register.
-   	  *   @param reg Register to get the value of.
-   	  *   @return The int bit pattern stored by that register.
-   	  **/
-   	  		
-    //    public static long getIntFromRegister(String reg) {
-    //     return getIntFromRegister(getRegisterNumber(reg));
-    //  }
-   	
+
    
    	/**
    	  *  Gets the double value stored in the given FPU register.  The register
    	  *  must be even-numbered.
    	  *   @param reg Register to get the value of. Must be even number of even/odd pair.
-   	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
-   	  **/
+	 **/
    	
-       public static double getDoubleValue(int reg) 
-                                    throws InvalidRegisterAccessException {
-        // if (reg % 2 != 0) {
-        //    throw new InvalidRegisterAccessException();
-        // } 
-       //  long bits = Binary.twoIntsToLong((int)registers.get(reg+1).getValue(),(int)registers.get(reg).getValue());
+       public static double getDoubleValue(int reg) {
          return Double.longBitsToDouble(registers.get(reg).getValue().longValue());
       }
    
@@ -353,14 +230,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
    	  **/
    	
-       public static long getLongValue(Number reg)
-                                     {
-       //  if (reg % 2 != 0) {
-       //     throw new InvalidRegisterAccessException();
-       //  } 
+       public static long getLongValue(Number reg){
          return registers.get(reg.intValue()).getValue().longValue();
       }
-   
    
    	/**
    	  *  Gets the double value stored in the given FPU register.  The register
@@ -369,8 +241,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @throws InvalidRegisterAccessException if register ID is invalid or odd-numbered.
    	  **/
    	   
-       public static long getLongValue(String reg)
-                                    {
+       public static long getLongValue(String reg){
          return getLongValue(getRegisterNumber(reg));
       }  
    
@@ -382,15 +253,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @param num FPU register to set the value of.
    	  *   @param val The desired int value for the register.
    	  **/
-   	  
-       public static Number updateRegister(Number num, long val) {
+
+       public static Number updateRegister(Number num, Number val) {
          Number old = 0;
          int num2 = num.intValue();
-        
+
          old = (Globals.getSettings().getBackSteppingEnabled())
                         ? Globals.program.getBackStepper().addCoprocessor1Restore(num2 , registers.get(num2).setValue(val).longValue())
                   		: registers.get(num2).setValue(val).longValue();
-
+		 registers.get(num2).setType(val);
          return old;
       }
  
@@ -409,15 +280,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            float floatVal = Float.intBitsToFloat(val.intValue());        
            
            if(Coprocessor1.isUnderflow(floatVal, Coprocessor1.getFclass(floatVal))) {
-          	 throw new FloatingPointException(statement,"Floating-point Arithmetic Underflow :", 
+          	 throw new FloatingPointException(statement,"Floating-point Arithmetic Underflow :",
                		Exceptions.FLOATING_POINT_UNDERFLOW);
            }
            else if (Float.isInfinite(floatVal)) {
-          	 throw new FloatingPointException(statement,"Floating-point Arithmetic Overflow :", 
+          	 throw new FloatingPointException(statement,"Floating-point Arithmetic Overflow :",
           		Exceptions.FLOATING_POINT_OVERFLOW);
            }
            else if (Float.isNaN(floatVal)) {
-        	   throw new FloatingPointException(statement,"Floating-point Invalid Operation :", 
+        	   throw new FloatingPointException(statement,"Floating-point Invalid Operation :",
                  		Exceptions.FLOATING_POINT_INVALID_OP);
            }
            // need to implemtent the inexact exception, don't know how...
@@ -462,7 +333,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  *   @return The set of registers.
    	  **/
    	
-       public static ArrayList<Register> getRegisters(){
+       public static ArrayList<Register.FPRegister> getRegisters(){
          return registers;
       }
       
@@ -473,8 +344,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	  **/
   
    
-       public static Register getRegister(String rName) {
-           Register reg = null;
+       public static Register.FPRegister getRegister(String rName) {
+		   Register.FPRegister reg;
            if (rName.charAt(0) == 'f' && Character.isDigit(rName.charAt(0))) {
           	
           	 try {
@@ -509,7 +380,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static void resetRegisters(){
          for(int i=0; i < registers.size(); i++)
             registers.get(i).resetValue();
-       //  clearConditionFlags();
          fcsr.resetValue();
       }
       
@@ -519,9 +389,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  will add the given Observer to each one.  
    	 */
        public static void addRegistersObserver(Observer observer) {
-         for (int i=0; i<registers.size(); i++) {
+         for (int i=0; i<registers.size(); i++)
             registers.get(i).addObserver(observer);
-         }
          fcsr.addObserver(observer);
       }
 
@@ -533,9 +402,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static void deleteRegistersObserver(Observer observer) {
          for (int i=0; i<registers.size(); i++) 
             registers.get(i).deleteObserver(observer);
-     
          fcsr.deleteObserver(observer);
-
       }
       
       public static int getFclass(Float value) {
@@ -543,14 +410,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  if(value == Float.NEGATIVE_INFINITY)
     		  return fclass.NEGATIVE_INF.ordinal();
     	  else if(value == Float.POSITIVE_INFINITY)
-    		  return fclass.POSITIZE_INF.ordinal();
+    		  return fclass.POSITIVE_INF.ordinal();
     	  else if(value == 0)
-    		  return fclass.POSITIZE_0.ordinal();
+    		  return fclass.POSITIVE_0.ordinal();
     	  else if((Float.floatToIntBits(value)&(~SIGN_MASK_32)) == 0)
     		  return fclass.NEGATIVE_0.ordinal();
     	  else if(0 < value &&
     			  value < Float.MIN_NORMAL) 
-    		  return fclass.POSITIZE_SUBNORMAL.ordinal();
+    		  return fclass.POSITIVE_SUBNORMAL.ordinal();
     	  else if(value < 0 &&
     			  value > (-Float.MIN_NORMAL)) 
     		  return fclass.NEGATIVE_SUBNORMAL.ordinal();
@@ -560,7 +427,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  }
     	  
     	  return ((Float.floatToIntBits(value)&SIGN_MASK_32) == 0) ?
-    			  fclass.POSITIZE_NORMAL.ordinal() : fclass.NEGATIVE_NORMAL.ordinal();
+    			  fclass.POSITIVE_NORMAL.ordinal() : fclass.NEGATIVE_NORMAL.ordinal();
     	  
       }
       
@@ -569,14 +436,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  if(value == Double.NEGATIVE_INFINITY)
     		  return fclass.NEGATIVE_INF.ordinal();
     	  else if(value == Double.POSITIVE_INFINITY)
-    		  return fclass.POSITIZE_INF.ordinal();
+    		  return fclass.POSITIVE_INF.ordinal();
     	  else if(value == 0)
-    		  return fclass.POSITIZE_0.ordinal();
+    		  return fclass.POSITIVE_0.ordinal();
     	  else if((Double.doubleToLongBits(value)&(~SIGN_MASK_64)) == 0)
     		  return fclass.NEGATIVE_0.ordinal();
     	  else if(0 < value &&
     			  value < Double.MIN_NORMAL) 
-    		  return fclass.POSITIZE_SUBNORMAL.ordinal();
+    		  return fclass.POSITIVE_SUBNORMAL.ordinal();
     	  else if(value < 0 &&
     			  value > (-Double.MIN_NORMAL)) 
     		  return fclass.NEGATIVE_SUBNORMAL.ordinal();
@@ -586,111 +453,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  }
     	  
     	  return ((Double.doubleToLongBits(value)&SIGN_MASK_64) == 0) ?
-    			  fclass.POSITIZE_NORMAL.ordinal() : fclass.NEGATIVE_NORMAL.ordinal();
+    			  fclass.POSITIVE_NORMAL.ordinal() : fclass.NEGATIVE_NORMAL.ordinal();
     	  
       }
-      
-      
-   	
-   	/**
-   	 *  Set condition flag to 1 (true).
-   	 *
-   	 *  @param flag condition flag number (0-7)
-   	 *  @return previous flag setting (0 or 1)
-   	 */
-    /*   public static int setConditionFlag(int flag) {
-         int old = 0;
-         if (flag >= 0 && flag < numConditionFlags) {
-            old = getConditionFlag(flag);
-            condition.setValue(Binary.setBit((int) condition.getValue(),flag));
-            if (Globals.getSettings().getBackSteppingEnabled())
-               if (old==0) {
-                  Globals.program.getBackStepper().addConditionFlagClear(flag);
-               } 
-               else {
-                  Globals.program.getBackStepper().addConditionFlagSet(flag);
-               }
-         }
-         return old;
-      }
-     
-     (/
-   
-   	/**
-   	 *  Set condition flag to 0 (false).
-   	 *
-   	 *  @param flag condition flag number (0-7)
-   	 *  @return previous flag setting (0 or 1)
-   	 */
-      /*
-       public static int clearConditionFlag(int flag) {
-         int old = 0;
-         if (flag >= 0 && flag < numConditionFlags) {
-            old = getConditionFlag(flag);
-            condition.setValue(Binary.clearBit((int) condition.getValue(),flag));
-            if (Globals.getSettings().getBackSteppingEnabled())
-               if (old==0) {
-                  Globals.program.getBackStepper().addConditionFlagClear(flag);
-               } 
-               else {
-                  Globals.program.getBackStepper().addConditionFlagSet(flag);
-               }
-         }
-         return old;
-      }
-   
-   	*/
-   	
-   	/**
-   	 *  Get value of specified condition flag (0-7).
-   	 *
-   	 *  @param flag condition flag number (0-7)
-   	 *  @return 0 if condition is false, 1 if condition is true
-   	 */
-      
-   /*   public static int getConditionFlag(int flag) {
-         if (flag < 0 || flag >= numConditionFlags) 
-            flag = 0;
-         return Binary.bitValue(condition.getValue(), flag);
-      }		
-   	
-   	*/
-   	/**
-   	 *  Get array of condition flags (0-7).
-   	 *
-   	 *  @return array of int condition flags
-   	 */
-     /*  public static int getConditionFlags() {
-         return (int) condition.getValue();
-      }	
-   	*/
-   	
-   	/**
-   	 *  Clear all condition flags (0-7).
-   	 *
-   	 */
-     /*  public static void clearConditionFlags() {
-         condition.setValue(0);  // sets all 32 bits to 0.
-      }		
-   	*/
-      /**
-   	 *  Set all condition flags (0-7).
-     * @throws FloatingPointException 
-   	 *
-   	 */
-     /*  public static void setConditionFlags() {
-         condition.setValue(-1);  // sets all 32 bits to 1.
-      }	
-   	
-      /**
-   	 *  Get count of condition flags.
-   	 *
-   	 *  @return number of condition flags
-   	 */
-     /*  public static int getConditionFlagCount() {
-         return numConditionFlags;        
-      }	
-     */  
       
       public synchronized static Register getFCSR() {
     	  return fcsr;
@@ -701,22 +466,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
       
       
-      private static int getRoudingMode() throws FloatingPointException {
-  //  	  if((int)(fcsr.getValue()&0x000000e0) > 4 || (int)(fcsr.getValue()&0x000000e0) < 0)
- //   		  throw new FloatingPointException();
+      private static int getRougingMode() {
     	  return (fcsr.getValue().intValue()&0x000000e0);
       }
       
       public static boolean isUnderflow(float value, int classification) {
     	  return (Float.isFinite(value) && classification != fclass.NEGATIVE_NORMAL.ordinal() 
-    			  && classification != fclass.POSITIZE_NORMAL.ordinal() && !Float.isNaN(value)
+    			  && classification != fclass.POSITIVE_NORMAL.ordinal() && !Float.isNaN(value)
     			  && value != 0);
       }
       
       
-      public static int round(float value) throws FloatingPointException {
+      public static int round(float value) {
 
-    	  switch (mars.mips.instructions.R_type.WithRmFeild.rmMode) {
+    	  switch (R_type.WithRmField.rmMode) {
     	  case RNE:
     		  Float.floatToRawIntBits(value);
     	  case RTZ: 
@@ -728,48 +491,40 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  case RMM:
     		  return roundToNearestMM(value);
     	  case DYNAMIC:
-    		  return getRoudingMode();
+    		  return getRougingMode();
     		  
     	  }
 		  return Float.floatToRawIntBits(value);
       }
-      
-      
-      
-      private static int floor(float floatValue) {
-        //  float floatValue = Float.intBitsToFloat(Coprocessor1.getIntValue(regNum));	
-    	 /* 
-          int floor = (int) Math.floor(floatValue);
 
-          if ( Float.isInfinite(floatValue)
-               || floatValue < (float) Integer.MIN_VALUE 
-          	  || floatValue > (float) Integer.MAX_VALUE ) {							
-             floor = Integer.MAX_VALUE;
-          }
-          return floor;
-         // updateRegister(regNum, floor);
-          * 
-          * 
-          */
-    	  
-    	  BigDecimal round = new BigDecimal(Float.floatToRawIntBits(floatValue));
+	public static long round(double value) {
+
+		switch (R_type.WithRmField.rmMode) {
+			case RNE:
+				Double.doubleToRawLongBits(value);
+			case RTZ:
+				return truncate(value);
+			case RDN:
+				return floor(value);
+			case RUP:
+				return ceil(value);
+			case RMM:
+				return roundToNearestMM(value);
+			case DYNAMIC:
+				return getRougingMode();
+
+		}
+		return Double.doubleToRawLongBits(value);
+	}
+      
+      
+      private static int floor(float value) {
+    	  BigDecimal round = new BigDecimal(Float.floatToRawIntBits(value));
     	  round.setScale(round.scale(), RoundingMode.FLOOR);
     	  return round.intValueExact();
       }
-      
-      
-      private static int ceil(float value) {
-        /*  float floatValue = Float.intBitsToFloat(Coprocessor1.getIntValue(regNum));	
-          int ceiling = (int) Math.ceil(floatValue);
 
-          if (  Float.isInfinite(floatValue)
-               || floatValue < (float) Integer.MIN_VALUE 
-          	  || floatValue > (float) Integer.MAX_VALUE ) {							
-             ceiling = Integer.MAX_VALUE;
-          }
-          updateRegister(regNum, ceiling);
-      	*/
-    	  
+      private static int ceil(float value) {
     	  BigDecimal round = new BigDecimal(Float.floatToRawIntBits(value));
     	  round.setScale(round.scale(), RoundingMode.CEILING);
     	  return round.intValueExact();
@@ -782,23 +537,33 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
       
       private static int truncate(float floatValue) {
-          
-    	  /*
-    	  int truncate = (int) floatValue;// Typecasting will round toward zero, the correct action
-       
-          if ( Float.isNaN(floatValue) 
-               || Float.isInfinite(floatValue)
-               || floatValue < (float) Integer.MIN_VALUE 
-          	  || floatValue > (float) Integer.MAX_VALUE ) {							
-             truncate = Integer.MAX_VALUE;
-          }
-          updateRegister(regNum, truncate);
-          
-          */
-
     	  BigDecimal round = new BigDecimal(Float.floatToRawIntBits(floatValue));
     	  round.setScale(round.scale(), RoundingMode.DOWN);
     	  return round.intValueExact();
-    	  
       }
-   }
+
+	private static long floor(double value) {
+		BigDecimal round = new BigDecimal(Double.doubleToRawLongBits(value));
+		round.setScale(round.scale(), RoundingMode.FLOOR);
+		return round.longValueExact();
+	}
+
+	private static long ceil(double value) {
+		BigDecimal round = new BigDecimal(Double.doubleToRawLongBits(value));
+		round.setScale(round.scale(), RoundingMode.CEILING);
+		return round.longValueExact();
+	}
+
+	private static long roundToNearestMM(double value) {
+		BigDecimal round = new BigDecimal(Double.doubleToRawLongBits(value));
+		round.setScale(round.scale(), RoundingMode.HALF_UP);
+		return round.longValueExact();
+	}
+
+	private static long truncate(double floatValue) {
+		BigDecimal round = new BigDecimal(Double.doubleToRawLongBits(floatValue));
+		round.setScale(round.scale(), RoundingMode.DOWN);
+		return round.longValueExact();
+	}
+
+    }

@@ -93,15 +93,15 @@ public class I_type extends BasicInstruction{
 				Function< Number, Number> x) {
 			this(example, description, operMask, x, null);
 		}
-	
-	
-		@FunctionalInterface
-		interface Function<T extends Number, R extends Number>{
-			R apply(T t) throws AddressErrorException;
-			default <V extends Number> Function<V, R> compose(Function<? super V, ? extends T> before) {
-				java.util.Objects.requireNonNull(before);
-				return (V v) -> apply(before.apply(v));
-			}
+
+	}
+
+	@FunctionalInterface
+	interface Function<T extends Number, R extends Number>{
+		R apply(T t) throws AddressErrorException;
+		default <V extends Number> Function<V, R> compose(Function<? super V, ? extends T> before) {
+			java.util.Objects.requireNonNull(before);
+			return (V v) -> apply(before.apply(v));
 		}
 	}
 }

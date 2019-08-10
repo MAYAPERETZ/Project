@@ -1,8 +1,6 @@
    package mars.mips.hardware;
-   import mars.*;
-import mars.venus.NumberDisplayBaseChooser;
 
-import java.util.*;
+   import java.util.*;
 
 /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -41,6 +39,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public class Register extends Observable {
       private String name;
       private int number;
+
       Number resetValue;
    	// volatile should be enough to allow safe multi-threaded access  
    	// w/o the use of synchronized methods.  getValue and setValue
@@ -84,79 +83,104 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
       /**
    	  *  Returns the value of the Register.  Observers are not notified.
-		  *  Added for release 3.8.
+       *  *  Added for release 3.8.
    	  *   @return value The value of the Register.
    	  */
-   	  
        public synchronized Number getValueNoNotify(){
          return value;
       }
-		
-   
-   	/**
-   	  *  Returns the reset value of the Register.
-   	  *   @return The reset (initial) value of the Register.
-   	  */
-   	  
+
+      /**
+       *  Returns the reset value of the Register.
+       *   @return The reset (initial) value of the Register.
+       */
        public Number getResetValue(){
          return resetValue;
       }   	
-   	/**
-   	  *  Returns the number of the Register.
-   	  *   @return number The number of the Register.
-   	  */
-   	  
+
+
+      /**
+       *  Returns the number of the Register.
+       *   @return number The number of the Register.
+       */
        public int getNumber(){
          return number;
       }
-      
-   	/**
-   	  *  Sets the value of the register to the val passed to it.
-		  *  Observers are notified of the WRITE operation.  
-   	  *   @param val Value to set the Register to.
-   	  *   @return previous value of register
-   	  */
-   	  
-  /*     public synchronized long setValue(long val){
-         long old = value;
-         value = val;
-         notifyAnyObservers(AccessNotice.WRITE);
-         return old;
-      }
-    */   
-       public synchronized Number setValue(Number val){
+
+
+      /**
+       *  Sets the value of the register to the val passed to it.
+       *  Observers are notified of the WRITE operation.
+       *  @param val Value to set the Register to.
+       *   @return previous value of register
+       */
+      public synchronized Number setValue(Number val){
            Number old = value;
            value = (val instanceof Long) ? val.longValue() : val.intValue();
            notifyAnyObservers(AccessNotice.WRITE);
            return old;
         }
-   	
-   	/**
-   	  *  Resets the value of the register to the value it was constructed with.
-   	  *  Observers are not notified.  
-   	  */
-   	  
+
+
+
+       /**
+        *  Resets the value of the register to the value it was constructed with.
+        *  Observers are not notified.
+        */
        public synchronized void resetValue(){
-         value = resetValue;
-      }
-   	
-   	/**
-   	 *  Change the register's reset value; the value to which it will be
-   	 *  set when <tt>resetValue()</tt> is called.
-   	 */
-   	 
+           value = resetValue;
+       }
+
+
+       /**
+   	    *  Change the register's reset value; the value to which it will be
+   	    *  set when <tt>resetValue()</tt> is called.
+   	    */
+
        public synchronized void changeResetValue(Number reset) {
-         resetValue = reset;
-      }
-   
+           resetValue = reset;
+       }
+
+
    //
    // Method to notify any observers of register operation that has just occurred.
    //
        private void notifyAnyObservers(int type) {
-         if (this.countObservers() > 0){// && Globals.program != null) && Globals.program.inSteppedExecution()) {
-            this.setChanged();
-            this.notifyObservers(new RegisterAccessNotice(type, this.name));
-         } 
-      } 
+           if (this.countObservers() > 0){// && Globals.program != null) && Globals.program.inSteppedExecution()) {
+               // this.setChanged();
+               this.notifyObservers(new RegisterAccessNotice(type, this.name));
+           }
+       }
+
+
+       public static class FPRegister extends Register{
+
+           public static enum Type{
+               FLOAT,
+               DOUBLE
+           }
+           private Type type;
+
+           /**
+            * Creates a new register with specified name, number, and value.
+            *
+            * @param n   The name of the register.
+            * @param num The number of the register.
+            * @param val The inital (and reset) value of the register.
+            */
+
+           public FPRegister(String n, int num, Number val) {
+               super(n, num, val);
+               setType(val);
+           }
+
+           public final synchronized void setType(Number val){
+                   type = (val instanceof Integer || val instanceof Float)? Type.FLOAT : Type.DOUBLE;
+           }
+
+           public synchronized Type getType(){
+               return type;
+           }
+       }
  	
    }

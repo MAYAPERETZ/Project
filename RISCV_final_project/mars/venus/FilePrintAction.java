@@ -1,11 +1,10 @@
    package mars.venus;
-   import mars.*;
-   import java.awt.*;
-   import java.awt.event.*;
+
    import javax.swing.*;
-   import java.io.*;
-   import java.awt.print.*;
-   import java.util.*;
+   import java.awt.event.ActionEvent;
+   import java.io.BufferedReader;
+   import java.io.IOException;
+   import java.io.StringReader;
  
  /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar

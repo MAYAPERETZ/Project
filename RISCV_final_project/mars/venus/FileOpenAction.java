@@ -1,13 +1,10 @@
    package mars.venus;
-   import mars.*;
-   import mars.util.*;
-   import java.util.ArrayList;
-   import java.awt.*;
-   import java.awt.event.*;
+
    import javax.swing.*;
-   import javax.swing.filechooser.FileFilter;
-   import java.io.*;
-   import java.beans.*;
+   import java.awt.event.ActionEvent;
+   import java.beans.PropertyChangeListener;
+   import java.io.File;
+   import java.util.ArrayList;
 	
 	/*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar

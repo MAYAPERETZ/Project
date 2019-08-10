@@ -1,13 +1,10 @@
    package mars.venus;
 	import mars.*;
 	import mars.simulator.*;
-import mars.util.Math2;
-import mars.mips.hardware.*;
-import mars.mips.instructions.GenMath;
-
-import java.awt.*;
-   import java.awt.event.*;
-   import javax.swing.*;
+	import mars.mips.hardware.*;
+	import mars.mips.instructions.GenMath;
+	import java.awt.event.*;
+	import javax.swing.*;
 	
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar

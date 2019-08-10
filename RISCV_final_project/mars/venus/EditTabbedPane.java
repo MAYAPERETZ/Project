@@ -1,13 +1,10 @@
    package mars.venus;
    import mars.mips.hardware.*;
-import mars.util.*;
+   import mars.util.*;
    import mars.*;
    import javax.swing.*;
    import javax.swing.event.*;
    import java.awt.*;
-   import java.awt.event.*;
-   import javax.swing.undo.*;
-   import java.text.*;
    import java.util.*;
    import java.io.*;
    import java.beans.PropertyChangeListener;

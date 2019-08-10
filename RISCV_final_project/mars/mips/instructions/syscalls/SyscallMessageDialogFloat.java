@@ -1,7 +1,5 @@
    package mars.mips.instructions.syscalls;
-   import mars.util.*;
    import mars.mips.hardware.*;
-	import mars.simulator.*;
    import mars.*;
 import javax.swing.JOptionPane;
 
@@ -76,7 +74,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
             // Display the dialog.
             JOptionPane.showMessageDialog(null,
-                  message + Float.toString(  Coprocessor1.getFloatValue("$f12") ),
+                  message + Float.toString(  Coprocessor1.getFloatValueString("$f12") ),
                   null,
                   JOptionPane.INFORMATION_MESSAGE );
             

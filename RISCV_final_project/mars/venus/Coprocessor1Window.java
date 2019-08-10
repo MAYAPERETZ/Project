@@ -45,7 +45,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     
     public class Coprocessor1Window extends JPanel implements Observer { 
       private static JTable table;
-      private static ArrayList<Register> registers;
+      private static ArrayList<Register.FPRegister> registers;
       private Object[][] tableData;
       private boolean highlighting;
       private int highlightRow;
@@ -73,8 +73,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          table.getColumnModel().getColumn(NUMBER_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.RIGHT));
          table.getColumnModel().getColumn(VALUE_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.RIGHT));
          this.add(new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
-      
-      
       }
   
    
@@ -145,14 +143,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          registers = Coprocessor1.getRegisters();
          for(int i=0; i< registers.size(); i++){
             ((RegTableModel)table.getModel()).setDisplayAndModelValueAt(
-            		NumberDisplayBaseChooser.formatNumber(registers.get(i).getValue().longValue(),base), registers.get(i).getNumber(), VALUE_COLUMN);
+            		NumberDisplayBaseChooser.formatNumber(registers.get(i),base), registers.get(i).getNumber(), VALUE_COLUMN);
          }
          ((RegTableModel)table.getModel()).setDisplayAndModelValueAt(
             		NumberDisplayBaseChooser.formatUnsignedInteger(Coprocessor1.getFCSR().getValue().intValue(),base)
             		, Coprocessor1.getFCSR().getNumber(), VALUE_COLUMN);
 
       }
-      
  
    
      /**
@@ -324,31 +321,42 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             try {
             
                   if (Binary.isHex(sVal)) {
-                     long lVal =Binary.stringToLong(sVal);
+                      Number lVal;
+                      lVal = Binary.stringToInt(sVal);
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
                      synchronized (Globals.memoryAndRegistersLock) {
-                        Coprocessor1.setRegister(row, lVal); 
+                        Coprocessor1.updateRegister(row, lVal);
                      }
                      data[row][col] =
-                           NumberDisplayBaseChooser.formatNumber(lVal, valueBase);
+                           NumberDisplayBaseChooser.formatNumber(registers.get(row), valueBase);
                   } 
                   else { // is not hex, so must be decimal
                      dVal =  Double.parseDouble(sVal);
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
                      synchronized (Globals.memoryAndRegistersLock) {
-                        Coprocessor1.setRegister(row, dVal); 
+                        Coprocessor1.updateRegister(row, dVal);
                      }
                      data[row][col] =
-                           NumberDisplayBaseChooser.formatNumber(dVal, valueBase);						
+                           NumberDisplayBaseChooser.formatNumber(registers.get(row), valueBase);
                   }			
                  
                }
        
                 catch (NumberFormatException nfe) {
-                  data[row][col] = "INVALID";
-                  fireTableCellUpdated(row, col);
+                    Number lVal;
+                    try{
+                        lVal = Binary.stringToLong(sVal);
+                        synchronized (Globals.memoryAndRegistersLock) {
+                            Coprocessor1.updateRegister(row, lVal);
+                        }
+                        data[row][col] =
+                                NumberDisplayBaseChooser.formatNumber(registers.get(row), valueBase);
+                    }catch (NumberFormatException e){
+                        data[row][col] = "INVALID";
+                        fireTableCellUpdated(row, col);
+                    }
                }
           
             return;

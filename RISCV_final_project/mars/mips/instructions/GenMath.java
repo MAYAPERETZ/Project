@@ -62,7 +62,7 @@ public class GenMath {
 	    		new BigInteger(Long.toUnsignedString(y.longValue()))).shiftRight(64).longValueExact());
 	     else
 	        return (T) (T) new Integer(new BigInteger(Integer.toString(x.intValue())).multiply(
-		    		new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(64).intValueExact());
+		    		new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(32).intValueExact());
 	    
 	 }
 	
@@ -76,7 +76,7 @@ public class GenMath {
 	    		new BigInteger(Long.toUnsignedString(y.longValue()))).shiftRight(64).longValueExact());
 	     else
 	        return (T) (T) new Integer(new BigInteger(Integer.toUnsignedString(x.intValue())).multiply(
-		    		new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(64).intValueExact());
+		    		new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(32).intValueExact());
 	    
 	 }
 	
@@ -198,7 +198,7 @@ public class GenMath {
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
 	        return (T) new Long(x.longValue() >> (y.longValue()&0x3F));
-	     else return (T) new Long(x.intValue() >> (y.intValue()&0x1F));
+	     else return (T) new Integer(x.intValue() >> (y.intValue()&0x1F));
 	     
 	}
 	

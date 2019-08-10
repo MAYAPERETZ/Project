@@ -1,14 +1,15 @@
    package mars.venus;
-   import mars.*;
-   import mars.util.*;
-   import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
 
-import java.awt.*;
-   import java.awt.event.*;
-import java.util.Observable;
-
-import javax.swing.*;
+   import mars.Globals;
+   import mars.ProcessingException;
+   import mars.mips.hardware.Coprocessor0;
+   import mars.mips.hardware.Coprocessor1;
+   import mars.mips.hardware.RV32IRegisters;
+   import mars.mips.hardware.memory.Memory;
+   import mars.util.SystemIO;
+   import javax.swing.*;
+   import java.awt.event.ActionEvent;
+   import java.util.Observable;
 	
 	/*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar

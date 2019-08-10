@@ -2,9 +2,8 @@
    import mars.*;
    import mars.util.*;
    import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
-
-import java.util.*;
+   import mars.mips.hardware.memory.Memory;
+   import java.util.*;
    import java.io.*;
    import java.awt.*;
    import java.awt.event.*;

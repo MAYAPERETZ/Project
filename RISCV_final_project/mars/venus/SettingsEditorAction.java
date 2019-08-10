@@ -1,18 +1,13 @@
    package mars.venus;
-   import mars.simulator.*;
 import mars.*;
-   import mars.util.*;
    import mars.venus.editors.jeditsyntax.*;
    import mars.venus.editors.jeditsyntax.tokenmarker.*;
-   import java.util.*;
    import java.awt.*;
    import java.awt.event.*;
    import javax.swing.*;
    import javax.swing.text.*;
    import javax.swing.border.*;
-   import javax.swing.event.*;
-   import java.io.*;
-	
+
 	/*
 Copyright (c) 2003-2011,  Pete Sanderson and Kenneth Vollmar
 
@@ -166,43 +161,29 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             JButton applyButton = new JButton("Apply");
             applyButton.setToolTipText(SettingsHighlightingAction.APPLY_TOOL_TIP_TEXT);
             applyButton.addActionListener(
-                   new ActionListener() {
-                      public void actionPerformed(ActionEvent e) {
-                        performApply();
-                     }
-                  });
+                    e -> performApply());
             JButton cancelButton = new JButton("Cancel");
             cancelButton.setToolTipText(SettingsHighlightingAction.CANCEL_TOOL_TIP_TEXT);
             cancelButton.addActionListener(
-                   new ActionListener() {
-                      public void actionPerformed(ActionEvent e) { 
-                        closeDialog();
-                     }
-                  });	
+                    e -> closeDialog());
             JButton resetButton = new JButton("Reset");
             resetButton.setToolTipText(SettingsHighlightingAction.RESET_TOOL_TIP_TEXT);
             resetButton.addActionListener(
-                   new ActionListener() {
-                      public void actionPerformed(ActionEvent e) {
-                        reset();
-                     }
-                  });
+                    e -> reset());
             initialGenericTextEditor = Globals.getSettings().getBooleanSetting(Settings.GENERIC_TEXT_EDITOR);
             genericEditorCheck = new JCheckBox("Use Generic Editor", initialGenericTextEditor);
             genericEditorCheck.setToolTipText(GENERIC_TOOL_TIP_TEXT);
             genericEditorCheck.addItemListener(
-                   new ItemListener() {
-                      public void itemStateChanged(ItemEvent e) { 
-                        if (e.getStateChange()==ItemEvent.SELECTED) {
-                           syntaxStylePanel.setVisible(false);
-                           otherSettingsPanel.setVisible(false);
-                        } 
-                        else {
-                           syntaxStylePanel.setVisible(true);
-                           otherSettingsPanel.setVisible(true);		
-                        }
-                     }
-                  });
+                    e -> {
+                      if (e.getStateChange()==ItemEvent.SELECTED) {
+                         syntaxStylePanel.setVisible(false);
+                         otherSettingsPanel.setVisible(false);
+                      }
+                      else {
+                         syntaxStylePanel.setVisible(true);
+                         otherSettingsPanel.setVisible(true);
+                      }
+                   });
          	
             controlPanel.add(Box.createHorizontalGlue());
             controlPanel.add(okButton);
@@ -279,22 +260,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             tabSizeSelector = new JSlider(Editor.MIN_TAB_SIZE, Editor.MAX_TAB_SIZE, initialEditorTabSize);
             tabSizeSelector.setToolTipText("Use slider to select tab size from "+Editor.MIN_TAB_SIZE+" to "+Editor.MAX_TAB_SIZE+".");
             tabSizeSelector.addChangeListener(
-                   new ChangeListener() {
-                      public void stateChanged(ChangeEvent e) {
-                        Integer value = new Integer(((JSlider)e.getSource()).getValue());
-                        tabSizeSpinSelector.setValue(value);
-                     }
-                  });  
+                    e -> {
+                      Integer value = new Integer(((JSlider)e.getSource()).getValue());
+                      tabSizeSpinSelector.setValue(value);
+                   });
             SpinnerNumberModel tabSizeSpinnerModel = new SpinnerNumberModel(initialEditorTabSize, Editor.MIN_TAB_SIZE, Editor.MAX_TAB_SIZE, 1); 
             tabSizeSpinSelector = new JSpinner(tabSizeSpinnerModel);
             tabSizeSpinSelector.setToolTipText(TAB_SIZE_TOOL_TIP_TEXT);
             tabSizeSpinSelector.addChangeListener(
-                   new ChangeListener() {
-                      public void stateChanged(ChangeEvent e) {
-                        Object value = ((JSpinner)e.getSource()).getValue();
-                        tabSizeSelector.setValue(((Integer)value).intValue());
-                     }
-                  });  				
+                    e -> {
+                      Object value = ((JSpinner)e.getSource()).getValue();
+                      tabSizeSelector.setValue(((Integer)value).intValue());
+                   });
          	
          	// highlighting of current line
             initialLineHighlighting = Globals.getSettings().getBooleanSetting(Settings.EDITOR_CURRENT_LINE_HIGHLIGHTING);
@@ -321,14 +298,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             blinkRateSpinSelector = new JSpinner(blinkRateSpinnerModel);
             blinkRateSpinSelector.setToolTipText(BLINK_SPINNER_TOOL_TIP_TEXT);
             blinkRateSpinSelector.addChangeListener(
-                   new ChangeListener() {
-                      public void stateChanged(ChangeEvent e) {
-                        Object value = ((JSpinner)e.getSource()).getValue();
-                        blinkCaret.setBlinkRate(((Integer)value).intValue());
-                        blinkSample.requestFocus();
-                        blinkCaret.setVisible(true);
-                     }
-                  });  	
+                    e -> {
+                      Object value = ((JSpinner)e.getSource()).getValue();
+                      blinkCaret.setBlinkRate(((Integer)value).intValue());
+                      blinkSample.requestFocus();
+                      blinkCaret.setVisible(true);
+                   });
          	
             JPanel tabPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             tabPanel.add(new JLabel("Tab Size"));
@@ -577,9 +552,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             
             // If selected: disable buttons, save current settings, set to defaults
             // If deselected:restore current settings, enable buttons
-               Color newBackground = null;
-               Font newFont = null;
-               if (e.getStateChange() == ItemEvent.SELECTED) {
+                 if (e.getStateChange() == ItemEvent.SELECTED) {
                   foregroundButtons[row].setEnabled(false);
                   bold[row].setEnabled(false);
                   italic[row].setEnabled(false);

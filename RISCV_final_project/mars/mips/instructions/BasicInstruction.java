@@ -40,7 +40,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 public class BasicInstruction extends Instruction {
 	
-    private BasicInstructionFormat instructionFormat;
     private String operationMask;
     private SimulationCode simulationCode;
 	private int opcodeMask;  // integer with 1's where constants required (0/1 become 1, f/s/t become 0)
@@ -106,21 +105,7 @@ public class BasicInstruction extends Instruction {
 	public String getOperationMask() {
 	    return operationMask;
 	}
-	
-      /**
-       * Gets the operand format of the instruction.  MIPS defines 3 of these
-       * R-format, I-format, and J-format.  R-format is all registers.  I-format
-       * is address formed from register base with immediate offset.  J-format
-       * is for jump destination addresses.  I have added one more:
-       * I-branch-format, for branch destination addresses.  These are a variation
-       * of the I-format in that the computed value is address relative to the 
-       * Program Counter.  All four formats are represented by static objects.
-       *
-       * @return The machine instruction format, R, I, J or I-branch.
-       */
-	public BasicInstructionFormat getInstructionFormat() {
-	    return instructionFormat;
-	}
+
 	
 	/**
 	 * Gets the SimulationCode object.  It is really an object of an anonymous

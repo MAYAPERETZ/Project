@@ -251,30 +251,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public NumberDisplayBaseChooser getAddressDisplayBaseChooser() {
          return addressDisplayBase;
       }
-   		
-   	/**
-   	 * Update display of columns based on state of given chooser.  Normally
-   	 * called only by the chooser's ItemListener.
-   	 * @param chooser the GUI object manipulated by the user to change number base
-   	 */
-      /* public void numberDisplayBaseChanged(NumberDisplayBaseChooser chooser) {
-         if (chooser == valueDisplayBase) {
-           // Have all internal windows update their value columns
-            registerValues.updateRegisters();
-            coprocessor1Values.updateRegisters();
-            coprocessor0Values.updateRegisters();
-            dataSegment.updateValues();
-            textSegment.updateBasicStatements();
-         } 
-         else { // addressDisplayBase
-           // Have all internal windows update their address columns
-            dataSegment.updateDataAddresses();
-            labelValues.updateLabelAddresses();
-            textSegment.updateCodeAddresses();
-            textSegment.updateBasicStatements();
-         }
-      }
-	*/
+
+
     /*
      * created by Maya Peretz in 04/20/2019.
      * An improvaent of the numberDisplayBaseChanged previous method, using Observer and

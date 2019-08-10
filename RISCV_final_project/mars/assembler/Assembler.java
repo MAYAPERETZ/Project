@@ -384,7 +384,7 @@ import mars.mips.instructions.Instruction;
             if (errors.errorLimitExceeded())
                break;
             statement = (ProgramStatement) this.machineList.get(i);
-            statement.buildMachineStatementFromBasicStatement(errors);
+            statement.buildMachineStatementFromBasicStatement();
             if (Globals.debug)
                System.out.println(statement);
             try {
@@ -503,20 +503,6 @@ import mars.mips.instructions.Instruction;
                   .getSourceLine(), 0, "Detected a macro expansion loop (recursive reference). "));
             } 
             else {
-            //                for (int i = macro.getFromLine() + 1; i < macro.getToLine(); i++) {
-            //                   String substituted = macro.getSubstitutedLine(i, tokens, counter, errors);
-            //                   TokenList tokenList2 = fileCurrentlyBeingAssembled.getTokenizer().tokenizeLine(
-            //                      i, substituted, errors);
-            //                   // If token list getProcessedLine() is not empty, then .eqv was performed and it contains the modified source.
-            //                	// Put it into the line to be parsed, so it will be displayed properly in text segment display. DPS 23 Jan 2013
-            //                   if (tokenList2.getProcessedLine().length() > 0)
-            //                      substituted = tokenList2.getProcessedLine();
-            //                   // recursively parse lines of expanded macro
-            //                   ArrayList<ProgramStatement> statements = parseLine(tokenList2, "<" + (i-macro.getFromLine()+macro.getOriginalFromLine()) + "> "
-            //                      + substituted.trim(), sourceLineNumber, extendedAssemblerEnabled);
-            //                   if (statements != null)
-            //                      ret.addAll(statements);
-            //                }
                for (int i = macro.getFromLine() + 1; i < macro.getToLine(); i++) {
                  
                   String substituted = macro.getSubstitutedLine(i, tokens, counter, errors);
@@ -1011,17 +997,15 @@ import mars.mips.instructions.Instruction;
                return;
             }
             if (this.inDataSegment) {
-               if (this.autoAlign) {
-                  this.dataAddress
-                     .set(this.alignToBoundary(this.dataAddress.get(), lengthInBytes));
-               }
+               if (this.autoAlign)
+                  this.dataAddress.set(this.alignToBoundary(this.dataAddress.get(), lengthInBytes));
+
                for (int i = 0; i < repetitions; i++) {
-                  if (Directives.isIntegerDirective(directive)) {
+                  if (Directives.isIntegerDirective(directive))
                      storeInteger(valueToken, directive, errors);
-                  } 
-                  else {
+                  else
                      storeRealNumber(valueToken, directive, errors);
-                  }
+
                }
             } // WHAT ABOUT .KDATA SEGMENT?
          /***************************************************************************
@@ -1050,12 +1034,10 @@ import mars.mips.instructions.Instruction;
       // if not in ".word w : n" format, must just be list of one or more values.
          for (int i = tokenStart; i < tokens.size(); i++) {
             token = tokens.get(i);
-            if (Directives.isIntegerDirective(directive)) {
+            if (Directives.isIntegerDirective(directive))
                storeInteger(token, directive, errors);
-            }
-            if (Directives.isFloatingDirective(directive)) {
+            if (Directives.isFloatingDirective(directive))
                storeRealNumber(token, directive, errors);
-            }
          }
          return;
       } // storeNumeric()
@@ -1121,9 +1103,9 @@ import mars.mips.instructions.Instruction;
                   Number dataAddress = writeToDataSegment(0, lengthInBytes, token, errors);
                   currentFileDataSegmentForwardReferences.add(dataAddress, lengthInBytes, token);
                } 
-               else { // label already defined, so write its address
+               else  // label already defined, so write its address
                   writeToDataSegment(value, lengthInBytes, token, errors);
-               }
+
             } // Data segment check done previously, so this "else" will not be.
             // See 11/20/06 note above.
             else {
@@ -1176,9 +1158,11 @@ import mars.mips.instructions.Instruction;
          if (directive == Directives.FLOAT) {
             writeToDataSegment(Float.floatToIntBits((float) value), lengthInBytes, token, errors);
          }
+
          if (directive == Directives.DOUBLE) {
             writeDoubleToDataSegment(value, token, errors);
          }
+
       
       } // storeRealNumber
    

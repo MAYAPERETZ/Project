@@ -1,12 +1,8 @@
 package mars.venus;
 
-import java.util.Observable;
-import java.util.Observer;
-
-import javax.swing.Icon;
-import javax.swing.KeyStroke;
-
 import mars.Globals;
+import javax.swing.*;
+import java.util.Observable;
 
 /**
  * parent class for Action subclasses to be defined for every menu/toolbar

@@ -37,8 +37,8 @@ public class InstCodeUtil {
 	}
 	
 	protected static int getFunct3(BasicInstruction basicInst){
-		if(basicInst instanceof R_type.WithRmFeild) {
-			return mask3 & (R_type.WithRmFeild.rmMode<<12);
+		if(basicInst instanceof R_type.WithRmField) {
+			return mask3 & (R_type.WithRmField.rmMode<<12);
 		}
 		return mask3 & (Binary.binaryStringToInt(basicInst.getOperationMask().substring(17, 20))<<12);
 	}

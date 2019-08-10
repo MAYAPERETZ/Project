@@ -50,7 +50,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        public RegistersPane(GUI mainUI2, RegistersWindow regs, Coprocessor1Window cop1,
 		                      Coprocessor0Window cop0){
-		   super("Data Segment", true, false, false, false);
+		   super("", true, false, false, false);
 		   setFrameIcon(null);
     	   this.mainUI = mainUI2;
     	   regsTab = regs;

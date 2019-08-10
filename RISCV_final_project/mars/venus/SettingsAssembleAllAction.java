@@ -1,12 +1,8 @@
    package mars.venus;
-   import mars.simulator.*;
 import mars.*;
-   import java.util.*;
-   import java.awt.*;
-   import java.awt.event.*;
-   import javax.swing.*;
-   import java.io.*;
-	
+import javax.swing.*;
+import java.awt.event.*;
+
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
 
@@ -43,7 +39,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    
        public SettingsAssembleAllAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI) {
+                                        Integer mnemonic, KeyStroke accel, GUI mainUI) {
          super(name, icon, descrip, mnemonic, accel, mainUI);
       }
    		 

@@ -1,10 +1,10 @@
    package mars.venus;
-   import mars.*;
-   import java.awt.event.*;
-import java.util.Observable;
 
-import javax.swing.*;
-   import javax.swing.event.*;
+   import mars.Globals;
+   import javax.swing.*;
+   import javax.swing.event.TableModelEvent;
+   import javax.swing.event.TableModelListener;
+   import java.awt.event.ActionEvent;
 	
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar

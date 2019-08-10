@@ -1,7 +1,4 @@
    package mars.venus;
-   import mars.*;
-
-import javax.swing.*;
    import java.io.*;
  
  /*
@@ -75,7 +72,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
     /**
      *  Set associated EditTabbedPane.  This is container for any/all open files.
-     *
      * @param editTabbedPane an existing editTabbedPane object
      */		
        public void setEditTabbedPane(EditTabbedPane editTabbedPane) {
@@ -111,8 +107,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             this.currentOpenDirectory = currentOpenDirectory;
          }
       }
-   		 
-   		 
    	  
      /**
       *  Get name of current directory for Save or Save As operation.

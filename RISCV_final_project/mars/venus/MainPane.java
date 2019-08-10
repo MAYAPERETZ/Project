@@ -1,9 +1,6 @@
 package mars.venus;
 import javax.swing.*;
-import java.awt.*;
 
-
-	
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
 
@@ -50,7 +47,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
        public MainPane(GUI mainUI2, Editor editor, RegistersWindow regs,
                        Coprocessor1Window cop1Regs,Coprocessor0Window cop0Regs){
-           super("Data Segment", true, false, false, false);
+           super("", false, false, false, false);
            setFrameIcon(null);
          this.mainUI = mainUI2;
          editTabbedPane = new EditTabbedPane(mainUI2, editor, this);
@@ -59,12 +56,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          add(jTabbedPane);
          jTabbedPane.addTab("Editor", editTabbedPane);
          jTabbedPane.addTab("Execute", executeTab);
-         setPreferredSize(new Dimension(700, 500));
-         setMaximumSize(new Dimension(700, 500));
-         setMinimumSize(new Dimension(700, 500));
-         setMaximizable(true);
          setVisible(true);
-         
+
       }
       
        

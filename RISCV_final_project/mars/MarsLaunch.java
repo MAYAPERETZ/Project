@@ -643,7 +643,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             } 
             else {
                      // floating point register
-               float fvalue = Coprocessor1.getFloatValue(reg);
+               float fvalue = Coprocessor1.getFloatValueString(reg);
                int ivalue = Coprocessor1.getIntFromRegister(reg);
                double dvalue = Double.NaN;
                long lvalue = 0;

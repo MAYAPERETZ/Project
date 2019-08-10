@@ -56,7 +56,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private Number textAddress;
       private int sourceLine;
       private int binaryStatement;
-      private boolean altered;
       private static final String invalidOperator = "<INVALID>";
     
     //////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +85,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          this.basicStatementList = new BasicStatementList();
          this.machineStatement = null;
          this.binaryStatement = 0;  // nop, or sll $0, $0, 0  (32 bits of 0's)
-         this.altered = false;
       }
    
    
@@ -123,8 +121,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           
             this.numOperands = (instr instanceof U_type || instr instanceof J_type) ? 2 : 3;
          }
-         this.altered = false;
-         this.basicStatementList = buildBasicStatementListFromBinaryCode(binaryStatement, instr, operands, numOperands);
+           this.basicStatementList = buildBasicStatementListFromBinaryCode(instr, operands, numOperands);
       }
    	
    
@@ -137,7 +134,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      **/
        public void buildBasicStatementFromBasicInstruction(ErrorList errors) {
          Token token = strippedTokenList.get(0);
-         String basicStatementElement = token.getValue()+" ";;
+         String basicStatementElement = token.getValue()+" ";
          String basic = basicStatementElement;
          basicStatementList.addString(basicStatementElement); // the operator
          TokenTypes tokenType, nextTokenType;
@@ -213,14 +210,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             	 // method.  There are some comments there as well.
             	 
                if (instruction instanceof BasicInstruction) {
-                  //BasicInstructionFormat format = ((BasicInstruction)instruction).getInstructionFormat();
-                  //if (format ==  BasicInstructionFormat.I_BRANCH_FORMAT) {
-                  if(((BasicInstruction)instruction) instanceof B_type) {
-                     //address = (address - (this.textAddress+((Globals.getSettings().getDelayedBranchingEnabled())? Instruction.INSTRUCTION_LENGTH : 0))) >> 2;
+                  if(instruction instanceof B_type) {
                      address = srl(sub(address, add(textAddress,Instruction.INSTRUCTION_LENGTH)), 2);
                      absoluteAddress = false;
                   }
-                  else if(((BasicInstruction)instruction) instanceof J_type) {
+                  else if(instruction instanceof J_type) {
                       //address = (address - (this.textAddress+((Globals.getSettings().getDelayedBranchingEnabled())? Instruction.INSTRUCTION_LENGTH : 0))) >> 2;
                       address = sub(address, textAddress);
                       absoluteAddress = false;
@@ -314,11 +308,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
      * Given the current statement in Basic Assembly format (see above), build the
      * 32-bit binary machine code statement.
-     * @param errors The list of assembly errors encountered so far.  May add to it here.
      **/
-       public void buildMachineStatementFromBasicStatement(ErrorList errors) {
+       public void buildMachineStatementFromBasicStatement() {
        
-         binaryStatement = ((BasicInstruction)instruction).computeOperands(operands);
+         binaryStatement = instruction.computeOperands(operands);
          
       }      
     
@@ -495,7 +488,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *   used by the constructor that is given only the int address and binary code.  It is not
     *   intended to be used when source code is available.  DPS 11-July-2013
     */
-       private BasicStatementList buildBasicStatementListFromBinaryCode(int binary, BasicInstruction instr, Number[] operands, int numOperands) {      
+       private BasicStatementList buildBasicStatementListFromBinaryCode(BasicInstruction instr, Number[] operands, int numOperands) {
          BasicStatementList statementList = new BasicStatementList();
          int tokenListCounter = 1;  // index 0 is operator; operands start at index 1
          if (instr == null) {
@@ -599,14 +592,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      result.append(e.sValue);
                      break;
                   case 1 :  
-                     result.append(mars.venus.NumberDisplayBaseChooser.formatIntNumber((int)e.iValue, addressBase));
+                     result.append(mars.venus.NumberDisplayBaseChooser.formatIntNumber(e.iValue.intValue(), addressBase));
                      break;
                   case 2 :  
                      if (valueBase == mars.venus.NumberDisplayBaseChooser.HEXADECIMAL) {
                         result.append(mars.util.Binary.currentNumToHexString(e.iValue)); // 13-July-2011, was: intToHalfHexString()
                      } 
                      else {
-                        result.append(mars.venus.NumberDisplayBaseChooser.formatIntNumber((int)e.iValue, valueBase));
+                        result.append(mars.venus.NumberDisplayBaseChooser.formatIntNumber(e.iValue.intValue(), valueBase));
                      }
                   default:  
                      break;

@@ -3,8 +3,7 @@
    import javax.swing.*;
    import javax.swing.event.*;
    import java.awt.*;
-   import java.awt.event.*;
-	
+
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
 
@@ -139,7 +138,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           public void stateChanged(ChangeEvent e) { 
             JSlider source = (JSlider)e.getSource(); 
             if (!source.getValueIsAdjusting()) { 
-               runSpeedIndex = (int)source.getValue();
+               runSpeedIndex = source.getValue();
             } 
             else {
                sliderLabel.setText(setLabel(source.getValue()));

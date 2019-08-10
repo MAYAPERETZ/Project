@@ -494,7 +494,7 @@
                cKeywords.add( ""+i, Token.KEYWORD3 );  // also recognize $0, $1, $2, etc
             }
          	// add Coprocessor 1 (floating point) register file
-            ArrayList<mars.mips.hardware.Register> coprocessor1RegisterFile = mars.mips.hardware.Coprocessor1.getRegisters();
+            ArrayList<mars.mips.hardware.Register.FPRegister> coprocessor1RegisterFile = mars.mips.hardware.Coprocessor1.getRegisters();
             for (int i=0; i< coprocessor1RegisterFile.size(); i++) {
                cKeywords.add( coprocessor1RegisterFile.get(i).getName(), Token.KEYWORD3 );
             }     

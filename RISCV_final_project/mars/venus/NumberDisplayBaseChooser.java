@@ -1,7 +1,8 @@
    package mars.venus;
    import mars.*;
-import mars.mips.hardware.MemoryConfigurations;
-import mars.util.*;
+   import mars.mips.hardware.MemoryConfigurations;
+   import mars.mips.hardware.Register;
+   import mars.util.*;
    import java.awt.*;
    import java.awt.event.*;
    import javax.swing.*;
@@ -54,34 +55,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * constructor. It assumes the text will be worded
     * so that a checked box means hexadecimal!
     * @param text Text to accompany the check box.
-    * @param defaultBase Currently either DECIMAL or HEXADECIMAL
+    * @param displayInHex Currently either DECIMAL or HEXADECIMAL
     */
        public NumberDisplayBaseChooser(String text, boolean displayInHex) {
          super(text, displayInHex);
          observable = new NewObservable();
-         EventQueue.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-		         observable.addObserver(Globals.getGui().getMainPane().getExecutePane());
-
-			}
-		});
+         EventQueue.invokeLater(() -> observable.addObserver(Globals.getGui().getMainPane().getExecutePane()));
          base = getBase(displayInHex);
          addItemListener(
-                new  ItemListener() {
-                   public void itemStateChanged(ItemEvent ie) {
-                     NumberDisplayBaseChooser choose = (NumberDisplayBaseChooser)ie.getItem();
-                     if (ie.getStateChange() == ItemEvent.SELECTED) {
-                        choose.setBase(NumberDisplayBaseChooser.HEXADECIMAL);
-                     } 
-                     else {
-                        choose.setBase(NumberDisplayBaseChooser.DECIMAL);
-                     }
-                
-                     observable.notifyObserversOfSelectedTab(choose);
+                 ie -> {
+                   NumberDisplayBaseChooser choose = (NumberDisplayBaseChooser)ie.getItem();
+                   if (ie.getStateChange() == ItemEvent.SELECTED) {
+                      choose.setBase(NumberDisplayBaseChooser.HEXADECIMAL);
                    }
-               });
+                   else {
+                      choose.setBase(NumberDisplayBaseChooser.DECIMAL);
+                   }
+
+                   observable.notifyObserversOfSelectedTab(choose);
+                 });
       }
    
    /**
@@ -120,9 +112,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	   if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
     		   return formatUnsignedInteger(value.intValue(), base);
     	   return formatUnsignedLong(value.longValue(), base);
-        }		 
-   	 
-       
+        }
        
        
        public static String formatUnsignedInteger(int value, int base) {
@@ -164,10 +154,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             case HEXADECIMAL :
                result = Binary.intToHexString(value);
                break;
-            case DECIMAL :
-               result =  Integer.toString(value);
-               break;
-            case ASCII : 
+             case ASCII :
                result = Binary.intToAscii(value);
                break;
             default :
@@ -201,11 +188,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        
       
        public static String formatNumber(Number value, int base) {
-    	   if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+           if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
     		   return formatNumber(value.intValue(), base);
     	   return formatNumber(value.longValue(), base);
-        }		 
-   	 
+        }
+
     /**
      * Produces a string form of a double given the value and the
      * numerical base to convert it to.  There is an instance
@@ -273,13 +260,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * @return a String equivalent of the value rendered appropriately.
      */
        public static String formatNumber(int value, int base) {
-         if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
-            return Binary.intToHexString(value);
-         } 
-         else {
-            return Float.toString(Float.intBitsToFloat(value));
-         }
-      }
+           if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
+               return Binary.intToHexString(value);
+           }
+           return Integer.toString(value);
+       }
+
+       public static String formatNumber(Register register, int base){
+           if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
+               return Binary.NumberToHexString(register.getValue().longValue(), "64");
+           }
+           else if (register instanceof Register.FPRegister){
+               if(((Register.FPRegister) register).getType() == Register.FPRegister.Type.FLOAT)
+                   return Float.toString(Float.intBitsToFloat(Binary.lowOrderLongToInt(register.getValue().longValue())));
+               else if(((Register.FPRegister) register).getType() == Register.FPRegister.Type.DOUBLE)
+                   return Double.toString(Double.longBitsToDouble(register.getValue().longValue()));
+           }
+           return Long.toString(register.getValue().longValue());
+       }
    
     /**
      * Produces a string form of a double given a long containing
@@ -301,7 +299,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * @return a String equivalent of the value rendered appropriately.
      */
        public static String formatNumber(long value, int base) {
-         if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
+           if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
             return Binary.NumberToHexString(value, "64");
          } 
          else {

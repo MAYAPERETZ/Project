@@ -1,18 +1,22 @@
    package mars.venus;
-   
-   import mars.*;
-   import mars.util.*;
-   import mars.assembler.*;
-   import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
 
-import java.io.*;
-   import java.util.*;
+   import mars.Globals;
+   import mars.MIPSprogram;
+   import mars.assembler.Symbol;
+   import mars.assembler.SymbolTable;
+   import mars.mips.hardware.memory.Memory;
+   import mars.util.Binary;
+   import javax.swing.*;
+   import javax.swing.table.AbstractTableModel;
+   import javax.swing.table.JTableHeader;
+   import javax.swing.table.TableCellRenderer;
+   import javax.swing.table.TableColumnModel;
    import java.awt.*;
    import java.awt.event.*;
-   import javax.swing.*;
-   import javax.swing.table.*;
-   import javax.swing.border.*;
+   import java.io.File;
+   import java.util.ArrayList;
+   import java.util.Collections;
+   import java.util.Comparator;
    
 	/*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
