@@ -3,8 +3,12 @@
    import mars.Globals;
    import mars.mips.hardware.*;
 import mars.mips.hardware.memory.Memory;
+   import mars.mips.instructions.GenMath;
+   import mars.util.Binary;
+   import mars.util.Math2;
+   import mars.venus.NumberDisplayBaseChooser;
 
-import java.io.*;
+   import java.io.*;
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
 
@@ -66,17 +70,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
    *  @throws IOException if error occurs during file output.
    */
-       public void dumpMemoryRange(File file, long firstAddress, long lastAddress) 
+       public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
         throws AddressErrorException, IOException {
          PrintStream out = new PrintStream(new FileOutputStream(file));
-         String string = null;
+         String string;
          try {
-            for (long address = firstAddress; address <= lastAddress; address += Memory.WORD_LENGTH_BYTES) {
-               Long temp = Globals.memory.getRawWordOrNull(address);
+            for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = GenMath.add(address, Memory.WORD_LENGTH_BYTES)) {
+               Number temp = Globals.memory.getRawWordOrNull(address);
                if (temp == null) 
                   break;
-               string = Integer.toHexString(temp.intValue());
-               while (string.length() < 8) {
+               string = NumberDisplayBaseChooser.formatNumber(temp, 16);
+               int i = 0;
+               while (i++ < string.length()) {
                   string = '0' + string;
                }
                out.println(string);

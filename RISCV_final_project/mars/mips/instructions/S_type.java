@@ -1,10 +1,13 @@
 package mars.mips.instructions;
 
 import java.util.function.Function;
+
+import mars.Globals;
 import mars.ProcessingException;
 import mars.ProgramStatement;
 import mars.mips.hardware.AddressErrorException;
 import mars.mips.hardware.RV32IRegisters;
+import mars.util.Binary;
 
 public class S_type extends BasicInstruction{
 
@@ -18,30 +21,31 @@ public class S_type extends BasicInstruction{
 
 	public S_type(String example, String description, String operMask, 
 			NewFunction< Number, Number, Number> x, Number mask) {
-		this(example, description, operMask, 
-				 new SimulationCode()
-        {
-            public void simulate(ProgramStatement statement) throws ProcessingException
-           {
-              Number[] operands = statement.getOperands();
-              try
-              {
-            	  
-            	 if(mask != null)
-            				x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
-                     		RV32IRegisters.getValue(operands[2]), operands[1]), RV32IRegisters.getValue(operands[0]));
-            	 else
-            		 x.apply(GenMath.add(
-					          		RV32IRegisters.getValue(operands[2]), operands[1])
-            		     ,RV32IRegisters.getValue(operands[0]));
-            	 
-              } 
-              catch (AddressErrorException e)
-              {
-                  throw new ProcessingException(statement, e);
-              }
-           }
-        });
+		this(example, description, operMask,
+				statement -> {
+				   Number[] operands = statement.getOperands();
+					if(Globals.debug) {
+						System.out.println("operands[0]: " + operands[0]);
+						System.out.println("operands[1]: " + operands[1]);
+						System.out.println("operands[2]: " + operands[2]);
+					}
+				   try
+				   {
+
+					  if(mask != null)
+								 x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
+								  RV32IRegisters.getValue(operands[2]), operands[1]), RV32IRegisters.getValue(operands[0]));
+					  else
+						  x.apply(GenMath.add(
+										   RV32IRegisters.getValue(operands[2]), operands[1])
+							  ,RV32IRegisters.getValue(operands[0]));
+
+				   }
+				   catch (AddressErrorException e)
+				   {
+					   throw new ProcessingException(statement, e);
+				   }
+				});
 	}
 
 	public S_type(String example, String description, String operMask, 
@@ -52,7 +56,7 @@ public class S_type extends BasicInstruction{
 	@Override
 	public int computeOperands(Number [] operands) {
 		return (getOpcode()|computeImm(operands[1].intValue())|InstCodeUtil.getFunct3(this)|
-				InstCodeUtil.computeRs1((int)operands[2])|InstCodeUtil.computeRs2((int)operands[0]));
+				InstCodeUtil.computeRs1((int)operands[2])|InstCodeUtil.computeRs2(this, operands[0]));
 	}
 	
 	
@@ -73,7 +77,6 @@ public class S_type extends BasicInstruction{
 		return  (int)(((args>>7) & FIRST_TO_FIFTH_BITS) |((args>>15)& SIXTH_TO_THIRTEENTH_BITS));
 
 	}
-	
 	
 	@FunctionalInterface
 	interface NewFunction<T extends Number, U extends Number, R extends Number>{

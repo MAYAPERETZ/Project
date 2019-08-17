@@ -71,8 +71,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          tabbedPane.addTab("License", createCopyrightInfoPanel());
          tabbedPane.addTab("Bugs/Comments", createHTMLHelpPanel("BugReportingHelp.html"));   
          tabbedPane.addTab("Acknowledgements", createHTMLHelpPanel("Acknowledgements.html"));
-         tabbedPane.addTab("Instruction Set Song", createHTMLHelpPanel("MIPSInstructionSetSong.html"));
-         // Create non-modal dialog. Based on java.sun.com "How to Make Dialogs", DialogDemo.java		
+         // Create non-modal dialog. Based on java.sun.com "How to Make Dialogs", DialogDemo.java
          final JDialog dialog = new JDialog(mainUI, "MARS "+Globals.version+" Help");
       	// assure the dialog goes away if user clicks the X
          dialog.addWindowListener(
@@ -127,7 +126,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                text.append(line+"\n");
             }
             in.close();
-            helpDisplay = new JEditorPane("text/html",text.toString());
+
+             helpDisplay = new JEditorPane("text/html",text.toString());
             helpDisplay.setEditable(false);
             helpDisplay.setCaretPosition(0); // assure top of document displayed
             helpScrollPane = new JScrollPane(helpDisplay, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,

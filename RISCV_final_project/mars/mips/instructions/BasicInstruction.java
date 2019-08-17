@@ -135,7 +135,6 @@ public class BasicInstruction extends Instruction {
 
 	@Override
 	public Number[] returnOperands(int instructionCode) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 }

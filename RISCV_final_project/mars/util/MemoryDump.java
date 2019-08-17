@@ -1,15 +1,11 @@
    package mars.util;
 
    import mars.Globals;
-   import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
+   import mars.mips.hardware.AddressErrorException;
+   import mars.mips.hardware.memory.Memory;
 
-import java.io.File;
-   import java.io.FileNotFoundException;
-   import java.io.FileOutputStream;
-   import java.io.IOException;
-   import java.io.PrintStream;
-   import java.util.*;
+   import java.util.ArrayList;
+   import java.util.HashMap;
 
 	/*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
@@ -59,12 +55,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * name does not match a known segment name.
    	 */
    	 
-       public static Long[] getSegmentBounds(String segment) {
+       public static Number[] getSegmentBounds(String segment) {
          for (int i=0; i< segmentNames.length; i++) {
             if (segmentNames[i].equals(segment)) {
-               Long[] bounds = new Long[2];
-               bounds[0] = new Long(getBaseAddresses(segmentNames)[i]);
-               bounds[1] = new Long(getLimitAddresses(segmentNames)[i]);
+               Number[] bounds = new Number[2];
+               bounds[0] = getBaseAddresses(segmentNames)[i];
+               bounds[1] = getLimitAddresses(segmentNames)[i];
                return bounds;
             }
          }

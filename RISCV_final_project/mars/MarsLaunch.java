@@ -1,4 +1,5 @@
    package mars;
+   import mars.mips.instructions.GenMath;
    import mars.venus.*;
 
 import mars.util.*;
@@ -184,7 +185,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          for (int i=0; i<dumpTriples.size(); i++) {
             String[] triple = (String[])dumpTriples.get(i);
             File file = new File(triple[2]);
-            Integer[] segInfo = MemoryDump.getSegmentBounds(triple[0]);
+            Number[] segInfo = MemoryDump.getSegmentBounds(triple[0]);
          	// If not segment name, see if it is address range instead.  DPS 14-July-2008
             if (segInfo == null) {
                try {
@@ -212,8 +213,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                continue;
             }
             try {
-               int highAddress = Globals.memory.getAddressOfFirstNull(segInfo[0].intValue(), segInfo[1].intValue())- Memory.WORD_LENGTH_BYTES;
-               if (highAddress < segInfo[0].intValue()) {
+               Number highAddress = GenMath.sub(Globals.memory.getAddressOfFirstNull(segInfo[0].intValue(), segInfo[1].intValue()), Memory.WORD_LENGTH_BYTES);
+               if (Math2.isLt(highAddress, segInfo[0].intValue())) {
                   out.println("This segment has not been written to, there is nothing to dump.");
                   continue;
                } 
@@ -252,13 +253,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   }
               }
           } catch (ClassNotFoundException ex) {
-              java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+              java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
           } catch (InstantiationException ex) {
-              java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+              java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
           } catch (IllegalAccessException ex) {
-              java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+              java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
           } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-              java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+              java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
           }
           //</editor-fold>
 
@@ -587,7 +588,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (countInstructions) {
             Observer instructionCounter = 
                new Observer() {
-                  private int lastAddress = 0;
+                  private Number lastAddress = 0;
                   public void update(Observable o, Object obj) { 
                      if (obj instanceof AccessNotice) {
                         AccessNotice notice = (AccessNotice) obj;
@@ -596,7 +597,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         if (notice.getAccessType() != AccessNotice.READ) 
                            return;
                         MemoryAccessNotice m = (MemoryAccessNotice) notice;
-                        int a = m.getAddress();
+                        Number a = m.getAddress();
                         if (a == lastAddress) 
                            return;
                         lastAddress = a;
@@ -605,7 +606,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   }
                };
             try {
-               Globals.memory.addObserver(instructionCounter, Memory.textBaseAddress, Memory.textLimitAddress);
+               Globals.memory.addObserver(instructionCounter, Memory.getInstance().getTextTable().getBaseAddress()
+                       , Memory.getInstance().getTextTable().getLimitAddress());
             } 
                catch (AddressErrorException aee) {
                   out.println("Internal error: MarsLaunch uses incorrect text segment address for instruction observer");
@@ -627,8 +629,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// Displays requested register or registers   			
    				
       private void displayRegistersPostMortem() {
-         int value;  // handy local to use throughout the next couple loops
-         String strValue;
+         Number value;  // handy local to use throughout the next couple loops
          // Display requested register contents
          out.println();
          Iterator regIter = registerDisplayList.iterator();
@@ -639,12 +640,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                if (verbose) 
                   out.print(reg+"\t");
                value = RV32IRegisters.getUserRegister(reg).getValue();
-               out.println( formatIntForDisplay(value) );
+               out.println( NumberDisplayBaseChooser.formatNumber(value, 16) );
             } 
             else {
                      // floating point register
                float fvalue = Coprocessor1.getFloatValueString(reg);
-               int ivalue = Coprocessor1.getIntFromRegister(reg);
+               Number ivalue = Coprocessor1.getRegisterNumber(reg);
                double dvalue = Double.NaN;
                long lvalue = 0;
                boolean hasDouble = false;
@@ -696,31 +697,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       }
    
-   	//////////////////////////////////////////////////////////////////////
-   	// Formats int value for display: decimal, hex, ascii    
-      private String formatIntForDisplay(int value) {
-         String strValue; 
-         switch (displayFormat) {
-            case DECIMAL : 
-               strValue = ""+value;
-               break;
-            case HEXADECIMAL :
-               strValue = Binary.intToHexString(value);
-               break;
-            case ASCII :
-               strValue = Binary.intToAscii(value);
-               break;
-            default :
-               strValue = Binary.intToHexString(value);
-         }   
-         return strValue;
-      }
+
    	
    	//////////////////////////////////////////////////////////////////////
    	// Displays requested memory range or ranges
    	
       private void displayMemoryPostMortem() {  
-         long value;  
+         Number value;
          // Display requested memory range contents
          Iterator memIter = memoryDisplayList.iterator();
          int addressStart=0, addressEnd=0;
@@ -743,14 +726,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
                try {
                   // Allow display of binary text segment (machine code) DPS 14-July-2008
-                  if (Memory.getInstance().inTextSegment(addr) || Memory.getInstance().inKernelTextSegment(addr)) {
-                     Long iValue = Globals.memory.getRawWordOrNull(addr);
+                  if (Memory.getInstance().getTextTable().inSegment(addr) ||
+                          Memory.getInstance().getKernelTextTable().inSegment(addr)) {
+                     Number iValue = Globals.memory.getRawWordOrNull(addr);
                      value = (iValue==null) ? 0 : iValue.intValue();
                   } 
                   else {
                      value = Globals.memory.getWord(addr);
                   }
-                  out.print( formatIntForDisplay(value)+"\t");
+                  out.print( NumberDisplayBaseChooser.formatNumber(value, 16)+"\t");
                }
                   catch (AddressErrorException aee) {
                      out.print("Invalid address: "+addr+"\t");

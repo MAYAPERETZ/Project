@@ -63,7 +63,6 @@ public class GenMath {
 	     else
 	        return (T) (T) new Integer(new BigInteger(Integer.toString(x.intValue())).multiply(
 		    		new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(32).intValueExact());
-	    
 	 }
 	
 	public static<T extends Number> T mulhu(T x, T y){

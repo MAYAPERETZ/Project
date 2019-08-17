@@ -28,19 +28,30 @@ public class InstCodeUtil {
 		return ((mask4 & args) >> 15);
 	}
 	
-	protected static int computeRs2(int args) {
-		return  (mask5 & (args << 20));
+	protected static int computeRs2(BasicInstruction basicInstruction, Number number) {
+		int s;
+		try {
+			s = Binary.binaryStringToInt(basicInstruction.getOperationMask().substring(7, 12));
+		}catch (NumberFormatException nfe)
+		{
+			return (mask5 & (number.intValue()<<20));
+		}
+		return(mask5 & (s << 20));
 	}
-	
+
+	protected static int computeRs2(Number args) {
+		return(mask5 & (args.intValue()<<20));
+	}
+
 	protected static int getRs2(int args) {
 		return ((mask5 & args) >> 20);
 	}
 	
 	protected static int getFunct3(BasicInstruction basicInst){
-		if(basicInst instanceof R_type.WithRmField) {
+		String res = basicInst.getOperationMask().substring(17, 20);
+		if (res.equals("xxx"))
 			return mask3 & (R_type.WithRmField.rmMode<<12);
-		}
-		return mask3 & (Binary.binaryStringToInt(basicInst.getOperationMask().substring(17, 20))<<12);
+		return mask3 & (Binary.binaryStringToInt(res)<<12);
 	}
 	
 }

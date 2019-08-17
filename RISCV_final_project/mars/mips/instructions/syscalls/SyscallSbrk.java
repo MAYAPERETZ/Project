@@ -51,9 +51,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Performs syscall function to allocate amount of heap memory specified in $a0, putting address into $v0.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         long address = 0;
+         Number address = 0;
          try {
-            address = Globals.memory.allocateBytesFromHeap(RV32IRegisters.getValue(4));
+            address = Globals.memory.allocateBytesFromHeap(RV32IRegisters.getValue(4).intValue());
          } 
              catch (IllegalArgumentException iae) {
                throw new ProcessingException(statement,

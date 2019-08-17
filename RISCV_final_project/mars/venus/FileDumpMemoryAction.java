@@ -1,5 +1,6 @@
    package mars.venus;
    import mars.*;
+   import mars.mips.instructions.GenMath;
    import mars.util.*;
    import mars.mips.dump.*;
    import mars.mips.hardware.*;
@@ -51,13 +52,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
       // A series of parallel arrays representing the memory segments that can be dumped.
       private String[] segmentArray;         
-      private long[] baseAddressArray;      
-      private long[] limitAddressArray;
-      private long[] highAddressArray;
+      private Number[] baseAddressArray;
+      private Number[] limitAddressArray;
+      private Number[] highAddressArray;
    	// These three are allocated and filled by buildDialogPanel() and used by action listeners.
       private String[] segmentListArray;  
-      private long[] segmentListBaseArray; 
-      private long[] segmentListHighArray;
+      private Number[] segmentListBaseArray;
+      private Number[] segmentListHighArray;
    	 
       private JComboBox segmentListSelector;
       private JComboBox formatListSelector;
@@ -107,13 +108,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          segmentArray = MemoryDump.getSegmentNames();
          baseAddressArray = MemoryDump.getBaseAddresses(segmentArray);
          limitAddressArray = MemoryDump.getLimitAddresses(segmentArray);
-         highAddressArray = new long[segmentArray.length];
+         highAddressArray = new Number[segmentArray.length];
       
       
       
          segmentListArray = new String[segmentArray.length];
-         segmentListBaseArray = new long[segmentArray.length];
-         segmentListHighArray = new long[segmentArray.length];
+         segmentListBaseArray = new Number[segmentArray.length];
+         segmentListHighArray = new Number[segmentArray.length];
         
          // Calculate the actual highest address to be dumped.  For text segment, this depends on the
       	// program length (number of machine code instructions).  For data segment, this depends on
@@ -127,13 +128,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	
          for (int i=0; i<segmentArray.length; i++) {
             try {
-               highAddressArray[i] = Globals.memory.getAddressOfFirstNull(baseAddressArray[i],limitAddressArray[i]) - Memory.WORD_LENGTH_BYTES;
+               highAddressArray[i] = GenMath.sub(Globals.memory.getAddressOfFirstNull(
+                       baseAddressArray[i],limitAddressArray[i]), Memory.WORD_LENGTH_BYTES);
             
             }  // Exception will not happen since the Memory base and limit addresses are on word boundaries!
                 catch (AddressErrorException aee) {
-                  highAddressArray[i] = baseAddressArray[i] - Memory.WORD_LENGTH_BYTES;
+                  highAddressArray[i] = GenMath.sub(baseAddressArray[i], Memory.WORD_LENGTH_BYTES);
                }
-            if (highAddressArray[i] >= baseAddressArray[i]) {
+            if (!Math2.isLt(highAddressArray[i], baseAddressArray[i])) {
                segmentListBaseArray[segmentCount] = baseAddressArray[i];
                segmentListHighArray[segmentCount] = highAddressArray[i];
                segmentListArray[segmentCount] = 
@@ -188,22 +190,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Box controlPanel = Box.createHorizontalBox();
          JButton dumpButton = new JButton("Dump To File...");
          dumpButton.addActionListener(
-                new ActionListener() {
-                   public void actionPerformed(ActionEvent e) {
-                     if (performDump(segmentListBaseArray[segmentListSelector.getSelectedIndex()], 
-                                 segmentListHighArray[segmentListSelector.getSelectedIndex()], 
-                        			(DumpFormat)formatListSelector.getSelectedItem())) {
-                        closeDialog();
-                     }
-                  }
-               });
+                 e -> {
+                   if (performDump(segmentListBaseArray[segmentListSelector.getSelectedIndex()],
+                               segmentListHighArray[segmentListSelector.getSelectedIndex()],
+                                  (DumpFormat)formatListSelector.getSelectedItem())) {
+                      closeDialog();
+                   }
+                });
          JButton cancelButton = new JButton("Cancel");
          cancelButton.addActionListener(
-                new ActionListener() {
-                   public void actionPerformed(ActionEvent e) {
-                     closeDialog();
-                  }
-               });	
+                 e -> closeDialog());
          controlPanel.add(Box.createHorizontalGlue());
          controlPanel.add(dumpButton);
          controlPanel.add(Box.createHorizontalGlue());
@@ -215,9 +211,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    	// User has clicked "Dump" button, so launch a file chooser then get
    	// segment (memory range) and format selections and save to the file.
-       private boolean performDump(long firstAddress, long lastAddress, DumpFormat format) {	
-         File theFile = null;
-         JFileChooser saveDialog = null;
+       private boolean performDump(Number firstAddress, Number lastAddress, DumpFormat format) {
+         File theFile;
+         JFileChooser saveDialog;
          boolean operationOK = false;
       
          saveDialog = new JFileChooser(mainUI.getEditor().getCurrentSaveDirectory());

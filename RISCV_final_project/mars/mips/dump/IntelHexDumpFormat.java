@@ -4,6 +4,10 @@
    import mars.mips.hardware.*;
    import mars.mips.hardware.memory.Memory;
    import static mars.mips.instructions.GenMath.*;
+
+   import mars.util.Binary;
+   import mars.util.Math2;
+
 import java.io.*;
 
 /**
@@ -36,9 +40,10 @@ import java.io.*;
        public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
           throws AddressErrorException, IOException {
             PrintStream out = new PrintStream(new FileOutputStream(file));
-            String string = null;
+            String string;
             try {
-               for (long address = firstAddress; address <= lastAddress; address += Memory.WORD_LENGTH_BYTES) {
+               for (Number address = firstAddress; !Math2.isLt(lastAddress, address);
+                    address = add(address, Memory.WORD_LENGTH_BYTES)) {
                   Number temp = Globals.memory.getRawWordOrNull(address);
                   if (temp == null) 
                      break;
@@ -46,22 +51,22 @@ import java.io.*;
                   while (string.length() < 8) {
                      string = '0' + string;
                   }
-                  String addr = Long.toHexString(address-firstAddress);
+                  String addr = Binary.currentNumToHexString(sub(address,firstAddress));
                   while (addr.length() < 4) {
                      addr = '0' + addr;
                   }
                   String chksum;
-                  int tmp_chksum = 0;
-                  tmp_chksum += 4;
-                  tmp_chksum += 0xFF & sub(address, firstAddress);
-                  tmp_chksum += 0xFF & ((address-firstAddress)>>8);
-                  tmp_chksum += 0xFF & temp.intValue();
-                  tmp_chksum += 0xFF & (temp.intValue()>>8);
-                  tmp_chksum += 0xFF & (temp.intValue()>>16);
-                  tmp_chksum += 0xFF & (temp.intValue()>>24);
-                  tmp_chksum = tmp_chksum % 256;
-                  tmp_chksum = ~tmp_chksum + 1;
-                  chksum = Integer.toHexString(0xFF & tmp_chksum);
+                  Number tmp_chksum = 0;
+                  tmp_chksum = add(tmp_chksum,4);
+                  tmp_chksum = add(tmp_chksum, (and(0xFF, sub(address, firstAddress))));
+                  tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),8)))));
+                  tmp_chksum = and(0xFF, temp);
+                  tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),8)))));
+                  tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),16)))));
+                  tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),24)))));
+                  tmp_chksum = rem(tmp_chksum, 256);
+                  tmp_chksum = add(neg(tmp_chksum), 1);
+                  chksum = Binary.currentNumToHexString(and(0xFF, tmp_chksum));
                   if(chksum.length()==1) chksum = '0' + chksum;
                   String finalstr = ":04"+addr+"00"+string+chksum;
                   out.println(finalstr.toUpperCase());

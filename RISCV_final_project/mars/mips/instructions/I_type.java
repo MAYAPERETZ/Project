@@ -14,16 +14,12 @@ public class I_type extends BasicInstruction{
 
 	public I_type(String example, String description, String operMask, 
 			java.util.function.BiFunction< Number,  Number, Number> x) {
-		this(example, description, operMask, 
-				new SimulationCode()
-				{
-					public void simulate(ProgramStatement statement) throws ProcessingException
-					{
-						 Number[] operands = statement.getOperands();
-	                     Number product = x.apply(RV32IRegisters.getValue(operands[1]), operands[2]);
-	                     RV32IRegisters.updateRegister(operands[0].intValue(), product);
-                       
-					}
+		this(example, description, operMask,
+				statement -> {
+					 Number[] operands = statement.getOperands();
+					 Number product = x.apply(RV32IRegisters.getValue(operands[1]), operands[2]);
+					 RV32IRegisters.updateRegister(operands[0].intValue(), product);
+
 				});
 	}
 	

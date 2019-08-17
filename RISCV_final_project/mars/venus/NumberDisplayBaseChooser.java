@@ -126,7 +126,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 
        public static String formatUnsignedLong(long value, int base) {
            if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
-               String st = "";
+               String st;
                try {
                    st = Binary.NumberToHexString(Long.parseLong(Long.toUnsignedString(value)), "64");
                }catch(NumberFormatException nfe){
@@ -175,15 +175,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * @return a String equivalent of the value rendered appropriately.
      */
        
-     
-       
        public static String formatNumber(Float value, int base) {
-         if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
-            return Binary.intToHexString(Float.floatToIntBits(value));
-         } 
-         else {
-            return Float.toString(value);
-         }
+           switch (base) {
+               case HEXADECIMAL :
+                    return Binary.intToHexString(Float.floatToIntBits(value));
+               case ASCII :
+                    return Binary.intToAscii(Float.floatToIntBits(value));
+               default:
+                    return Float.toString(value);
+            }
       }
        
       
@@ -203,13 +203,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * @return a String equivalent of the value rendered appropriately.
      */
        public static String formatNumber(double value, int base) {
-         if (base == NumberDisplayBaseChooser.HEXADECIMAL) {
-            long lguy = Double.doubleToLongBits(value);
-            return Binary.NumberToHexString(Binary.highOrderLongToInt(lguy), "64");
-         } 
-         else {
-            return Double.toString(value);
-         }
+           String result;
+           switch (base) {
+               case HEXADECIMAL :
+                   result = Double.toHexString(value);
+                   break;
+               case ASCII :
+                   result = Binary.longToAscii(Double.doubleToRawLongBits(value));
+                   break;
+               default :
+                   result = Double.toString(value);
+           }
+           return result;
       }		 
    
     /**

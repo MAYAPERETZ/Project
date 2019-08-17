@@ -1,10 +1,11 @@
    package mars.util;
-	import mars.Globals;
-    import mars.mips.hardware.MemoryConfigurations;
-    import mars.mips.instructions.GenMath;
-    import mars.venus.NumberDisplayBaseChooser;
 
-    import java.util.*;
+   import mars.Globals;
+   import mars.mips.hardware.MemoryConfigurations;
+   import mars.mips.instructions.GenMath;
+   import mars.venus.NumberDisplayBaseChooser;
+
+   import java.util.Arrays;
 
 	
 	/*
@@ -269,8 +270,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static String intToHexString(int d)
       {
     	
-         String leadingZero = new String("0");
-         String leadingX = new String("0x");
+         String leadingZero = "0";
+         String leadingX = "0x";
          String t = Integer.toHexString(d);
          while (t.length() < 8)
             t = leadingZero.concat(t);
@@ -292,11 +293,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      */
        public static String intToHalfHexString(int d)
       {
-         String leadingZero = new String("0");
-         String leadingX = new String("0x");
+         String leadingZero = "0";
+         String leadingX = "0x";
          String t = Integer.toHexString(d);
          if (t.length() > 4) {
-            t = t.substring(t.length()-4, t.length());
+            t = t.substring(t.length()-4);
          }
          while (t.length() < 4)
             t = leadingZero.concat(t);
@@ -364,6 +365,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          return result.toString();
       }
+
+    /**
+     * Produce ASCII string equivalent of integer value, interpreting it as 4 one-byte
+     * characters.  If the value in a given byte does not correspond to a printable
+     * character, it will be assigned a default character (defined in config.properties)
+     * for a placeholder.
+     *
+     * @param d The int value to interpret
+     * @return String that represents ASCII equivalent
+     */
+        public static String longToAscii(long d) {
+            StringBuilder result = new StringBuilder(16);
+            for (int i=7; i>=0; i--) {
+                int byteValue = getByte(d, i);
+                result.append((byteValue < Globals.ASCII_TABLE.length) ? Globals.ASCII_TABLE[byteValue] : Globals.ASCII_NON_PRINT );
+            }
+            return result.toString();
+    }
+
    	    
     /**
      * Attempt to validate given string whose characters represent a 32 bit integer.
@@ -626,6 +646,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static int getByte(int value, int bite) {
          return value << ((3-bite)<<3) >>> 24;
       }
+
+    /**
+     *  Gets the specified byte of the specified value.
+     *   @param value The value in which the byte is to be retrieved.
+     *   @param bite byte position in range 0 (least significant) to 7 (most)
+     *   @return zero-extended byte value in low order byte.
+     **/
+
+        public static int getByte(long value, int bite) {
+            return (int)(value << ((7-bite)<<7) >>> 56);
+        }
      
            // KENV 1/4/05
    /**
@@ -728,6 +759,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	   return GenMath.sra(GenMath.sll(val, shift), shift);
        }
        
-       
+       public static int sizeof(Number number){
+           if (number instanceof Integer)
+               return Integer.BYTES;
+           return Long.BYTES;
+       }
       
    }

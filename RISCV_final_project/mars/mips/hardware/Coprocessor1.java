@@ -1,12 +1,17 @@
 package mars.mips.hardware;
+import com.sun.jmx.snmp.SnmpUnsignedInt;
+import jdk.jfr.Unsigned;
 import mars.mips.instructions.R_type;
 import mars.util.*;
 import mars.Globals;
 import mars.ProgramStatement;
 import mars.simulator.Exceptions;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
@@ -273,29 +278,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            } 
            return old;
         }
-      
-       public static Number updateRegisterWithExecptions(Number num,  Number val, ProgramStatement statement) throws FloatingPointException {
+
+		public static Number updateRegisterWithExecptions(Number num,  Number val, ProgramStatement statement) throws FloatingPointException {
            Number old = 0;
            int num2 = num.intValue();
-           float floatVal = Float.intBitsToFloat(val.intValue());        
-           
-           if(Coprocessor1.isUnderflow(floatVal, Coprocessor1.getFclass(floatVal))) {
-          	 throw new FloatingPointException(statement,"Floating-point Arithmetic Underflow :",
-               		Exceptions.FLOATING_POINT_UNDERFLOW);
-           }
-           else if (Float.isInfinite(floatVal)) {
-          	 throw new FloatingPointException(statement,"Floating-point Arithmetic Overflow :",
-          		Exceptions.FLOATING_POINT_OVERFLOW);
-           }
-           else if (Float.isNaN(floatVal)) {
-        	   throw new FloatingPointException(statement,"Floating-point Invalid Operation :",
-                 		Exceptions.FLOATING_POINT_INVALID_OP);
-           }
+
+           if(Coprocessor1.isUnderflow(val, Coprocessor1.getFclass(val)))
+          	 throw new FloatingPointException(Exceptions.FLOATING_POINT_UNDERFLOW);
+           else if (Coprocessor1.isInfinite(val))
+          	 throw new FloatingPointException(Exceptions.FLOATING_POINT_OVERFLOW);
+           else if (Coprocessor1.isNan(val))
+        	   throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
+
            // need to implemtent the inexact exception, don't know how...
            
            old = (Globals.getSettings().getBackSteppingEnabled())
                           ? Globals.program.getBackStepper().addCoprocessor1Restore(num2 , registers.get(num2).setValue(val).longValue())
                     		: registers.get(num2).setValue(val).longValue();
+
 
            return old;
         }
@@ -404,7 +404,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             registers.get(i).deleteObserver(observer);
          fcsr.deleteObserver(observer);
       }
-      
+
+      public static int getFclass(Number val){
+       	if(val instanceof Float)
+       		return getFclass(val.floatValue());
+       	return getFclass(val.doubleValue());
+	  }
+
       public static int getFclass(Float value) {
     	 
     	  if(value == Float.NEGATIVE_INFINITY)
@@ -466,16 +472,55 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
       
       
-      private static int getRougingMode() {
+      private static int getRoundingMode() {
     	  return (fcsr.getValue().intValue()&0x000000e0);
       }
       
-      public static boolean isUnderflow(float value, int classification) {
-    	  return (Float.isFinite(value) && classification != fclass.NEGATIVE_NORMAL.ordinal() 
-    			  && classification != fclass.POSITIVE_NORMAL.ordinal() && !Float.isNaN(value)
-    			  && value != 0);
+      public static boolean isUnderflow(Number value, int classification) {
+       	  if (value instanceof Float)
+    	  	return (Float.isFinite(value.floatValue()) && classification != fclass.NEGATIVE_NORMAL.ordinal()
+    			  && classification != fclass.POSITIVE_NORMAL.ordinal() && !Double.isNaN(value.floatValue())
+    			  && value.floatValue() != 0);
+       	  return (Double.isFinite(value.floatValue()) && classification != fclass.NEGATIVE_NORMAL.ordinal()
+				  && classification != fclass.POSITIVE_NORMAL.ordinal() && !Double.isNaN(value.doubleValue())
+				  && value.doubleValue() != 0);
       }
-      
+
+	public static boolean isNan(Number value) {
+       	if(value instanceof Float){
+       		return Float.isNaN(value.floatValue());
+		}
+       	return Double.isNaN(value.doubleValue());
+	}
+
+	public static boolean isInfinite(Number value) {
+		if(value instanceof Float){
+			return Float.isInfinite(value.floatValue());
+		}
+		return Double.isInfinite(value.doubleValue());
+	}
+
+      public static Number getFCVTOutputUnsigned(Number value){
+		  if(value instanceof Float) {
+			if (value.floatValue() < 0)
+				return 0;
+		  	return 0xffffffff;
+		  }
+		  if(value.doubleValue() < 0)
+		  	return 0;
+		  return 0xffffffffffffffffL;
+	  }
+
+	  public static Number getFCVTOutput(Number value){
+       	if(value instanceof Float){
+       		if(value.floatValue() < 0)
+       			return Integer.MIN_VALUE;
+       		return Integer.MAX_VALUE;
+		}
+       	if(value.doubleValue() < 0)
+       		return Long.MIN_VALUE;
+       	return Long.MAX_VALUE;
+	  }
       
       public static int round(float value) {
 
@@ -491,7 +536,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  case RMM:
     		  return roundToNearestMM(value);
     	  case DYNAMIC:
-    		  return getRougingMode();
+    		  return getRoundingMode();
     		  
     	  }
 		  return Float.floatToRawIntBits(value);
@@ -511,7 +556,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			case RMM:
 				return roundToNearestMM(value);
 			case DYNAMIC:
-				return getRougingMode();
+				return getRoundingMode();
 
 		}
 		return Double.doubleToRawLongBits(value);
@@ -530,7 +575,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	  return round.intValueExact();
       }
       
-      private static int roundToNearestMM(float value) {
+      public static int roundToNearestMM(float value) {
     	  BigDecimal round = new BigDecimal(Float.floatToRawIntBits(value));
     	  round.setScale(round.scale(), RoundingMode.HALF_UP);
     	  return round.intValueExact();

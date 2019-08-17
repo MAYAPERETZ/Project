@@ -1,5 +1,6 @@
 package mars.mips.instructions;
 import mars.*;
+import mars.mips.hardware.FloatingPointException;
 
 /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar

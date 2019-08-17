@@ -3,10 +3,12 @@
    import mars.Globals;
    import mars.mips.hardware.*;
 import mars.mips.hardware.memory.Memory;
-import mars.mips.instructions.GenMath;
-import mars.util.Math2;
+   import mars.util.Binary;
+   import mars.util.Math2;
+   import static mars.mips.instructions.GenMath.*;
 
-import java.io.*;
+
+   import java.io.*;
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
 
@@ -73,12 +75,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     		   throws AddressErrorException, IOException {
          PrintStream out = new PrintStream(new FileOutputStream(file));
          try {
-            for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = GenMath.add(address, Memory.WORD_LENGTH_BYTES)) {
+            for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = add(address, Memory.WORD_LENGTH_BYTES)) {
                Number temp = Globals.memory.getRawWordOrNull(address);
                if (temp == null) 
                   break;
-               for (int i = 0; i < MemoryConfigurations.getCurrentComputingArchitecture()/8; i++) 
-                  out.write((word >>> (i << 3)) & 0xFF);
+                Number word = temp;
+                for (int i = 0; i < Binary.sizeof(firstAddress); i++)
+                  out.write(and(srl(word, sll(i, (Binary.sizeof(firstAddress)/8))), 0xFF).intValue());
             }
          } 
          finally { 

@@ -2,11 +2,18 @@
 
    import mars.Globals;
    import mars.ProgramStatement;
+   import mars.mips.hardware.AddressErrorException;
+   import mars.mips.hardware.memory.Memory;
+   import mars.mips.instructions.GenMath;
    import mars.util.Binary;
-   import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
+   import mars.util.Math2;
 
-import java.io.*;
+   import java.io.File;
+   import java.io.FileOutputStream;
+   import java.io.IOException;
+   import java.io.PrintStream;
+
+   import static mars.mips.instructions.GenMath.add;
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
 
@@ -79,7 +86,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
    *  @throws IOException if error occurs during file output.
    */
-       public void dumpMemoryRange(File file, long firstAddress, long lastAddress) 
+       public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
         throws AddressErrorException, IOException {
       
          PrintStream out = new PrintStream(new FileOutputStream(file));
@@ -89,22 +96,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// If address in data segment, print in same format as Data Segment Window
          if (Memory.getInstance().getDataTable().inSegment(firstAddress)) {
             boolean hexValues = Globals.getSettings().getDisplayValuesInHex();
-            int offset = 0;
+            Number offset = 0;
             String string="";
             try {
-               for (long address = firstAddress; address <= lastAddress; address += Memory.WORD_LENGTH_BYTES) {
-                  if (offset % 8 == 0) {
-                     string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.unsignedLongToLongString(address))  + "    ";
+                for (Number address = firstAddress; !Math2.isLt(lastAddress, address);
+                     address = add(address, Memory.WORD_LENGTH_BYTES)) {
+                  if (Math2.isEqz(GenMath.rem(offset, Binary.sizeof(address)))) {
+                     string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.toUnsignedNumber(address))  + "    ";
                   }
-                  offset++;
-                  Long temp = Globals.memory.getRawWordOrNull(address);
+                  GenMath.add(offset, 1);
+                  Number temp = Globals.memory.getRawWordOrNull(address);
                   if (temp == null) 
                      break;
                   string += ((hexValues) 
                              ? Binary.intToHexString(temp.intValue()) 
                      		  : ("           "+temp).substring(temp.toString().length()) 
                      		 ) + " ";
-                  if (offset % 8 == 0) {
+                  if (Math2.isEqz(GenMath.rem(offset, Binary.sizeof(address)))) {
                      out.println(string);
                      string = "";
                   }
@@ -125,11 +133,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	//           12345678901234567890123456789012345678901234567890
       	//                    1         2         3         4         5
          out.println();
-         String string = null;
+         String string;
          try {
-            for (long address = firstAddress; address <= lastAddress; address += Memory.WORD_LENGTH_BYTES) {
-               string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.unsignedLongToLongString(address))  + "  ";
-               Long temp = Globals.memory.getRawWordOrNull(address);
+             for (Number address = firstAddress; !Math2.isLt(lastAddress, address);
+                  address = add(address, Memory.WORD_LENGTH_BYTES)) {
+               string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.toUnsignedNumber(address))  + "  ";
+               Number temp = Globals.memory.getRawWordOrNull(address);
                if (temp == null) 
                   break;
                string += Binary.intToHexString(temp.intValue()) + "  ";
@@ -148,6 +157,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             out.close(); 
          }
       }
-   
-   
-   }
+
+
+}

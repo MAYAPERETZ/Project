@@ -116,40 +116,40 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "ttttttttttttsssss000fffff0010011",GenMath::add));
 
          instructionList.add(
-                new R_M("mul t1,t2,t3",
+                new R_type.RVM("mul t1,t2,t3",
             	 "Multiplication : Set hi to high-order 32 bits, lo to low-order 32 bits of the product of $t1 and $t2 (use mfhi to access hi, mflo to access lo)",
                 "000", GenMath::mul));
          instructionList.add(
-                 new R_M("mulh t1,t2,t3",
+                 new R_type.RVM("mulh t1,t2,t3",
              	 "Multiplication : Set hi to high-order 32 bits, lo to low-order 32 bits of the product of $t1 and $t2 (use mfhi to access hi, mflo to access lo)",
                  "001", GenMath::mulh));
          
          instructionList.add(
-                 new R_M("mulhsu t1,t2,t3",
+                 new R_type.RVM("mulhsu t1,t2,t3",
              	 "Multiplication unsigned : Set HI to high-order 32 bits, LO to low-order 32 bits of the product of unsigned $t1 and $t2 (use mfhi to access HI, mflo to access LO)",
                  "010",GenMath::mulhsu));
          
          instructionList.add(
-                new R_M("mulhu t1,t2,t3",
+                new R_type.RVM("mulhu t1,t2,t3",
             	 "Multiplication unsigned : Set HI to high-order 32 bits, LO to low-order 32 bits of the product of unsigned $t1 and $t2 (use mfhi to access HI, mflo to access LO)",
                 "011",GenMath::mulhu));
 
          instructionList.add(
-                new R_M_DIV("div t1,t2,t3",
+                new R_type.Div("div t1,t2,t3",
             	 "Division with overflow : Divide $t1 by $t2 then set LO to quotient and HI to remainder (use mfhi to access HI, mflo to access LO)",
                 "100",GenMath::div));
          instructionList.add(
-                new R_M_DIV("divu t1,t2,t3",
+                new R_type.Div("divu t1,t2,t3",
             	 "Division unsigned without overflow : Divide unsigned $t1 by $t2 then set LO to quotient and HI to remainder (use mfhi to access HI, mflo to access LO)",
                 "101", GenMath::divu));
          
          instructionList.add(
-                 new R_M_DIV("rem t1,t2,t3",
+                 new R_type.Div("rem t1,t2,t3",
              	 "Division with overflow : Divide $t1 by $t2 then set LO to quotient and HI to remainder (use mfhi to access HI, mflo to access LO)",
                  "110", GenMath::rem));
          
          instructionList.add(
-                 new R_M_DIV("remu t1,t2,t3",
+                 new R_type.Div("remu t1,t2,t3",
              	 "Division unsigned without overflow : Divide unsigned $t1 by $t2 then set LO to quotient and HI to remainder (use mfhi to access HI, mflo to access LO)",
                  "111", (GenMath::remu)));
 
@@ -432,8 +432,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            if (Float.isInfinite(sum)) {
                                Coprocessor1.updateRegister(operands[0], Coprocessor1.round(sum));
 
-                               throw new FloatingPointException(statement,"Floating-point Arithmetic Overflow",
-                                  Exceptions.FLOATING_POINT_OVERFLOW);
+                               throw new FloatingPointException(Exceptions.FLOATING_POINT_OVERFLOW);
                            }
 
                            Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum), statement);
@@ -450,8 +449,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            float sub2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
                            float diff = sub1 - sub2;
                            if(Coprocessor1.isUnderflow(diff, Coprocessor1.getFclass(diff))) {
-                               throw new FloatingPointException(statement,"Floating-point Arithmetic Underflow",
-                                       Exceptions.FLOATING_POINT_UNDERFLOW);
+                               throw new FloatingPointException(Exceptions.FLOATING_POINT_UNDERFLOW);
                            }
                            else
                                Coprocessor1.updateRegisterWithExecptions(operands[0].intValue(), Coprocessor1.round(diff), statement);
@@ -477,8 +475,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            float div1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
                            float div2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
                            if(div2 == 0){
-                               throw new FloatingPointException(statement, "Divide by Zero Exception: ",
-                                       Exceptions.DIVIDE_BY_ZERO_EXCEPTION);
+                               throw new FloatingPointException(Exceptions.DIVIDE_BY_ZERO_EXCEPTION);
                            }
                            else {
                                float quot = div1 / div2;
@@ -605,7 +602,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         }));
 
          instructionList.add(
-                 new R_type.WithTwoOperands("fmv.x.w t1,ft2",
+                 new R_type("fmv.x.w t1,ft2",
                  "Floating-point Move Word to Integer, Single-Presicion.",
                  "111100000000sssss000fffff1010011",
                          e->e, Coprocessor1::getIntValue, RV32IRegisters::updateRegister));
@@ -660,9 +657,83 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            Coprocessor1.updateRegister(operands[0], Coprocessor1.getFclass(rs1));
                         }));
 
+          instructionList.add(
+                  new R_type("fcvt.w.s t1,ft2",
+                          "Floating-point Convert to Word from Single. ",
+                          "110000000000sssssxxxfffff1010011",
+                          statement -> {
+                              Number[] operands = statement.getOperands();
+                              Number rs1;
+                              try {
+                                   rs1 = Integer.parseInt(""+Coprocessor1.getFloatValue(operands[1]));
+                              }catch (NumberFormatException nfe){
+                                  rs1 = Coprocessor1.getFCVTOutput(Coprocessor1.getFloatValue(operands[1]));
+                                  RV32IRegisters.updateRegister(operands[0], rs1);
+                                  throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
+                              }
+                              RV32IRegisters.updateRegister(operands[0], rs1);
+                          }));
+
+          /***
+           * Floating-point-to-integer and integer-to-floating-point conversion instructions are encoded in the
+           * OP-FP major opcode space. FCVT.W.S or FCVT.L.S converts a floating-point number in floatingpoint register rs1
+           * to a signed 32-bit or 64-bit integer, respectively, in integer register rd. FCVT.S.W
+           * or FCVT.S.L converts a 32-bit or 64-bit signed integer, respectively, in integer register rs1 into a
+           * floating-point number in floating-point register rd. FCVT.WU.S, FCVT.LU.S, FCVT.S.WU, and
+           * FCVT.S.LU variants convert to or from unsigned integer values. FCVT.L[U].S and FCVT.S.L[U]
+           * are illegal in RV32. If the rounded result is not representable in the destination format, it is
+           * clipped to the nearest value and the invalid flag is set. Table 8.4 gives the range of valid inputs for
+           * FCVT.int.S and the behavior for invalid inputs.
+           *
+           * -----------------------------------------------------------------------------------------------------------
+           *                                            |   FCVT.W.S   |   FCVT.WU.S    |   FCVT.L.S    |  FCVT.LU.S   |
+           * -----------------------------------------------------------------------------------------------------------
+           * Minimum valid input (after rounding)       |    −2**31    |       0        |   -2**63      |       0      |
+           * Maximum valid input (after rounding)       |   2**31−1    |    2**32−1     |   2**63-1     |   2**64-1    |
+           * -----------------------------------------------------------------------------------------------------------
+           * Output for out-of-range negative input −2  |    −2**31    |       0        |   -2**63      |       0      |
+           * -----------------------------------------------------------------------------------------------------------
+           * Output for −∞                              |    −2**31    |       0        |   -2**63      |       0      |
+           * -----------------------------------------------------------------------------------------------------------
+           * Output for out-of-range positive input     |   2**31−1    |     2**32−1    |   2**63-1     |    2**64-1   |
+           * -----------------------------------------------------------------------------------------------------------
+           * Output for +∞ or NaN                       |   2**31−1    |     2**32−1    |   2**63-1     |    2**64-1   |
+           * -----------------------------------------------------------------------------------------------------------
+           */
+          instructionList.add(
+                  new R_type.WithRmField("fcvt.wu.s t1,ft2",
+                          "Floating-point Convert to Unsigned Word from Single. ",
+                          "110000000001sssssxxxfffff1010011",
+                          statement -> {
+                              Number[] operands = statement.getOperands();
+                              float rs1;
+                              try {
+                                  rs1 = Integer.parseUnsignedInt(""+
+                                          Coprocessor1.getFloatValue(operands[1]));
+                              }catch (NumberFormatException nfe){
+                                  rs1 = Integer.parseUnsignedInt(""+
+                                          Coprocessor1.getFCVTOutputUnsigned(
+                                          Coprocessor1.getFloatValue(operands[1])));
+                                  RV32IRegisters.updateRegister(operands[0], rs1);
+                                  throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
+                              }
+                              RV32IRegisters.updateRegister(operands[0], rs1);
+                          }));
+
+          instructionList.add(
+                  new R_type("fcvt.s.w ft1, t1",
+                          "Floating-point Convert to Word from Single. ",
+                          "110100000000sssssxxxfffff1010011",
+                          statement -> {
+                              Number[] operands = statement.getOperands();
+                              Float rs1;
+                              rs1 = Float.intBitsToFloat(RV32IRegisters.getValue(operands[1]).intValue());
+                              Coprocessor1.updateRegister(operands[0], Coprocessor1.round(rs1));
+                          }));
+
 
                 /*
-                      TODO: FCVT.W.S, FCVT.WU.S, FCVT.S.W, FCVT.S.WU
+                      TODO: FCVT.S.W, FCVT.S.WU
                 */
 
           /************************************************************************************************************
@@ -678,7 +749,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            *                                THE RV32/64D INSTRUCTIONS
            ***********************************************************************************************************/
 
-         instructionList.add(// no printed reference, got opcode from SPIM
+         instructionList.add(
                 new I_type.LW_type("fld ft1,-100(t1)",
             	 "Load double word Coprocessor 1 (FPU)) : Set ft1 to 64-bit value from effective memory doubleword address",
                 "ttttttttttttsssss011fffff0000111",
@@ -707,7 +778,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         }));
         	 
          
-         instructionList.add( // no printed reference, got opcode from SPIM
+         instructionList.add(
                 new S_type("fsd ft1,-100(t1)",
             	 "Store double word from Coprocessor 1 (FPU)) : Store 64 bit value in ft1 to effective memory doubleword address",
                  "tttttttsssssfffff011sssss0100111",
@@ -855,8 +926,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                               // overflow detected when sum is positive or negative infinity.
                               if (Double.isInfinite(sum)) {
                                   Coprocessor1.updateRegister(operands[0], Coprocessor1.round(sum));
-                                  throw new FloatingPointException(statement,"Floating-point Arithmetic Overflow",
-                                          Exceptions.FLOATING_POINT_OVERFLOW);
+                                  throw new FloatingPointException(Exceptions.FLOATING_POINT_OVERFLOW);
                               }
 
                               Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum), statement);
@@ -871,15 +941,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
               /*
                   TODO: FCVT.L.D, FCVT.LU.D, FMV.X.D, FCVT.D.L, FCVT.D.LU, FMV.D.X
-                    instructionList.add(
-                          new R_type.WithTwoOperands("fmv.x.d t1,ft2",
-                                  "Floating-point Move Word to Integer, Single-Presicion.",
-                                  "111100000000sssss000fffff1010011",
-                                  e->e, Coprocessor1::getIntValue, RV32IRegisters::updateRegister));
-
               */
-
-
 
 
 

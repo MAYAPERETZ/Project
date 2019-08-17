@@ -686,7 +686,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public Number getRawOrNull(Number address, final int shift) throws AddressErrorException {
          Number value = null;
          int addressLength = (shift % 2);
-         if (!isEqz(rem(address, ((2 * addressLength)*WORD_LENGTH_BYTES)))) {
+         if (!isEqz(addressLength) &&!isEqz(rem(address, ((2 * addressLength)*WORD_LENGTH_BYTES)))) {
             throw new AddressErrorException("address for fetch not aligned on word boundary",
                   Exceptions.ADDRESS_EXCEPTION_LOAD, address);
          }
@@ -694,7 +694,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if(tables.isInAnyBlockTable(address)) {
           	for(int i = 0; i < tables.size()-1; i++) { // all block tables except memory map
          	 	if(tables.get(i).inSegment(address)) {
-         		 	value = ((BlockTable)tables.get(i)).fetchWordFromTable(address, false, shift);
+         		 	value = tables.get(i).fetchWordFromTable(address, false, shift);
          		 	break;
          	 	}
           	}

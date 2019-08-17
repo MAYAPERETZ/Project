@@ -61,7 +61,8 @@ public class Exceptions {
     
     public static final int ADDRESS_EXCEPTION_LOAD = 3;
 	public static final int ADDRESS_EXCEPTION_STORE = 9;
-	
+
+
 	public static final int RESERVED_INSTRUCTION_EXCEPTION = 10;
 	public static final int ARITHMETIC_OVERFLOW_EXCEPTION = 12;
 	public static final int TRAP_EXCEPTION = 13;
@@ -101,7 +102,7 @@ public class Exceptions {
 	 *  @param cause The cause code (see Exceptions for a list). Should be address exception.
 	 *  @param addr The address that caused the exception.
 	 */	
-	public static void setRegisters(int cause, long addr) {
+	public static void  setRegisters(int cause, long addr) {
 	  Coprocessor0.updateRegister(Coprocessor0.VADDR,(int)addr);
 	  setRegisters(cause);
 	}

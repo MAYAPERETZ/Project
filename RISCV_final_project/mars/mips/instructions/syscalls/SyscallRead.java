@@ -1,4 +1,5 @@
    package mars.mips.instructions.syscalls;
+   import mars.mips.instructions.GenMath;
    import mars.util.*;
    import mars.mips.hardware.*;
    import mars.simulator.*;
@@ -54,35 +55,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * and a2 specifies length.  Number of characters read is returned in v0 (starting MARS 3.7).
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         int byteAddress = RV32IRegisters.getValue(5); // destination of characters read from file
+         Number byteAddress = RV32IRegisters.getValue(5); // destination of characters read from file
          byte b = 0;
          int index = 0;
-         byte myBuffer[] = new byte[RV32IRegisters.getValue(6)]; // specified length
+         byte myBuffer[] = new byte[RV32IRegisters.getValue(6).intValue()]; // specified length
          // Call to SystemIO.xxxx.read(xxx,xxx,xxx)  returns actual length
          int retLength = SystemIO.readFromFile(
-                                 RV32IRegisters.getValue(4), // fd
+                                 RV32IRegisters.getValue(4).intValue(), // fd
                                  myBuffer, // buffer
-                                 RV32IRegisters.getValue(6)); // length
+                                 RV32IRegisters.getValue(6).intValue()); // length
          RV32IRegisters.updateRegister(2, retLength); // set returned value in register
-
-         // Getting rid of processing exception.  It is the responsibility of the
-			// user program to check the syscall's return value.  MARS should not
-			// re-emptively terminate MIPS execution because of it.  Thanks to
-			// UCLA student Duy Truong for pointing this out.  DPS 28-July-2009
-         /*
-         if (retLength < 0) // some error in opening file
-         {
-            throw new ProcessingException(statement,
-                                    SystemIO.getFileErrorMessage()+" (syscall 14)",
-                                    Exceptions.SYSCALL_EXCEPTION);
-         }
-			*/                
+           
          // copy bytes from returned buffer into MARS memory
          try
          {
             while (index < retLength)
             {
-               Globals.memory.setByte(byteAddress++,
+               Globals.memory.setByte(GenMath.add(byteAddress,1),
                                         myBuffer[index++]);
             }
          } 

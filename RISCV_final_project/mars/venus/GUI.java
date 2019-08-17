@@ -66,8 +66,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    JSplitPane splitter, horizonSplitter;
    JPanel north;
 
-   private int frameState; // see windowActivated() and windowDeactivated()
-   private static int menuState = FileStatus.NO_FILE;
+        private static int menuState = FileStatus.NO_FILE;
   	
 	// PLEASE PUT THESE TWO (& THEIR METHODS) SOMEWHERE THEY BELONG, NOT HERE
    private static boolean reset= true; // registers/memory reset for execution
@@ -109,7 +108,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    					settingsDelayedBranchingAction, settingsExceptionHandlerAction, settingsEditorAction,
    					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction;    
    private Action helpHelpAction, helpAboutAction;
-   private javax.swing.JPanel toolBarPanel, contentPane;
    NewObservable observable;
    private JToolBar toolBar;
    /**
@@ -279,17 +277,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            fileSaveAllAction = new FileSaveAllAction("Save All", null,
                                            "Save all open files", new Integer(KeyEvent.VK_V),
               									  null, mainUI, observable);	
-    //       fileDumpMemoryAction = new FileDumpMemoryAction("Dump Memory ...", 
-      //                                     new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump22.png"))),
-        //      									  "Dump machine code or data in an available format", new Integer(KeyEvent.VK_D),
-         //     									  KeyStroke.getKeyStroke( KeyEvent.VK_D, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
-           //   									  mainUI);
+           fileDumpMemoryAction = new FileDumpMemoryAction("Dump Memory ...",
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump22.png"))),
+              									  "Dump machine code or data in an available format", new Integer(KeyEvent.VK_D),
+              									  KeyStroke.getKeyStroke( KeyEvent.VK_D, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
+             									  mainUI);
               									  	
-  /*         filePrintAction = new FilePrintAction("Print ...", 
+           filePrintAction = new FilePrintAction("Print ...",
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print22.gif"))),
               									  "Print current file", new Integer(KeyEvent.VK_P),
               									  null, mainUI);
-              									  */	
+
            fileExitAction = new FileExitAction("Exit", null,
               	                         "Exit", new Integer(KeyEvent.VK_X),
               									  null, mainUI, observable);	
@@ -457,14 +455,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               									  "View and modify memory segment base addresses for simulated MIPS.",
               									  null,null,
               									  mainUI, observable);
-   /*        helpHelpAction = new HelpHelpAction("Help", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help22.png"))),
+           helpHelpAction = new HelpHelpAction("Help",
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"help.png"))),
               									  "Help", new Integer(KeyEvent.VK_H),
               									  KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
               									  mainUI);	
            helpAboutAction = new HelpAboutAction("About ...",null, 
                                            "Information about Mars", null,null, mainUI);
-                                           */	
+
         } 
             catch (NullPointerException e) {
               System.out.println("Internal Error: images folder not found, or other null pointer exception while creating Action objects");
@@ -511,10 +509,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       fileSaveAs.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"SaveAs16.png"))));
       fileSaveAll = new JMenuItem(fileSaveAllAction);
       fileSaveAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-    //  fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
-     // fileDumpMemory.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump16.png"))));
-   //   filePrint = new JMenuItem(filePrintAction);
-     // filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
+      fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
+      fileDumpMemory.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump16.png"))));
+      filePrint = new JMenuItem(filePrintAction);
+      filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
       fileExit = new JMenuItem(fileExitAction);
       fileExit.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
       file.add(fileNew);
@@ -525,11 +523,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       file.add(fileSave);
       file.add(fileSaveAs);
       file.add(fileSaveAll);
-   //   if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
-    //     file.add(fileDumpMemory);
-    //  }
-   //   file.addSeparator();
- //     file.add(filePrint);
+      if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
+         file.add(fileDumpMemory);
+      }
+      file.addSeparator();
+      file.add(filePrint);
       file.addSeparator();
       file.add(fileExit);
    	
@@ -639,7 +637,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       settings.add(settingsHighlighting);
       settings.add(settingsExceptionHandler);
       settings.add(settingsMemoryConfiguration);
-   /*			
+
       helpHelp = new JMenuItem(helpHelpAction);
       helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help16.png"))));//"Help16.gif"))));
       helpAbout = new JMenuItem(helpAboutAction);
@@ -647,14 +645,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       help.add(helpHelp);
       help.addSeparator();
       help.add(helpAbout);
-   */
+
       menuBar.add(file);
       menuBar.add(edit);
       menuBar.add(run);
       menuBar.add(settings);
  //     JMenu toolMenu = new ToolLoader().buildToolsMenu();
    //   if (toolMenu != null) menuBar.add(toolMenu);
-    //  menuBar.add(help);
+      menuBar.add(help);
    	
    
    	
@@ -731,8 +729,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       Pause = new ToolBarComponent(runPauseAction);
       Pause.setText("");   
       
-     // Help= new JButton(helpHelpAction);
-    //  Help.setText("");
+      Help= new ToolBarComponent(helpHelpAction);
+      Help.setText("");
       
       toolBar.add(New);
       toolBar.add(Open);
@@ -757,9 +755,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       toolBar.add(Pause);
       toolBar.add(Stop);
       toolBar.add(Reset);
-    //  toolBar.add(new JToolBar.Separator());
-     // toolBar.add(Help);
-    //  toolBar.add(new JToolBar.Separator());
+      toolBar.add(new JToolBar.Separator());
+      toolBar.add(Help);
+      toolBar.add(new JToolBar.Separator());
    	
       return toolBar;
    }

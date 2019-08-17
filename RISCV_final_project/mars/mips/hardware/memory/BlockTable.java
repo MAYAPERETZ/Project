@@ -61,8 +61,9 @@ public class BlockTable extends AbstractBlockTable{
 			
 		}
 		if(Globals.debug) {
-			System.out.println(" relativeWordAddress: " + relativeNumberAddress);
-			System.out.print("address: " +address);
+			System.out.println("-------------------------------------------------------------------------------------");
+			System.out.println("relativeNumberAddress: " + relativeNumberAddress);
+			System.out.println("address: " +address);
 		}
 		
 		for (NumberPositionInValue = (numOfBytes-1); Math2.isLt(loopStopper, NumberPositionInValue); NumberPositionInValue = sub(NumberPositionInValue, 1)) {
@@ -70,6 +71,12 @@ public class BlockTable extends AbstractBlockTable{
 			relativeWordAddress = sra(relativeNumberAddress, 2);
 			block = div(relativeWordAddress, BLOCK_LENGTH_WORDS).intValue();  // Block Number
 			offset = rem(relativeWordAddress, BLOCK_LENGTH_WORDS).intValue(); // Word within that block
+			if(Globals.debug) {
+				System.out.println("relativeWordAddress: " + relativeWordAddress);
+				System.out.println("address: " +address);
+				System.out.println("block: " + block);
+				System.out.println("offset: " +offset);
+			}
 			if (blockTable[block] == null) {
 				if (operation == op.STORE) 
 					blockTable[block] = new Number[BLOCK_LENGTH_WORDS];

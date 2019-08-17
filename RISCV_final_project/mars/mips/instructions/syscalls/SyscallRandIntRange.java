@@ -58,14 +58,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           //    $a1 = the upper bound of range of returned values.
           // Return: $a0 = the next pseudorandom, uniformly distributed int value from this
           // random number generator's sequence.
-         Integer index = new Integer(RV32IRegisters.getValue(4));
+         Integer index = new Integer(RV32IRegisters.getValue(4).intValue());
          Random stream = (Random) RandomStreams.randomStreams.get(index);
          if (stream == null) {
             stream = new Random(); // create a non-seeded stream
             RandomStreams.randomStreams.put(index, stream);
          } 
          try {
-            RV32IRegisters.updateRegister(4, stream.nextInt( RV32IRegisters.getValue(5) ) );
+            RV32IRegisters.updateRegister(4, stream.nextInt( RV32IRegisters.getValue(5).intValue() ) );
          } 
              catch (IllegalArgumentException iae) {
                throw new ProcessingException(statement,

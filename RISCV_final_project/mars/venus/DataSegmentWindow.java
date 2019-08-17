@@ -50,9 +50,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	  **/
     
    public class DataSegmentWindow extends JInternalFrame implements Observer {
-   
-      private static final String [] dataSegmentNames={"Data", "Stack", "Kernel"};
-      private static  Object[][] dataData;
+
+       private static  Object[][] dataData;
    
       private static JTable dataTable;
       private JScrollPane dataTableScroller;
@@ -90,9 +89,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       JComboBox  baseAddressSelector;
    	
    	// The next bunch are initialized dynamically in initializeBaseAddressChoices()
-      private String[] displayBaseAddressChoices; 
-      private Number[] displayBaseAddresses;
-      private int defaultBaseAddressIndex;
+      private String[] displayBaseAddressChoices;
+       private int defaultBaseAddressIndex;
       private JPanel panel;
       private  JTabbedPane tabbedPane;
       JButton[] baseAddressButtons;
@@ -195,7 +193,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			
          displayBaseAddressChoices = createBaseAddressLabelsArray(displayBaseAddressArray, descriptions);
          baseAddressSelector.setModel(new CustomComboBoxModel(displayBaseAddressChoices));
-         displayBaseAddresses = displayBaseAddressArray;
          baseAddressSelector.setSelectedIndex(defaultBaseAddressIndex);
       }
    	
@@ -358,7 +355,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          baseAddressButtons[KERNEL_DATA_BASE_ADDRESS_INDEX]=kernButton;
          baseAddressButtons[MMIO_BASE_ADDRESS_INDEX]=mmioButton;
          baseAddressButtons[TEXT_BASE_ADDRESS_INDEX]=textButton;
-         displayBaseAddresses = displayBaseAddressArray;
          displayBaseAddressChoices = createBaseAddressLabelsArray(displayBaseAddressArray, descriptions);
          defaultBaseAddressIndex = DATA_BASE_ADDRESS_INDEX;
       }
