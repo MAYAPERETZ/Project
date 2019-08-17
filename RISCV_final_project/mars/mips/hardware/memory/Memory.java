@@ -206,8 +206,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 */
    	 
        public void clear() {
-           initialize();
+           /*
+           Todo: There is an issue when calling initialize() before setConfiguration() - after the block size reaches
+             its max capacity, an exception is thrown instead of cleanly terminate the process.
+             On the other hand, when calling  setConfiguration() before initialize(), the new address space is not set.
+            need to figure out how to implement this shit.
+            */
            setConfiguration();
+           initialize();
+
        }
    
      /**
@@ -246,8 +253,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private void initialize() {
          heapAddress = heapBaseAddress;
          tables = new BlockTables();
-         kernelTextBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getDefaultKernelTextBaseAddress());
-         textBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getDefaultTextBaseAddress());    
+         kernelTextBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getCurrentConfiguration().getKernelTextBaseAddress());
+         textBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getCurrentConfiguration().getTextBaseAddress());
          System.gc(); // call garbage collector on any Table memory just deallocated. 	  
       }  
      
