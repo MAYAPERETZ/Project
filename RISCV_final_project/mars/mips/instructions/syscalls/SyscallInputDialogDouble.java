@@ -1,7 +1,5 @@
    package mars.mips.instructions.syscalls;
-   import mars.util.*;
    import mars.mips.hardware.*;
-	import mars.simulator.*;
    import mars.*;
 import javax.swing.JOptionPane;
 
@@ -61,7 +59,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
          String message = new String(); // = "";
-         int byteAddress = RV32IRegisters.getValue(4).intValue();
+         int byteAddress = RVIRegisters.getValue(4).intValue();
          char ch[] = { ' '}; // Need an array to convert to String
          try
          {
@@ -90,11 +88,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               Coprocessor1.setRegister(0, 0.0);  // set $f0 to zero
               if (inputValue == null)  // Cancel was chosen
               {
-                 RV32IRegisters.updateRegister(5, -2 );  // set $a1 to -2 flag
+                 RVIRegisters.updateRegister(5, -2 );  // set $a1 to -2 flag
               }
               else if (inputValue.length() == 0)  // OK was chosen but there was no input
               {
-                 RV32IRegisters.updateRegister(5, -3 );  // set $a1 to -3 flag
+                 RVIRegisters.updateRegister(5, -3 );  // set $a1 to -3 flag
               }
               else
               {
@@ -102,23 +100,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
                    // Successful parse of valid input data
                    Coprocessor1.setRegister(0, doubleValue);  // set $f0 to input data
-                   RV32IRegisters.updateRegister(5, 0 );  // set $a1 to valid flag
+                   RVIRegisters.updateRegister(5, 0 );  // set $a1 to valid flag
                    
               }
 
             } // end try block
 
-          /*     catch (InvalidRegisterAccessException e)   // register ID error in this method
-               {
-                  RV32IRegisters.updateRegister(5, -1 );  // set $a1 to -1 flag
-                   throw new ProcessingException(statement,
-                       "invalid int reg. access during double input (syscall "+this.getNumber()+")",
-						           Exceptions.SYSCALL_EXCEPTION);
-               }
-	*/
                catch ( NumberFormatException e)    // Unsuccessful parse of input data
                {
-                   RV32IRegisters.updateRegister(5, -1 );  // set $a1 to -1 flag
+                   RVIRegisters.updateRegister(5, -1 );  // set $a1 to -1 flag
                    /*  Don't throw exception because returning a status flag
                    throw new ProcessingException(statement,
                       "invalid float input (syscall "+this.getNumber()+")",

@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="org.pushing-pixels:radiance-substance:2.0.1" type="repository">
+    <properties maven-id="org.pushing-pixels:radiance-substance:2.0.1" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/pushing-pixels/radiance-substance/2.0.1/radiance-substance-2.0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/pushing-pixels/radiance-trident/2.0.1/radiance-trident-2.0.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/pushing-pixels/radiance-neon/2.0.1/radiance-neon-2.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

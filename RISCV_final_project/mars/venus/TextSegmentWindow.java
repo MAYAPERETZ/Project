@@ -541,7 +541,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  execution and when reaching breakpoints.
    	 */
        public void highlightStepAtPC() {
-         highlightStepAtAddress(RV32IRegisters.getProgramCounter(), false);
+         highlightStepAtAddress(RVIRegisters.getProgramCounter(), false);
       }
    	
    	/**
@@ -553,7 +553,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *   otherwise.
    	 */
        public void highlightStepAtPC(boolean inDelaySlot) {
-         highlightStepAtAddress(RV32IRegisters.getProgramCounter(), inDelaySlot);
+         highlightStepAtAddress(RVIRegisters.getProgramCounter(), inDelaySlot);
       }
    	
    	/**

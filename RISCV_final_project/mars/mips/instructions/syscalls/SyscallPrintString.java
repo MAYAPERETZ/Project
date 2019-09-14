@@ -50,7 +50,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Performs syscall function to print string stored starting at address in $a0.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         Number byteAddress = RV32IRegisters.getValue(4);
+         Number byteAddress = RVIRegisters.getValue(4);
          char ch = 0;
          try
          {

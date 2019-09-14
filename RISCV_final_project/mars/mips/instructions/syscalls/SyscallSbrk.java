@@ -1,6 +1,5 @@
    package mars.mips.instructions.syscalls;
-   import mars.util.*;
-	import mars.simulator.*;
+   import mars.simulator.*;
    import mars.mips.hardware.*;
    import mars.*;
 
@@ -53,13 +52,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void simulate(ProgramStatement statement) throws ProcessingException {
          Number address = 0;
          try {
-            address = Globals.memory.allocateBytesFromHeap(RV32IRegisters.getValue(4).intValue());
+            address = Globals.memory.allocateBytesFromHeap(RVIRegisters.getValue(4).intValue());
          } 
              catch (IllegalArgumentException iae) {
                throw new ProcessingException(statement,
                                        iae.getMessage()+" (syscall "+this.getNumber()+")",
                                        Exceptions.SYSCALL_EXCEPTION);
             }
-         RV32IRegisters.updateRegister(2, address);
+         RVIRegisters.updateRegister(2, address);
       }
    }

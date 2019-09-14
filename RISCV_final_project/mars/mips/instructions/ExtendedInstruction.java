@@ -516,7 +516,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                String token = theTokenList.get(op).getValue();
                int regNumber;
                try { // if token is a RegisterFile register, substitute next higher register
-                  regNumber = RV32IRegisters.getUserRegister(token).getNumber();
+                  regNumber = RVIRegisters.getUserRegister(token).getNumber();
                   if (regNumber>=0) {
                      instruction = substitute(instruction, "NR"+op, ""+(regNumber+1));
                   } 

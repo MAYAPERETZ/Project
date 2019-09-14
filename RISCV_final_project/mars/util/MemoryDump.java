@@ -1,11 +1,10 @@
-   package mars.util;
+package mars.util;
 
-   import mars.Globals;
-   import mars.mips.hardware.AddressErrorException;
-   import mars.mips.hardware.memory.Memory;
-
-   import java.util.ArrayList;
-   import java.util.HashMap;
+import mars.Globals;
+import mars.mips.hardware.AddressErrorException;
+import mars.mips.hardware.memory.Memory;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 	/*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
@@ -109,25 +108,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    			
    			
    
-     /**
-      *  Look for first "null" memory value in an address range.  For text segment (binary code), this
-   	*  represents a word that does not contain an instruction.  Normally use this to find the end of 
-   	*  the program.  For data segment, this represents the first block of simulated memory (block length
-   	*  currently 4K words) that has not been referenced by an assembled/executing program.
-   	*
-   	*  @param baseAddress lowest MIPS address to be searched; the starting point
-   	*  @param limitAddress highest MIPS address to be searched
-   	*  @return lowest address within specified range that contains "null" value as described above.
-   	*  @throws AddressErrorException if the base address is not on a word boundary
-   	*/
-       public static int getAddressOfFirstNull(int baseAddress, int limitAddress) throws AddressErrorException {
-         int address = baseAddress;
-         for (; address < limitAddress; address += Memory.WORD_LENGTH_BYTES) {
-            if (Globals.memory.getRawWordOrNull(address) == null) {
+    /**
+    *  Look for first "null" memory value in an address range.  For text segment (binary code), this
+    *  represents a word that does not contain an instruction.  Normally use this to find the end of
+    *  the program.  For data segment, this represents the first block of simulated memory (block length
+    *  currently 4K words) that has not been referenced by an assembled/executing program.
+    *
+    *  @param baseAddress lowest MIPS address to be searched; the starting point
+    *  @param limitAddress highest MIPS address to be searched
+    *  @return lowest address within specified range that contains "null" value as described above.
+    *  @throws AddressErrorException if the base address is not on a word boundary
+    */
+    public static int getAddressOfFirstNull(int baseAddress, int limitAddress) throws AddressErrorException {
+        int address = baseAddress;
+            for (; address < limitAddress; address += Memory.WORD_LENGTH_BYTES) {
+            if (Globals.memory.getRawWordOrNull(address) == null)
                break;
-            } 
-         }
-         return address;
-      }
+
+        }
+    return address;
+    }
    
    }

@@ -1,0 +1,23 @@
+  body {
+  padding-top: 30px;
+  text-align: left;
+  font-family: monaco, monospace;
+  background-size: cover;
+}
+h1, h2 {
+  display: inline-block;
+  background: #fff;
+}
+h1 {
+  font-size: 30px
+}
+h2 {
+  font-size: 20px;
+}
+span {
+  background: #fd0;
+}
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}

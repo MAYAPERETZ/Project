@@ -1,12 +1,15 @@
-   package mars.venus;
-import mars.*;
-   import mars.venus.editors.jeditsyntax.*;
-   import mars.venus.editors.jeditsyntax.tokenmarker.*;
-   import java.awt.*;
-   import java.awt.event.*;
-   import javax.swing.*;
-   import javax.swing.text.*;
-   import javax.swing.border.*;
+package mars.venus;
+
+import mars.Globals;
+import mars.Settings;
+import mars.venus.editors.jeditsyntax.SyntaxStyle;
+import mars.venus.editors.jeditsyntax.SyntaxUtilities;
+import mars.venus.editors.jeditsyntax.tokenmarker.MIPSTokenMarker;
+
+import javax.swing.*;
+import javax.swing.text.Caret;
+import java.awt.*;
+import java.awt.event.*;
 
 	/*
 Copyright (c) 2003-2011,  Pete Sanderson and Kenneth Vollmar
@@ -49,30 +52,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// Used to determine upon OK, whether or not anything has changed.
       String initialFontFamily, initialFontStyle, initialFontSize; 
    	  
-   	  /**
-   	   *  Create a new SettingsEditorAction.  Has all the GuiAction parameters.
-   		*/
-       public SettingsEditorAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI) {
-         super(name, icon, descrip, mnemonic, accel, mainUI);
-      }
+    /**
+    *  Create a new SettingsEditorAction.  Has all the GuiAction parameters.
+    */
+    public SettingsEditorAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI) {
+        super(name, icon, descrip, mnemonic, accel, mainUI);
+    }
    	 
-   	 /**
-   	  *  When this action is triggered, launch a dialog to view and modify
-   	  *  editor settings.
-   	  */
-       public void actionPerformed(ActionEvent e) {
-         editorDialog = new EditorFontDialog(Globals.getGui(), "Text Editor Settings", true, Globals.getSettings().getEditorFont() );
-         editorDialog.setVisible(true);
-      
-      }
+    /**
+    *  When this action is triggered, launch a dialog to view and modify
+    *  editor settings.
+    */
+    public void actionPerformed(ActionEvent e) {
+        editorDialog = new EditorFontDialog(Globals.getGui(), "Text Editor Settings", true, Globals.getSettings().getEditorFont() );
+        editorDialog.setVisible(true);
+    }
    	
       private static final int gridVGap = 2;
       private static final int gridHGap = 2;
-      private static final Border ColorSelectButtonEnabledBorder = new BevelBorder(BevelBorder.RAISED, Color.WHITE, Color.GRAY);
-      private static final Border ColorSelectButtonDisabledBorder = new LineBorder(Color.GRAY, 2); 
-   
-      private static final String GENERIC_TOOL_TIP_TEXT = "Use generic editor (original MARS editor, similar to Notepad) instead of language-aware styled editor";
+
+       private static final String GENERIC_TOOL_TIP_TEXT = "Use generic editor (original MARS editor, similar to Notepad) instead of language-aware styled editor";
    
       private static final String SAMPLE_TOOL_TIP_TEXT = "Current setting; modify using buttons to the right";
       private static final String FOREGROUND_TOOL_TIP_TEXT = "Click, to select text color";
@@ -103,16 +103,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          private int[] syntaxStyleIndex;
          private SyntaxStyle[] defaultStyles,initialStyles, currentStyles;
          private Font previewFont;
-      	
-         private JPanel dialogPanel,syntaxStylePanel,otherSettingsPanel; /////4 Aug 2010
+
+        private JPanel syntaxStylePanel;
+        private JPanel otherSettingsPanel; /////4 Aug 2010
       	
          private JSlider tabSizeSelector;
-         private JSpinner tabSizeSpinSelector, blinkRateSpinSelector, popupPrefixLengthSpinSelector;
-         private JCheckBox lineHighlightCheck, genericEditorCheck, autoIndentCheck;
+         private JSpinner tabSizeSpinSelector;
+        private JSpinner blinkRateSpinSelector;
+        private JCheckBox lineHighlightCheck, genericEditorCheck, autoIndentCheck;
          private Caret blinkCaret;
          private JTextField blinkSample;
-         private ButtonGroup popupGuidanceButtons;
-         private JRadioButton[] popupGuidanceOptions;
+        private JRadioButton[] popupGuidanceOptions;
       	// Flag to indicate whether any syntax style buttons have been clicked
       	// since dialog created or most recent "apply".
          private boolean syntaxStylesAction = false; 
@@ -140,8 +141,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             dialog.add(fontDialogPanel, BorderLayout.WEST);
             dialog.add(syntaxStylePanel, BorderLayout.CENTER);
             dialog.add(otherSettingsPanel, BorderLayout.SOUTH);
-            this.dialogPanel = dialog; /////4 Aug 2010
-            this.syntaxStylePanel = syntaxStylePanel; /////4 Aug 2010
+              this.syntaxStylePanel = syntaxStylePanel; /////4 Aug 2010
             this.otherSettingsPanel = otherSettingsPanel; /////4 Aug 2010
             return dialog;
          }
@@ -152,12 +152,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             JButton okButton = new JButton("Apply and Close");
             okButton.setToolTipText(SettingsHighlightingAction.CLOSE_TOOL_TIP_TEXT);
             okButton.addActionListener(
-                   new ActionListener() {
-                      public void actionPerformed(ActionEvent e) {
-                        performApply();
-                        closeDialog();
-                     }
-                  });
+                    e -> {
+                      performApply();
+                      closeDialog();
+                   });
             JButton applyButton = new JButton("Apply");
             applyButton.setToolTipText(SettingsHighlightingAction.APPLY_TOOL_TIP_TEXT);
             applyButton.addActionListener(
@@ -205,7 +203,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             Globals.getSettings().setBooleanSetting(Settings.GENERIC_TEXT_EDITOR, genericEditorCheck.isSelected());
             Globals.getSettings().setBooleanSetting(Settings.EDITOR_CURRENT_LINE_HIGHLIGHTING, lineHighlightCheck.isSelected());
             Globals.getSettings().setBooleanSetting(Settings.AUTO_INDENT, autoIndentCheck.isSelected());
-            Globals.getSettings().setCaretBlinkRate(((Integer)blinkRateSpinSelector.getValue()).intValue());
+            Globals.getSettings().setCaretBlinkRate((Integer) blinkRateSpinSelector.getValue());
             Globals.getSettings().setEditorTabSize(tabSizeSelector.getValue());
             if (syntaxStylesAction) { 
                for (int i=0; i<syntaxStyleIndex.length; i++) {
@@ -243,10 +241,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// Perform reset on miscellaneous editor settings
           private void resetOtherSettings() {
             tabSizeSelector.setValue(initialEditorTabSize);
-            tabSizeSpinSelector.setValue(new Integer(initialEditorTabSize));
+            tabSizeSpinSelector.setValue(initialEditorTabSize);
             lineHighlightCheck.setSelected(initialLineHighlighting);
 				autoIndentCheck.setSelected(initialAutoIndent); 
-            blinkRateSpinSelector.setValue(new Integer(initialCaretBlinkRate));
+            blinkRateSpinSelector.setValue(initialCaretBlinkRate);
             blinkCaret.setBlinkRate(initialCaretBlinkRate);
             popupGuidanceOptions[initialPopupGuidance].setSelected(true);				
          }
@@ -261,7 +259,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             tabSizeSelector.setToolTipText("Use slider to select tab size from "+Editor.MIN_TAB_SIZE+" to "+Editor.MAX_TAB_SIZE+".");
             tabSizeSelector.addChangeListener(
                     e -> {
-                      Integer value = new Integer(((JSlider)e.getSource()).getValue());
+                      Integer value = ((JSlider) e.getSource()).getValue();
                       tabSizeSpinSelector.setValue(value);
                    });
             SpinnerNumberModel tabSizeSpinnerModel = new SpinnerNumberModel(initialEditorTabSize, Editor.MIN_TAB_SIZE, Editor.MAX_TAB_SIZE, 1); 
@@ -270,7 +268,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             tabSizeSpinSelector.addChangeListener(
                     e -> {
                       Object value = ((JSpinner)e.getSource()).getValue();
-                      tabSizeSelector.setValue(((Integer)value).intValue());
+                      tabSizeSelector.setValue((Integer) value);
                    });
          	
          	// highlighting of current line
@@ -300,7 +298,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             blinkRateSpinSelector.addChangeListener(
                     e -> {
                       Object value = ((JSpinner)e.getSource()).getValue();
-                      blinkCaret.setBlinkRate(((Integer)value).intValue());
+                      blinkCaret.setBlinkRate((Integer) value);
                       blinkSample.requestFocus();
                       blinkCaret.setVisible(true);
                    });
@@ -323,8 +321,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 				leftColumnSettingsPanel.add(autoIndentCheck);
          	
          	// Combine instruction guide off/on and instruction prefix length into radio buttons
-            JPanel rightColumnSettingsPanel = new JPanel(new GridLayout(4,1));				
-            popupGuidanceButtons = new ButtonGroup();
+            JPanel rightColumnSettingsPanel = new JPanel(new GridLayout(4,1));
+              ButtonGroup popupGuidanceButtons = new ButtonGroup();
             popupGuidanceOptions = new JRadioButton[3];
             popupGuidanceOptions[0] = new JRadioButton("No popup instruction or directive guide");
             popupGuidanceOptions[1] = new JRadioButton("Display instruction guide after 1 letter typed");
@@ -360,11 +358,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             syntaxStylesAction = false;
             int count = 0;
          	// Count the number of actual styles specified
-            for (int i=0; i<labels.length; i++) {
-               if (labels[i] != null) {
-                  count++;
-               }
-            }
+              for (String s : labels) {
+                  if (s != null) {
+                      count++;
+                  }
+              }
          	// create new arrays (no gaps) for grid display, refer to original index
             syntaxStyleIndex = new int[count];
             currentStyles = new SyntaxStyle[count];
@@ -489,7 +487,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       // Toggle bold or italic style on preview button when B or I button clicked	
           private class BoldItalicChanger implements ActionListener {
             private int row;
-             public BoldItalicChanger(int row) {
+             BoldItalicChanger(int row) {
                this.row = row;
             }
              public void actionPerformed(ActionEvent e) {
@@ -523,7 +521,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        //   		
           private class ForegroundChanger implements ActionListener {
             private int row;
-             public ForegroundChanger(int pos) {
+             ForegroundChanger(int pos) {
                row = pos;
             }
              public void actionPerformed(ActionEvent e) {
@@ -545,7 +543,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        //   	
           private class DefaultChanger implements ItemListener {
             private int row;
-             public DefaultChanger(int pos) {
+             DefaultChanger(int pos) {
                row = pos;
             }
              public void itemStateChanged(ItemEvent e) {

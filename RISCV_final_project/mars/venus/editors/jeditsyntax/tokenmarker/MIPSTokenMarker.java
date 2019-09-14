@@ -9,6 +9,7 @@
 
    package mars.venus.editors.jeditsyntax.tokenmarker;
 
+   import mars.mips.hardware.RVIRegisters;
    import mars.venus.editors.jeditsyntax.*;
    import mars.mips.instructions.*;
    import mars.assembler.*;
@@ -488,7 +489,7 @@
                cKeywords.add( ((mars.assembler.Directives)directiveSet.get(i)).getName(), Token.KEYWORD2 );
             }
          	// add integer register file
-            ArrayList<mars.mips.hardware.Register> registerFile = mars.mips.hardware.RV32IRegisters.getRegisters();
+            ArrayList<mars.mips.hardware.Register> registerFile = RVIRegisters.getRegisters();
             for (int i=0; i< registerFile.size(); i++) {
                cKeywords.add( registerFile.get(i).getName(), Token.KEYWORD3 );
                cKeywords.add( ""+i, Token.KEYWORD3 );  // also recognize $0, $1, $2, etc

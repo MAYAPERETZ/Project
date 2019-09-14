@@ -6,7 +6,6 @@ import mars.mips.hardware.*;
 import mars.mips.hardware.memory.Memory;
 import mars.mips.hardware.memory.MemoryAccessNotice;
 import mars.mips.instructions.GenMath;
-import org.pushingpixels.substance.api.UiThreadingViolationException;
 import static mars.util.Math2.*;
 import static mars.mips.instructions.GenMath.*;
 import javax.swing.*;
@@ -79,8 +78,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private int addressRow, addressColumn;
       private Settings settings;
    	
-      Number firstAddress,addressRowFirstAddress;
-      Number homeAddress;
+      Number firstAddress = 0,addressRowFirstAddress = 0;
+      Number homeAddress = 0;
       boolean userOrKernelMode;
    
    	// The combo box replaced the row of buttons when Number of buttons expanded to 7!
@@ -269,12 +268,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
          // STEP 2:  Set the combo box appropriately.  This will also display the 
       	// first chunk of addresses from that segment.
-         try {
-            baseAddressSelector.setSelectedIndex(desiredComboBoxIndex);
-         }
-         catch (UiThreadingViolationException e){
-            //do nothing
-         }
+         baseAddressSelector.setSelectedIndex(desiredComboBoxIndex);
+
+
             ((CustomComboBoxModel) baseAddressSelector.getModel()).forceComboBoxUpdate(desiredComboBoxIndex);
          baseAddressButtons[desiredComboBoxIndex].getActionListeners()[0].actionPerformed(null);
       	// STEP 3:  Display memory chunk containing this address, which may be 
@@ -282,12 +278,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Number baseAddress = displayBaseAddressArray[desiredComboBoxIndex];
          if (isEq(baseAddress, -1)) {
             if (desiredComboBoxIndex == GLOBAL_POINTER_ADDRESS_INDEX) {
-               baseAddress = sub(RV32IRegisters.getValue(RV32IRegisters.GLOBAL_POINTER_REGISTER),
-                              rem(RV32IRegisters.getValue(RV32IRegisters.GLOBAL_POINTER_REGISTER), NumberS_PER_ROW));
+               baseAddress = sub(RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER),
+                              rem(RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER), NumberS_PER_ROW));
             } 
             else if (desiredComboBoxIndex == STACK_POINTER_BASE_ADDRESS_INDEX) {
-               baseAddress = sub(RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER),
-                       rem(RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER), NumberS_PER_ROW));   
+               baseAddress = sub(RVIRegisters.getValue(RVIRegisters.STACK_POINTER_REGISTER),
+                       rem(RVIRegisters.getValue(RVIRegisters.STACK_POINTER_REGISTER), NumberS_PER_ROW));
                } 
             else {
                return null;// shouldn't happen since these are the only two
@@ -395,7 +391,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             desiredComboBoxIndex = EXTERN_BASE_ADDRESS_INDEX;
          }
       	// Check distance from global pointer; can be either side of it...
-         thisDistance = abs(sub(address, RV32IRegisters.getValue(RV32IRegisters.GLOBAL_POINTER_REGISTER))); // distance from global pointer
+         thisDistance = abs(sub(address, RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER))); // distance from global pointer
          if (isLt(thisDistance, shortDistance)) {
             shortDistance = thisDistance;
             desiredComboBoxIndex = GLOBAL_POINTER_ADDRESS_INDEX;
@@ -413,7 +409,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             desiredComboBoxIndex = HEAP_BASE_ADDRESS_INDEX;
          }      	
       	// Check distance from stack pointer.  Can be on either side of it...
-         thisDistance = abs(sub(address, RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER)));
+         thisDistance = abs(sub(address, RVIRegisters.getValue(RVIRegisters.STACK_POINTER_REGISTER)));
          if (isLt(thisDistance, shortDistance)) {
             shortDistance = thisDistance;
             desiredComboBoxIndex = STACK_POINTER_BASE_ADDRESS_INDEX;
@@ -710,10 +706,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   	// get $gp global pointer, but guard against it having value below data segment
                      if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
                     	 firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                    			 ,RV32IRegisters.getValue(RV32IRegisters.GLOBAL_POINTER_REGISTER).intValue());
+                    			 , RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER).intValue());
                      else
                     	 firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                    			 ,RV32IRegisters.getValue(RV32IRegisters.GLOBAL_POINTER_REGISTER).longValue());
+                    			 , RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER).longValue());
                   	// updateModelForMemoryRange requires argument to be multiple of 4
                   	// but for cleaner display we'll make it multiple of 32 (last nibble is 0).  
                   	// This makes it easier to mentally calculate address from row address + column offset.
@@ -730,10 +726,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                     // get $sp stack pointer, but guard against it having value below data segment
                     if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
                        firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                                ,RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER).intValue());
+                                , RVIRegisters.getValue(RVIRegisters.STACK_POINTER_REGISTER).intValue());
                     else
                        firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                                ,RV32IRegisters.getValue(RV32IRegisters.STACK_POINTER_REGISTER).longValue());
+                                , RVIRegisters.getValue(RVIRegisters.STACK_POINTER_REGISTER).longValue());
                     // See comment above for gloButton...
                     firstAddress = sub(firstAddress, rem(firstAddress, NumberS_PER_ROW));
                     homeAddress = Globals.memory.getInstance().getStackTable().getBaseAddress();

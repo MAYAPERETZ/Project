@@ -11,9 +11,9 @@ public class GenMath {
 	        return null;
 
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() + y.longValue());
+	        return (T) Long.valueOf(x.longValue() + y.longValue());
 	     else
-	        return (T)new Integer(x.intValue() + y.intValue());
+	        return (T) Integer.valueOf(x.intValue() + y.intValue());
 	  
 	 }
 	
@@ -24,9 +24,9 @@ public class GenMath {
 	        return null;
 
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() - y.longValue());
+	        return (T) Long.valueOf(x.longValue() - y.longValue());
 	     else
-	        return (T)new Integer(x.intValue() - y.intValue());
+	        return (T) Integer.valueOf(x.intValue() - y.intValue());
 	 }
 	
 	public static<T extends Number> T mul(T x, T y){
@@ -35,8 +35,8 @@ public class GenMath {
 	        return null;
 
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() * y.longValue());
-	     else return (T)new Integer(x.intValue() * y.intValue());
+	        return (T) Long.valueOf(x.longValue() * y.longValue());
+	     else return (T) Integer.valueOf(x.intValue() * y.intValue());
 	        
 	 }
 	
@@ -46,9 +46,9 @@ public class GenMath {
 	        return null;
 
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) {
-	        return (T) new Long(new BigInteger(Long.toString(x.longValue())).multiply(new BigInteger(Long.toString(y.longValue()))).shiftRight(64).longValueExact());
+	        return (T) Long.valueOf(new BigInteger(Long.toString(x.longValue())).multiply(new BigInteger(Long.toString(y.longValue()))).shiftRight(64).longValueExact());
 	    }else
-	        return (T) new Integer(new BigInteger(Long.toString(x.intValue())).multiply(new BigInteger(Long.toString(y.intValue()))).shiftRight(32).intValueExact());
+	        return (T) Integer.valueOf(new BigInteger(Long.toString(x.intValue())).multiply(new BigInteger(Long.toString(y.intValue()))).shiftRight(32).intValueExact());
 	  
 	 }
 	
@@ -58,11 +58,11 @@ public class GenMath {
 	        return null;
 
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64)
-	        return (T) new Long(new BigInteger(Long.toString(x.longValue())).multiply(
-	    		new BigInteger(Long.toUnsignedString(y.longValue()))).shiftRight(64).longValueExact());
+	        return (T) Long.valueOf(new BigInteger(Long.toString(x.longValue())).multiply(
+					new BigInteger(Long.toUnsignedString(y.longValue()))).shiftRight(64).longValueExact());
 	     else
-	        return (T) (T) new Integer(new BigInteger(Integer.toString(x.intValue())).multiply(
-		    		new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(32).intValueExact());
+	        return (T) (T) Integer.valueOf(new BigInteger(Integer.toString(x.intValue())).multiply(
+					new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(32).intValueExact());
 	 }
 	
 	public static<T extends Number> T mulhu(T x, T y){
@@ -71,11 +71,11 @@ public class GenMath {
 	        return null;
 	   
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(new BigInteger(Long.toUnsignedString(x.longValue())).multiply(
-	    		new BigInteger(Long.toUnsignedString(y.longValue()))).shiftRight(64).longValueExact());
+	        return (T) Long.valueOf(new BigInteger(Long.toUnsignedString(x.longValue())).multiply(
+					new BigInteger(Long.toUnsignedString(y.longValue()))).shiftRight(64).longValueExact());
 	     else
-	        return (T) (T) new Integer(new BigInteger(Integer.toUnsignedString(x.intValue())).multiply(
-		    		new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(32).intValueExact());
+	        return (T) (T) Integer.valueOf(new BigInteger(Integer.toUnsignedString(x.intValue())).multiply(
+					new BigInteger(Integer.toUnsignedString(y.intValue()))).shiftRight(32).intValueExact());
 	    
 	 }
 	
@@ -87,9 +87,9 @@ public class GenMath {
 	  	    	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) {
-	        return (T) new Long(x.longValue() / y.longValue());
+	        return (T) Long.valueOf(x.longValue() / y.longValue());
 	    } else {
-	        return (T)new Integer(x.intValue() / y.intValue()); 
+	        return (T) Integer.valueOf(x.intValue() / y.intValue());
 	    }
 	 }
 	
@@ -102,8 +102,8 @@ public class GenMath {
 	        return null;
 	  	    	   
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(Long.divideUnsigned(x.longValue(), y.intValue()));
-	     else return (T)new Integer(Integer.divideUnsigned(x.intValue(), y.intValue()));
+	        return (T) Long.valueOf(Long.divideUnsigned(x.longValue(), y.intValue()));
+	     else return (T) Integer.valueOf(Integer.divideUnsigned(x.intValue(), y.intValue()));
 	    
 	 }
 	
@@ -113,8 +113,8 @@ public class GenMath {
 	        return null;    	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() % y.longValue());
-	     else return (T)new Integer(x.intValue() % y.intValue());
+	        return (T) Long.valueOf(x.longValue() % y.longValue());
+	     else return (T) Integer.valueOf(x.intValue() % y.intValue());
 	    
 	 }
 	
@@ -124,9 +124,9 @@ public class GenMath {
 	        return null;  
 	  	    	   
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(Long.remainderUnsigned(x.longValue(), y.intValue()));
+	        return (T) Long.valueOf(Long.remainderUnsigned(x.longValue(), y.intValue()));
 	     else
-	        return (T)new Integer(Integer.remainderUnsigned(x.intValue(), y.intValue()));
+	        return (T) Integer.valueOf(Integer.remainderUnsigned(x.intValue(), y.intValue()));
 	    
 	 }
 	
@@ -136,8 +136,8 @@ public class GenMath {
 	        return null;   	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() & y.longValue());
-	      else return (T)new Integer(x.intValue() & y.intValue());
+	        return (T) Long.valueOf(x.longValue() & y.longValue());
+	      else return (T) Integer.valueOf(x.intValue() & y.intValue());
 	   
 	 }
 	
@@ -147,8 +147,8 @@ public class GenMath {
 	        return null;  	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() | y.longValue());
-	     else return (T)new Integer(x.intValue() | y.intValue());
+	        return (T) Long.valueOf(x.longValue() | y.longValue());
+	     else return (T) Integer.valueOf(x.intValue() | y.intValue());
 	   
 	 }
 	
@@ -159,8 +159,8 @@ public class GenMath {
 	        	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() ^ y.longValue());
-	     else return (T)new Integer(x.intValue() ^ y.intValue());
+	        return (T) Long.valueOf(x.longValue() ^ y.longValue());
+	     else return (T) Integer.valueOf(x.intValue() ^ y.intValue());
 	    
 	 }
 	
@@ -170,8 +170,8 @@ public class GenMath {
 	        return null;
 	        	 
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() << (y.longValue()&0x3F));
-	     else return (T) new Long(x.intValue() << (y.intValue()&0x1F));
+	        return (T) Long.valueOf(x.longValue() << (y.longValue() & 0x3F));
+	     else return (T) Integer.valueOf(x.intValue() << (y.intValue() & 0x1F));
 	    
 	 }
 
@@ -183,8 +183,8 @@ public class GenMath {
 	    
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() >>> (y.longValue()&0x3F));
-	     else return (T) new Long(x.intValue() >>> (y.intValue()&0x1F));
+	        return (T) Long.valueOf(x.longValue() >>> (y.longValue() & 0x3F));
+	     else return (T) Integer.valueOf(x.intValue() >>> (y.intValue() & 0x1F));
 	    
 	 }
 	
@@ -196,8 +196,8 @@ public class GenMath {
 	     	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) new Long(x.longValue() >> (y.longValue()&0x3F));
-	     else return (T) new Integer(x.intValue() >> (y.intValue()&0x1F));
+	        return (T) Long.valueOf(x.longValue() >> (y.longValue() & 0x3F));
+	     else return (T) Integer.valueOf(x.intValue() >> (y.intValue() & 0x1F));
 	     
 	}
 	
@@ -209,7 +209,7 @@ public class GenMath {
 	       	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return (T) ((x.longValue() < y.longValue()) ? new Long(1) : new Long(0));
+	        return (T) ((x.longValue() < y.longValue()) ? Long.valueOf(1) : Long.valueOf(0));
 	     else return (T) ((x.intValue() < y.intValue()) ? (Integer)1 : (Integer)0);
 	    
 	}
@@ -222,7 +222,7 @@ public class GenMath {
 	        	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-            return (T) ((Long.compareUnsigned(x.longValue(), y.longValue()) < 0) ?  new Long(1) : new Long(0)) ;
+            return (T) ((Long.compareUnsigned(x.longValue(), y.longValue()) < 0) ? Long.valueOf(1) : Long.valueOf(0)) ;
 	     else return (T) ((Integer.compareUnsigned(x.intValue(), y.intValue()) < 0) ?  (Integer)1 : (Integer)0) ;
 	    
 	}
@@ -247,7 +247,7 @@ public class GenMath {
 	    	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-	        return  (T) ((x.longValue() == y.longValue()) ? new Long(1) : new Long(0));
+	        return  (T) ((x.longValue() == y.longValue()) ? Long.valueOf(1) : Long.valueOf(0));
 	     else return  (T) ((x.intValue() == y.intValue()) ? (Integer)1 : (Integer)0);
 	    
 	}
@@ -260,8 +260,8 @@ public class GenMath {
 		     	
 
 		if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-		    return  (T) (new Long(Math.min(x.longValue(), y.longValue())));
-		else return  (T) (new Integer(Math.min(x.intValue(), y.intValue())));
+		    return  (T) (Long.valueOf(Math.min(x.longValue(), y.longValue())));
+		else return  (T) (Integer.valueOf(Math.min(x.intValue(), y.intValue())));
 		    
 	}
 		
@@ -272,8 +272,8 @@ public class GenMath {
 			return null;
 			   	
 		if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-			return  (T) (new Long(Math.max(x.longValue(), y.longValue())));
-		else return  (T) (new Integer(Math.max(x.intValue(), y.intValue())));
+			return  (T) (Long.valueOf(Math.max(x.longValue(), y.longValue())));
+		else return  (T) (Integer.valueOf(Math.max(x.intValue(), y.intValue())));
 			
 	}
 		
@@ -283,8 +283,8 @@ public class GenMath {
 		if (x == null ) return null;
 					   	
 		if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-			return  (T) (new Long(Math.abs(x.longValue())));
-		else return  (T) (new Integer(Math.abs(x.intValue())));
+			return  (T) (Long.valueOf(Math.abs(x.longValue())));
+		else return  (T) (Integer.valueOf(Math.abs(x.intValue())));
 			
 	}
 				
@@ -293,8 +293,8 @@ public class GenMath {
 		if (x == null ) return null;
 					   	
 		if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
-			return  (T) (new Long(Math.abs(~x.longValue())));
-		else return  (T) (new Integer(Math.abs(~x.intValue())));
+			return  (T) (Long.valueOf(~x.longValue()));
+		else return  (T) (Integer.valueOf(~x.intValue()));
 			
 	}
 	

@@ -1,7 +1,7 @@
-   package mars.venus;
-   import mars.Globals;
-   import java.awt.event.*;
-   import javax.swing.*;
+package mars.venus;
+import mars.Globals;
+import java.awt.event.*;
+import javax.swing.*;
 
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -31,21 +31,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-   /**
-    * Action class for the Settings menu item to control number base (10 or 16) of memory addresses.
-    */
-    public class SettingsAddressDisplayBaseAction extends GuiAction  {
-   	
-   
-       public SettingsAddressDisplayBaseAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI) {
-         super(name, icon, descrip, mnemonic, accel, mainUI);
-      }
-   		 
-         public void actionPerformed(ActionEvent e) {
-		   boolean isHex = ((JCheckBoxMenuItem) e.getSource()).isSelected(); 
-		   Globals.getGui().getMainPane().getExecutePane().getAddressDisplayBaseChooser().setSelected(isHex);
-			Globals.getSettings().setDisplayAddressesInHex(isHex);
-      }
-   	   	
-   }
+/**
+* Action class for the Settings menu item to control number base (10 or 16) of memory addresses.
+*/
+public class SettingsAddressDisplayBaseAction extends GuiAction  {
+
+    public SettingsAddressDisplayBaseAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI) {
+        super(name, icon, descrip, mnemonic, accel, mainUI);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        boolean isHex = ((JCheckBoxMenuItem) e.getSource()).isSelected();
+        Globals.getGui().getMainPane().getExecutePane().getAddressDisplayBaseChooser().setSelected(isHex);
+        Globals.getSettings().setDisplayAddressesInHex(isHex);
+    }
+
+}

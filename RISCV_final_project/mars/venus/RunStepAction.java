@@ -106,7 +106,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             FileStatus.set(FileStatus.TERMINATED); // should be redundant.
 								executePane.getTextSegmentWindow().setCodeHighlighting(true);
 				executePane.getTextSegmentWindow().unhighlightAllSteps();
-            executePane.getTextSegmentWindow().highlightStepAtAddress(GenMath.sub(RV32IRegisters.getProgramCounter(),4));
+            executePane.getTextSegmentWindow().highlightStepAtAddress(GenMath.sub(RVIRegisters.getProgramCounter(),4));
          }
          mainUI.setReset(false);   
       }

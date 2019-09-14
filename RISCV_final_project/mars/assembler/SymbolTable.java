@@ -189,20 +189,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
       
    	
-   	/**
-   	  *  For obtaining the Text Symbols.
-   	  *   @return An ArrayList of Symbol objects.
-   	  **/
+    /**
+    *  For obtaining the Text Symbols.
+    *   @return An ArrayList of Symbol objects.
+    **/
       
-       public ArrayList getTextSymbols(){
-         ArrayList list= new ArrayList();
-         for(int i=0; i<table.size(); i++){
-            if(!((Symbol)table.get(i)).getType()){
+    public ArrayList getTextSymbols(){
+        ArrayList list= new ArrayList();
+        for(int i=0; i<table.size(); i++){
+            if(!((Symbol)table.get(i)).getType())
                list.add(table.get(i));
-            }	
-         }
-         return list;
-      }		
+        }
+        return list;
+    }
    	
    	/**
    	  *  For obtaining all the Symbols.

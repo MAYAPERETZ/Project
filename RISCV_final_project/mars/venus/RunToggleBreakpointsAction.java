@@ -1,8 +1,8 @@
-   package mars.venus;
-   import mars.*;
-   import java.awt.event.*;
-   import java.util.Observable;
-   import javax.swing.*;
+package mars.venus;
+import mars.*;
+import java.awt.event.*;
+import java.util.Observable;
+import javax.swing.*;
 
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -32,36 +32,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-   /**
-    * Action class for the Run menu item to clear execution breakpoints that have been set.
-	 * It is a listener and is notified whenever a breakpoint is added or removed, thus will
-	 * set its enabled status true or false depending on whether breakpoints remain after that action. 
-    */
-   public class RunToggleBreakpointsAction extends RunAction  {
+/**
+* Action class for the Run menu item to clear execution breakpoints that have been set.
+* It is a listener and is notified whenever a breakpoint is added or removed, thus will
+* set its enabled status true or false depending on whether breakpoints remain after that action.
+*/
+public class RunToggleBreakpointsAction extends RunAction  {
    	
-       /**
-		  * Create the object and register with text segment window as a listener on its table model.
-		  * The table model has not been created yet, so text segment window will hang onto this
-		  * registration info and transfer it to the table model upon creation (which happens with
-		  * each successful assembly).
-     * @param observable 
-		  */
-    	public RunToggleBreakpointsAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-    		super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-       }
-   	 /**
-		  *  When this option is selected, tell text segment window to clear breakpoints in its table model.
-		  */
-       	public void actionPerformed(ActionEvent e) {
-       		Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow().toggleBreakpoints();
-		}
-   	   
-   		public void update(Observable arg0, Object arg1) {
-  
-   			super.update(arg0, arg1);
-   			if ((int)arg1 == FileStatus.TERMINATED)
-   				this.setEnabled(status = true);
-   		} 		
+	/**
+	* Create the object and register with text segment window as a listener on its table model.
+	* The table model has not been created yet, so text segment window will hang onto this
+	* registration info and transfer it to the table model upon creation (which happens with
+	* each successful assembly).
+	* @param observable
+	*/
+	public RunToggleBreakpointsAction(String name, Icon icon, String descrip,
+				 Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+		super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+	}
 
-    }
+	/**
+	*  When this option is selected, tell text segment window to clear breakpoints in its table model.
+	*/
+	public void actionPerformed(ActionEvent e) {
+		Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow().toggleBreakpoints();
+	}
+   	   
+	public void update(Observable arg0, Object arg1) {
+		super.update(arg0, arg1);
+		if ((int)arg1 == FileStatus.TERMINATED)
+			this.setEnabled(status = true);
+	}
+
+}

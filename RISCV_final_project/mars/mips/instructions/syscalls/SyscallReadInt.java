@@ -62,7 +62,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  "invalid integer input (syscall "+this.getNumber()+")",
 					  Exceptions.SYSCALL_EXCEPTION);
             }
-         RV32IRegisters.updateRegister(2, value);
+         RVIRegisters.updateRegister(2, value);
       }
    
    }

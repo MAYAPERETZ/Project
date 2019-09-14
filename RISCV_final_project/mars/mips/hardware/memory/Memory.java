@@ -1,15 +1,18 @@
-   package mars.mips.hardware.memory;
-   import jdk.jfr.Unsigned;
-   import mars.*;
-   import mars.simulator.*;
-   import mars.mips.hardware.AccessNotice;
-   import mars.mips.hardware.AddressErrorException;
-   import mars.mips.hardware.MemoryConfigurations;
-   import mars.mips.instructions.*;
-   import java.util.*;
-   import java.util.function.BiFunction;
-   import static mars.util.Math2.*;
-   import static mars.mips.instructions.GenMath.*;
+package mars.mips.hardware.memory;
+
+import mars.Globals;
+import mars.ProgramStatement;
+import mars.Settings;
+import mars.mips.hardware.AccessNotice;
+import mars.mips.hardware.AddressErrorException;
+import mars.mips.hardware.MemoryConfigurations;
+import mars.mips.instructions.GenMath;
+import mars.mips.instructions.Instruction;
+import mars.simulator.Exceptions;
+import java.util.*;
+import java.util.function.BiFunction;
+import static mars.mips.instructions.GenMath.*;
+import static mars.util.Math2.*;
 	
 	/*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
@@ -40,8 +43,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Represents MIPS memory.  Different segments are represented by different data structs.
- * 
+ * Represents RISCV memory.  Different segments are represented by different data structs.
+ *
+ * Each Method was evolved and rearranged by Maya Peretz in September 2019. (Mainly in oreder to support 64
+ * bit architecture)
+ *
  * @author Pete Sanderson 
  * @version August 2003
  */
@@ -51,43 +57,44 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /////////////////////////////////////////////////////////////////////
 
     public class Memory extends Observable  {
-   
-    /** base address for .extern directive: 0x10000000 **/
-      public static Number externBaseAddress = MemoryConfigurations.getDefaultExternBaseAddress(); //0x10000000;
+
+    /** base address for .extern directive **/
+    public static Number externBaseAddress = MemoryConfigurations.getDefaultExternBaseAddress();
+
     /** base address for storing globals **/
-      
-      public static Number globalPointer = MemoryConfigurations.getDefaultGlobalPointer(); //0x10008000;
-    /** base address for storage of non-global static data in data segment: 0x10010000 (from SPIM) **/		
-      
-    /** base address for heap: 0x10040000 (I think from SPIM not MIPS) **/
-      public static Number heapBaseAddress = MemoryConfigurations.getDefaultHeapBaseAddress(); //0x10040000; // I think from SPIM not MIPS
-    /** starting address for stack: 0x7fffeffc (this is from SPIM not MIPS) **/
-      
-    /** base address for stack: 0x7ffffffc (this is mine - start of highest word below kernel space) **/
-      public static Number stackPointer = MemoryConfigurations.getDefaultStackPointer(); //0x7fffeffc;
-   
+    public static Number globalPointer = MemoryConfigurations.getDefaultGlobalPointer();
+
+    /** base address for storage of non-global static data in data segment **/
+
+    /** base address for heap **/
+    public static Number heapBaseAddress = MemoryConfigurations.getDefaultHeapBaseAddress();
+    /** starting address for stack **/
+
+    /** base address for stack **/
+    public static Number stackPointer = MemoryConfigurations.getDefaultStackPointer();
+
     /** highest address accessible in user (not kernel) mode. **/
-      public static Number userHighAddress = MemoryConfigurations.getDefaultUserHighAddress(); //0x7fffffff;
+    public static Number userHighAddress = MemoryConfigurations.getDefaultUserHighAddress();
 
-    /** starting address for exception handlers: 0x80000180 **/
-      public static Number exceptionHandlerAddress = MemoryConfigurations.getDefaultExceptionHandlerAddress(); //0x80000180;
-  
+    /** starting address for exception handlers **/
+    public static Number exceptionHandlerAddress = MemoryConfigurations.getDefaultExceptionHandlerAddress();
+
     /** highest address accessible in kernel mode. **/
-      public static Number kernelHighAddress = MemoryConfigurations.getDefaultKernelHighAddress(); //0xffffffff;
+    public static Number kernelHighAddress = MemoryConfigurations.getDefaultKernelHighAddress();
 
-    /** MIPS word length in bytes. **/
+    /** RISCV word length in bytes. **/
     // NOTE:  Much of the code is hardwired for 4 byte words.  Refactoring this is low priority.
-      public static final int WORD_LENGTH_BYTES = 4;
-   	/** Constant representing byte order of each memory word.  Little-endian means lowest 
-   	    numbered byte is right most [3][2][1][0]. */
-      private static final boolean LITTLE_ENDIAN = true;
-   	/** Constant representing byte order of each memory word.  Big-endian means lowest 
-   	    numbered byte is left most [0][1][2][3]. */
-      public static final boolean BIG_ENDIAN = false;
-   	/** Current setting for endian (default LITTLE_ENDIAN) **/
-      private static boolean byteOrder = LITTLE_ENDIAN;
-   	
-      public static Number heapAddress;
+    public static final int WORD_LENGTH_BYTES = 4;
+    /** Constant representing byte order of each memory word.  Little-endian means lowest
+    numbered byte is right most [3][2][1][0]. */
+    private static final boolean LITTLE_ENDIAN = true;
+    /** Constant representing byte order of each memory word.  Big-endian means lowest
+    numbered byte is left most [0][1][2][3]. */
+    public static final boolean BIG_ENDIAN = false;
+    /** Current setting for endian (default LITTLE_ENDIAN) **/
+    private static boolean byteOrder = LITTLE_ENDIAN;
+
+    public static Number heapAddress;
    
     // Memory will maintain a collection of observables.  Each one is associated
     // with a specific memory address or address range, and each will have at least
@@ -101,7 +108,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     // and high end of address range, but retrieval from the tree has to be based
     // on target address being ANYWHERE IN THE RANGE (not an exact key match).
       
-      Collection observables = getNewMemoryObserversCollection();
+    Collection observables = getNewMemoryObserversCollection();
    
     // The data segment is allocated in blocks of 1024 ints (4096 bytes).  Each block is
     // referenced by a "block table" entry, and the table has 1024 entries.  The capacity
@@ -127,251 +134,232 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     // the start of the 65'th block -- table entry 64.  That leaves (1024-64) * 4096 = 3,932,160
     // bytes of space available without going indirect.
     
-      private static final int BLOCK_TABLE_LENGTH = 1024; // Each entry of table points to a block.
-      private BlockTable kernelDataBlockTable;
+    private static final int BLOCK_TABLE_LENGTH = 1024; // Each entry of table points to a block.
+    private BlockTable kernelDataBlockTable;
     
     // The stack is modeled similarly to the data segment.  It cannot share the same
     // data structure because the stack base address is very large.  To store it in the
     // same data structure would require implementation of indirect blocks, which has not
-    // been realized.  So the stack gets its own table of blocks using the same dimensions 
+    // been realized.  So the stack gets its own table of blocks using the same dimensions
     // and allocation scheme used for data segment.
     //
     // The other major difference is the stack grows DOWNWARD from its base address, not
-    // upward.  I.e., the stack base is the largest stack address. This turns the whole 
+    // upward.  I.e., the stack base is the largest stack address. This turns the whole
     // scheme for translating memory address to block-offset on its head!  The simplest
-    // solution is to calculate relative address (offset from base) by subtracting the 
-    // desired address from the stack base address (rather than subtracting base address 
+    // solution is to calculate relative address (offset from base) by subtracting the
+    // desired address from the stack base address (rather than subtracting base address
     // from desired address).  Thus as the address gets smaller the offset gets larger.
     // Everything else works the same, so it shares some private helper methods with
     // data segment algorithms.
-    
+
     //  private StackBlockTable stackBlockTable;
-   
+
     // Memory mapped I/O is simulated with a separate table using the same structure and
     // logic as data segment.  Memory is allocated in 4K byte blocks.  But since MMIO
-    // address range is limited to 0xffff0000 to 0xfffffffc, there are only 64K bytes 
+    // address range is limited to 0xffff0000 to 0xfffffffc, there are only 64K bytes
     // total.  Thus there will be a maximum of 16 blocks, and I suspect never more than
     // one since only the first few addresses are typically used.  The only exception
     // may be a rogue program generating such addresses in a loop.  Note that the
-    // MMIO addresses are interpreted by Java as negative numbers since it does not 
+    // MMIO addresses are interpreted by Java as negative numbers since it does not
     // have unsigned types.  As long as the absolute address is correctly translated
     // into a table offset, this is of no concern.
-   
-      private static final int MMIO_TABLE_LENGTH = 16; // Each entry of table points to a 4K block.
+
+    private static final int MMIO_TABLE_LENGTH = 16; // Each entry of table points to a 4K block.
    	    
     // I use a similar scheme for storing instructions.  MIPS text segment ranges from
     // 0x00400000 all the way to data segment (0x10000000) a range of about 250 MB!  So
     // I'll provide table of blocks with similar capacity.  This differs from data segment
     // somewhat in that the block entries do not contain int's, but instead contain
-    // references to ProgramStatement objects.  
-   
-      private static final int TEXT_BLOCK_TABLE_LENGTH = 1024; // Each entry of table points to a block.
-      private TextBlockTable  textBlockTable;
-      private TextBlockTable kernelTextBlockTable;
-      private BlockTables tables;
+    // references to ProgramStatement objects.
+
+    private static final int TEXT_BLOCK_TABLE_LENGTH = 1024; // Each entry of table points to a block.
+    private TextBlockTable  textBlockTable;
+    private TextBlockTable kernelTextBlockTable;
+    private BlockTables tables;
 
    
-    // This will be a Singleton class, only one instance is ever created.  Since I know the 
+    // This will be a Singleton class, only one instance is ever created.  Since I know the
     // Memory object is always needed, I'll go ahead and create it at the time of class loading.
     // (greedy rather than lazy instantiation).  The constructor is private and getInstance()
     // always returns this instance.
-    
-      private static Memory uniqueMemoryInstance = new Memory(); 
 
-      enum DataTypes {
-    	    Byte(1), halfword(2), word(4), doubleword(8);
+    private static Memory uniqueMemoryInstance = new Memory();
 
-    	    private final int len;
-    	    private DataTypes(int len) { this.len= len; }
-    	    public int getValue() { return len; }
-      }
+    enum DataTypes {
+        Byte(1), halfword(2), word(4), doubleword(8);
+
+        private final int len;
+        DataTypes(int len) { this.len= len; }
+        public int getValue() { return len; }
+    }
       
     /*
-     * Private constructor for Memory.  Separate data structures for text and data segments. 
-     **/
-       private Memory() {
-    	   initialize();
-       }
-   
-     /**
-      * Returns the unique Memory instance, which becomes in essence global.
-   	*/
-   	
-       public static Memory getInstance() {
-         return uniqueMemoryInstance;
-      }
-   	
-   	/**
-   	 * Explicitly clear the contents of memory.  Typically done at start of assembly.
-   	 */
-   	 
-       public void clear() {
-           /*
-           Todo: There is an issue when calling initialize() before setConfiguration() - after the block size reaches
-             its max capacity, an exception is thrown instead of cleanly terminate the process.
-             On the other hand, when calling  setConfiguration() before initialize(), the new address space is not set.
-            need to figure out how to implement this shit.
-            */
-           setConfiguration();
-           initialize();
+    * Private constructor for Memory.  Separate data structures for text and data segments.
+    **/
+    private Memory() {
+       initialize();
+    }
 
-       }
+    /**
+    * Returns the unique Memory instance, which becomes in essence global.
+    */
+
+    public static Memory getInstance() {
+     return uniqueMemoryInstance;
+    }
+
+    /**
+    * Explicitly clear the contents of memory.  Typically done at start of assembly.
+    */
+
+    public void clear() {
+       setConfiguration();
+       initialize();
+    }
    
-     /**
-     * Sets current memory configuration for simulated MIPS.  Configuration is 
-     * collection of memory segment addresses. e.g. text segment starting at 
-     * address 0x00400000.  Configuration can be modified starting with MARS 3.7.
-     */
-   
-       public void setConfiguration() {
-         externBaseAddress = MemoryConfigurations.getCurrentConfiguration().getExternBaseAddress(); //0x10000000;
-         globalPointer = MemoryConfigurations.getCurrentConfiguration().getGlobalPointer(); //0x10008000;
-         heapBaseAddress = MemoryConfigurations.getCurrentConfiguration().getHeapBaseAddress(); //0x10040000; // I think from SPIM not MIPS
-         stackPointer = MemoryConfigurations.getCurrentConfiguration().getStackPointer(); //0x7fffeffc;
-         userHighAddress = MemoryConfigurations.getCurrentConfiguration().getUserHighAddress(); //0x7fffffff;
-         exceptionHandlerAddress = MemoryConfigurations.getCurrentConfiguration().getExceptionHandlerAddress(); //0x80000180;
-         kernelHighAddress = MemoryConfigurations.getCurrentConfiguration().getKernelHighAddress(); //0xffffffff;	
-         
-         
-         tables.get(0).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getDataBaseAddress());
-         textBlockTable.setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getTextBaseAddress());
-         tables.get(1).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getKernelDataBaseAddress());
-         kernelTextBlockTable.setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getKernelTextBaseAddress());
-         tables.get(2).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getStackBaseAddress());
-         tables.get(3).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getMemoryMapBaseAddress());
-         
-         tables.get(0).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getDataSegmentLimitAddress());
-         textBlockTable.setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getTextLimitAddress());
-         tables.get(1).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getKernelDataSegmentLimitAddress());
-         kernelTextBlockTable.setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getKernelTextLimitAddress());
-         tables.get(2).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getStackLimitAddress());
-         tables.get(3).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getMemoryMapLimitAddress());
-         
+    /**
+    * Sets current memory configuration for simulated MIPS.  Configuration is
+    * collection of memory segment addresses. e.g. text segment starting at
+    * address 0x00400000.  Configuration can be modified starting with MARS 3.7.
+    */
+
+    public void setConfiguration() {
+        externBaseAddress = MemoryConfigurations.getCurrentConfiguration().getExternBaseAddress(); //0x10000000;
+        globalPointer = MemoryConfigurations.getCurrentConfiguration().getGlobalPointer(); //0x10008000;
+        heapBaseAddress = MemoryConfigurations.getCurrentConfiguration().getHeapBaseAddress(); //0x10040000; // I think from SPIM not MIPS
+        stackPointer = MemoryConfigurations.getCurrentConfiguration().getStackPointer(); //0x7fffeffc;
+        userHighAddress = MemoryConfigurations.getCurrentConfiguration().getUserHighAddress(); //0x7fffffff;
+        exceptionHandlerAddress = MemoryConfigurations.getCurrentConfiguration().getExceptionHandlerAddress(); //0x80000180;
+        kernelHighAddress = MemoryConfigurations.getCurrentConfiguration().getKernelHighAddress(); //0xffffffff;
+
+        //tables.get(0).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getDataSegmentBaseAddress());
+        textBlockTable.setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getTextBaseAddress());
+        //tables.get(1).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getKernelDataBaseAddress());
+        kernelTextBlockTable.setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getKernelTextBaseAddress());
+        //tables.get(2).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getStackBaseAddress());
+        //tables.get(3).setBaseAddress(MemoryConfigurations.getCurrentConfiguration().getMemoryMapBaseAddress());
+
+        tables.get(0).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getDataSegmentLimitAddress());
+        textBlockTable.setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getTextLimitAddress());
+        tables.get(1).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getKernelDataSegmentLimitAddress());
+        kernelTextBlockTable.setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getKernelTextLimitAddress());
+        tables.get(2).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getStackLimitAddress());
+        tables.get(3).setLimitAddress(MemoryConfigurations.getCurrentConfiguration().getMemoryMapLimitAddress());
+
+    }
        
-      }
-       
-      private void initialize() {
-         heapAddress = heapBaseAddress;
-         tables = new BlockTables();
-         kernelTextBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getCurrentConfiguration().getKernelTextBaseAddress());
-         textBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getCurrentConfiguration().getTextBaseAddress());
-         System.gc(); // call garbage collector on any Table memory just deallocated. 	  
-      }  
+    private void initialize() {
+        heapAddress = heapBaseAddress;
+        tables = new BlockTables();
+        kernelTextBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getCurrentConfiguration().getKernelTextBaseAddress());
+        textBlockTable  = new TextBlockTable(TEXT_BLOCK_TABLE_LENGTH, MemoryConfigurations.getCurrentConfiguration().getTextBaseAddress());
+        System.gc(); // call garbage collector on any Table memory just deallocated.
+    }
      
-   	/**
-   	 * Returns the next available word-aligned heap address.  There is no recycling and
-   	 * no heap management!  There is however nearly 4MB of heap space available in Mars.
-   	 *
-   	 * @param numBytes Number of bytes requested.  Should be multiple of 4, otherwise next higher multiple of 4 allocated.
-   	 * @return address of allocated heap storage. 
-   	 * @throws IllegalArgumentException if number of requested bytes is negative or exceeds available heap storage
-   	 */
-       public Number allocateBytesFromHeap(int numBytes) throws IllegalArgumentException {
-         Number result = heapAddress;
-         if (numBytes < 0) {
+    /**
+    * Returns the next available word-aligned heap address.  There is no recycling and
+    * no heap management!  There is however nearly 4MB of heap space available in Mars.
+    *
+    * @param numBytes Number of bytes requested.  Should be multiple of 4, otherwise next higher multiple of 4 allocated.
+    * @return address of allocated heap storage.
+    * @throws IllegalArgumentException if number of requested bytes is negative or exceeds available heap storage
+    */
+    public Number allocateBytesFromHeap(int numBytes) throws IllegalArgumentException {
+        Number result = heapAddress;
+        if (numBytes < 0)
             throw new IllegalArgumentException("request ("+numBytes+") is negative heap amount");
-         }
-         Number newHeapAddress = add(heapAddress, numBytes);
-         if (!isEqz(rem(newHeapAddress, 4)) ) {
+
+        Number newHeapAddress = add(heapAddress, numBytes);
+        if (!isEqz(rem(newHeapAddress, 4)) )
             newHeapAddress = add(newHeapAddress, sub(4, rem(newHeapAddress, 4))) ; // next higher multiple of 4
-         }
-         if (!isLt(newHeapAddress,getDataTable().getBaseAddress())) {
+
+        if (!isLt(newHeapAddress,getDataTable().getBaseAddress()))
             throw new IllegalArgumentException("request ("+numBytes+") exceeds available heap storage");
-         }
-         heapAddress = newHeapAddress;
-         return result;
-      }
-   
-   
-     /**
-      * Set byte order to either LITTLE_ENDIAN or BIG_ENDIAN.  Default is LITTLE_ENDIAN.
-   	*
-   	* @param order either LITTLE_ENDIAN or BIG_ENDIAN
-   	*/
-       public void setByteOrder(boolean order) {
-         byteOrder = order;
-      }
+
+        heapAddress = newHeapAddress;
+        return result;
+    }
+
+    /**
+    * Set byte order to either LITTLE_ENDIAN or BIG_ENDIAN.  Default is LITTLE_ENDIAN.
+    * @param order either LITTLE_ENDIAN or BIG_ENDIAN
+    */
+    public void setByteOrder(boolean order) {
+        byteOrder = order;
+    }
+
+    /**
+    * Retrieve memory byte order.  Default is LITTLE_ENDIAN (like PCs).
+    * @return either LITTLE_ENDIAN or BIG_ENDIAN
+    */
+    public boolean getByteOrder() {
+        return byteOrder;
+    }
    	
-     /**
-      * Retrieve memory byte order.  Default is LITTLE_ENDIAN (like PCs).
-   	*
-   	* @return either LITTLE_ENDIAN or BIG_ENDIAN
-   	*/
-       public boolean getByteOrder() {
-         return byteOrder;
-      }
-   	
-   	
-   /*  *******************************  THE SETTER METHODS  ******************************/
-   
-   
+    /*  *******************************  THE SETTER METHODS  ******************************/
+
     ///////////////////////////////////////////////////////////////////////////////////////
     /** 
-    * Starting at the given address, write the given value over the given number of bytes.
-    * This one does not check for word boundaries, and copies one byte at a time.
-    * If length == 1, takes value from low order byte.  If 2, takes from low order half-word.
-    * 
-    * @param address Starting address of Memory address to be set.
-    * @param value Value to be stored starting at that address.
-    * @param length Number of bytes to be written.
-    * @return old value that was replaced by the set operation
+    *  Starting at the given address, write the given value over the given number of bytes.
+    *  This one does not check for word boundaries, and copies one byte at a time.
+    *  If length == 1, takes value from low order byte.  If 2, takes from low order half-word.
+    *
+    *  @param address Starting address of Memory address to be set.
+    *  @param value Value to be stored starting at that address.
+    *  @param length Number of bytes to be written.
+    *  @return old value that was replaced by the set operation
     **/
-       
-       
-   // Allocates blocks if necessary.
-       public Number set(Number address, Number value, int length) throws AddressErrorException {
-         Number oldValue = 0;
-         
-         if(tables.isInAnyBlockTable(address)) {
-         	for(BlockTable table : tables) {
-        	 	if(table.inSegment(address)) {
-        		 	oldValue = table.storeOrFetchNumbersInTable(address, length, value, (byteOrder == LITTLE_ENDIAN), BlockTable.op.STORE);
-        		 	break;
-        	 	}
-         	}
-         }
-         else if (textBlockTable.inSegment(address)) {
-           // Burch Mod (Jan 2013): replace throw with call to setStatement 
-           // DPS adaptation 5-Jul-2013: either throw or call, depending on setting
-         
+
+    // Allocates blocks if necessary.
+    public Number set(Number address, Number value, int length) throws AddressErrorException {
+        Number oldValue = 0;
+
+        if(tables.isInAnyBlockTable(address)) {
+            for(BlockTable table : tables) {
+                if(table.inSegment(address)) {
+                    oldValue = table.storeOrFetchNumbersInTable(address, length, value, (byteOrder == LITTLE_ENDIAN),
+                            BlockTable.op.STORE);
+                    break;
+                }
+            }
+        }
+        else if (textBlockTable.inSegment(address)) {
+            // Burch Mod (Jan 2013): replace throw with call to setStatement
+            // DPS adaptation 5-Jul-2013: either throw or call, depending on setting
+
             if (Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED)) {
                ProgramStatement oldStatement = getStatementNoNotify(address);
-               if (oldStatement != null) 
+               if (oldStatement != null)
                   oldValue = oldStatement.getBinaryStatement();
-               
+
                setStatement(address, new ProgramStatement(value.intValue(), address));
-            } 
-            else {
-               throw new AddressErrorException(
-                  "Cannot write directly to text segment!", 
-                  Exceptions.ADDRESS_EXCEPTION_STORE, address);
             }
-         } 
-         else if (kernelTextBlockTable.inSegment(address)) {
-           // DEVELOPER: PLEASE USE setStatement() TO WRITE TO KERNEL TEXT SEGMENT...
-            throw new AddressErrorException(
-               "DEVELOPER: You must use setStatement() to write to kernel text segment!", 
+            else
+                throw new AddressErrorException("Cannot write directly to text segment!",
+                        Exceptions.ADDRESS_EXCEPTION_STORE, address);
+        }
+        else if (kernelTextBlockTable.inSegment(address)) {
+            // DEVELOPER: PLEASE USE setStatement() TO WRITE TO KERNEL TEXT SEGMENT...
+            throw new AddressErrorException("DEVELOPER: You must use setStatement() to write to kernel text segment!",
                Exceptions.ADDRESS_EXCEPTION_STORE, address);
-         } 
-         else {
-           // falls outside Mars addressing range
-            throw new AddressErrorException("address out of range ",
-               Exceptions.ADDRESS_EXCEPTION_STORE, address);
-         }
-         notifyAnyObservers(AccessNotice.WRITE, address, length, value);
-         return oldValue;
-      }
+        }
+        else
+            // falls outside Mars addressing range
+            throw new AddressErrorException("address out of range ", Exceptions.ADDRESS_EXCEPTION_STORE, address);
+        notifyAnyObservers(AccessNotice.WRITE, address, length, value);
+        return oldValue;
+    }
    	
     ///////////////////////////////////////////////////////////////////////////////////////
     /** 
-     *  Starting at the given word address, write the given value over 4 bytes (a word).  
+     *  Starting at the given address, write the given value over 8/4 bytes.
      *  It must be written as is, without adjusting for byte order (little vs big endian).
-     *  Address must be word-aligned.
-     * 
-     * @param address Starting address of Memory address to be set.
-     * @param value Value to be stored starting at that address.
-     * @return old value that was replaced by the set operation.
-     * @throws AddressErrorException If address is not on word boundary.
+     *  Address must be word/double-word-aligned (depends on the value length and configuration).
+     *
+     *  @param address Starting address of Memory address to be set.
+     *  @param value Value to be stored starting at that address.
+     *  @return old value that was replaced by the set operation.
+     *  @throws AddressErrorException If address is not on word boundary.
     **/
        private Number setRaw(Number address, Number value, final int shift) throws AddressErrorException {
          Number oldValue=0;
@@ -478,7 +466,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          return set(address, value, DataTypes.Byte, Globals.program.getBackStepper()::addMemoryRestoreByte);
       }
 
-   
    ////////////////////////////////////////////////////////////////////////////////
    /**
     * Stores ProgramStatement in Text Segment.  
@@ -519,34 +506,35 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /********************************  THE GETTER METHODS  ******************************/
        
     public TextBlockTable getTextTable() {
-      return  textBlockTable;
+        return  textBlockTable;
     }
-     
+
     public TextBlockTable getKernelTextTable() {
-      return  kernelTextBlockTable;
+        return  kernelTextBlockTable;
     }
       
-   	public BlockTable getDataTable() {
-   	  return (BlockTable)tables.get(0);
-   	 }
+    public BlockTable getDataTable() {
+        return tables.get(0);
+    }
    	  
-   	public BlockTable getKernelDataTable() {
-   	  return (BlockTable)tables.get(1);
-   	}
+    public BlockTable getKernelDataTable() {
+        return tables.get(1);
+    }
    	  
-   	public BlockTable getStackTable() {
-   	  return (BlockTable)tables.get(2);
-   	}
+    public BlockTable getStackTable() {
+        return tables.get(2);
+    }
    	  
-   	public BlockTable getMemoryMapTable() {
-   	  return (BlockTable)tables.get(3);
-   	}
+    public BlockTable getMemoryMapTable() {
+        return tables.get(3);
+    }
    
    //////////////////////////////////////////////////////////////////////////////////////////
    /**
-    * Starting at the given word address, read the given number of bytes (max 4).
+    * Starting at the given word/double-word address, read the given number of bytes.
     * This one does not check for word boundaries, and copies one byte at a time.
     * If length == 1, puts value in low order byte.  If 2, puts into low order half-word.
+    *
     * @param address Starting address of Memory address to be read.
     * @param length Number of bytes to be read.
     * @return  Value stored starting at that address.
@@ -600,13 +588,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
    /////////////////////////////////////////////////////////////////////////
     /** 
-     *  Starting at the given word address, read a 4 byte word as an int.  
-     *  It transfers the 32 bit value "raw" as stored in memory, and does not adjust 
-     *  for byte order (big or little endian).  Address must be word-aligned.
-     * 
-     * @param address Starting address of word to be read.
-     * @return  Word (4-byte value) stored starting at that address.
-     * @throws AddressErrorException If address is not on word boundary.
+     *  Starting at the given word address, read a 4/8 byte word/double-word as an int/long.
+     *  It transfers the 32/64 bit value "raw" as stored in memory, and does not adjust
+     *  for byte order (big or little endian).  Address must be word/double-word-aligned.
+     *
+     *  @param address Starting address of word to be read.
+     *  @return  Word/Double-word (4 or 8 byte value respectively) stored starting at that address.
+     *  @throws AddressErrorException If address is not on word/double-word boundary.
     **/
         
     // Note: the logic here is repeated in getRawWordOrNull() below.  Logic is
@@ -668,228 +656,221 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	   return getRaw(address, 3);
        }
    
-      /////////////////////////////////////////////////////////////////////////
-       /** 
-        *  Starting at the given word address, read a 4 byte word as an int and return Integer.  
-        *  It transfers the 32 bit value "raw" as stored in memory, and does not adjust 
-        *  for byte order (big or little endian).  Address must be word-aligned.
-   	  *
-   	  *  Returns null if reading from text segment and there is no instruction at the
-   	  *  requested address. Returns null if reading from data segment and this is the
-   	  *  first reference to the MARS 4K memory allocation block (i.e., an array to
-   	  *  hold the memory has not been allocated).
-   	  *
-   	  *  This method was developed by Greg Giberling of UC Berkeley to support the memory
-   	  *  dump feature that he implemented in Fall 2007.
-        * 
-        * @param address Starting address of word to be read.
-        * @return  Word (4-byte value) stored starting at that address as an Integer.  Conditions
-   	  * that cause return value null are described above.
-        * @throws AddressErrorException If address is not on word boundary.
-       **/
+    /////////////////////////////////////////////////////////////////////////
+    /**
+    *  Starting at the given address, read a 4/8 byte value as an int/long and return Integer/Long.
+    *  It transfers the 32/64 bit value "raw" as stored in memory, and does not adjust
+    *  for byte order (big or little endian).  Address must be word-aligned.
+    *
+    *  Returns null if reading from text segment and there is no instruction at the
+    *  requested address. Returns null if reading from data segment and this is the
+    *  first reference to the MARS 4K memory allocation block (i.e., an array to
+    *  hold the memory has not been allocated).
+    *
+    *  This method was developed by Greg Giberling of UC Berkeley to support the memory
+    *  dump feature that he implemented in Fall 2007.
+    *  @param address Starting address of word to be read.
+    *  @return  Word/Double-word (4 or 8 byte value respectively) stored starting at that address as a/n Integer/Long.
+    *  Conditions that cause return value null are described above.
+    *  @throws AddressErrorException If address is not on word/double-word boundary.
+    **/
    	 
-   	 // See note above, with getRawWord(), concerning duplicated logic.
-   	 
-       public Number getRawOrNull(Number address, final int shift) throws AddressErrorException {
-         Number value = null;
-         int addressLength = (shift % 2);
-         if (!isEqz(addressLength) &&!isEqz(rem(address, ((2 * addressLength)*WORD_LENGTH_BYTES)))) {
+    // See note above, with getRawWord(), concerning duplicated logic.
+
+    public Number getRawOrNull(Number address, final int shift) throws AddressErrorException {
+        Number value = null;
+        int addressLength = (shift % 2);
+        if (!isEqz(addressLength) &&!isEqz(rem(address, ((2 * addressLength)*WORD_LENGTH_BYTES))))
             throw new AddressErrorException("address for fetch not aligned on word boundary",
                   Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         }
-         
-         if(tables.isInAnyBlockTable(address)) {
-          	for(int i = 0; i < tables.size()-1; i++) { // all block tables except memory map
-         	 	if(tables.get(i).inSegment(address)) {
-         		 	value = tables.get(i).fetchWordFromTable(address, false, shift);
-         		 	break;
-         	 	}
-          	}
-          }
-         else if (textBlockTable.inSegment(address) || kernelDataBlockTable.inSegment(address)) {
-        	 try {
-               value = (getStatementNoNotify(address) == null) 
-            		   ? null : new Long(getStatementNoNotify(address).getBinaryStatement());
-        	 }
-             catch (AddressErrorException aee) { 
+
+        if(tables.isInAnyBlockTable(address)) {
+            for(int i = 0; i < tables.size()-1; i++) { // all block tables except memory map
+                if(tables.get(i).inSegment(address)) {
+                    value = tables.get(i).fetchWordFromTable(address, false, shift);
+                    break;
+                }
+            }
+        }
+        else if (textBlockTable.inSegment(address) || kernelDataBlockTable.inSegment(address)) {
+             try {
+               value = (getStatementNoNotify(address) == null)
+                       ? null : (long) getStatementNoNotify(address).getBinaryStatement();
+             }
+             catch (AddressErrorException aee) {
                 return value;
              }
-         }  
-         else // falls outside Mars addressing range
+        }
+        else // falls outside Mars addressing range
             throw new AddressErrorException("address out of range ", Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-            // Do not notify observers.  This read operation is initiated by the 
-      		// dump feature, not the executing MIPS program.
-         return value;
-      } 
-       
-       public Number getRawWordOrNull(Number address) throws AddressErrorException {
-    	   return getRawOrNull(address, 2);
-       }
-   
-       public Number getRawDoubleWordOrNull(Number address) throws AddressErrorException {
-    	   return getRawOrNull(address, 3);
-       }
-     /**
-      *  Look for first "null" memory value in an address range.  For text segment (binary code), this
-   	*  represents a word that does not contain an instruction.  Normally use this to find the end of 
-   	*  the program.  For data segment, this represents the first block of simulated memory (block length
-   	*  currently 4K words) that has not been referenced by an assembled/executing program.
-   	*
-   	*  @param baseAddress lowest MIPS address to be searched; the starting point
-   	*  @param limitAddress highest MIPS address to be searched
-   	*  @return lowest address within specified range that contains "null" value as described above.
-   	*  @throws AddressErrorException if the base address is not on a word boundary
-   	*/
-       public Number getAddressOfFirstNull(Number baseAddress, Number limitAddress) throws AddressErrorException {
+            // Do not notify observers.  This read operation is initiated by the
+            // dump feature, not the executing MIPS program.
+        return value;
+    }
+
+    public Number getRawWordOrNull(Number address) throws AddressErrorException {
+       return getRawOrNull(address, 2);
+    }
+
+    public Number getRawDoubleWordOrNull(Number address) throws AddressErrorException {
+       return getRawOrNull(address, 3);
+    }
+    /**
+    *  Look for first "null" memory value in an address range.  For text segment (binary code), this
+    *  represents a word that does not contain an instruction.  Normally use this to find the end of
+    *  the program.  For data segment, this represents the first block of simulated memory (block length
+    *  currently 4K words) that has not been referenced by an assembled/executing program.
+    *
+    *  @param baseAddress lowest MIPS address to be searched; the starting point
+    *  @param limitAddress highest MIPS address to be searched
+    *  @return lowest address within specified range that contains "null" value as described above.
+    *  @throws AddressErrorException if the base address is not on a word boundary
+    */
+    public Number getAddressOfFirstNull(Number baseAddress, Number limitAddress) throws AddressErrorException {
          Number address = baseAddress;
          for (; isLt(address, limitAddress); address = add(address, Memory.WORD_LENGTH_BYTES)) {
-            if (getRawWordOrNull(address) == null) {
+            if (getRawWordOrNull(address) == null)
                break;
-            }
          }
          return address;
-      }
+    }
    
     ///////////////////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Starting at the given word address, read a 4 byte word as an int.  
-     *  Does not use "get()"; we can do it faster here knowing we're working only 
-     *  with full words.
-     * 
-     * @param address Starting address of word to be read.
-     * @return  Word (4-byte value) stored starting at that address.
-     * @throws AddressErrorException If address is not on word boundary.
+    /**
+    *  Starting at the given word address, read a 4 byte word as an int.
+    *  Does not use "get()"; we can do it faster here knowing we're working only
+    *  with full words.
+    *
+    *  @param address Starting address of word to be read.
+    *  @return  Word (4-byte value) stored starting at that address.
+    *  @throws AddressErrorException If address is not on word boundary.
     **/
-       public Number getWord(Number address) throws AddressErrorException {
-    	   if (GenMath.rem(address, WORD_LENGTH_BYTES).intValue() != 0) {
-               throw new AddressErrorException("fetch address not aligned on double word boundary ",
-                  Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-            }
-       	 if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-       		 return get(address.intValue(), 4);
-       	 return get(address.longValue(), 4);   
-      }   
-   
-       
-       public Number getDoubleWord(Number address) throws AddressErrorException {
-    	   if (GenMath.rem(address,(2*WORD_LENGTH_BYTES)).intValue() != 0) {
-               throw new AddressErrorException("fetch address not aligned on double word boundary ",
-                  Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-            }
-       	 if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-       		 return get(address.intValue(), 8);
-       	 return get(address.longValue(), 8);   
-       }  
+    public Number getWord(Number address) throws AddressErrorException {
+        if (GenMath.rem(address, WORD_LENGTH_BYTES).intValue() != 0)
+            throw new AddressErrorException("fetch address not aligned on double word boundary ",
+            Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+
+        if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+            return get(address.intValue(), 4);
+        return get(address.longValue(), 4);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Starting at the given word address, read a 4 byte word as an int.  
-     *  Does not use "get()"; we can do it faster here knowing we're working only 
-     *  with full words.  Observers are NOT notified.
-     * 
-     * @param address Starting address of word to be read.
-     * @return  Word (4-byte value) stored starting at that address.
-     * @throws AddressErrorException If address is not on word boundary.
+    /**
+    *  Starting at the given word address, read a 8 byte word as an int.
+    *  @param address Starting address of word to be read.
+    *  @return  Double word (8-byte value) stored starting at that address.
+    *  @throws AddressErrorException If address is not on word boundary.
     **/
-       
-       public Number getWordNoNotify(Number address) throws AddressErrorException {
-          if (GenMath.rem(address,WORD_LENGTH_BYTES).intValue() != 0) {
+    public Number getDoubleWord(Number address) throws AddressErrorException {
+        if (GenMath.rem(address,(2*WORD_LENGTH_BYTES)).intValue() != 0) {
+            throw new AddressErrorException("fetch address not aligned on double word boundary ",
+                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+        }
+        if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+            return get(address.intValue(), 8);
+        return get(address.longValue(), 8);
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+    *  Starting at the given word address, read a 4 byte word as an int.
+    *  Does not use "get()"; we can do it faster here knowing we're working only
+    *  with full words.  Observers are NOT notified.
+    *
+    *  @param address Starting address of word to be read.
+    *  @return  Word (4-byte value) stored starting at that address.
+    *  @throws AddressErrorException If address is not on word boundary.
+    **/
+
+    public Number getWordNoNotify(Number address) throws AddressErrorException {
+        if (GenMath.rem(address,WORD_LENGTH_BYTES).intValue() != 0) {
             throw new AddressErrorException("fetch address not aligned on word boundary ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         }
-    	 if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-    		 return get(address.intValue(), 4, false);
-    	 return get(address.longValue(), 4, false);
-       } 
-   
-   
+                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+        }
+        if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+            return get(address.intValue(), 4, false);
+        return get(address.longValue(), 4, false);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Starting at the given word address, read a 2 byte word into lower 16 bits of int.  
-     * 
-     * @param address Starting address of word to be read.
-     * @return  Halfword (2-byte value) stored starting at that address, stored in lower 16 bits.
-     * @throws AddressErrorException If address is not on halfword boundary.
-    **/   
-       public Number getHalf(Number address) throws AddressErrorException {
-         if (GenMath.rem(address,2).intValue() != 0) {
+    /**
+    *  Starting at the given word address, read a 2 byte word into lower 16 bits of int.
+    *  @param address Starting address of word to be read.
+    *  @return  Halfword (2-byte value) stored starting at that address, stored in lower 16 bits.
+    *  @throws AddressErrorException If address is not on halfword boundary.
+    **/
+    public Number getHalf(Number address) throws AddressErrorException {
+        if (GenMath.rem(address,2).intValue() != 0) {
             throw new AddressErrorException("fetch address not aligned on halfword boundary ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         }
-  	   	if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-		   return get(address.intValue(), 2);
-  	   	return get(address.longValue(), 2);
-      }
+                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+        }
+        if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+            return get(address.intValue(), 2);
+        return get(address.longValue(), 2);
+    }
  
-   
-   
+
     ///////////////////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Reads specified Memory byte into low order 8 bits of int.
-     * 
-     * @param address Address of Memory byte to be read.
-     * @return Value stored at that address.  Only low order 8 bits used.
-     **/
-       public Number getByte(Number address) throws AddressErrorException {
-    	   if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-    		   return get(address.intValue(), 1);
-    	   return get(address.longValue(), 1);
-      }
-       
-     
+    /**
+    *  Reads specified Memory byte into low order 8 bits of int.
+    *  @param address Address of Memory byte to be read.
+    *  @return Value stored at that address.  Only low order 8 bits used.
+    **/
+    public Number getByte(Number address) throws AddressErrorException {
+        if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+            return get(address.intValue(), 1);
+        return get(address.longValue(), 1);
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /**
+    *  Gets ProgramStatement from Text Segment.
+    *  @param address Starting address of Memory address to be read.  Must be word boundary.
+    *  @return reference to ProgramStatement object associated with that address, or null if none.
+    *  @throws AddressErrorException If address is not on word boundary or is outside Text Segment.
+    *  @see ProgramStatement
+    **/
+
+    public ProgramStatement getStatement(Number address) throws AddressErrorException {
+        return getStatement(address, true);
+    }
    
    ////////////////////////////////////////////////////////////////////////////////
-   /**
-    * Gets ProgramStatement from Text Segment.  
-    * @param address Starting address of Memory address to be read.  Must be word boundary.
-    * @return reference to ProgramStatement object associated with that address, or null if none.
-    * @throws AddressErrorException If address is not on word boundary or is outside Text Segment.
-    * @see ProgramStatement
+    /**
+    *  Gets ProgramStatement from Text Segment without notifying observers.
+    *  @param address Starting address of Memory address to be read.  Must be word boundary.
+    *  @return reference to ProgramStatement object associated with that address, or null if none.
+    *  @throws AddressErrorException If address is not on word boundary or is outside Text Segment.
+    *  @see ProgramStatement
     **/
-   
-       public ProgramStatement getStatement(Number address) throws AddressErrorException {
-         return getStatement(address, true);
-   
-      }
+
+    public ProgramStatement getStatementNoNotify(Number address) throws AddressErrorException {
+        return getStatement(address, false);
+    }
    
    ////////////////////////////////////////////////////////////////////////////////
-   /**
-    * Gets ProgramStatement from Text Segment without notifying observers.
-    * @param address Starting address of Memory address to be read.  Must be word boundary.
-    * @return reference to ProgramStatement object associated with that address, or null if none.
-    * @throws AddressErrorException If address is not on word boundary or is outside Text Segment.
-    * @see ProgramStatement
-    **/
    
-       public ProgramStatement getStatementNoNotify(Number address) throws AddressErrorException {
-         return getStatement(address, false);
-      
-      }
-   
-       ////////////////////////////////////////////////////////////////////////////////
-   
-       private ProgramStatement getStatement(Number address, boolean notify) throws AddressErrorException {
-         if (!wordAligned(address)) {
-            throw new AddressErrorException(
-               "fetch address for text segment not aligned to word boundary ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         }
-         if (!Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED)
-          && !(textBlockTable.inSegment(address) || kernelTextBlockTable.inSegment(address))) {
-            throw new AddressErrorException(
-               "fetch address for text segment out of range ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         }
-         
-         	if (textBlockTable.inSegment(address)) 
-         		return readProgramStatement(textBlockTable, address, notify);
-         	else if (kernelTextBlockTable.inSegment(address)) 
-         		return readProgramStatement(kernelTextBlockTable, address, notify);
-            
-         	return new ProgramStatement(get(address, WORD_LENGTH_BYTES).intValue(), address);
-      }
-   		
-   	  
-     
+    private ProgramStatement getStatement(Number address, boolean notify) throws AddressErrorException {
+        if (!wordAligned(address)) {
+            throw new AddressErrorException("fetch address for text segment not aligned to word boundary ",
+                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+        }
+        if (!Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED)
+        && !(textBlockTable.inSegment(address) || kernelTextBlockTable.inSegment(address))) {
+            throw new AddressErrorException("fetch address for text segment out of range ",
+                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+        }
+
+        if (textBlockTable.inSegment(address))
+            return readProgramStatement(textBlockTable, address, notify);
+        else if (kernelTextBlockTable.inSegment(address))
+            return readProgramStatement(kernelTextBlockTable, address, notify);
+
+        return new ProgramStatement(get(address, WORD_LENGTH_BYTES).intValue(), address);
+    }
+
+
    /*********************************  THE UTILITIES  *************************************/ 
    
    /**
@@ -910,21 +891,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          return isEqz(GenMath.rem(address,(2*WORD_LENGTH_BYTES)));
       }
    
-   /**
-    * Utility method to align given address to next full word boundary, if not already
-    * aligned.   
-    * @param address  a memory address (any long value is potentially valid)
-    * @return address aligned to next word boundary (divisible by 4)
+    /**
+    *  Utility method to align given address to next full word boundary, if not already
+    *  aligned.
+    *  @param address  a memory address (any long value is potentially valid)
+    *  @return address aligned to next word boundary (divisible by 4)
     */
-       public static Number alignToDoubleWordBoundary(Number address) {
-         if (!wordAligned(address)) {
-            if (isLt(0, address))
-            	address = add(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
-            else
-            	address = sub(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
-         }  
-         return address;
-      }
+    public static Number alignToDoubleWordBoundary(Number address) {
+     if (!wordAligned(address)) {
+        if (isLt(0, address))
+            address = add(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
+        else
+            address = sub(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
+     }
+     return address;
+    }
     
    	
    ///////////////////////////////////////////////////////////////////////////
@@ -950,22 +931,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
       }
     
-   /**
+    /**
     *  Method to accept registration from observer for specific address.  This includes
     *  the memory word starting at the given address. Note to observers: this class delegates Observable operations
     *  so notices will come from the delegate, not the memory object.
-    *
-    *  @param obs  the observer
+    *  @param obs the observer
     *  @param addr the memory address which must be on word boundary
     */
    
-       public void addObserver(Observer obs, Number addr) throws AddressErrorException {
-         this.addObserver(obs, addr, addr);
-      }
+    public void addObserver(Observer obs, Number addr) throws AddressErrorException {
+        this.addObserver(obs, addr, addr);
+    }
    
    
-   /**
-    *  Method to accept registration from observer for specific address range.  The 
+    /**
+    *  Method to accept registration from observer for specific address range.  The
     *  last byte included in the address range is the last byte of the word specified
     *  by the ending address. Note to observers: this class delegates Observable operations
     *  so notices will come from the delegate, not the memory object.
@@ -973,146 +953,140 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param obs  the observer
     *  @param startAddr the low end of memory address range, must be on word boundary
     *  @param endAddr the high end of memory address range, must be on word boundary
-    */	
-       public void addObserver(Observer obs, Number startAddr, Number endAddr) throws AddressErrorException {
-         if (!isEqz(GenMath.rem(startAddr, WORD_LENGTH_BYTES))) {
+    */
+    public void addObserver(Observer obs, Number startAddr, Number endAddr) throws AddressErrorException {
+        if (!isEqz(GenMath.rem(startAddr, WORD_LENGTH_BYTES)))
             throw new AddressErrorException("address not aligned on word boundary ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
-         }
-         if (!isEq(endAddr, startAddr) && !isEqz(GenMath.rem(endAddr, WORD_LENGTH_BYTES))) {
+            Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
+
+        if (!isEq(endAddr, startAddr) && !isEqz(GenMath.rem(endAddr, WORD_LENGTH_BYTES)))
             throw new AddressErrorException("address not aligned on word boundary ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
-         }
-      	// upper half of address space (above 0x7fffffff) has sign bit 1 thus is seen as
-      	// negative.
-         if (!isLtz(startAddr) && isLtz(endAddr)) {
+            Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
+
+        // upper half of address space (above 0x7fffffff) has sign bit 1 thus is seen as
+        // negative.
+        if (!isLtz(startAddr) && isLtz(endAddr)) {
             throw new AddressErrorException("range cannot cross 0x8000000; please split it up",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
-         }			   
-         if (isLt(endAddr,startAddr)) {
+                Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
+        }
+        if (isLt(endAddr,startAddr)) {
             throw new AddressErrorException("end address of range < start address of range ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
-         }
-         observables.add(new MemoryObservable(obs, startAddr, endAddr));
-      }
+                    Exceptions.ADDRESS_EXCEPTION_LOAD, startAddr);
+        }
+        observables.add(new MemoryObservable(obs, startAddr, endAddr));
+    }
+
+    /**
+    * get the number of observers
+    * @return the number of observers
+    */
+    public int countObservers() {
+        return observables.size();
+    }
    
-      /**
-   	 *  Return number of observers
-   	 */
-       public int countObservers() {
-         return observables.size();
-      }
-   
-   	/**
-   	 *  Remove specified memory observers
-   	 *  @param obs  Observer to be removed
-   	 */   		
-       public void deleteObserver(Observer obs) {
-         Iterator it = observables.iterator();
-         while (it.hasNext()) {
-            ((MemoryObservable)it.next()).deleteObserver(obs);
-         }	
-      }
+    /**
+    *  Remove specified memory observers
+    *  @param obs  Observer to be removed
+    */
+    public void deleteObserver(Observer obs) {
+        for (Object observable : observables) {
+            ((MemoryObservable) observable).deleteObserver(obs);
+        }
+    }
    	
-   	/**
-   	 *  Remove all memory observers
-   	 */
-       public void deleteObservers() {
+    /**
+    *  Remove all memory observers
+    */
+    public void deleteObservers() {
          // just drop the collection
          observables = getNewMemoryObserversCollection();
-      }
+    }
    	
-   	/**
-   	 * Overridden to be unavailable.  The notice that an Observer
-   	 * receives does not come from the memory object itself, but 
-   	 * instead from a delegate.
-   	 * @throws UnsupportedOperationException
-   	 */   		
-       public void notifyObservers() {
-         throw new UnsupportedOperationException();
-      }
+    /**
+    *  Overridden to be unavailable.  The notice that an Observer
+    *  receives does not come from the memory object itself, but
+    *  instead from a delegate.
+    *  @throws UnsupportedOperationException
+    */
+    public void notifyObservers() {
+        throw new UnsupportedOperationException();
+    }
    	
-   	/**
-   	 * Overridden to be unavailable.  The notice that an Observer
-   	 * receives does not come from the memory object itself, but 
-   	 * instead from a delegate.
-   	 * @throws UnsupportedOperationException
-   	 */
-       public void notifyObservers(Object obj) {
-         throw new UnsupportedOperationException();
-      }
+    /**
+    *  Overridden to be unavailable.  The notice that an Observer
+    *  receives does not come from the memory object itself, but
+    *  instead from a delegate.
+    *  @throws UnsupportedOperationException
+    */
+    public void notifyObservers(Object obj) {
+        throw new UnsupportedOperationException();
+    }
+
+
+    private Collection getNewMemoryObserversCollection() {
+     return new Vector();  // Vectors are thread-safe
+    }
    		
-   		
-       private Collection getNewMemoryObserversCollection() {
-         return new Vector();  // Vectors are thread-safe
-      }
-   		
-       /////////////////////////////////////////////////////////////////////////
-       // Private class whose objects will represent an observable-observer pair 
-   	 // for a given memory address or range.
-       private class MemoryObservable extends Observable implements Comparable {
-         private Number lowAddress, highAddress; 
-      	
-          public MemoryObservable(Observer obs, Number startAddr, Number endAddr) {
+    /////////////////////////////////////////////////////////////////////////
+    // Private class whose objects will represent an observable-observer pair
+    // for a given memory address or range.
+    private class MemoryObservable extends Observable implements Comparable {
+        private Number lowAddress, highAddress;
+
+        public MemoryObservable(Observer obs, Number startAddr, Number endAddr) {
             lowAddress = startAddr;
             highAddress = endAddr;
             this.addObserver(obs);
-         }
-      	
-          public boolean match(Number address) {
+        }
+
+        public boolean match(Number address) {
             return !isLt(address, lowAddress) && !isEq(
-            		GenMath.sub(highAddress, 1+WORD_LENGTH_BYTES), address);
-         }
-      	
-          public void notifyObserver(MemoryAccessNotice notice) {
+                    GenMath.sub(highAddress, 1 + WORD_LENGTH_BYTES), address);
+        }
+
+        public void notifyObserver(MemoryAccessNotice notice) {
             this.setChanged();
             this.notifyObservers(notice);
-         }
-         
-      	// Useful to have for future refactoring, if it actually becomes worthwhile to sort
-      	// these or put 'em in a tree (rather than sequential search through list).
-          public int compareTo(Object obj) {
-            if (!(obj instanceof MemoryObservable)) {
-               throw new ClassCastException();
-            }
+        }
+
+        // Useful to have for future refactoring, if it actually becomes worthwhile to sort
+        // these or put 'em in a tree (rather than sequential search through list).
+        public int compareTo(Object obj) {
+            if (!(obj instanceof MemoryObservable))
+                throw new ClassCastException();
+
             MemoryObservable mo = (MemoryObservable) obj;
             if (isLt(this.lowAddress, mo.lowAddress)
-            		|| isEq(this.lowAddress, mo.lowAddress) && 
-            		isLt(this.highAddress, mo.highAddress)) {
-               return -1;
-            }
+                    || isEq(this.lowAddress, mo.lowAddress) &&
+                    isLt(this.highAddress, mo.highAddress))
+                return -1;
+
             if (isLt(mo.lowAddress, this.lowAddress)
-            	|| isEq(this.lowAddress, mo.lowAddress) && 
-            		isLt(mo.highAddress, this.highAddress)) {
-               return -1;
-            }
+                    || isEq(this.lowAddress, mo.lowAddress) &&
+                    isLt(mo.highAddress, this.highAddress))
+                return -1;
+
             return 0;  // they have to be equal at this point.
-         }
-      }
-       
-      
+        }
+    }
    
    /*********************************  THE HELPERS  *************************************/
-     
-   
-   ////////////////////////////////////////////////////////////////////////////////
-   //
-   // Method to notify any observers of memory operation that has just occurred.
-   //
-   // The "|| Globals.getGui()==null" is a hack added 19 July 2012 DPS.  IF MIPS simulation
-   // is from command mode, Globals.program is null but still want ability to observe.
-       private void notifyAnyObservers(int type, Number address, int length, Number value) {
-         if ((Globals.program != null || Globals.getGui()==null) && this.observables.size() > 0) {
-            Iterator it = this.observables.iterator();
-            MemoryObservable mo;
+
+    ////////////////////////////////////////////////////////////////////////////////
+    // Method to notify any observers of memory operation that has just occurred.
+    // The "|| Globals.getGui()==null" is a hack added 19 July 2012 DPS.  IF MIPS simulation
+    // is from command mode, Globals.program is null but still want ability to observe.
+    private void notifyAnyObservers(int type, Number address, int length, Number value) {
+        if ((Globals.program != null || Globals.getGui()==null) && this.observables.size() > 0) {
+        Iterator it = this.observables.iterator();
+        MemoryObservable mo;
             while (it.hasNext()) {
                mo = (MemoryObservable)it.next();
-               if (mo.match(address)) 
+               if (mo.match(address))
                   mo.notifyObserver(new MemoryAccessNotice(type, address, length, value));
             }
-         } 		
-      }
-   
+        }
+    }
        
    ///////////////////////////////////////////////////////////////////////   	
    // Read a program statement from the given address.  Address has already been verified
@@ -1131,20 +1105,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            if (notify) notifyAnyObservers(AccessNotice.READ, address, Instruction.INSTRUCTION_LENGTH,0);
            return null;
       }
-       
 
       private class BlockTables extends ArrayList<BlockTable>{
     	      	  
     	  private BlockTables() {
     		  super(Arrays.asList(  
-        				  (new BlockTable(BLOCK_TABLE_LENGTH, 
-        						  MemoryConfigurations.getDefaultDataBaseAddress())), // data table
+        				  (new BlockTable(BLOCK_TABLE_LENGTH,
+        						  MemoryConfigurations.getCurrentConfiguration().getDataBaseAddress(),
+                                  MemoryConfigurations.getCurrentConfiguration().getDataSegmentBaseAddress())), // data table
         				  (new BlockTable.DataBlockTable(BLOCK_TABLE_LENGTH,
-        						  MemoryConfigurations.getDefaultKernelDataBaseAddress())),   // kernel data table
+        						  MemoryConfigurations.getCurrentConfiguration().getKernelDataBaseAddress())),   // kernel data table
         				  ( new StackBlockTable(-BLOCK_TABLE_LENGTH, 
-        						  MemoryConfigurations.getDefaultStackBaseAddress())), // stack table
+        						  MemoryConfigurations.getCurrentConfiguration().getStackBaseAddress())), // stack table
         				  ( new BlockTable(MMIO_TABLE_LENGTH,
-        						  MemoryConfigurations.getDefaultMemoryMapBaseAddress())) // memory map table
+        						  MemoryConfigurations.getCurrentConfiguration().getMemoryMapBaseAddress())) // memory map table
         		));  
     	  }
     	  
@@ -1155,8 +1129,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     		  }
     		  return false;
     	  }
-
-    	  
       }
-   	   	
    }

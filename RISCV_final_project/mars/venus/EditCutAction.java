@@ -1,7 +1,7 @@
-   package mars.venus;
+package mars.venus;
 
-   import javax.swing.*;
-   import java.awt.event.ActionEvent;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 	
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -33,15 +33,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
     /**
     * Action  for the Edit -> Cut menu item
-    */   			
+    */
     public class EditCutAction extends ChangeableAction {
-   	 
-       public EditCutAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-      }
-   		  
-       public void actionPerformed(ActionEvent e){
-		    mainUI.getMainPane().getEditPane().cutText();
-      }
-   }
+
+        public EditCutAction(String name, Icon icon, String descrip,
+                 Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+        }
+
+        public void actionPerformed(ActionEvent e){
+            mainUI.getMainPane().getEditPane().cutText();
+        }
+    }

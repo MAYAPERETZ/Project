@@ -50,6 +50,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * Performs syscall function to print on the console the integer stored in $a0.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         SystemIO.printString((RV32IRegisters.getValue(4)).toString());
+         SystemIO.printString((RVIRegisters.getValue(4)).toString());
       }
    }

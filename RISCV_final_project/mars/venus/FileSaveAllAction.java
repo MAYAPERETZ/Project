@@ -36,12 +36,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     */   			
     public class FileSaveAllAction extends ChangeableAction{
    	 
-       public FileSaveAllAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-      }
+    public FileSaveAllAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+    }
    	
-       public void actionPerformed(ActionEvent e){
-		      mainUI.editor.saveAll();
-      }
+    public void actionPerformed(ActionEvent e){
+        mainUI.editor.saveAll();
+    }
    }

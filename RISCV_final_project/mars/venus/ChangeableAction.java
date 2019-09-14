@@ -9,14 +9,13 @@ import javax.swing.KeyStroke;
 /**
  * parent class for Action subclasses to be defined for every menu/toolbar
  * option which its state is changeable
- * 
  * @author Maya Peretz
  * 
  */
 public class ChangeableAction extends GuiAction implements Observer{
 
-	NewObservable newObservable;
-	protected ChangeableAction(String name, Icon icon, String descrip, 
+	private NewObservable newObservable;
+	protected ChangeableAction(String name, Icon icon, String descrip,
 			Integer mnemonic, KeyStroke accel, GUI mainUI2) {
 		super(name, icon, descrip, mnemonic, accel, mainUI2);
 	}
@@ -28,12 +27,12 @@ public class ChangeableAction extends GuiAction implements Observer{
 		newObservable.addObserver(this);
 	}
 	
-	 /** Determines from FileStatus what the menu state (enabled/disabled)should be. 
-	  * 
-	  */
+	/** Determines from FileStatus what the menu state (enabled/disabled)should be.
+	*
+	*/
     @Override
 	public void update(Observable arg0, Object arg1) {
-  	  	boolean status = false;
+  	  	boolean status;
   	  	switch ((int)arg1) {
         case FileStatus.NO_FILE:
            status = (this instanceof FileNewAction
@@ -49,15 +48,15 @@ public class ChangeableAction extends GuiAction implements Observer{
         case FileStatus.EDITED:
         case FileStatus.TERMINATED:	
         case FileStatus.RUNNABLE:
-      	   this.setEnabled(status = true);
+      	   this.setEnabled(true);
       	   break; 
         case FileStatus.RUNNING:
-       	   this.setEnabled(status = false);
+       	   this.setEnabled(false);
        	   break;
         case FileStatus.OPENING:// This is a temporary state. DPS 9-Aug-2011
            break;
         default:
-           System.out.println("Invalid File Status: "+status);
+           System.out.println("Invalid File Status");
            break;
   	  	}
 }

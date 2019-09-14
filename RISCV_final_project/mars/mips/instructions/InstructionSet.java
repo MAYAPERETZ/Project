@@ -6,7 +6,6 @@
    import mars.util.*;
    import java.util.*;
    import java.io.*;
-   import java.util.function.Function;
 
 	/*
 Copyright (c) 2003-2013,  Pete Sanderson and Kenneth Vollmar
@@ -50,7 +49,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private ArrayList instructionList;
 	  private ArrayList opcodeMatchMaps;
       private SyscallLoader syscallLoader;
-    /**
+
+      /**
      * Creates a new InstructionSet object.
      */
        public InstructionSet()
@@ -58,9 +58,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          instructionList = new ArrayList();
       
       }
-    /**
-     * Retrieve the current instruction set.
-     */
+
+       /**
+        * Retrieve the current instruction set.
+        * @return instructionList
+        */
        public ArrayList getInstructionList()
       {
          return instructionList;
@@ -264,7 +266,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          instructionList.add(
                  new U_type("auipc t1, 1000",
                  "Add Upper Immediate to PC. Adds the sign-extended 20-bit immediate, left-shifted by 12 bits, to the pc, and writes the result to t1",
-             	"ssssssssssssssssssssfffff0010111",RV32IRegisters.getProgramCounter()));
+             	"ssssssssssssssssssssfffff0010111", RVIRegisters.getProgramCounter()));
                 
          instructionList.add(
                 new B_type("beq t1, t2,offset",
@@ -352,7 +354,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             	 "Issue a system call : Execute the system call specified by value in $v0",
             	 
                 "000000 00000 00000 00000 00000 001100",
-                        statement -> findAndSimulateSyscall(RV32IRegisters.getValue(2).intValue(),statement)));
+                        statement -> findAndSimulateSyscall(RVIRegisters.getValue(2).intValue(),statement)));
 
          instructionList.add(
                 new J_type("jal t1, target",
@@ -361,9 +363,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "ssssssssssssssssssssfffff1101111",
                         statement -> {
                            Number[] operands = statement.getOperands();
-                           processReturnAddress(operands[0]);//RV32IRegisters.updateRegister(operands[0], RV32IRegisters.getProgramCounter());
+                           processReturnAddress(operands[0]);//RVIRegisters.updateRegister(operands[0], RVIRegisters.getProgramCounter());
                            processJump(GenMath.sub(GenMath.add(
-                              RV32IRegisters.getProgramCounter(), operands[1])
+                              RVIRegisters.getProgramCounter(), operands[1])
                               ,Instruction.INSTRUCTION_LENGTH));
                         }));
          
@@ -380,7 +382,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            Number[] operands = statement.getOperands();
                            processReturnAddress(operands[0]);
                            processJump(
-                                   GenMath.and(GenMath.add(RV32IRegisters.getValue(operands[2]),
+                                   GenMath.and(GenMath.add(RVIRegisters.getValue(operands[2]),
                                    operands[1]), (~1)));
                         }));
        
@@ -435,7 +437,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                throw new FloatingPointException(Exceptions.FLOATING_POINT_OVERFLOW);
                            }
 
-                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum), statement);
+                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum));
 
                         }));
          
@@ -452,7 +454,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                throw new FloatingPointException(Exceptions.FLOATING_POINT_UNDERFLOW);
                            }
                            else
-                               Coprocessor1.updateRegisterWithExecptions(operands[0].intValue(), Coprocessor1.round(diff), statement);
+                               Coprocessor1.updateRegisterWithExecptions(operands[0].intValue(), Coprocessor1.round(diff));
 
                         }));
          instructionList.add(
@@ -464,7 +466,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            float mul1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
                            float mul2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
                            float prod = mul1 * mul2;
-                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(prod), statement);
+                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(prod));
                         }));
          instructionList.add(
                 new R_type.WithRmField("fdiv.s ft1,ft2,ft3",
@@ -479,7 +481,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            }
                            else {
                                float quot = div1 / div2;
-                               Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(quot), statement);
+                               Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(quot));
                            }
                        }));
          instructionList.add(
@@ -499,7 +501,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            else {
                               floatSqrt = Float.floatToIntBits( (float) Math.sqrt(value));
                            }
-                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(floatSqrt), statement);
+                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(floatSqrt));
                          }));
 
          instructionList.add(
@@ -512,7 +514,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            {
                               Coprocessor1.updateRegister(operands[0],
                                   Globals.memory.getWord(
-                                  RV32IRegisters.getValue(operands[2]).intValue() + operands[1].intValue()
+                                  RVIRegisters.getValue(operands[2]).intValue() + operands[1].intValue()
                                   ).intValue());
                            }
                                catch (AddressErrorException e)
@@ -531,7 +533,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            try
                            {
                               Globals.memory.setWord(
-                                  RV32IRegisters.getValue(operands[2]).intValue() + operands[1].intValue(),
+                                  RVIRegisters.getValue(operands[2]).intValue() + operands[1].intValue(),
                                   Coprocessor1.getIntValue(operands[0]));
                            }
                                catch (AddressErrorException e)
@@ -605,7 +607,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  new R_type("fmv.x.w t1,ft2",
                  "Floating-point Move Word to Integer, Single-Presicion.",
                  "111100000000sssss000fffff1010011",
-                         e->e, Coprocessor1::getIntValue, RV32IRegisters::updateRegister));
+                         e->e, Coprocessor1::getIntValue, RVIRegisters::updateRegister));
 
          
          instructionList.add(
@@ -668,38 +670,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                    rs1 = Integer.parseInt(""+Coprocessor1.getFloatValue(operands[1]));
                               }catch (NumberFormatException nfe){
                                   rs1 = Coprocessor1.getFCVTOutput(Coprocessor1.getFloatValue(operands[1]));
-                                  RV32IRegisters.updateRegister(operands[0], rs1);
+                                  RVIRegisters.updateRegister(operands[0], rs1);
                                   throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
                               }
-                              RV32IRegisters.updateRegister(operands[0], rs1);
+                              RVIRegisters.updateRegister(operands[0], rs1);
                           }));
 
-          /***
-           * Floating-point-to-integer and integer-to-floating-point conversion instructions are encoded in the
-           * OP-FP major opcode space. FCVT.W.S or FCVT.L.S converts a floating-point number in floatingpoint register rs1
-           * to a signed 32-bit or 64-bit integer, respectively, in integer register rd. FCVT.S.W
-           * or FCVT.S.L converts a 32-bit or 64-bit signed integer, respectively, in integer register rs1 into a
-           * floating-point number in floating-point register rd. FCVT.WU.S, FCVT.LU.S, FCVT.S.WU, and
-           * FCVT.S.LU variants convert to or from unsigned integer values. FCVT.L[U].S and FCVT.S.L[U]
-           * are illegal in RV32. If the rounded result is not representable in the destination format, it is
-           * clipped to the nearest value and the invalid flag is set. Table 8.4 gives the range of valid inputs for
-           * FCVT.int.S and the behavior for invalid inputs.
-           *
-           * -----------------------------------------------------------------------------------------------------------
-           *                                            |   FCVT.W.S   |   FCVT.WU.S    |   FCVT.L.S    |  FCVT.LU.S   |
-           * -----------------------------------------------------------------------------------------------------------
-           * Minimum valid input (after rounding)       |    −2**31    |       0        |   -2**63      |       0      |
-           * Maximum valid input (after rounding)       |   2**31−1    |    2**32−1     |   2**63-1     |   2**64-1    |
-           * -----------------------------------------------------------------------------------------------------------
-           * Output for out-of-range negative input −2  |    −2**31    |       0        |   -2**63      |       0      |
-           * -----------------------------------------------------------------------------------------------------------
-           * Output for −∞                              |    −2**31    |       0        |   -2**63      |       0      |
-           * -----------------------------------------------------------------------------------------------------------
-           * Output for out-of-range positive input     |   2**31−1    |     2**32−1    |   2**63-1     |    2**64-1   |
-           * -----------------------------------------------------------------------------------------------------------
-           * Output for +∞ or NaN                       |   2**31−1    |     2**32−1    |   2**63-1     |    2**64-1   |
-           * -----------------------------------------------------------------------------------------------------------
-           */
+
           instructionList.add(
                   new R_type.WithRmField("fcvt.wu.s t1,ft2",
                           "Floating-point Convert to Unsigned Word from Single. ",
@@ -714,10 +691,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                   rs1 = Integer.parseUnsignedInt(""+
                                           Coprocessor1.getFCVTOutputUnsigned(
                                           Coprocessor1.getFloatValue(operands[1])));
-                                  RV32IRegisters.updateRegister(operands[0], rs1);
+                                  RVIRegisters.updateRegister(operands[0], rs1);
                                   throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
                               }
-                              RV32IRegisters.updateRegister(operands[0], rs1);
+                              RVIRegisters.updateRegister(operands[0], rs1);
                           }));
 
           instructionList.add(
@@ -727,7 +704,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                           statement -> {
                               Number[] operands = statement.getOperands();
                               Float rs1;
-                              rs1 = Float.intBitsToFloat(RV32IRegisters.getValue(operands[1]).intValue());
+                              rs1 = Float.intBitsToFloat(RVIRegisters.getValue(operands[1]).intValue());
                               Coprocessor1.updateRegister(operands[0], Coprocessor1.round(rs1));
                           }));
 
@@ -756,11 +733,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         statement -> {
                            Number[] operands = statement.getOperands();
                             // IF statement added by DPS 13-July-2011.
-                           if (!Globals.memory.doublewordAligned(GenMath.add(RV32IRegisters.getValue(operands[2]),
+                           if (!Globals.memory.doublewordAligned(GenMath.add(RVIRegisters.getValue(operands[2]),
                                    Binary.signExtend(operands[1], 12, 32)))) {
                               throw new ProcessingException(statement,
                                  new AddressErrorException("address not aligned on doubleword boundary ",
-                                 Exceptions.ADDRESS_EXCEPTION_LOAD, GenMath.add(RV32IRegisters.getValue(operands[2]),
+                                 Exceptions.ADDRESS_EXCEPTION_LOAD, GenMath.add(RVIRegisters.getValue(operands[2]),
                                  Binary.signExtend(operands[1], 12, 64))));
                            }
 
@@ -768,7 +745,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            {
                               Coprocessor1.updateRegister(operands[0],
                                   Globals.memory.getDoubleWord(
-                                  (RV32IRegisters.getValue(GenMath.add(operands[2]
+                                  (RVIRegisters.getValue(GenMath.add(operands[2]
                                           , Binary.signExtend(operands[1], 12, 64).longValue())))));
                            }
                                catch (AddressErrorException e)
@@ -785,17 +762,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                         statement -> {
                            Number[] operands = statement.getOperands();
                             // IF statement added by DPS 13-July-2011.
-                           if (!Globals.memory.doublewordAligned(GenMath.add(RV32IRegisters.getValue(operands[2]),
+                           if (!Globals.memory.doublewordAligned(GenMath.add(RVIRegisters.getValue(operands[2]),
                                    Binary.signExtend(operands[1], 12, 64)))) {
                               throw new ProcessingException(statement,
                                  new AddressErrorException("address not aligned on doubleword boundary ",
-                                 Exceptions.ADDRESS_EXCEPTION_STORE, GenMath.add(RV32IRegisters.getValue(operands[2]),
+                                 Exceptions.ADDRESS_EXCEPTION_STORE, GenMath.add(RVIRegisters.getValue(operands[2]),
                                  Binary.signExtend(operands[1].longValue(), 12, 32))));
                            }
                            try
                            {
                               Globals.memory.setDoubleWord(
-                                  (GenMath.add(RV32IRegisters.getValue(operands[2]),
+                                  (GenMath.add(RVIRegisters.getValue(operands[2]),
                                           Binary.signExtend(operands[1], 12, 64))),
                                   Coprocessor1.getIntValue(operands[0]));
                            }
@@ -929,7 +906,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                                   throw new FloatingPointException(Exceptions.FLOATING_POINT_OVERFLOW);
                               }
 
-                              Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum), statement);
+                              Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum));
                           }));
                 /*
                     TODO: FCVT.S.D, FCVT.D.S, FMV.W.D, FCVT.WU.D, FCVT.D.W, FMV.D.WU
@@ -945,245 +922,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
 
-      	////////////////////////////  THE TRAP INSTRUCTIONS & ERET  ////////////////////////////
-        /* 
-         instructionList.add(
-                new BasicInstruction("teq $t1,$t2",
-                "Trap if equal : Trap if $t1 is equal to $t2",
-            	 
-                "000000 fffff sssss 00000 00000 110100",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  { 
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) == RV32IRegisters.getValue(operands[1]))
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     } 	                     
-                  }
-               }));
-         
-         
-         instructionList.add(
-                new BasicInstruction("teqi $t1,-100",
-            	 "Trap if equal to immediate : Trap if $t1 is equal to sign-extended 16 bit immediate",
-                
-                "000001 fffff 01100 ssssssssssssssss",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) == (operands[1] << 16 >> 16)) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tne $t1,$t2",
-                "Trap if not equal : Trap if $t1 is not equal to $t2",
-            	 
-                "000000 fffff sssss 00000 00000 110110",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  { 
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) != RV32IRegisters.getValue(operands[1]))
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                      
-                  }
-               }));        
-         instructionList.add(
-                new BasicInstruction("tnei $t1,-100",
-            	 "Trap if not equal to immediate : Trap if $t1 is not equal to sign-extended 16 bit immediate",
-                
-                "000001 fffff 01110 ssssssssssssssss",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) != (operands[1] << 16 >> 16)) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                     
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tge $t1,$t2",
-                "Trap if greater or equal : Trap if $t1 is greater than or equal to $t2",
-            	 
-                "000000 fffff sssss 00000 00000 110000",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  { 
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) >= RV32IRegisters.getValue(operands[1]))
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     } 	                     
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tgeu $t1,$t2",
-                "Trap if greater or equal unsigned : Trap if $t1 is greater than or equal to $t2 using unsigned comparision",
-            	 
-                "000000 fffff sssss 00000 00000 110001",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  { 
-                     int[] operands = statement.getOperands();
-                     int first = RV32IRegisters.getValue(operands[0]);
-                     int second = RV32IRegisters.getValue(operands[1]);
-                  	// if signs same, do straight compare; if signs differ & first negative then first greater else second
-                     if ((first >= 0 && second >= 0 || first < 0 && second < 0) ? (first >= second) : (first < 0) ) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                      
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tgei $t1,-100",
-            	 "Trap if greater than or equal to immediate : Trap if $t1 greater than or equal to sign-extended 16 bit immediate",
-                
-                "000001 fffff 01000 ssssssssssssssss",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) >= (operands[1] << 16 >> 16)) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                    
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tgeiu $t1,-100",
-                "Trap if greater or equal to immediate unsigned : Trap if $t1 greater than or equal to sign-extended 16 bit immediate, unsigned comparison",
-            	 
-                "000001 fffff 01001 ssssssssssssssss",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                     int[] operands = statement.getOperands();
-                     int first = RV32IRegisters.getValue(operands[0]);
-                     // 16 bit immediate value in operands[1] is sign-extended
-                     int second = operands[1] << 16 >> 16;
-                  	// if signs same, do straight compare; if signs differ & first negative then first greater else second
-                     if ((first >= 0 && second >= 0 || first < 0 && second < 0) ? (first >= second) : (first < 0) ) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tlt $t1,$t2",
-                "Trap if less than: Trap if $t1 less than $t2",
-            	 
-                "000000 fffff sssss 00000 00000 110010",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  { 
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) < RV32IRegisters.getValue(operands[1]))
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     } 	                     
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tltu $t1,$t2",
-                "Trap if less than unsigned : Trap if $t1 less than $t2, unsigned comparison",
-            	 
-                "000000 fffff sssss 00000 00000 110011",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  { 
-                     int[] operands = statement.getOperands();
-                     int first = RV32IRegisters.getValue(operands[0]);
-                     int second = RV32IRegisters.getValue(operands[1]);
-                  	// if signs same, do straight compare; if signs differ & first positive then first is less else second
-                     if ((first >= 0 && second >= 0 || first < 0 && second < 0) ? (first < second) : (first >= 0) ) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                    
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tlti $t1,-100",
-            	 "Trap if less than immediate : Trap if $t1 less than sign-extended 16-bit immediate",
-                
-                "000001 fffff 01010 ssssssssssssssss",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                     int[] operands = statement.getOperands();
-                     if (RV32IRegisters.getValue(operands[0]) < (operands[1] << 16 >> 16)) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     } 	                     
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("tltiu $t1,-100",
-                "Trap if less than immediate unsigned : Trap if $t1 less than sign-extended 16-bit immediate, unsigned comparison",
-            	 
-                "000001 fffff 01011 ssssssssssssssss",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                     int[] operands = statement.getOperands();
-                     int first = RV32IRegisters.getValue(operands[0]);
-                     // 16 bit immediate value in operands[1] is sign-extended
-                     int second = operands[1] << 16 >> 16;
-                  	// if signs same, do straight compare; if signs differ & first positive then first is less else second
-                     if ((first >= 0 && second >= 0 || first < 0 && second < 0) ? (first < second) : (first >= 0) ) 
-                     {
-                        throw new ProcessingException(statement,
-                            "trap",Exceptions.TRAP_EXCEPTION);
-                     }                   
-                  }
-               }));
-         instructionList.add(
-                new BasicInstruction("eret", 
-            	 "Exception return : Set Program Counter to Coprocessor 0 EPC register value, set Coprocessor Status register bit 1 (exception level) to zero",
-            	 
-                "010000 1 0000000000000000000 011000",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                     // set EXL bit (bit 1) in Status register to 0 and set PC to EPC
-                     Coprocessor0.updateRegister(Coprocessor0.STATUS, 
-                                                 Binary.clearBit(Coprocessor0.getValue(Coprocessor0.STATUS), Coprocessor0.EXCEPTION_LEVEL));
-                     RV32IRegisters.setProgramCounter(Coprocessor0.getValue(Coprocessor0.EPC));
-                  }
-               }));
-      			
-        */
         ////////////// READ PSEUDO-INSTRUCTION SPECS FROM DATA FILE AND ADD //////////////////////
          addPseudoInstructions();
       	
@@ -1205,8 +943,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		 	Object rawInstr = instructionList.get(i);
 			if (rawInstr instanceof BasicInstruction) {
 				BasicInstruction basic = (BasicInstruction) rawInstr;
-				Integer mask = Integer.valueOf(basic.getOpcodeMask());
-				Integer match = Integer.valueOf(basic.getOpcodeMatch());
+				Integer mask = basic.getOpcodeMask();
+				Integer match = basic.getOpcodeMatch();
 				HashMap matchMap = (HashMap) maskMap.get(mask);
 				if (matchMap == null) {
 					matchMap = new HashMap();
@@ -1391,7 +1129,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             DelayedBranch.register(targetAddress);
          } 
          else {
-            RV32IRegisters.setProgramCounter(targetAddress);
+            RVIRegisters.setProgramCounter(targetAddress);
          }	 
       }
    
@@ -1408,7 +1146,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 */
    	 
        private void processReturnAddress(Number register) {
-         RV32IRegisters.updateRegister(register.intValue(), GenMath.add(RV32IRegisters.getProgramCounter(),
+         RVIRegisters.updateRegister(register.intValue(), GenMath.add(RVIRegisters.getProgramCounter(),
                  ((Globals.getSettings().getDelayedBranchingEnabled()) ? 
             	  Instruction.INSTRUCTION_LENGTH : 0) ));	 
       }

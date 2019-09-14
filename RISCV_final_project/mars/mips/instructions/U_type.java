@@ -2,7 +2,7 @@ package mars.mips.instructions;
 
 import mars.ProcessingException;
 import mars.ProgramStatement;
-import mars.mips.hardware.RV32IRegisters;
+import mars.mips.hardware.RVIRegisters;
 
 public class U_type extends BasicInstruction{
 	
@@ -12,16 +12,12 @@ public class U_type extends BasicInstruction{
 	}
 	
 	public U_type(String example, String description, String operMask, Number y) {
-		this(example, description, operMask, 
-				new SimulationCode()
-				{
-					public void simulate(ProgramStatement statement) throws ProcessingException
-					{
-	                      Number[] operands = statement.getOperands();
-	                      Number sum = GenMath.aui(y, operands[1]);
-	                      RV32IRegisters.updateRegister(operands[0].intValue(), sum);
-                       
-					}
+		this(example, description, operMask,
+				statement -> {
+					  Number[] operands = statement.getOperands();
+					  Number sum = GenMath.aui(y, operands[1]);
+					  RVIRegisters.updateRegister(operands[0].intValue(), sum);
+
 				});
 	}
 	

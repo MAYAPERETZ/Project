@@ -85,7 +85,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                } 
                else {
                   filesToAssemble = new ArrayList();
-                  filesToAssemble.add(FileStatus.getName());  
+                  filesToAssemble.add(FileStatus.getName());
                }
                String exceptionHandler = null;
                if (Globals.getSettings().getExceptionHandlerEnabled() &&
@@ -93,7 +93,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                    Globals.getSettings().getExceptionHandler().length() > 0) {
                   exceptionHandler = Globals.getSettings().getExceptionHandler();
                }
-               MIPSprogramsToAssemble = Globals.program.prepareFilesForAssembly(filesToAssemble, FileStatus.getFile().getPath(), exceptionHandler);					
+               MIPSprogramsToAssemble = Globals.program.prepareFilesForAssembly(filesToAssemble, FileStatus.getFile().getPath(), exceptionHandler);
                mainUI.messagesPane.postMarsMessage(buildFileNameList(name+": assembling ", MIPSprogramsToAssemble));
                // added logic to receive any warnings and output them.... DPS 11/28/06
                ErrorList warnings = Globals.program.assemble(MIPSprogramsToAssemble, extendedAssemblerEnabled,
@@ -105,7 +105,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                           name+": operation completed successfully.\n\n");
                FileStatus.setAssembled(true);
                FileStatus.set(FileStatus.RUNNABLE);
-               RV32IRegisters.resetRegisters();
+               RVIRegisters.resetRegisters();
                Coprocessor1.resetRegisters();
                Coprocessor0.resetRegisters();
                executePane.getTextSegmentWindow().setupTable();

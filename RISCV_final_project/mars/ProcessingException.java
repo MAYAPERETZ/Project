@@ -74,7 +74,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public ProcessingException(ProgramStatement ps, String m) {
          errs = new ErrorList();
          errs.add(new ErrorMessage(ps, "Runtime exception at "+
-            Binary.currentNumToHexString(GenMath.sub(RV32IRegisters.getProgramCounter(), Instruction.INSTRUCTION_LENGTH))+ 
+            Binary.currentNumToHexString(GenMath.sub(RVIRegisters.getProgramCounter(), Instruction.INSTRUCTION_LENGTH))+
             ": "+m));
       		// Stopped using ps.getAddress() because of pseudo-instructions.  All instructions in
       		// the macro expansion point to the same ProgramStatement, and thus all will return the

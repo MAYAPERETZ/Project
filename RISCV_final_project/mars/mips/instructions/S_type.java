@@ -4,10 +4,8 @@ import java.util.function.Function;
 
 import mars.Globals;
 import mars.ProcessingException;
-import mars.ProgramStatement;
 import mars.mips.hardware.AddressErrorException;
-import mars.mips.hardware.RV32IRegisters;
-import mars.util.Binary;
+import mars.mips.hardware.RVIRegisters;
 
 public class S_type extends BasicInstruction{
 
@@ -32,13 +30,13 @@ public class S_type extends BasicInstruction{
 				   try
 				   {
 
-					  if(mask != null)
-								 x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
-								  RV32IRegisters.getValue(operands[2]), operands[1]), RV32IRegisters.getValue(operands[0]));
-					  else
+					//  if(mask != null)
+					//			 x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
+					//			  RVIRegisters.getValue(operands[2]), operands[1]), RVIRegisters.getValue(operands[0]));
+					//  else
 						  x.apply(GenMath.add(
-										   RV32IRegisters.getValue(operands[2]), operands[1])
-							  ,RV32IRegisters.getValue(operands[0]));
+										   RVIRegisters.getValue(operands[2]), operands[1])
+							  , RVIRegisters.getValue(operands[0]));
 
 				   }
 				   catch (AddressErrorException e)

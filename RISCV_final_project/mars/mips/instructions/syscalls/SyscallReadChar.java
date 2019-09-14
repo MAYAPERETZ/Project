@@ -63,7 +63,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   	Exceptions.SYSCALL_EXCEPTION);
             }
 			// DPS 20 June 2008: changed from 4 ($a0) to 2 ($v0)
-         RV32IRegisters.updateRegister(2, value); 
+         RVIRegisters.updateRegister(2, value);
       }
    
    }

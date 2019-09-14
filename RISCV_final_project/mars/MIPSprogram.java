@@ -1,13 +1,11 @@
    package mars;
 	
-   import mars.venus.*;
    import mars.assembler.*;
    import mars.simulator.*;
    import mars.mips.hardware.*;
 	
    import java.util.*;
    import java.io.*;
-   import java.awt.event.*;
    import javax.swing.*;
 
 /*
@@ -360,7 +358,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public boolean simulateFromPC(Number[] breakPoints, Number maxSteps, AbstractAction a) throws ProcessingException {
          steppedExecution = false;
          Simulator sim = Simulator.getInstance();
-         return sim.simulate(this, RV32IRegisters.getProgramCounter(), maxSteps, breakPoints, a);
+         return sim.simulate(this, RVIRegisters.getProgramCounter(), maxSteps, breakPoints, a);
       }
    
    
@@ -375,7 +373,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public boolean simulateStepAtPC(AbstractAction a) throws ProcessingException {
          steppedExecution = true;
          Simulator sim = Simulator.getInstance();
-         boolean done = sim.simulate(this, RV32IRegisters.getProgramCounter(), 1, null,a);
+         boolean done = sim.simulate(this, RVIRegisters.getProgramCounter(), 1, null,a);
          return done;
       }
    

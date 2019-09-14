@@ -3,7 +3,7 @@
    import mars.Globals;
    import mars.mips.hardware.Coprocessor0;
    import mars.mips.hardware.Coprocessor1;
-   import mars.mips.hardware.RV32IRegisters;
+   import mars.mips.hardware.RVIRegisters;
    import mars.mips.hardware.memory.Memory;
    import javax.swing.*;
    import java.awt.event.ActionEvent;
@@ -67,12 +67,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (Globals.getSettings().getBackSteppingEnabled()) {
             boolean inDelaySlot = Globals.program.getBackStepper().inDelaySlot(); // Added 25 June 2007
 				Memory.getInstance().addObserver(executePane.getDataSegmentWindow());
-				RV32IRegisters.addRegistersObserver(executePane.getRegistersWindow());
+				RVIRegisters.addRegistersObserver(executePane.getRegistersWindow());
 				Coprocessor0.addRegistersObserver(executePane.getCoprocessor0Window());
 				Coprocessor1.addRegistersObserver(executePane.getCoprocessor1Window());
             Globals.program.getBackStepper().backStep();
 				Memory.getInstance().deleteObserver(executePane.getDataSegmentWindow());
-				RV32IRegisters.deleteRegistersObserver(executePane.getRegistersWindow());
+				RVIRegisters.deleteRegistersObserver(executePane.getRegistersWindow());
             executePane.getRegistersWindow().updateRegisters();
             executePane.getCoprocessor1Window().updateRegisters();
             executePane.getCoprocessor0Window().updateRegisters();

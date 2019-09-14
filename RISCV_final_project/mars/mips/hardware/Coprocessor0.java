@@ -1,6 +1,6 @@
-   package mars.mips.hardware;
-   import mars.Globals;
-   import java.util.*;
+package mars.mips.hardware;
+import mars.Globals;
+import java.util.*;
 
 /*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
@@ -118,7 +118,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static int getValue(int num){
          for (int i=0; i< registers.length; i++){
             if(registers[i].getNumber()== num) {
-               return (int) registers[i].getValue();
+               return registers[i].getValue().intValue();
             }
          }
          return 0;

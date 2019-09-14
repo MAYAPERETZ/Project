@@ -54,8 +54,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void simulate(ProgramStatement statement) throws ProcessingException {
       
          String inputString = "";
-         int buf = RV32IRegisters.getValue(4).intValue(); // buf addr in $a0
-         int maxLength = RV32IRegisters.getValue(5).intValue() - 1; // $a1
+         int buf = RVIRegisters.getValue(4).intValue(); // buf addr in $a0
+         int maxLength = RVIRegisters.getValue(5).intValue() - 1; // $a1
 			boolean addNullByte = true;
       	// Guard against negative maxLength.  DPS 13-July-2011
          if (maxLength < 0) 

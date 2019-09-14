@@ -185,10 +185,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             
             // Need to set $sp register to stack address, $a0 to argc, $a1 to argv
          	// Need to by-pass the backstepping mechanism so go directly to Register instead of RegisterFile
-            ArrayList<Register> registers = RV32IRegisters.getRegisters();
-            RV32IRegisters.getUserRegister("sp").setValue(add(stackAddress, Memory.WORD_LENGTH_BYTES));  
-            RV32IRegisters.getUserRegister("a0").setValue(argStartAddress.length); // argc
-            RV32IRegisters.getUserRegister("a1").setValue(add(add(stackAddress, Memory.WORD_LENGTH_BYTES), Memory.WORD_LENGTH_BYTES)); // argv
+            ArrayList<Register> registers = RVIRegisters.getRegisters();
+            RVIRegisters.getUserRegister("sp").setValue(add(stackAddress, Memory.WORD_LENGTH_BYTES));
+            RVIRegisters.getUserRegister("a0").setValue(argStartAddress.length); // argc
+            RVIRegisters.getUserRegister("a1").setValue(add(add(stackAddress, Memory.WORD_LENGTH_BYTES), Memory.WORD_LENGTH_BYTES)); // argv
          	//RegisterFile.updateRegister("$sp",stackAddress+Memory.WORD_LENGTH_BYTES);
          	//RegisterFile.updateRegister("$a0",argStartAddress.length); // argc
          	//RegisterFile.updateRegister("$a1",stackAddress+Memory.WORD_LENGTH_BYTES+Memory.WORD_LENGTH_BYTES); // argv

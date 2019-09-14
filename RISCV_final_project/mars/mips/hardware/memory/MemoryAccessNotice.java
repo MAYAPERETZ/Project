@@ -33,7 +33,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 /**
  * Object provided to Observers of runtime access to MIPS memory.
  * Observer can get the access type (R/W), address and length in bytes (4,2,1).
- * 
  * @author Pete Sanderson 
  * @version July 2005
  */
@@ -65,10 +64,11 @@ public class MemoryAccessNotice extends AccessNotice {
   public Number getAddress() {
      return address;
   }
-  /** Fetch the length in bytes of the access operation (4,2,1). */
+/*  *//***
+   *  Fetch the length in bytes of the access operation (4,2,1). *//*
   public int getLength() {
      return length;
-  }
+  }*/
   /** Fetch the value of the access operation (the value read or written). */
   public Number getValue() {
      return value;

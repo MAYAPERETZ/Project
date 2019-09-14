@@ -43,78 +43,62 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
 */
 
-	/**
-	  *  Top level container for Venus GUI.
-	  *   @author Sanderson and Team JSpim
-	  **/
+    /**
+    *  Top level container for Venus GUI.
+    *   @author Sanderson and Team JSpim
+    **/
 	  
-	  /* Heavily modified by Pete Sanderson, July 2004, to incorporate JSPIMMenu and JSPIMToolbar
-	   * not as subclasses of JMenuBar and JToolBar, but as instances of them.  They are both
-		* here primarily so both can share the Action objects.
-		*/
+    /* Heavily modified by Pete Sanderson, July 2004, to incorporate JSPIMMenu and JSPIMToolbar
+    * not as subclasses of JMenuBar and JToolBar, but as instances of them.  They are both
+    * here primarily so both can share the Action objects.
+    */
 	
  public class GUI extends JFrame{
-   GUI mainUI;
-   public JMenuBar menu;
-   JToolBar toolbar;
-   MainPane mainPane; 
-   RegistersPane registersPane; 
-   RegistersWindow registersTab;
-   Coprocessor1Window coprocessor1Tab;
-   Coprocessor0Window coprocessor0Tab;
-   MessagesPane messagesPane;
-   JSplitPane splitter, horizonSplitter;
-   JPanel north;
+    GUI mainUI;
+    public JMenuBar menu;
+    JToolBar toolbar;
+    MainPane mainPane;
+    RegistersPane registersPane;
+    MessagesPane messagesPane;
+    JPanel north;
 
-        private static int menuState = FileStatus.NO_FILE;
-  	
-	// PLEASE PUT THESE TWO (& THEIR METHODS) SOMEWHERE THEY BELONG, NOT HERE
-   private static boolean reset= true; // registers/memory reset for execution
-   private static boolean started = false;  // started execution
-   Editor editor;
-	
-	// components of the menubar
-   private JMenu file, run, window, help, edit, settings;
-   private JMenuItem fileNew, fileOpen, fileClose, fileCloseAll, fileSave, fileSaveAs, fileSaveAll, fileDumpMemory, filePrint, fileExit;
-   private JMenuItem editUndo, editRedo, editCut, editCopy, editPaste, editFindReplace, editSelectAll;
-   private JMenuItem runGo, runStep, runBackstep, runReset, runAssemble, runStop, runPause, runClearBreakpoints, runToggleBreakpoints;
-   private JCheckBoxMenuItem settingsLabel, settingsPopupInput, settingsValueDisplayBase, settingsAddressDisplayBase,
-           settingsExtended, settingsAssembleOnOpen, settingsAssembleAll, settingsWarningsAreErrors, settingsStartAtMain,
-   		  settingsDelayedBranching, settingsProgramArguments, settingsSelfModifyingCode;
-   private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration;
-   private JMenuItem helpHelp, helpAbout;
-      
-   // components of the toolbar
-   private ToolBarComponent Undo, Redo, Cut, Copy, Paste, FindReplace;
-   private ToolBarComponent New, Open, Save, SaveAs, SaveAll, DumpMemory, Print;
-   private ToolBarComponent Run, Assemble, Reset, Step, Backstep, Stop, Pause;
-   private ToolBarComponent Help;
-   private JButton SelectAll;
+    private static int menuState = FileStatus.NO_FILE;
 
-   // The "action" objects, which include action listeners.  One of each will be created then
-	// shared between a menu item and its corresponding toolbar button.  This is a very cool
-	// technique because it relates the button and menu item so closely
-	
-   private Action fileNewAction, fileOpenAction, fileCloseAction, fileCloseAllAction, fileSaveAction;
-   private Action fileSaveAsAction, fileSaveAllAction, fileDumpMemoryAction, filePrintAction, fileExitAction;
-   EditUndoAction editUndoAction;
-   EditRedoAction editRedoAction;
-   private Action editCutAction, editCopyAction, editPasteAction, editFindReplaceAction, editSelectAllAction;
-   private Action runAssembleAction, runGoAction, runStepAction, runBackstepAction, runResetAction, 
-                  runStopAction, runPauseAction, runClearBreakpointsAction, runToggleBreakpointsAction;
-   private Action settingsLabelAction, settingsPopupInputAction, settingsValueDisplayBaseAction, settingsAddressDisplayBaseAction,
-                  settingsExtendedAction, settingsAssembleOnOpenAction, settingsAssembleAllAction,
-   					settingsWarningsAreErrorsAction, settingsStartAtMainAction, settingsProgramArgumentsAction,
-   					settingsDelayedBranchingAction, settingsExceptionHandlerAction, settingsEditorAction,
-   					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction;    
-   private Action helpHelpAction, helpAboutAction;
-   NewObservable observable;
-   private JToolBar toolBar;
-   /**
-   *  Constructor for the Class. Sets up a window object for the UI
-	*   @param s Name of the window to be created.
-	**/     
+    // PLEASE PUT THESE TWO (& THEIR METHODS) SOMEWHERE THEY BELONG, NOT HERE
+    private static boolean reset= true; // registers/memory reset for execution
+    private static boolean started = false;  // started execution
+    Editor editor;
 
+    private JMenu window;
+    private JCheckBoxMenuItem settingsValueDisplayBase;
+    private JCheckBoxMenuItem settingsAddressDisplayBase;
+    private ToolBarComponent SaveAll;
+    private ToolBarComponent DumpMemory;
+    private ToolBarComponent Print;
+
+        // The "action" objects, which include action listeners.  One of each will be created then
+    // shared between a menu item and its corresponding toolbar button.  This is a very cool
+    // technique because it relates the button and menu item so closely
+
+    private Action fileNewAction, fileOpenAction, fileCloseAction, fileCloseAllAction, fileSaveAction;
+    private Action fileSaveAsAction, fileSaveAllAction, fileDumpMemoryAction, filePrintAction, fileExitAction;
+    EditUndoAction editUndoAction;
+    EditRedoAction editRedoAction;
+    private Action editCutAction, editCopyAction, editPasteAction, editFindReplaceAction, editSelectAllAction;
+    private Action runAssembleAction, runGoAction, runStepAction, runBackstepAction, runResetAction,
+              runStopAction, runPauseAction, runClearBreakpointsAction, runToggleBreakpointsAction;
+    private Action settingsLabelAction, settingsPopupInputAction, settingsValueDisplayBaseAction, settingsAddressDisplayBaseAction,
+              settingsExtendedAction, settingsAssembleOnOpenAction, settingsAssembleAllAction,
+                settingsWarningsAreErrorsAction, settingsStartAtMainAction, settingsProgramArgumentsAction,
+                settingsDelayedBranchingAction, settingsExceptionHandlerAction, settingsEditorAction,
+                settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction;
+    private Action helpHelpAction, helpAboutAction;
+    NewObservable observable;
+
+        /**
+    *  Constructor for the Class. Sets up a window object for the UI
+    *   @param s Name of the window to be created.
+    **/
     public GUI(String s) {
         super(s);
         mainUI = this;
@@ -164,24 +148,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         // roughly in bottom-up order; some are created in component constructors and thus are
         // not visible here.
 
-        registersTab = new RegistersWindow();
-        coprocessor1Tab = new Coprocessor1Window();
-        coprocessor0Tab = new Coprocessor0Window();
-        registersPane = new RegistersPane(mainUI, registersTab,coprocessor1Tab, coprocessor0Tab);
+        RegistersWindow registersTab = new RegistersWindow();
+        Coprocessor1Window coprocessor1Tab = new Coprocessor1Window();
+        Coprocessor0Window coprocessor0Tab = new Coprocessor0Window();
+        registersPane = new RegistersPane(mainUI, registersTab, coprocessor1Tab, coprocessor0Tab);
         registersPane.setPreferredSize(registersPanePreferredSize);
 
-        //Insets defaultTabInsets = (Insets)UIManager.get("TabbedPane.tabInsets");
-        //UIManager.put("TabbedPane.tabInsets", new Insets(1, 1, 1, 1));
         mainPane = new MainPane(mainUI, editor, registersTab, coprocessor1Tab, coprocessor0Tab);
-        //UIManager.put("TabbedPane.tabInsets", defaultTabInsets);
-
         mainPane.setPreferredSize(mainPanePreferredSize);
         messagesPane= new MessagesPane();
         messagesPane.setPreferredSize(messagesPanePreferredSize);
-        splitter= new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPane, messagesPane);
+        JSplitPane splitter = new JSplitPane(JSplitPane.VERTICAL_SPLIT, mainPane, messagesPane);
         splitter.setOneTouchExpandable(true);
         splitter.resetToPreferredSizes();
-        horizonSplitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitter, registersPane);
+        JSplitPane horizonSplitter = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, splitter, registersPane);
         horizonSplitter.setOneTouchExpandable(true);
         horizonSplitter.resetToPreferredSizes();
 
@@ -197,9 +177,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         JPanel center= new JPanel(new BorderLayout());
         center.add(jp, BorderLayout.NORTH);
         center.add(horizonSplitter);
-
-
-
         this.getContentPane().add(center);
 
         FileStatus.reset();
@@ -230,147 +207,143 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         // situation where user Cancels out of "save edits?" dialog.  By default,
         // the GUI frame will be hidden but I want it to do nothing.
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-
         this.pack();
         this.setVisible(true);
       
    }
-    
 
- /*
-  * Action objects are used instead of action listeners because one can be easily shared between
-  * a menu item and a toolbar button.  Does nice things like disable both if the action is
-  * disabled, etc.
-  */
+    /*
+    * Action objects are used instead of action listeners because one can be easily shared between
+    * a menu item and a toolbar button.  Does nice things like disable both if the action is
+    * disabled, etc.
+    */
     private void createActionObjects() {
         Toolkit tk = Toolkit.getDefaultToolkit();
         Class cs = this.getClass(); 
         try {
            fileNewAction = new FileNewAction("New", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "new_file.png"))),
-                                           "Create a new file for editing", new Integer(KeyEvent.VK_N),
+                                           "Create a new file for editing", KeyEvent.VK_N,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_N, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);		
            fileOpenAction = new FileOpenAction("Open ...", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "open_document.png"))),
-              									  "Open a file for editing", new Integer(KeyEvent.VK_O),
+              									  "Open a file for editing", KeyEvent.VK_O,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_O, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
               									  
            fileCloseAction = new FileCloseAction("Close", null,
-                                           "Close the current file", new Integer(KeyEvent.VK_C),
+                                           "Close the current file", KeyEvent.VK_C,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_W, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);						
            fileCloseAllAction = new FileCloseAllAction("Close All", null,
-                                           "Close all open files", new Integer(KeyEvent.VK_L),
+                                           "Close all open files", KeyEvent.VK_L,
               									  null, mainUI, observable);	
            fileSaveAction = new FileSaveAction("Save", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "save.png"))),
-              									  "Save the current file", new Integer(KeyEvent.VK_S),
+              									  "Save the current file", KeyEvent.VK_S,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_S, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
            
            fileSaveAsAction = new FileSaveAsAction("Save as ...", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "save_as.png"))),
-              									  "Save current file with different name", new Integer(KeyEvent.VK_A),
+              									  "Save current file with different name", KeyEvent.VK_A,
               									  null, mainUI, observable);	
            fileSaveAllAction = new FileSaveAllAction("Save All", null,
-                                           "Save all open files", new Integer(KeyEvent.VK_V),
+                                           "Save all open files", KeyEvent.VK_V,
               									  null, mainUI, observable);	
            fileDumpMemoryAction = new FileDumpMemoryAction("Dump Memory ...",
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump22.png"))),
-              									  "Dump machine code or data in an available format", new Integer(KeyEvent.VK_D),
+              									  "Dump machine code or data in an available format", KeyEvent.VK_D,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_D, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
              									  mainUI);
               									  	
            filePrintAction = new FilePrintAction("Print ...",
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print22.gif"))),
-              									  "Print current file", new Integer(KeyEvent.VK_P),
+              									  "Print current file", KeyEvent.VK_P,
               									  null, mainUI);
 
            fileExitAction = new FileExitAction("Exit", null,
-              	                         "Exit", new Integer(KeyEvent.VK_X),
+              	                         "Exit", KeyEvent.VK_X,
               									  null, mainUI, observable);	
            editUndoAction = new EditUndoAction("Undo", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "undo.png"))),
-              									  "Undo last edit", new Integer(KeyEvent.VK_U),
+              									  "Undo last edit", KeyEvent.VK_U,
                                            KeyStroke.getKeyStroke( KeyEvent.VK_Z, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editRedoAction = new EditRedoAction("Redo", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "redo.png"))),
-              									  "Redo last edit", new Integer(KeyEvent.VK_R),
+              									  "Redo last edit", KeyEvent.VK_R,
                                            KeyStroke.getKeyStroke( KeyEvent.VK_Y, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);			
            editCutAction = new EditCutAction("Cut", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "cut.png"))),
-              									  "Cut", new Integer(KeyEvent.VK_C),
+              									  "Cut", KeyEvent.VK_C,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_X, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editCopyAction = new EditCopyAction("Copy", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "copy.png"))),
-              									  "Copy", new Integer(KeyEvent.VK_O),
+              									  "Copy", KeyEvent.VK_O,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editPasteAction = new EditPasteAction("Paste", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "paste.png"))),
-              									  "Paste", new Integer(KeyEvent.VK_P),
+              									  "Paste", KeyEvent.VK_P,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_V, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);	
            editFindReplaceAction = new EditFindReplaceAction("Find/Replace", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "find_and_replace.png"))),
-              									  "Find/Replace", new Integer(KeyEvent.VK_F),
+              									  "Find/Replace", KeyEvent.VK_F,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
            editSelectAllAction = new EditSelectAllAction("Select All", 
                                            null, //new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find22.png"))),
-              									  "Select All", new Integer(KeyEvent.VK_A),
+              									  "Select All", KeyEvent.VK_A,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_A, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
            runAssembleAction = new RunAssembleAction("Assemble",  
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "assemble.png"))),
-              									  "Assemble the current file and clear breakpoints", new Integer(KeyEvent.VK_A),
+              									  "Assemble the current file and clear breakpoints", KeyEvent.VK_A,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F3, 0), 
               									  mainUI, observable);			
            runGoAction = new RunGoAction("Go", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "play_button.png"))),
-              									  "Run the current program", new Integer(KeyEvent.VK_G),
+              									  "Run the current program", KeyEvent.VK_G,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F5, 0),
               									  mainUI, observable);	
            runStepAction = new RunStepAction("Step", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "resume_button.png"))),
-              									  "Run one step at a time", new Integer(KeyEvent.VK_T),
+              									  "Run one step at a time", KeyEvent.VK_T,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F7, 0),
               									  mainUI, observable);	
            runBackstepAction = new RunBackstepAction("Backstep", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "previous.png"))),
-              									  "Undo the last step", new Integer(KeyEvent.VK_B),
+              									  "Undo the last step", KeyEvent.VK_B,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F8, 0), 
               									  mainUI, observable);	
            runPauseAction = new RunPauseAction("Pause", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "circled_pause.png"))),
-              									  "Pause the currently running program", new Integer(KeyEvent.VK_P),
+              									  "Pause the currently running program", KeyEvent.VK_P,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F9, 0), 
               									  mainUI, observable);	
            runStopAction = new RunStopAction("Stop", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "stop_circled.png"))),
-              									  "Stop the currently running program", new Integer(KeyEvent.VK_S),
+              									  "Stop the currently running program", KeyEvent.VK_S,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F11, 0), 
               									  mainUI, observable);
            runResetAction = new RunResetAction("Reset", 
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "rewind_button.png"))),
-              									  "Reset MIPS memory and registers", new Integer(KeyEvent.VK_R),
+              									  "Reset MIPS memory and registers", KeyEvent.VK_R,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F12,0),
               									  mainUI, observable);	
            runClearBreakpointsAction = new RunClearBreakpointsAction("Clear all breakpoints",
                                            null,
-              									  "Clears all execution breakpoints set since the last assemble.",
-              									  new Integer(KeyEvent.VK_K),
+              									  "Clears all execution breakpoints set since the last assemble.", KeyEvent.VK_K,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_K, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);  
            runToggleBreakpointsAction = new RunToggleBreakpointsAction("Toggle all breakpoints",
                                            null,
-              									  "Disable/enable all breakpoints without clearing (can also click Bkpt column header)",
-              									  new Integer(KeyEvent.VK_T),
+              									  "Disable/enable all breakpoints without clearing (can also click Bkpt column header)", KeyEvent.VK_T,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_T, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
               									  mainUI, observable);
               									  
@@ -457,7 +430,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
               									  mainUI, observable);
            helpHelpAction = new HelpHelpAction("Help",
                                            new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"help.png"))),
-              									  "Help", new Integer(KeyEvent.VK_H),
+              									  "Help", KeyEvent.VK_H,
               									  KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0),
               									  mainUI);	
            helpAboutAction = new HelpAboutAction("About ...",null, 
@@ -481,39 +454,40 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       Toolkit tk = Toolkit.getDefaultToolkit();
       Class cs = this.getClass();
       JMenuBar menuBar = new JMenuBar();
-      file=new JMenu("File");
+        // components of the menubar
+        JMenu file = new JMenu("File");
       file.setMnemonic(KeyEvent.VK_F);
-      edit = new JMenu("Edit");
+        JMenu edit = new JMenu("Edit");
       edit.setMnemonic(KeyEvent.VK_E);
-      run=new JMenu("Run");
+        JMenu run = new JMenu("Run");
       run.setMnemonic(KeyEvent.VK_R);
       //window = new JMenu("Window");
       //window.setMnemonic(KeyEvent.VK_W);
-      settings = new JMenu("Settings");
+        JMenu settings = new JMenu("Settings");
       settings.setMnemonic(KeyEvent.VK_S);
-      help = new JMenu("Help");
+        JMenu help = new JMenu("Help");
       help.setMnemonic(KeyEvent.VK_H); 
    	// slight bug: user typing alt-H activates help menu item directly, not help menu
-   
-      fileNew = new JMenuItem(fileNewAction);
+
+        JMenuItem fileNew = new JMenuItem(fileNewAction);
       fileNew.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"New16.png"))));
-      fileOpen = new JMenuItem(fileOpenAction);
+        JMenuItem fileOpen = new JMenuItem(fileOpenAction);
       fileOpen.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Open16.png"))));
-      fileClose = new JMenuItem(fileCloseAction);
+        JMenuItem fileClose = new JMenuItem(fileCloseAction);
       fileClose.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-      fileCloseAll = new JMenuItem(fileCloseAllAction);
+        JMenuItem fileCloseAll = new JMenuItem(fileCloseAllAction);
       fileCloseAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-      fileSave = new JMenuItem(fileSaveAction);
+        JMenuItem fileSave = new JMenuItem(fileSaveAction);
       fileSave.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Save16.png"))));
-      fileSaveAs = new JMenuItem(fileSaveAsAction);
+        JMenuItem fileSaveAs = new JMenuItem(fileSaveAsAction);
       fileSaveAs.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"SaveAs16.png"))));
-      fileSaveAll = new JMenuItem(fileSaveAllAction);
+        JMenuItem fileSaveAll = new JMenuItem(fileSaveAllAction);
       fileSaveAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-      fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
+        JMenuItem fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
       fileDumpMemory.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump16.png"))));
-      filePrint = new JMenuItem(filePrintAction);
+        JMenuItem filePrint = new JMenuItem(filePrintAction);
       filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
-      fileExit = new JMenuItem(fileExitAction);
+        JMenuItem fileExit = new JMenuItem(fileExitAction);
       fileExit.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
       file.add(fileNew);
       file.add(fileOpen);
@@ -530,20 +504,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       file.add(filePrint);
       file.addSeparator();
       file.add(fileExit);
-   	
-      editUndo = new JMenuItem(editUndoAction);
+
+        JMenuItem editUndo = new JMenuItem(editUndoAction);
       editUndo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Undo16.png"))));//"Undo16.gif"))));
-      editRedo = new JMenuItem(editRedoAction);
+        JMenuItem editRedo = new JMenuItem(editRedoAction);
       editRedo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Redo16.png"))));//"Redo16.gif"))));      
-      editCut = new JMenuItem(editCutAction);
+        JMenuItem editCut = new JMenuItem(editCutAction);
       editCut.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Cut16.gif"))));
-      editCopy = new JMenuItem(editCopyAction);
+        JMenuItem editCopy = new JMenuItem(editCopyAction);
       editCopy.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Copy16.png"))));//"Copy16.gif"))));
-      editPaste = new JMenuItem(editPasteAction);
+        JMenuItem editPaste = new JMenuItem(editPasteAction);
       editPaste.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Paste16.png"))));//"Paste16.gif"))));
-      editFindReplace = new JMenuItem(editFindReplaceAction);
+        JMenuItem editFindReplace = new JMenuItem(editFindReplaceAction);
       editFindReplace.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find16.png"))));//"Paste16.gif"))));
-      editSelectAll = new JMenuItem(editSelectAllAction);
+        JMenuItem editSelectAll = new JMenuItem(editSelectAllAction);
       editSelectAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
       edit.add(editUndo);
       edit.add(editRedo);
@@ -554,24 +528,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       edit.addSeparator();
       edit.add(editFindReplace);
       edit.add(editSelectAll);
-   
-      runAssemble = new JMenuItem(runAssembleAction);
+
+        JMenuItem runAssemble = new JMenuItem(runAssembleAction);
       runAssemble.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble16.png"))));//"MyAssemble16.gif"))));
-      runGo = new JMenuItem(runGoAction);
+        JMenuItem runGo = new JMenuItem(runGoAction);
       runGo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Play16.png"))));//"Play16.gif"))));
-      runStep = new JMenuItem(runStepAction);
+        JMenuItem runStep = new JMenuItem(runStepAction);
       runStep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward16.png"))));//"MyStepForward16.gif"))));
-      runBackstep = new JMenuItem(runBackstepAction);
+        JMenuItem runBackstep = new JMenuItem(runBackstepAction);
       runBackstep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack16.png"))));//"MyStepBack16.gif"))));
-      runReset = new JMenuItem(runResetAction);
+        JMenuItem runReset = new JMenuItem(runResetAction);
       runReset.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Reset16.png"))));//"MyReset16.gif"))));
-      runStop = new JMenuItem(runStopAction);
+        JMenuItem runStop = new JMenuItem(runStopAction);
     //  runStop.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Stop16.png"))));//"Stop16.gif"))));
-      runPause = new JMenuItem(runPauseAction);
+        JMenuItem runPause = new JMenuItem(runPauseAction);
       runPause.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Pause16.png"))));//"Pause16.gif"))));
-      runClearBreakpoints = new JMenuItem(runClearBreakpointsAction);
+        JMenuItem runClearBreakpoints = new JMenuItem(runClearBreakpointsAction);
       runClearBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-      runToggleBreakpoints = new JMenuItem(runToggleBreakpointsAction);
+        JMenuItem runToggleBreakpoints = new JMenuItem(runToggleBreakpointsAction);
       runToggleBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
    
       run.add(runAssemble);
@@ -584,10 +558,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       run.addSeparator();
       run.add(runClearBreakpoints);
       run.add(runToggleBreakpoints);
-   	
-      settingsLabel = new JCheckBoxMenuItem(settingsLabelAction);
+
+        JCheckBoxMenuItem settingsLabel = new JCheckBoxMenuItem(settingsLabelAction);
       settingsLabel.setSelected(Globals.getSettings().getLabelWindowVisibility());
-      settingsPopupInput = new JCheckBoxMenuItem(settingsPopupInputAction);
+        JCheckBoxMenuItem settingsPopupInput = new JCheckBoxMenuItem(settingsPopupInputAction);
       settingsPopupInput.setSelected(Globals.getSettings().getBooleanSetting(Settings.POPUP_SYSCALL_INPUT));
       settingsValueDisplayBase = new JCheckBoxMenuItem(settingsValueDisplayBaseAction);
       settingsValueDisplayBase.setSelected(Globals.getSettings().getDisplayValuesInHex());//mainPane.getExecutePane().getValueDisplayBaseChooser().isSelected());
@@ -596,27 +570,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       settingsAddressDisplayBase = new JCheckBoxMenuItem(settingsAddressDisplayBaseAction);
       settingsAddressDisplayBase.setSelected(Globals.getSettings().getDisplayAddressesInHex());//mainPane.getExecutePane().getValueDisplayBaseChooser().isSelected());
       // Tell the corresponding JCheckBox in the Execute Pane about me -- it has already been created.
-      mainPane.getExecutePane().getAddressDisplayBaseChooser().setSettingsMenuItem(settingsAddressDisplayBase);
-      settingsExtended = new JCheckBoxMenuItem(settingsExtendedAction);
+      mainPane.getExecutePane().getAddressDisplayBaseChooser().setSettingsMenuItem();
+        JCheckBoxMenuItem settingsExtended = new JCheckBoxMenuItem(settingsExtendedAction);
       settingsExtended.setSelected(Globals.getSettings().getExtendedAssemblerEnabled());
-      settingsDelayedBranching = new JCheckBoxMenuItem(settingsDelayedBranchingAction);
+        JCheckBoxMenuItem settingsDelayedBranching = new JCheckBoxMenuItem(settingsDelayedBranchingAction);
       settingsDelayedBranching.setSelected(Globals.getSettings().getDelayedBranchingEnabled());
-      settingsSelfModifyingCode = new JCheckBoxMenuItem(settingsSelfModifyingCodeAction);
+        JCheckBoxMenuItem settingsSelfModifyingCode = new JCheckBoxMenuItem(settingsSelfModifyingCodeAction);
       settingsSelfModifyingCode.setSelected(Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED));
-      settingsAssembleOnOpen = new JCheckBoxMenuItem(settingsAssembleOnOpenAction);
+        JCheckBoxMenuItem settingsAssembleOnOpen = new JCheckBoxMenuItem(settingsAssembleOnOpenAction);
       settingsAssembleOnOpen.setSelected(Globals.getSettings().getAssembleOnOpenEnabled());
-      settingsAssembleAll = new JCheckBoxMenuItem(settingsAssembleAllAction);
+        JCheckBoxMenuItem settingsAssembleAll = new JCheckBoxMenuItem(settingsAssembleAllAction);
       settingsAssembleAll.setSelected(Globals.getSettings().getAssembleAllEnabled());
-      settingsWarningsAreErrors = new JCheckBoxMenuItem(settingsWarningsAreErrorsAction);
+        JCheckBoxMenuItem settingsWarningsAreErrors = new JCheckBoxMenuItem(settingsWarningsAreErrorsAction);
       settingsWarningsAreErrors.setSelected(Globals.getSettings().getWarningsAreErrors());
-      settingsStartAtMain = new JCheckBoxMenuItem(settingsStartAtMainAction);
-      settingsStartAtMain.setSelected(Globals.getSettings().getStartAtMain()); 
-      settingsProgramArguments = new JCheckBoxMenuItem(settingsProgramArgumentsAction);
+        JCheckBoxMenuItem settingsStartAtMain = new JCheckBoxMenuItem(settingsStartAtMainAction);
+      settingsStartAtMain.setSelected(Globals.getSettings().getStartAtMain());
+        JCheckBoxMenuItem settingsProgramArguments = new JCheckBoxMenuItem(settingsProgramArgumentsAction);
       settingsProgramArguments.setSelected(Globals.getSettings().getProgramArguments());
-      settingsEditor = new JMenuItem(settingsEditorAction);
-      settingsHighlighting = new JMenuItem(settingsHighlightingAction);
-      settingsExceptionHandler = new JMenuItem(settingsExceptionHandlerAction);
-      settingsMemoryConfiguration = new JMenuItem(settingsMemoryConfigurationAction);
+        JMenuItem settingsEditor = new JMenuItem(settingsEditorAction);
+        JMenuItem settingsHighlighting = new JMenuItem(settingsHighlightingAction);
+        JMenuItem settingsExceptionHandler = new JMenuItem(settingsExceptionHandlerAction);
+        JMenuItem settingsMemoryConfiguration = new JMenuItem(settingsMemoryConfigurationAction);
    	
       settings.add(settingsLabel);
       settings.add(settingsProgramArguments);
@@ -638,9 +612,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       settings.add(settingsExceptionHandler);
       settings.add(settingsMemoryConfiguration);
 
-      helpHelp = new JMenuItem(helpHelpAction);
+        JMenuItem helpHelp = new JMenuItem(helpHelpAction);
       helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help16.png"))));//"Help16.gif"))));
-      helpAbout = new JMenuItem(helpAboutAction);
+        JMenuItem helpAbout = new JMenuItem(helpAboutAction);
       helpAbout.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
       help.add(helpHelp);
       help.addSeparator();
@@ -650,12 +624,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       menuBar.add(edit);
       menuBar.add(run);
       menuBar.add(settings);
- //     JMenu toolMenu = new ToolLoader().buildToolsMenu();
-   //   if (toolMenu != null) menuBar.add(toolMenu);
       menuBar.add(help);
-   	
-   
-   	
+
       return menuBar;
    }
 
@@ -665,543 +635,216 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   */
 
     JToolBar setUpToolBar() {
-       toolBar = new JToolBar();
+        JToolBar toolBar = new JToolBar();
       toolBar.setOpaque(false);
       toolBar.setBackground(new java.awt.Color(229, 229, 229));
       toolBar.setBorder(null);
       toolBar.setRollover(true);
       toolBar.setBorderPainted(false);
-      New = new ToolBarComponent(fileNewAction);
-      New.setText("");
+        ToolBarComponent aNew = new ToolBarComponent(fileNewAction);
+      aNew.setText("");
       //New.setOpaque(false);
-      New.setIconTextGap(0);
-     
-      Open = new ToolBarComponent(fileOpenAction);
-      Open.setText("");
-      Save = new ToolBarComponent(fileSaveAction);
-      Save.setText("");
-      SaveAs = new ToolBarComponent(fileSaveAsAction);
-      SaveAs.setText("");
+      aNew.setIconTextGap(0);
+
+        ToolBarComponent open = new ToolBarComponent(fileOpenAction);
+      open.setText("");
+        ToolBarComponent save = new ToolBarComponent(fileSaveAction);
+      save.setText("");
+        ToolBarComponent saveAs = new ToolBarComponent(fileSaveAsAction);
+      saveAs.setText("");
     //  DumpMemory = new ToolBarComponent(fileDumpMemoryAction);
     //  DumpMemory.setText("");
-  //    Print= new ToolBarComponent(filePrintAction);
-     // Print.setText("");
-   
-      Undo = new ToolBarComponent(editUndoAction);
-      Undo.setText(""); 
+    //    Print= new ToolBarComponent(filePrintAction);
+    // Print.setText("");
+
+        // components of the toolbar
+        ToolBarComponent undo = new ToolBarComponent(editUndoAction);
+      undo.setText("");
+
+        ToolBarComponent redo = new ToolBarComponent(editRedoAction);
+      redo.setText("");
+
+        ToolBarComponent cut = new ToolBarComponent(editCutAction);
+      cut.setText("");
+
+        ToolBarComponent copy = new ToolBarComponent(editCopyAction);
+      copy.setText("");
+
+        ToolBarComponent paste = new ToolBarComponent(editPasteAction);
+      paste.setText("");
+
+        ToolBarComponent findReplace = new ToolBarComponent(editFindReplaceAction);
+      findReplace.setText("");
+
+        JButton selectAll = new JButton(editSelectAllAction);
+      selectAll.setText("");
+
+        ToolBarComponent run1 = new ToolBarComponent(runGoAction);
+      run1.setText("");
+
+        ToolBarComponent assemble = new ToolBarComponent(runAssembleAction);
+      assemble.setText("");
+
+        ToolBarComponent step = new ToolBarComponent(runStepAction);
+      step.setText("");
+
+        ToolBarComponent backstep = new ToolBarComponent(runBackstepAction);
+      backstep.setText("");
+
+        ToolBarComponent reset1 = new ToolBarComponent(runResetAction);
+      reset1.setText("");
+
+        ToolBarComponent stop = new ToolBarComponent(runStopAction);
+      stop.setText("");
+
+        ToolBarComponent pause = new ToolBarComponent(runPauseAction);
+      pause.setText("");
+
+        ToolBarComponent help1 = new ToolBarComponent(helpHelpAction);
+      help1.setText("");
       
-      Redo = new ToolBarComponent(editRedoAction);
-      Redo.setText("");
-      
-      Cut= new ToolBarComponent(editCutAction);
-      Cut.setText("");
-      
-      Copy = new ToolBarComponent(editCopyAction);
-      Copy.setText("");
-      
-      Paste= new ToolBarComponent(editPasteAction);
-      Paste.setText("");
-      
-      FindReplace = new ToolBarComponent(editFindReplaceAction);
-      FindReplace.setText("");
-      
-      SelectAll = new JButton(editSelectAllAction);
-      SelectAll.setText("");
-   	
-      Run = new ToolBarComponent(runGoAction);
-      Run.setText("");
-      
-      Assemble = new ToolBarComponent(runAssembleAction);
-      Assemble.setText("");
-      
-      Step = new ToolBarComponent(runStepAction);
-      Step.setText(""); 
-      
-      Backstep = new ToolBarComponent(runBackstepAction);
-      Backstep.setText("");
-      
-      Reset = new ToolBarComponent(runResetAction);
-      Reset.setText(""); 
-      
-      Stop = new ToolBarComponent(runStopAction);
-      Stop.setText("");
-      
-      Pause = new ToolBarComponent(runPauseAction);
-      Pause.setText("");   
-      
-      Help= new ToolBarComponent(helpHelpAction);
-      Help.setText("");
-      
-      toolBar.add(New);
-      toolBar.add(Open);
-      toolBar.add(Save);
-      toolBar.add(SaveAs);
-  //    if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
-   //      toolBar.add(DumpMemory);
-   //   }
-     // toolBar.add(Print);
-    //  toolBar.add(new JToolBar.Separator());
-      toolBar.add(Undo);
-      toolBar.add(Redo);
-      toolBar.add(Cut);
-      toolBar.add(Copy);
-      toolBar.add(Paste);
-      toolBar.add(FindReplace);
+      toolBar.add(aNew);
+      toolBar.add(open);
+      toolBar.add(save);
+      toolBar.add(saveAs);
+        //    if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
+        //      toolBar.add(DumpMemory);
+        //   }
+        // toolBar.add(Print);
+        //  toolBar.add(new JToolBar.Separator());
+      toolBar.add(undo);
+      toolBar.add(redo);
+      toolBar.add(cut);
+      toolBar.add(copy);
+      toolBar.add(paste);
+      toolBar.add(findReplace);
       toolBar.add(new JToolBar.Separator());
-      toolBar.add(Assemble);
-      toolBar.add(Run);   
-      toolBar.add(Step);
-      toolBar.add(Backstep);
-      toolBar.add(Pause);
-      toolBar.add(Stop);
-      toolBar.add(Reset);
+      toolBar.add(assemble);
+      toolBar.add(run1);
+      toolBar.add(step);
+      toolBar.add(backstep);
+      toolBar.add(pause);
+      toolBar.add(stop);
+      toolBar.add(reset1);
       toolBar.add(new JToolBar.Separator());
-      toolBar.add(Help);
+      toolBar.add(help1);
       toolBar.add(new JToolBar.Separator());
    	
       return toolBar;
    }
    
-	
- /* Determine from FileStatus what the menu state (enabled/disabled)should 
-  * be then call the appropriate method to set it.  Current states are:
-  *
-  * setMenuStateInitial: set upon startup and after File->Close
-  * setMenuStateEditingNew: set upon File->New
-  * setMenuStateEditing: set upon File->Open or File->Save or erroneous Run->Assemble
-  * setMenuStateRunnable: set upon successful Run->Assemble
-  * setMenuStateRunning: set upon Run->Go
-  * setMenuStateTerminated: set upon completion of simulated execution
-  */
-   /* void setMenuState(int status) {
-      menuState = status; 
-      switch (status) {
-         case FileStatus.NO_FILE:
-            setMenuStateInitial();
-            break;
-         case FileStatus.NEW_NOT_EDITED:
-            setMenuStateEditingNew();
-            break;
-         case FileStatus.NEW_EDITED:
-            setMenuStateEditingNew();
-            break;
-         case FileStatus.NOT_EDITED:
-            setMenuStateNotEdited(); // was MenuStateEditing. DPS 9-Aug-2011
-            break;
-         case FileStatus.EDITED:
-            setMenuStateEditing();
-            break;
-         case FileStatus.RUNNABLE:
-            setMenuStateRunnable();
-            break;
-         case FileStatus.RUNNING:
-            setMenuStateRunning();
-            break;
-         case FileStatus.TERMINATED:
-            setMenuStateTerminated();
-            break;
-         case FileStatus.OPENING:// This is a temporary state. DPS 9-Aug-2011
-            break;
-         default:
-            System.out.println("Invalid File Status: "+status);
-            break;
-      }
-   }
-  
-  
-    void setMenuStateInitial() {
-      fileNewAction.setEnabled(true);
-      fileOpenAction.setEnabled(true);
-      fileCloseAction.setEnabled(false);
-      fileCloseAllAction.setEnabled(false);
-      fileSaveAction.setEnabled(false);
-      fileSaveAsAction.setEnabled(false);
-      fileSaveAllAction.setEnabled(false);
-   //   fileDumpMemoryAction.setEnabled(false);
-    //  filePrintAction.setEnabled(false);
-      fileExitAction.setEnabled(true);
-      editUndoAction.setEnabled(false);
-      editRedoAction.setEnabled(false);
-      editCutAction.setEnabled(false);
-      editCopyAction.setEnabled(false);
-      editPasteAction.setEnabled(false);
-      editFindReplaceAction.setEnabled(false);
-      editSelectAllAction.setEnabled(false);
-      settingsDelayedBranchingAction.setEnabled(true); // added 25 June 2007
-      settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
-      runAssembleAction.setEnabled(false);
-      runGoAction.setEnabled(false);
-      runStepAction.setEnabled(false);
-      runBackstepAction.setEnabled(false);
-      runResetAction.setEnabled(false);
-      runStopAction.setEnabled(false);
-      runPauseAction.setEnabled(false);
-      runClearBreakpointsAction.setEnabled(false);
-      runToggleBreakpointsAction.setEnabled(false);
-//      helpHelpAction.setEnabled(true);
- //     helpAboutAction.setEnabled(true);
-      editUndoAction.updateUndoState();
-      editRedoAction.updateRedoState();
-   }
 
-   /* Added DPS 9-Aug-2011, for newly-opened files.  Retain
-	   existing Run menu state (except Assemble, which is always true).
-		Thus if there was a valid assembly it is retained. */
-   // void setMenuStateNotEdited() {
-   /* Note: undo and redo are handled separately by the undo manager*/  
-    /*  fileNewAction.setEnabled(true);
-      fileOpenAction.setEnabled(true);
-      fileCloseAction.setEnabled(true);
-      fileCloseAllAction.setEnabled(true);
-      fileSaveAction.setEnabled(true);
-      fileSaveAsAction.setEnabled(true);
-      fileSaveAllAction.setEnabled(true);
-     // fileDumpMemoryAction.setEnabled(false);
-     // filePrintAction.setEnabled(true);
-      fileExitAction.setEnabled(true);
-      editCutAction.setEnabled(true);
-      editCopyAction.setEnabled(true);
-      editPasteAction.setEnabled(true);
-      editFindReplaceAction.setEnabled(true);
-      editSelectAllAction.setEnabled(true);
-      settingsDelayedBranchingAction.setEnabled(true); 
-      settingsMemoryConfigurationAction.setEnabled(true);
-      runAssembleAction.setEnabled(true);
-			// If assemble-all, allow previous Run menu settings to remain.
-			// Otherwise, clear them out.  DPS 9-Aug-2011
-      if (!Globals.getSettings().getBooleanSetting(mars.Settings.ASSEMBLE_ALL_ENABLED)) {
-         runGoAction.setEnabled(false);
-         runStepAction.setEnabled(false);
-         runBackstepAction.setEnabled(false);
-         runResetAction.setEnabled(false);
-         runStopAction.setEnabled(false);
-         runPauseAction.setEnabled(false);
-         runClearBreakpointsAction.setEnabled(false);
-         runToggleBreakpointsAction.setEnabled(false);
-      } 
-    //  helpHelpAction.setEnabled(true);
-    //  helpAboutAction.setEnabled(true);
-      editUndoAction.updateUndoState();
-      editRedoAction.updateRedoState();
-   }
-
-
-
-
-    void setMenuStateEditing() {
-   /* Note: undo and redo are handled separately by the undo manager*/  
- /*     fileNewAction.setEnabled(true);
-      fileOpenAction.setEnabled(true);
-      fileCloseAction.setEnabled(true);
-      fileCloseAllAction.setEnabled(true);
-      fileSaveAction.setEnabled(true);
-      fileSaveAsAction.setEnabled(true);
-      fileSaveAllAction.setEnabled(true);
-   //   fileDumpMemoryAction.setEnabled(false);
-     // filePrintAction.setEnabled(true);
-      fileExitAction.setEnabled(true);
-      editCutAction.setEnabled(true);
-      editCopyAction.setEnabled(true);
-      editPasteAction.setEnabled(true);
-      editFindReplaceAction.setEnabled(true);
-      editSelectAllAction.setEnabled(true);
-      settingsDelayedBranchingAction.setEnabled(true); // added 25 June 2007
-      settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
-      runAssembleAction.setEnabled(true);
-      runGoAction.setEnabled(false);
-      runStepAction.setEnabled(false);
-      runBackstepAction.setEnabled(false);
-      runResetAction.setEnabled(false);
-      runStopAction.setEnabled(false);
-      runPauseAction.setEnabled(false);
-      runClearBreakpointsAction.setEnabled(false);
-      runToggleBreakpointsAction.setEnabled(false);
-    //  helpHelpAction.setEnabled(true);
-    //  helpAboutAction.setEnabled(true);
-      editUndoAction.updateUndoState();
-      editRedoAction.updateRedoState();
-   }
-
-  /* Use this when "File -> New" is used
-   */
-  /*  void setMenuStateEditingNew() {
-   /* Note: undo and redo are handled separately by the undo manager*/  
-    /*  fileNewAction.setEnabled(true);
-      fileOpenAction.setEnabled(true);
-      fileCloseAction.setEnabled(true);
-      fileCloseAllAction.setEnabled(true);
-      fileSaveAction.setEnabled(true);
-      fileSaveAsAction.setEnabled(true);
-      fileSaveAllAction.setEnabled(true);
-   //   fileDumpMemoryAction.setEnabled(false);
-  //    filePrintAction.setEnabled(true);
-      fileExitAction.setEnabled(true);
-      editCutAction.setEnabled(true);
-      editCopyAction.setEnabled(true);
-      editPasteAction.setEnabled(true);
-      editFindReplaceAction.setEnabled(true);
-      editSelectAllAction.setEnabled(true);
-      settingsDelayedBranchingAction.setEnabled(true); // added 25 June 2007
-      settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
-      runAssembleAction.setEnabled(false);
-      runGoAction.setEnabled(false);
-      runStepAction.setEnabled(false);
-      runBackstepAction.setEnabled(false);
-      runResetAction.setEnabled(false);
-      runStopAction.setEnabled(false);
-      runPauseAction.setEnabled(false);
-      runClearBreakpointsAction.setEnabled(false);
-      runToggleBreakpointsAction.setEnabled(false);
- //     helpHelpAction.setEnabled(true);
- //     helpAboutAction.setEnabled(true);
-      editUndoAction.updateUndoState();
-      editRedoAction.updateRedoState();
-   }
- 	 
-  /* Use this upon successful assemble or reset
-   */
-  /*  void setMenuStateRunnable() {
-   /* Note: undo and redo are handled separately by the undo manager */  
-    /*  fileNewAction.setEnabled(true);
-      fileOpenAction.setEnabled(true);
-      fileCloseAction.setEnabled(true);
-      fileCloseAllAction.setEnabled(true);
-      fileSaveAction.setEnabled(true);
-      fileSaveAsAction.setEnabled(true);
-      fileSaveAllAction.setEnabled(true);
-  //    fileDumpMemoryAction.setEnabled(true);
-    //  filePrintAction.setEnabled(true);
-      fileExitAction.setEnabled(true);
-      editCutAction.setEnabled(true);
-      editCopyAction.setEnabled(true);
-      editPasteAction.setEnabled(true);
-      editFindReplaceAction.setEnabled(true);
-      editSelectAllAction.setEnabled(true);
-      settingsDelayedBranchingAction.setEnabled(true); // added 25 June 2007
-      settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
-      runAssembleAction.setEnabled(true);
-      runGoAction.setEnabled(true);
-      runStepAction.setEnabled(true);
-      runBackstepAction.setEnabled(
-         (Globals.getSettings().getBackSteppingEnabled()&& !Globals.program.getBackStepper().empty())
-          ? true : false);
-      runResetAction.setEnabled(true);
-      runStopAction.setEnabled(false);
-      runPauseAction.setEnabled(false);
-      runToggleBreakpointsAction.setEnabled(true);
-  //    helpHelpAction.setEnabled(true);
-  //    helpAboutAction.setEnabled(true);
-      editUndoAction.updateUndoState();
-      editRedoAction.updateRedoState();
-   }
-
-  /* Use this while program is running
-   */
-   /* void setMenuStateRunning() {
-   /* Note: undo and redo are handled separately by the undo manager */  
-   /*   fileNewAction.setEnabled(false);
-      fileOpenAction.setEnabled(false);
-      fileCloseAction.setEnabled(false);
-      fileCloseAllAction.setEnabled(false);
-      fileSaveAction.setEnabled(false);
-      fileSaveAsAction.setEnabled(false);
-      fileSaveAllAction.setEnabled(false);
-  //    fileDumpMemoryAction.setEnabled(false);
-  //    filePrintAction.setEnabled(false);
-      fileExitAction.setEnabled(false);
-      editCutAction.setEnabled(false);
-      editCopyAction.setEnabled(false);
-      editPasteAction.setEnabled(false);
-      editFindReplaceAction.setEnabled(false);
-      editSelectAllAction.setEnabled(false);
-      settingsDelayedBranchingAction.setEnabled(false); // added 25 June 2007
-      settingsMemoryConfigurationAction.setEnabled(false); // added 21 July 2009
-      runAssembleAction.setEnabled(false);
-      runGoAction.setEnabled(false);
-      runStepAction.setEnabled(false);
-      runBackstepAction.setEnabled(false);
-      runResetAction.setEnabled(false);
-      runStopAction.setEnabled(true);
-      runPauseAction.setEnabled(true);
-      runToggleBreakpointsAction.setEnabled(false);
-  //    helpHelpAction.setEnabled(true);
-   //   helpAboutAction.setEnabled(true);
-      editUndoAction.setEnabled(false);//updateUndoState(); // DPS 10 Jan 2008
-      editRedoAction.setEnabled(false);//updateRedoState(); // DPS 10 Jan 2008
-   }   
-  /* Use this upon completion of execution
-   */
-  /*  void setMenuStateTerminated() {
-   /* Note: undo and redo are handled separately by the undo manager */  
-   /*   fileNewAction.setEnabled(true);
-      fileOpenAction.setEnabled(true);
-      fileCloseAction.setEnabled(true);
-      fileCloseAllAction.setEnabled(true);
-      fileSaveAction.setEnabled(true);
-      fileSaveAsAction.setEnabled(true);
-      fileSaveAllAction.setEnabled(true);
-  //    fileDumpMemoryAction.setEnabled(true);
-  //    filePrintAction.setEnabled(true);
-      fileExitAction.setEnabled(true);
-      editCutAction.setEnabled(true);
-      editCopyAction.setEnabled(true);
-      editPasteAction.setEnabled(true);
-      editFindReplaceAction.setEnabled(true);
-      editSelectAllAction.setEnabled(true);
-      settingsDelayedBranchingAction.setEnabled(true); // added 25 June 2007
-      settingsMemoryConfigurationAction.setEnabled(true); // added 21 July 2009
-      runAssembleAction.setEnabled(true);
-      runGoAction.setEnabled(false);
-      runStepAction.setEnabled(false);
-      runBackstepAction.setEnabled(
-         (Globals.getSettings().getBackSteppingEnabled()&& !Globals.program.getBackStepper().empty())
-          ? true : false);
-      runResetAction.setEnabled(true);
-      runStopAction.setEnabled(false);
-      runPauseAction.setEnabled(false);
-      runToggleBreakpointsAction.setEnabled(true);
-    //  helpHelpAction.setEnabled(true);
-    //  helpAboutAction.setEnabled(true);
-      editUndoAction.updateUndoState();
-      editRedoAction.updateRedoState();
-   }
-
- */
- /**
-  * Get current menu state.  State values are constants in FileStatus class.  DPS 23 July 2008
-  * @return current menu state.
-  **/
-  
+    /**
+    * Get current menu state.  State values are constants in FileStatus class.  DPS 23 July 2008
+    * @return current menu state.
+    **/
     public static int getMenuState() {
-      return menuState;
-   }
+        return menuState;
+    }
    
-	/**
-	  *  To set whether the register values are reset.
-	  *   @param b Boolean true if the register values have been reset.
-	  **/
-	
+    /**
+    *  To set whether the register values are reset.
+    *  @param b Boolean true if the register values have been reset.
+    **/
+
     public  void setReset(boolean b){
-      reset=b;
-   }
+        reset=b;
+    }
 
-	/**
-	  *  To set whether MIPS program execution has started.
-	  *   @param b true if the MIPS program execution has started.
-	  **/
-	
-    public void setStarted(boolean b){ 
-      started=b;
-   }
-   /**
-	  *  To find out whether the register values are reset.
-	  *   @return Boolean true if the register values have been reset.
-	  **/
-   
+    /**
+    *  To set whether MIPS program execution has started.
+    *  @param b true if the MIPS program execution has started.
+    **/
+    public void setStarted(boolean b){
+        started=b;
+    }
+
+    /**
+    *  To find out whether the register values are reset.
+    *   @return Boolean true if the register values have been reset.
+    **/
     public boolean getReset(){
-      return reset;
-   }
+        return reset;
+    }
 	
-   /**
-	  *  To find out whether MIPS program is currently executing.
-	  *   @return  true if MIPS program is currently executing.
-	  **/
+    /**
+    *  To find out whether RISCV program is currently executing.
+    *  @return  true if RISCV program is currently executing.
+    **/
     public boolean getStarted(){
-      return started;
-   }
+        return started;
+    }
 	
-   /**
-	  *  Get reference to Editor object associated with this GUI.
-	  *   @return Editor for the GUI.
-	  **/
-      	
+    /**
+    *  Get reference to Editor object associated with this GUI.
+    *  @return Editor for the GUI.
+    **/
     public Editor getEditor() {
-      return editor;
-   }		
+        return editor;
+    }
 	
-   /**
-	  *  Get reference to messages pane associated with this GUI.
-	  *   @return MessagesPane object associated with the GUI.
-	  **/
-      	
+    /**
+    *  Get reference to messages pane associated with this GUI.
+    *  @return MessagesPane object associated with the GUI.
+    **/
     public MainPane getMainPane() {
-      return mainPane;
-   }      /**
-	  *  Get reference to messages pane associated with this GUI.
-	  *   @return MessagesPane object associated with the GUI.
-	  **/
-      	
+        return mainPane;
+    }
+
+    /**
+    *  Get reference to messages pane associated with this GUI.
+    *   @return MessagesPane object associated with the GUI.
+    **/
     public MessagesPane getMessagesPane() {
-      return messagesPane;
-   }
+        return messagesPane;
+    }
 
-   /**
-	  *  Get reference to registers pane associated with this GUI.
-	  *   @return RegistersPane object associated with the GUI.
-	  **/
-      	
+    /**
+    * Get reference to registers pane associated with this GUI.
+    * @return RegistersPane object associated with the GUI.
+    **/
     public RegistersPane getRegistersPane() {
-      return registersPane;
-   }   	
+        return registersPane;
+    }
 
-   /**
-	  *  Get reference to settings menu item for display base of memory/register values.
-	  *   @return the menu item
-	  **/
-      	
+    /**
+    * Get reference to settings menu item for display base of memory/register values.
+    * @return the menu item
+    **/
     public JCheckBoxMenuItem getValueDisplayBaseMenuItem() {
-      return settingsValueDisplayBase;
-   }   	     
+        return settingsValueDisplayBase;
+    }
 
-   /**
-	  *  Get reference to settings menu item for display base of memory/register values.
-	  *   @return the menu item
-	  **/
-      	
+    /**
+    * Get reference to settings menu item for display base of memory/register values.
+    * @return the menu item
+    **/
     public JCheckBoxMenuItem getAddressDisplayBaseMenuItem() {
-      return settingsAddressDisplayBase;
-   }   	          
+        return settingsAddressDisplayBase;
+    }
 	
-	/**
-	 * Return reference tothe Run->Assemble item's action.  Needed by File->Open in case
-	 * assemble-upon-open flag is set.
-	 * @return the Action object for the Run->Assemble operation.
-	 */
+    /**
+    * Return reference to the Run->Assemble item's action.  Needed by File->Open in case
+    * assemble-upon-open flag is set.
+    * @return the Action object for the Run->Assemble operation.
+    */
     public Action getRunAssembleAction() {
-      return runAssembleAction;
-   }
+        return runAssembleAction;
+    }
 	
-	/**
-	 * Have the menu request keyboard focus.  DPS 5-4-10
-	 */
+    /**
+    * Have the menu request keyboard focus.  DPS 5-4-10
+    */
     public void haveMenuRequestFocus() {
-      this.menu.requestFocus();
-   }
+    this.menu.requestFocus();
+    }
 	
-	/**
-	 * Send keyboard event to menu for possible processing.  DPS 5-4-10
-	 * @param evt KeyEvent for menu component to consider for processing.
-	 */
+    /**
+    * Send keyboard event to menu for possible processing.  DPS 5-4-10
+    * @param evt KeyEvent for menu component to consider for processing.
+    */
     public void dispatchEventToMenu(KeyEvent evt) {
-      this.menu.dispatchEvent(evt);
-   }
-  
-  // pop up menu experiment 3 Aug 2006.  Keep for possible later revival.
-    private void setupPopupMenu() {
-      JPopupMenu popup; 
-      popup = new JPopupMenu();
-   	// cannot put the same menu item object on two different menus.
-   	// If you want to duplicate functionality, need a different item.
-   	// Should be able to share listeners, but if both menu items are
-   	// JCheckBoxMenuItem, how to keep their checked status in synch?
-   	// If you popup this menu and check the box, the right action occurs
-   	// but its counterpart on the regular menu is not checked.
-      popup.add(new JCheckBoxMenuItem(settingsLabelAction)); 
-   //Add listener to components that can bring up popup menus. 
-      MouseListener popupListener = new PopupListener(popup); 
-      this.addMouseListener(popupListener); 
-   }
-  
+    this.menu.dispatchEvent(evt);
+    }
 
-
-}
+    }

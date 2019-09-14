@@ -5,8 +5,8 @@ import mars.simulator.Exceptions;
 
 public class FloatingPointException extends ProcessingException {
 
-	   public FloatingPointException(int cause) {
-		  Exceptions.setFCSRRegister(cause);
-	   }
+	public FloatingPointException(int cause) {
+		Exceptions.setFCSRRegister(cause);
+	}
 
 }

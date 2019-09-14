@@ -2,7 +2,6 @@
    import mars.mips.instructions.GenMath;
    import mars.util.*;
    import mars.mips.hardware.*;
-	import mars.simulator.*;
    import mars.*;
 
 /*
@@ -73,7 +72,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           // Returns in $v0: a "file descriptor" in the range 0 to SystemIO.SYSCALL_MAXFILES-1,
           // or -1 if error
          String filename = new String(); // = "";
-         Number byteAddress = RV32IRegisters.getValue(4);
+         Number byteAddress = RVIRegisters.getValue(4);
          char ch[] = { ' '}; // Need an array to convert to String
          try
          {
@@ -91,8 +90,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                throw new ProcessingException(statement, e);
             }
          int retValue = SystemIO.openFile(filename,
-                                 RV32IRegisters.getValue(5).intValue());
-         RV32IRegisters.updateRegister(2, retValue); // set returned fd value in register
+                                 RVIRegisters.getValue(5).intValue());
+         RVIRegisters.updateRegister(2, retValue); // set returned fd value in register
 			
 			// GETTING RID OF PROCESSING EXCEPTION.  IT IS THE RESPONSIBILITY OF THE
 			// USER PROGRAM TO CHECK FOR BAD FILE OPEN.  MARS SHOULD NOT PRE-EMPTIVELY

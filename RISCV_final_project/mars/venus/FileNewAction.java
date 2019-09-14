@@ -36,20 +36,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     */   			
     public class FileNewAction extends ChangeableAction {
    	 
-       public FileNewAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-      }
-   	
-   	/**
-   	 * Code to create a new document.  It clears the source code window.
-   	 *
-   	 * @param e component triggering this call
-   	 */
-       public void actionPerformed(ActionEvent e) {
-	  	   mainUI.editor.newFile();
-           mainUI.mainPane.setCurrentTab(mainUI.mainPane.getEditTabbedPane());
+        public FileNewAction(String name, Icon icon, String descrip,
+                         Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+        }
 
-       }
+        /**
+        * Code to create a new document.  It clears the source code window.
+        * @param e component triggering this call
+        */
+        public void actionPerformed(ActionEvent e) {
+            mainUI.editor.newFile();
+            mainUI.mainPane.setCurrentTab(mainUI.mainPane.getEditTabbedPane());
+        }
    }
 	

@@ -268,9 +268,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }       
          }
       	      
-			 // Performs the close operation.  Records the current state of the case-sensitivity
-			 // checkbox into a static variable so it will be remembered across invocations within
-			 // the session.  This also happens with the contents of the "find" text field.
+         // Performs the close operation.  Records the current state of the case-sensitivity
+         // checkbox into a static variable so it will be remembered across invocations within
+         // the session.  This also happens with the contents of the "find" text field.
           private void performClose() {
 			   caseSensitivity = caseSensitiveCheckBox.isSelected();
             this.setVisible(false);

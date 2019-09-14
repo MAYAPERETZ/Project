@@ -32,15 +32,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
     /**
     * Action  for the Edit -> Copy menu item
-    */   			
+    */
     public class EditSelectAllAction extends ChangeableAction{
-   	 
-       public EditSelectAllAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-      }
-   		  
-       public void actionPerformed(ActionEvent e){
-		    mainUI.getMainPane().getEditPane().selectAllText();
-      }
-   }
+
+        public EditSelectAllAction(String name, Icon icon, String descrip,
+                         Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+        }
+
+        public void actionPerformed(ActionEvent e){
+            mainUI.getMainPane().getEditPane().selectAllText();
+        }
+    }

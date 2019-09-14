@@ -4,7 +4,7 @@
    import mars.ProcessingException;
    import mars.mips.hardware.Coprocessor0;
    import mars.mips.hardware.Coprocessor1;
-   import mars.mips.hardware.RV32IRegisters;
+   import mars.mips.hardware.RVIRegisters;
    import mars.mips.hardware.memory.Memory;
    import mars.util.SystemIO;
    import javax.swing.*;
@@ -75,7 +75,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                "Unable to reset.  Please close file then re-open and re-assemble.\n");
                return;
             }
-         RV32IRegisters.resetRegisters();
+         RVIRegisters.resetRegisters();
          Coprocessor1.resetRegisters();
          Coprocessor0.resetRegisters();
 

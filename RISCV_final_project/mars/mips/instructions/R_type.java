@@ -4,7 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import mars.mips.hardware.RV32IRegisters;
+import mars.mips.hardware.RVIRegisters;
 import mars.util.Binary;
 
 public class R_type extends BasicInstruction{
@@ -66,8 +66,8 @@ public class R_type extends BasicInstruction{
 		}
 
 		public RVI(String example, String description, String operMask, BiFunction<Number, Number, Number> x) {
-			super(example, description, operMask, x, RV32IRegisters::getValue, RV32IRegisters::getValue,
-					RV32IRegisters::updateRegister);
+			super(example, description, operMask, x, RVIRegisters::getValue, RVIRegisters::getValue,
+					RVIRegisters::updateRegister);
 		}
 	}
 	
@@ -114,13 +114,13 @@ public class R_type extends BasicInstruction{
 			super(example, description, funct3,
 					statement -> {
 						Number[] operands = statement.getOperands();
-						if (RV32IRegisters.getValue(operands[2]) == (Number) 0) {
+						if (RVIRegisters.getValue(operands[2]) == (Number) 0) {
 							// Note: no exceptions, and undefined results for zero divide
 							return;
 						}
-						Number qu = x.apply(RV32IRegisters.getValue(operands[1]), RV32IRegisters.getValue(operands[2]));
+						Number qu = x.apply(RVIRegisters.getValue(operands[1]), RVIRegisters.getValue(operands[2]));
 
-						RV32IRegisters.updateRegister(operands[0].intValue(), qu);
+						RVIRegisters.updateRegister(operands[0].intValue(), qu);
 
 					});
 		}

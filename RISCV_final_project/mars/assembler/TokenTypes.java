@@ -133,7 +133,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         	 return TokenTypes.MACRO_PARAMETER;
 			           
        // See if it is a register
-         Register reg = RV32IRegisters.getUserRegister(value);
+         Register reg = RVIRegisters.getUserRegister(value);
          if (reg != null) {
             if (reg.getName().equals(value)) 
                return TokenTypes.REGISTER_NAME;

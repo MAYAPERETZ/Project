@@ -104,7 +104,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   if (Math2.isEqz(GenMath.rem(offset, Binary.sizeof(address)))) {
                      string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.toUnsignedNumber(address))  + "    ";
                   }
-                  GenMath.add(offset, 1);
+                  add(offset, 1);
                   Number temp = Globals.memory.getRawWordOrNull(address);
                   if (temp == null) 
                      break;

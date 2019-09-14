@@ -150,7 +150,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                basic += basicStatementElement;
                basicStatementList.addString(basicStatementElement);
                try {
-                  registerNumber = RV32IRegisters.getUserRegister(tokenValue).getNumber();
+                  registerNumber = RVIRegisters.getUserRegister(tokenValue).getNumber();
                } 
                    catch (Exception e) {
                     // should never happen; should be caught before now...
@@ -160,7 +160,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                this.operands[this.numOperands++] = registerNumber;
             } 
             else if (tokenType == TokenTypes.REGISTER_NAME) {
-               registerNumber = RV32IRegisters.getNumber(tokenValue);
+               registerNumber = RVIRegisters.getNumber(tokenValue);
                basicStatementElement = "x" + registerNumber;
                basic += basicStatementElement;
                basicStatementList.addString(basicStatementElement);

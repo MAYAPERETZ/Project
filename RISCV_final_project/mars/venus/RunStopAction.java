@@ -1,4 +1,4 @@
- package mars.venus;
+package mars.venus;
 
 import mars.simulator.Simulator;
 
@@ -30,35 +30,34 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-   /**
-    * Action class for the Run -> Stop menu item (and toolbar icon)
-    */
-    public class RunStopAction extends RunAction  {
-   
-       public RunStopAction(String name, javax.swing.Icon icon, String descrip,
-                             Integer mnemonic, javax.swing.KeyStroke accel,
-                             GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-      }
-   		 
-       public void actionPerformed(java.awt.event.ActionEvent e) {
-    	  
-    	   Simulator.getInstance().stopExecution(this);
-			// RunGoAction's "stopped" method will take care of the cleanup.
-      }
-    
-    
+/**
+* Action class for the Run -> Stop menu item (and toolbar icon)
+*/
+public class RunStopAction extends RunAction  {
+
+    public RunStopAction(String name, javax.swing.Icon icon, String descrip,
+                         Integer mnemonic, javax.swing.KeyStroke accel,
+                         GUI mainUI, NewObservable observable) {
+        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+    }
+
+    public void actionPerformed(java.awt.event.ActionEvent e) {
+
+       Simulator.getInstance().stopExecution(this);
+        // RunGoAction's "stopped" method will take care of the cleanup.
+    }
+
     @Override
-   	public void update(java.util.Observable arg0, Object arg1) {
-   		  super.update(arg0, arg1);
-     	  switch ((int)arg1) { 
+    public void update(java.util.Observable arg0, Object arg1) {
+          super.update(arg0, arg1);
+          switch ((int)arg1) {
           case FileStatus.RUNNABLE:
              this.setEnabled(status = false);
-          	 break;
+             break;
           case FileStatus.RUNNING:
              this.setEnabled(status = true);
-           	 break;
-     	  }
+             break;
+          }
      }
    	   	
-   }
+}

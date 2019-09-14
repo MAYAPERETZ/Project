@@ -2,10 +2,7 @@
 
    import mars.Globals;
    import mars.Settings;
-   import mars.mips.hardware.AccessNotice;
-   import mars.mips.hardware.RV32IRegisters;
-   import mars.mips.hardware.Register;
-   import mars.mips.hardware.RegisterAccessNotice;
+   import mars.mips.hardware.*;
    import mars.simulator.Simulator;
    import mars.simulator.SimulatorNotice;
    import mars.util.Binary;
@@ -111,7 +108,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public Object[][] setupWindow(){
          int valueBase = NumberDisplayBaseChooser.getBase(settings.getDisplayValuesInHex());
          tableData = new Object[33][3];
-         registers = RV32IRegisters.getRegisters();
+         registers = RVIRegisters.getRegisters();
          for(int i=0; i< registers.size(); i++){
             tableData[i][0]= registers.get(i).getName();
             tableData[i][1]= new Integer(registers.get(i).getNumber());
@@ -119,7 +116,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          tableData[32][0]= "pc";
          tableData[32][1]= "";//new Integer(32);
-         tableData[32][2]= NumberDisplayBaseChooser.formatUnsignedNumber(RV32IRegisters.getProgramCounter(),valueBase);
+         tableData[32][2]= NumberDisplayBaseChooser.formatUnsignedNumber(RVIRegisters.getProgramCounter(),valueBase);
          
    
          return tableData;
@@ -129,7 +126,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 */
        public void clearWindow() {
          this.clearHighlighting();
-         RV32IRegisters.resetRegisters();
+         RVIRegisters.resetRegisters();
          this.updateRegisters(Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase());
       }
       
@@ -166,11 +163,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * @param base desired number base
    	 */   	
        public void updateRegisters(int base) {
-         registers = RV32IRegisters.getRegisters();
+         registers = RVIRegisters.getRegisters();
          for(int i=0; i< registers.size(); i++){
             updateRegisterValue(registers.get(i).getNumber(), registers.get(i).getValue(), base);
          }
-         updateRegisterUnsignedValue(32, RV32IRegisters.getProgramCounter(), base);
+         updateRegisterUnsignedValue(32, RVIRegisters.getProgramCounter(), base);
 
       }
    	
@@ -212,13 +209,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                // Simulated MIPS execution starts.  Respond to memory changes if running in timed
             	// or stepped mode.
                if (notice.getRunSpeed() != RunSpeedPanel.UNLIMITED_SPEED || Math2.isEq(notice.getMaxSteps(),1)) {
-                  RV32IRegisters.addRegistersObserver(this);
+                  RVIRegisters.addRegistersObserver(this);
                   this.highlighting = true;
                }
             } 
             else {
                // Simulated MIPS execution stops.  Stop responding.
-               RV32IRegisters.deleteRegistersObserver(this);            
+               RVIRegisters.deleteRegistersObserver(this);
             }
          } 
          else if (obj instanceof RegisterAccessNotice) { 
@@ -361,7 +358,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          	//  Assures that if changed during MIPS program execution, the update will
          	//  occur only between MIPS instructions.
             synchronized (Globals.memoryAndRegistersLock) {
-               RV32IRegisters.updateRegister(row, val);
+               RVIRegisters.updateRegister(row, val);
             }
             int valueBase = Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase();
             data[row][col] = NumberDisplayBaseChooser.formatNumber(val, valueBase); 

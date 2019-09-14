@@ -1,15 +1,11 @@
 package mars.assembler;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import mars.ErrorList;
 import mars.ErrorMessage;
 import mars.MIPSprogram;
-import mars.mips.hardware.RV32IRegisters;
-import mars.mips.hardware.Coprocessor0;
-import mars.mips.hardware.Coprocessor1;
 
 /*
 Copyright (c) 2013-2014.
@@ -37,10 +33,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Stores information of a macro definition.
- * 
- * @author M.H.Sekhavat <sekhavat17@gmail.com>
- */
+* Stores information of a macro definition.
+*
+* @author M.H.Sekhavat <sekhavat17@gmail.com>
+*/
 public class Macro {
    private String name;
    private MIPSprogram program;
@@ -228,7 +224,7 @@ public class Macro {
          // from Coprocessor0 or Coprocessor1 register sets.  Expanded the condition. 
 			// DPS  7-July-2014.
        //  if (tokenValue.length() > 0 && tokenValue.charAt(0) == '$' &&
-       //     RV32IRegisters.getUserRegister(tokenValue) == null &&
+       //     RVIRegisters.getUserRegister(tokenValue) == null &&
         //    Coprocessor0.getRegister(tokenValue) == null &&  // added 7-July-2014
         //    Coprocessor1.getRegister(tokenValue) == null)    // added 7-July-2014
         // {

@@ -35,12 +35,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     */   			
     public class EditPasteAction extends ChangeableAction{
    	 
-       public EditPasteAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-      }
-   		  
-       public void actionPerformed(ActionEvent e){
-		    mainUI.getMainPane().getEditPane().pasteText();
-      }
+        public EditPasteAction(String name, Icon icon, String descrip,
+                 Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+        }
+
+        public void actionPerformed(ActionEvent e){
+            mainUI.getMainPane().getEditPane().pasteText();
+        }
    }

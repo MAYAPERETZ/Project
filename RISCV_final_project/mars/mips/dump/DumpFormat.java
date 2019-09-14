@@ -60,12 +60,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public String getDescription();
 
-   /**
-	 * A short one-word descriptor that will be used by the MARS
-	 * command line parser (and the MARS command line user) to specify
-	 * that this format is to be used.
-	 */
-       public String getCommandDescriptor();
+
+    /**
+     * A short one-word descriptor that will be used by the MARS
+     * command line parser (and the MARS command line user) to specify
+     * that this format is to be used.
+     * @return A short one-word descriptor that will be used by the MARS
+     */
+    public String getCommandDescriptor();
 		 
    /**
     * Descriptive name for the format. 

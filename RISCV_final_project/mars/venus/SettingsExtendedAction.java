@@ -31,19 +31,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-   /**
-    * Action class for the Settings menu item to control use of extended (pseudo) instructions or formats.
-    */
-    public class SettingsExtendedAction extends GuiAction  {
-   	
+/**
+* Action class for the Settings menu item to control use of extended (pseudo) instructions or formats.
+*/
+public class SettingsExtendedAction extends GuiAction  {
    
-       public SettingsExtendedAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI) {
-         super(name, icon, descrip, mnemonic, accel, mainUI);
-      }
+    public SettingsExtendedAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI) {
+        super(name, icon, descrip, mnemonic, accel, mainUI);
+    }
    		 
-       public void actionPerformed(ActionEvent e) {
-		   Globals.getSettings().setExtendedAssemblerEnabled(((JCheckBoxMenuItem)e.getSource()).isSelected());
-      }
+    public void actionPerformed(ActionEvent e) {
+        Globals.getSettings().setExtendedAssemblerEnabled(((JCheckBoxMenuItem)e.getSource()).isSelected());
+    }
    	   	
-   }
+}

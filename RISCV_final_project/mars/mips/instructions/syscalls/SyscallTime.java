@@ -52,8 +52,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
 			long value = new java.util.Date().getTime();
-         RV32IRegisters.updateRegister(4, Binary.lowOrderLongToInt(value)); // $a0 
-			RV32IRegisters.updateRegister(5, Binary.highOrderLongToInt(value)); // $a1
+         RVIRegisters.updateRegister(4, Binary.lowOrderLongToInt(value)); // $a0
+			RVIRegisters.updateRegister(5, Binary.highOrderLongToInt(value)); // $a1
       }
    
    }

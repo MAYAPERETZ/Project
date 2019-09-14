@@ -146,7 +146,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          FileStatus.setName(name);
          FileStatus.set(FileStatus.NEW_NOT_EDITED);
       
-         RV32IRegisters.resetRegisters(); 
+         RVIRegisters.resetRegisters();
          mainUI.setReset(true);
          mainPane.getExecutePane().clearPane();
        //  mainPane.setSelectedComponent(this);

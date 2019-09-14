@@ -19,7 +19,8 @@ public class RunAction extends ChangeableAction{
 			KeyStroke accel, GUI mainUI2, NewObservable newObservable) {
 		super(name, icon, descrip, mnemonic, accel, mainUI2, newObservable);
 	}
-	
+
+
 	@Override
 	public void update(Observable arg0, Object arg1) {
 	  switch ((int)arg1) {

@@ -1,7 +1,6 @@
-   package mars.mips.hardware;
-   import jdk.jfr.Unsigned;
-   import mars.Globals;
+package mars.mips.hardware;
 
+import mars.Globals;
 import java.util.*;
 
 
@@ -103,40 +102,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          0xffffffff  // memory map limit address
          };
       
-     /* private static long[] defaultConfiguration64 = { 
-    	 0x00000000000400000L, // .text Base Address
-    	 0x00000000010000000L, // Data Segment base address
-    	 0x00000000010000000L, // .extern Base Address
-    	 0x00000000010008000L, // Global Pointer $gp)
-    	 0x00000000010010000L, // .data base Address
-    	 0x00000000010040000L, // heap base address
-    	 0x0000000007fffeffcL, // stack pointer $sp (from SPIM not MIPS)
-    	 0x0000000007ffffffcL, // stack base address
-    	 0x0000000007fffffffL, // highest address in user space
-    	 0x00000000080000000L, // lowest address in kernel space
-    	 0x00000000080000000L, // .ktext base address
-    	 0x00000000080000180L, // exception handler address
-    	 0x00000000090000000L, // .kdata base address
-    	 0x000000000ffff0000L, // MMIO base address
-    	 0x000000000ffffffffL, // highest address in kernel (and memory)
-    	 0x0000000007fffffffL, // data segment limit address
-    	 0x0000000000ffffffcL, // text limit address
-    	 0x000000000fffeffffL, // kernel data segment limit address
-    	 0x0000000008ffffffcL, // kernel text limit address
-    	 0x00000000010040000L, // stack limit address
-    	 0x000000000ffffffffL  // memory map limit address
-    	         };
-    	*/      
-      
       // Default configuration comes from SPIM
       private static Number[] configuration64 = {
          0x0000000000400000L, // .text Base Address
          0x0000000010000000L, // Data Segment base address
          0x0000000010000000L, // .extern Base Address
-         0x0000000010000000L, // Global Pointer $gp)
+         0x0000000010000000L, // Global Pointer gp)
          0x0000000010010000L, // .data base Address
          0x0000000010040000L, // heap base address
-         0x0000003fffffeff0L, // stack pointer $sp (from SPIM not MIPS)
+         0x0000003fffffeff0L, // stack pointer sp
          0x0000003ffffffff0L, // stack base address
          0x0000003fffffffffL, // highest address in user space
          0x8000000000000000L, // lowest address in kernel space
@@ -263,11 +237,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          if (config != currentConfiguration) {
             currentConfiguration = config;
             Globals.memory.clear();
-            RV32IRegisters.getUserRegister("gp").changeResetValue(config.getGlobalPointer());
-            RV32IRegisters.getUserRegister("sp").changeResetValue(config.getStackPointer());
-            RV32IRegisters.getProgramCounterRegister().changeResetValue(config.getTextBaseAddress());
-            RV32IRegisters.initializeProgramCounter(config.getTextBaseAddress());
-            RV32IRegisters.resetRegisters();
+            RVIRegisters.getUserRegister("gp").changeResetValue(config.getGlobalPointer());
+            RVIRegisters.getUserRegister("sp").changeResetValue(config.getStackPointer());
+            RVIRegisters.getProgramCounterRegister().changeResetValue(config.getTextBaseAddress());
+            RVIRegisters.initializeProgramCounter(config.getTextBaseAddress());
+            RVIRegisters.resetRegisters();
             return true;
          }
          else {

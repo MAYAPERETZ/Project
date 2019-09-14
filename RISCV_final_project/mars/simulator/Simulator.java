@@ -6,9 +6,8 @@
    import mars.mips.hardware.memory.Memory;
    import mars.mips.instructions.*;
    import java.util.*;
-   import java.util.concurrent.ExecutionException;
    import javax.swing.*;
-   import java.awt.event.*;
+
    import static mars.util.Math2.*;
 
 	/*
@@ -274,20 +273,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             
             Simulator.getInstance().notifyObserversOfExecutionStart(maxSteps, pc);
          	
-            RV32IRegisters.initializeProgramCounter(pc);
+            RVIRegisters.initializeProgramCounter(pc);
             ProgramStatement statement = null;
             try {
-               statement = Globals.memory.getStatement(RV32IRegisters.getProgramCounter());
+               statement = Globals.memory.getStatement(RVIRegisters.getProgramCounter());
             } 
                 catch (AddressErrorException e) {
                   ErrorList el = new ErrorList();
-                  el.add(new ErrorMessage((MIPSprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RV32IRegisters.getProgramCounter())));
+                  el.add(new ErrorMessage((MIPSprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RVIRegisters.getProgramCounter())));
                   this.pe = new ProcessingException(el, e);
 						// Next statement is a hack.  Previous statement sets EPC register to ProgramCounter-4
 						// because it assumes the bad address comes from an operand so the ProgramCounter has already been
 						// incremented.  In this case, bad address is the instruction fetch itself so Program Counter has
 						// not yet been incremented.  We'll set the EPC directly here.  DPS 8-July-2013
-                  Coprocessor0.updateRegister(Coprocessor0.EPC, RV32IRegisters.getProgramCounter());
+                  Coprocessor0.updateRegister(Coprocessor0.EPC, RVIRegisters.getProgramCounter());
                   this.constructReturnReason = EXCEPTION;
                   this.done = true;
                   SystemIO.resetFiles(); // close any files opened in MIPS program
@@ -329,8 +328,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             Number pc = 0;  // added: 7/26/06 (explanation above)
          
             while (statement != null) {
-               pc = RV32IRegisters.getProgramCounter(); // added: 7/26/06 (explanation above)
-               RV32IRegisters.incrementPC();           	
+               pc = RVIRegisters.getProgramCounter(); // added: 7/26/06 (explanation above)
+               RVIRegisters.incrementPC();
             	// Perform the MIPS instruction in synchronized block.  If external threads agree
             	// to access MIPS memory and registers only through synchronized blocks on same 
             	// lock variable, then full (albeit heavy-handed) protection of MIPS memory and 
@@ -376,7 +375,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            } 
                                catch (AddressErrorException aee) { } // will not occur with this well-known addres
                            if (exceptionHandler != null) {
-                              RV32IRegisters.setProgramCounter(Memory.exceptionHandlerAddress);
+                              RVIRegisters.setProgramCounter(Memory.exceptionHandlerAddress);
                            } 
                            else {
                               this.constructReturnReason = EXCEPTION;
@@ -392,7 +391,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             	
             	///////// DPS 15 June 2007.  Handle delayed branching if it occurs./////
                if (DelayedBranch.isTriggered()) {
-                  RV32IRegisters.setProgramCounter(DelayedBranch.getBranchTargetAddress());
+                  RVIRegisters.setProgramCounter(DelayedBranch.getBranchTargetAddress());
                   DelayedBranch.clear();
                } 
                else if (DelayedBranch.isRegistered()) {
@@ -409,7 +408,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
             	//	Return if we've reached a breakpoint.					
                if((breakPoints != null) && 
-               (Arrays.binarySearch(breakPoints,RV32IRegisters.getProgramCounter()) >= 0)) {
+               (Arrays.binarySearch(breakPoints, RVIRegisters.getProgramCounter()) >= 0)) {
                   this.constructReturnReason = BREAKPOINT;
                   this.done = false;
                   Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
@@ -447,17 +446,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                // Get next instruction in preparation for next iteration.
             
                try {
-                  statement = Globals.memory.getStatement(RV32IRegisters.getProgramCounter());
+                  statement = Globals.memory.getStatement(RVIRegisters.getProgramCounter());
                } 
                    catch (AddressErrorException e) {
                      ErrorList el = new ErrorList();
-                     el.add(new ErrorMessage((MIPSprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RV32IRegisters.getProgramCounter())));
+                     el.add(new ErrorMessage((MIPSprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RVIRegisters.getProgramCounter())));
                      this.pe = new ProcessingException(el,e);
 						   // Next statement is a hack.  Previous statement sets EPC register to ProgramCounter-4
 						   // because it assumes the bad address comes from an operand so the ProgramCounter has already been
 						   // incremented.  In this case, bad address is the instruction fetch itself so Program Counter has
 						   // not yet been incremented.  We'll set the EPC directly here.  DPS 8-July-2013
-                     Coprocessor0.updateRegister(Coprocessor0.EPC, RV32IRegisters.getProgramCounter());
+                     Coprocessor0.updateRegister(Coprocessor0.EPC, RVIRegisters.getProgramCounter());
                      this.constructReturnReason = EXCEPTION;
                      this.done = true;
                      SystemIO.resetFiles(); // close any files opened in MIPS program

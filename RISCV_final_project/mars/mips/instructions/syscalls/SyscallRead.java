@@ -2,7 +2,6 @@
    import mars.mips.instructions.GenMath;
    import mars.util.*;
    import mars.mips.hardware.*;
-   import mars.simulator.*;
    import mars.*;
 
 /*
@@ -55,16 +54,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    * and a2 specifies length.  Number of characters read is returned in v0 (starting MARS 3.7).
    */
        public void simulate(ProgramStatement statement) throws ProcessingException {
-         Number byteAddress = RV32IRegisters.getValue(5); // destination of characters read from file
+         Number byteAddress = RVIRegisters.getValue(5); // destination of characters read from file
          byte b = 0;
          int index = 0;
-         byte myBuffer[] = new byte[RV32IRegisters.getValue(6).intValue()]; // specified length
+         byte myBuffer[] = new byte[RVIRegisters.getValue(6).intValue()]; // specified length
          // Call to SystemIO.xxxx.read(xxx,xxx,xxx)  returns actual length
          int retLength = SystemIO.readFromFile(
-                                 RV32IRegisters.getValue(4).intValue(), // fd
+                                 RVIRegisters.getValue(4).intValue(), // fd
                                  myBuffer, // buffer
-                                 RV32IRegisters.getValue(6).intValue()); // length
-         RV32IRegisters.updateRegister(2, retLength); // set returned value in register
+                                 RVIRegisters.getValue(6).intValue()); // length
+         RVIRegisters.updateRegister(2, retLength); // set returned value in register
            
          // copy bytes from returned buffer into MARS memory
          try

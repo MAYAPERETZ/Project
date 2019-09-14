@@ -1,7 +1,5 @@
    package mars.mips.instructions.syscalls;
-   import mars.util.*;
    import mars.mips.hardware.*;
-	import mars.simulator.*;
    import mars.*;
    import java.util.Random;
 
@@ -55,12 +53,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
           //   $a1 = seed for pseudorandom number generator.
           // Result: No values are returned. Sets the seed of the underlying Java pseudorandom number generator.
 
-          Number index = RV32IRegisters.getValue(4);
+          Number index = RVIRegisters.getValue(4);
 			 Random stream = (Random) RandomStreams.randomStreams.get(index);
           if (stream == null) {
-			    RandomStreams.randomStreams.put(index, new Random(RV32IRegisters.getValue(5).longValue()));
+			    RandomStreams.randomStreams.put(index, new Random(RVIRegisters.getValue(5).longValue()));
 			 } else {
-			    stream.setSeed(RV32IRegisters.getValue(5).longValue());
+			    stream.setSeed(RVIRegisters.getValue(5).longValue());
 			 }
        }
 

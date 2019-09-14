@@ -32,14 +32,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-    /**
-    * Action  for the Help -> About menu item
-    */   			
-    public class HelpAboutAction extends GuiAction {
-       public  HelpAboutAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI gui) {
-         super(name, icon, descrip, mnemonic, accel, gui);
-      }
+	/**
+	* Action  for the Help -> About menu item
+	*/
+	public class HelpAboutAction extends GuiAction {
+		public  HelpAboutAction(String name, Icon icon, String descrip,
+				Integer mnemonic, KeyStroke accel, GUI gui) {
+			super(name, icon, descrip, mnemonic, accel, gui);
+		}
    		  
        public void actionPerformed(ActionEvent e){
           JOptionPane.showMessageDialog(mainUI,

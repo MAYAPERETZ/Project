@@ -1,6 +1,5 @@
-   package mars.mips.hardware;
-
-   import java.util.*;
+package mars.mips.hardware;
+import java.util.*;
 
 /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -30,157 +29,162 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 
-	 /**
-      *  Abstraction to represent a register of a MIPS Assembler.
-      *   @author Jason Bumgarner, Jason Shrewsbury, Ben Sherman
-      *   @version June 2003
-      **/    
+/**
+*  Abstraction to represent a register of a RISCV Assembler.
+*   @author Jason Bumgarner, Jason Shrewsbury, Ben Sherman
+*   @version June 2003
+**/
     
-    public class Register extends Observable {
-      private String name;
-      private int number;
+public class Register extends Observable {
+    private String name;
+    private int number;
 
-      Number resetValue;
-   	// volatile should be enough to allow safe multi-threaded access  
-   	// w/o the use of synchronized methods.  getValue and setValue
-   	// are the only methods here used by the register collection
-   	// (RegisterFile, Coprocessor0, Coprocessor1) methods. 
-      private volatile Number value;
+    Number resetValue;
+    // volatile should be enough to allow safe multi-threaded access
+    // w/o the use of synchronized methods.  getValue and setValue
+    // are the only methods here used by the register collection
+    // (RegisterFile, Coprocessor0, Coprocessor1) methods.
+    private volatile Number value;
       
-   	 /**
-        *  Creates a new register with specified name, number, and value.
-        *   @param n The name of the register.
-        *   @param num The number of the register.
-        *   @param val The inital (and reset) value of the register.
+    /**
+    *  Creates a new register with specified name, number, and value.
+    *  @param n The name of the register.
+    *  @param num The number of the register.
+    *  @param val The initial (and reset) value of the register.
+    */
+   	  
+    public Register(String n, int num, Number val){
+        name= n;
+        number=num;
+        value= val;
+        resetValue = val;
+    }
+
+    /**
+    *  Returns the name of the Register.
+    *  @return name The name of the Register.
+    */
+   	  
+    public String getName(){
+        return name;
+    }
+      
+    /**
+    *  Returns the value of the Register.  Observers are notified
+    *  of the READ operation.
+    *   @return value The value of the Register.
+    */
+   	  
+    public synchronized Number getValue(){
+        notifyAnyObservers(AccessNotice.READ);
+        return value;
+    }
+
+    /**
+    *  Returns the value of the Register.  Observers are not notified.
+    *  Added for release 3.8.
+    *  @return value The value of the Register.
+    */
+    public synchronized Number getValueNoNotify(){
+        return value;
+    }
+
+    /**
+    *  Returns the reset value of the Register.
+    *  @return The reset (initial) value of the Register.
+    */
+    public Number getResetValue(){
+        return resetValue;
+    }
+
+
+    /**
+    *  Returns the number of the Register.
+    *  @return number The number of the Register.
+    */
+    public int getNumber(){
+        return number;
+    }
+
+    /**
+    *  Sets the value of the register to the val passed to it.
+    *  Observers are notified of the WRITE operation.
+    *  @param val Value to set the Register to.
+    *  @return previous value of register
+    */
+    public synchronized Number setValue(Number val){
+        Number old = value;
+        value = (val instanceof Long) ? val.longValue() : val.intValue();
+        notifyAnyObservers(AccessNotice.WRITE);
+        return old;
+    }
+
+    /**
+    *  Resets the value of the register to the value it was constructed with.
+    *  Observers are not notified.
+    */
+    public synchronized void resetValue(){
+        value = resetValue;
+    }
+
+    /**
+    *  Change the register's reset value; the value to which it will be
+    *  set when <tt>resetValue()</tt> is called.
+    */
+
+    public synchronized void changeResetValue(Number reset) {
+        resetValue = reset;
+    }
+
+    //
+    // Method to notify any observers of register operation that has just occurred.
+    //
+    private void notifyAnyObservers(int type) {
+        if (this.countObservers() > 0)
+        this.notifyObservers(new RegisterAccessNotice(type, this.name));
+    }
+
+        /**
+        *  This subclass represents floating point register.
+        *  Added by Maya Peretz in September 2019.
+        *  The class was added to answer the need of distinguishing between
+        *  double value and float value in a fp register
         */
-   	  
-       public Register(String n, int num, Number val){
-         name= n;
-         number=num;
-         value= val;
-         resetValue = val;
-      }
-      
-   	/**
-        *  Returns the name of the Register.
-        *   @return name The name of the Register.
-   	  */
-   	  
-       public String getName(){
-         return name;
-      }
-      
-      /**
-   	  *  Returns the value of the Register.  Observers are notified
-		  *  of the READ operation.
-   	  *   @return value The value of the Register.
-   	  */
-   	  
-       public synchronized Number getValue(){
-         notifyAnyObservers(AccessNotice.READ);
-         return value;
-      }
+        public static class FPRegister extends Register{
 
-      /**
-   	  *  Returns the value of the Register.  Observers are not notified.
-       *  *  Added for release 3.8.
-   	  *   @return value The value of the Register.
-   	  */
-       public synchronized Number getValueNoNotify(){
-         return value;
-      }
-
-      /**
-       *  Returns the reset value of the Register.
-       *   @return The reset (initial) value of the Register.
-       */
-       public Number getResetValue(){
-         return resetValue;
-      }   	
-
-
-      /**
-       *  Returns the number of the Register.
-       *   @return number The number of the Register.
-       */
-       public int getNumber(){
-         return number;
-      }
-
-
-      /**
-       *  Sets the value of the register to the val passed to it.
-       *  Observers are notified of the WRITE operation.
-       *  @param val Value to set the Register to.
-       *   @return previous value of register
-       */
-      public synchronized Number setValue(Number val){
-           Number old = value;
-           value = (val instanceof Long) ? val.longValue() : val.intValue();
-           notifyAnyObservers(AccessNotice.WRITE);
-           return old;
-        }
-
-
-
-       /**
-        *  Resets the value of the register to the value it was constructed with.
-        *  Observers are not notified.
-        */
-       public synchronized void resetValue(){
-           value = resetValue;
-       }
-
-
-       /**
-   	    *  Change the register's reset value; the value to which it will be
-   	    *  set when <tt>resetValue()</tt> is called.
-   	    */
-
-       public synchronized void changeResetValue(Number reset) {
-           resetValue = reset;
-       }
-
-
-   //
-   // Method to notify any observers of register operation that has just occurred.
-   //
-       private void notifyAnyObservers(int type) {
-           if (this.countObservers() > 0){// && Globals.program != null) && Globals.program.inSteppedExecution()) {
-               // this.setChanged();
-               this.notifyObservers(new RegisterAccessNotice(type, this.name));
-           }
-       }
-
-
-       public static class FPRegister extends Register{
-
-           public static enum Type{
+           public enum Type{
                FLOAT,
                DOUBLE
            }
            private Type type;
 
-           /**
+            /**
             * Creates a new register with specified name, number, and value.
             *
             * @param n   The name of the register.
             * @param num The number of the register.
-            * @param val The inital (and reset) value of the register.
+            * @param val The initial (and reset) value of the register.
             */
+            public FPRegister(String n, int num, Number val) {
+                super(n, num, val);
+                setType(val);
+            }
 
-           public FPRegister(String n, int num, Number val) {
-               super(n, num, val);
-               setType(val);
-           }
+            /**
+            * Sets the type of the value in the fp register (double or float)
+            * @param val the value to set a type to(double or float)
+            */
+            public final synchronized void setType(Number val){
+                type = (val instanceof Integer || val instanceof Float)? Type.FLOAT : Type.DOUBLE;
+            }
 
-           public final synchronized void setType(Number val){
-                   type = (val instanceof Integer || val instanceof Float)? Type.FLOAT : Type.DOUBLE;
-           }
-
-           public synchronized Type getType(){
-               return type;
-           }
+            /**
+            * Retrieves the type of the value in the fp register (double or float)
+            * @return the type of the value in the fp register (double or float)
+            */
+            public synchronized Type getType(){
+                return type;
+            }
        }
  	
    }

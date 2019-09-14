@@ -35,36 +35,37 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	
     /**
     * Action  for the Edit -> Redo menu item
-    */   			
+    */
     public class EditRedoAction extends ChangeableAction{
-   	 
-       public EditRedoAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-         setEnabled(false);
-      }
-   	  /**
-   	   * Adapted from TextComponentDemo.java in the
-   	   * Java Tutorial "Text Component Features"
-   		*/
-       public void actionPerformed(ActionEvent e) {
-         EditPane editPane = mainUI.getMainPane().getEditPane();
-         if (editPane != null) {
+
+    public EditRedoAction(String name, Icon icon, String descrip,
+                 Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+        setEnabled(false);
+    }
+
+    /**
+    * Adapted from TextComponentDemo.java in the
+    * Java Tutorial "Text Component Features"
+    */
+    public void actionPerformed(ActionEvent e) {
+        EditPane editPane = mainUI.getMainPane().getEditPane();
+        if (editPane != null) {
             editPane.redo();
             updateRedoState();
             mainUI.editUndoAction.updateUndoState();
-         }
-       }
-   
-       @Override
-       public void update(Observable arg0, Object arg1) {
-    	   updateRedoState();
-       }
-       
-       void updateRedoState() {
-         EditPane editPane = mainUI.getMainPane().getEditPane();
-         setEnabled(editPane != null && editPane.getUndoManager().canRedo());
-       }
+        }
+    }
+
+    @Override
+    public void update(Observable arg0, Object arg1) {
+        updateRedoState();
+    }
+
+    void updateRedoState() {
+        EditPane editPane = mainUI.getMainPane().getEditPane();
+        setEnabled(editPane != null && editPane.getUndoManager().canRedo());
+    }
 
    }
 	

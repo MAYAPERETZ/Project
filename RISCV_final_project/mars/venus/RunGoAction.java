@@ -2,7 +2,7 @@
 
    import mars.Globals;
    import mars.ProcessingException;
-   import mars.mips.hardware.RV32IRegisters;
+   import mars.mips.hardware.RVIRegisters;
    import mars.mips.instructions.GenMath;
    import mars.simulator.ProgramArgumentList;
    import mars.simulator.Simulator;
@@ -145,7 +145,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             mainUI.getRegistersPane().setCurrentTab(executePane.getCoprocessor0Window());
             executePane.getTextSegmentWindow().setCodeHighlighting(true);
             executePane.getTextSegmentWindow().unhighlightAllSteps();
-            executePane.getTextSegmentWindow().highlightStepAtAddress(GenMath.sub(RV32IRegisters.getProgramCounter(), 4));
+            executePane.getTextSegmentWindow().highlightStepAtAddress(GenMath.sub(RVIRegisters.getProgramCounter(), 4));
          }
          switch (reason) {
             case Simulator.NORMAL_TERMINATION : 

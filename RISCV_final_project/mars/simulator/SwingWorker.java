@@ -2,14 +2,11 @@ package mars.simulator;
 
 import javax.swing.SwingUtilities;
 
-//package mars.simulator;
-//import javax.swing.SwingUtilities;
-
 /*-----------------------------------------------------
  * This file downloaded from the Sun Microsystems URL given below.
  *
  * I will subclass it to create worker thread for running 
- * MIPS simulated execution.
+ * RISCV simulated execution.
  */
 
 /**
@@ -27,10 +24,10 @@ import javax.swing.SwingUtilities;
 public abstract class SwingWorker {
     private Object value;  // see getValue(), setValue()
 
-    /** 
-     * Class to maintain reference to current worker thread
-     * under separate synchronization control.
-     */
+    /**
+    * Class to maintain reference to current worker thread
+    * under separate synchronization control.
+    */
     private static class ThreadVar {
         private Thread thread;
         ThreadVar(Thread t) { thread = t; }
@@ -40,42 +37,41 @@ public abstract class SwingWorker {
 
     private ThreadVar threadVar;
 
-    /** 
-     * Get the value produced by the worker thread, or null if it 
-     * hasn't been constructed yet.
-     */
-    protected synchronized Object getValue() { 
-        return value; 
+    /**
+    * Get the value produced by the worker thread, or null if it
+    * hasn't been constructed yet.
+    */
+    protected synchronized Object getValue() {
+    return value;
     }
 
-    /** 
-     * Set the value produced by worker thread 
-     */
-   private synchronized void setValue(Object x) { 
-        value = x; 
+    /**
+    * Set the value produced by worker thread
+    */
+    private synchronized void setValue(Object x) {
+    value = x;
     }
 
-    /** 
-     * Compute the value to be returned by the <code>get</code> method. 
-     */
+    /**
+    * Compute the value to be returned by the <code>get</code> method.
+    */
     public abstract Object construct();
 
     /**
-     * Called on the event dispatching thread (not on the worker thread)
-     * after the <code>construct</code> method has returned.
-     */
-    public void finished() { 
+    * Called on the event dispatching thread (not on the worker thread)
+    * after the <code>construct</code> method has returned.
+    */
+    public void finished() {
     }
 
     /**
-     * A new method that interrupts the worker thread.  Call this method
-     * to force the worker to stop what it's doing.
-     */
+    * A new method that interrupts the worker thread.  Call this method
+    * to force the worker to stop what it's doing.
+    */
     public void interrupt() {
         Thread t = threadVar.get();
-        if (t != null) {
+        if (t != null)
             t.interrupt();
-        }
         threadVar.clear();
     }
 
@@ -83,7 +79,6 @@ public abstract class SwingWorker {
      * Return the value created by the <code>construct</code> method.  
      * Returns null if either the constructing thread or the current
      * thread was interrupted before a value was produced.
-     * 
      * @return the value created by the <code>construct</code> method
      */
     public Object get() {
@@ -104,44 +99,37 @@ public abstract class SwingWorker {
 
 
     /**
-     * Start a thread that will call the <code>construct</code> method
-     * and then exit.
-	  * @param useSwing Set true if MARS is running from GUI, false otherwise.
-     */
+    * Start a thread that will call the <code>construct</code> method
+    * and then exit.
+    * @param useSwing Set true if MARS is running from GUI, false otherwise.
+    */
     public SwingWorker(final boolean useSwing) {
-        final Runnable doFinished = new Runnable() {
-           public void run() { finished(); }
-        };
+        final Runnable doFinished = () -> finished();
 
-      Runnable doConstruct = new Runnable() { 
-            public void run() {
-                try {
-                    setValue(construct());
-                }
-                finally {
-                    threadVar.clear();
-                }
-
-                if (useSwing) SwingUtilities.invokeLater(doFinished);
-                else doFinished.run();
+        Runnable doConstruct = () -> {
+            try {
+                setValue(construct());
             }
+            finally {
+                threadVar.clear();
+            }
+
+            if (useSwing) SwingUtilities.invokeLater(doFinished);
+            else doFinished.run();
         };
 
-	     // Thread that represents executing MIPS program...
-        Thread t = new Thread(doConstruct, "MIPS");
-		  
-		  //t.setPriority(Thread.NORM_PRIORITY-1);//******************
-		  
+        // Thread that represents executing RISC-V program...
+        Thread t = new Thread(doConstruct, "RISC-V");
+        //t.setPriority(Thread.NORM_PRIORITY-1);//******************
         threadVar = new ThreadVar(t);
     }
 
     /**
-     * Start the worker thread.
-     */
+    * Start the worker thread.
+    */
     public void start() {
         Thread t = threadVar.get();
-        if (t != null) {
+        if (t != null)
             t.start();
-        }
     }
 }

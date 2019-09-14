@@ -1,10 +1,7 @@
-   package mars.venus;
+package mars.venus;
 
-   import javax.swing.*;
-   import java.awt.event.ActionEvent;
-   import java.beans.PropertyChangeListener;
-   import java.io.File;
-   import java.util.ArrayList;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 	
 	/*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
@@ -36,29 +33,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
     /**
     * Action  for the File -> Open menu item
-    */   			
+    */
     public class FileOpenAction extends ChangeableAction {
-    
-      private File mostRecentlyOpenedFile;
-      private JFileChooser fileChooser;
-      private int fileFilterCount;
-      private ArrayList fileFilterList;
-      private PropertyChangeListener listenForUserAddedFileFilter;
-       public FileOpenAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-        		
-      }
+
+        public FileOpenAction(String name, Icon icon, String descrip,
+                         Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+        }
    	 
-       /**
-   	  * Launch a file chooser for name of file to open
-   	  *
-   	  * @param e component triggering this call
-   	  */
-       public void actionPerformed(ActionEvent e) {
-  		 
-  	   	 mainUI.editor.open();	 
-  	     mainUI.getMainPane().setCurrentTab(mainUI.getMainPane().getEditTabbedPane());
-	  }
+        /**
+        * Launch a file chooser for name of file to open
+        * @param e component triggering this call
+        */
+        public void actionPerformed(ActionEvent e) {
+             mainUI.editor.open();
+             mainUI.getMainPane().setCurrentTab(mainUI.getMainPane().getEditTabbedPane());
+        }
    
    }      

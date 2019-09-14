@@ -3,7 +3,7 @@ package mars.mips.instructions;
 import mars.ProcessingException;
 import mars.ProgramStatement;
 import mars.mips.hardware.AddressErrorException;
-import mars.mips.hardware.RV32IRegisters;
+import mars.mips.hardware.RVIRegisters;
 
 public class I_type extends BasicInstruction{
 
@@ -17,8 +17,8 @@ public class I_type extends BasicInstruction{
 		this(example, description, operMask,
 				statement -> {
 					 Number[] operands = statement.getOperands();
-					 Number product = x.apply(RV32IRegisters.getValue(operands[1]), operands[2]);
-					 RV32IRegisters.updateRegister(operands[0].intValue(), product);
+					 Number product = x.apply(RVIRegisters.getValue(operands[1]), operands[2]);
+					 RVIRegisters.updateRegister(operands[0].intValue(), product);
 
 				});
 	}
@@ -60,29 +60,25 @@ public class I_type extends BasicInstruction{
 
 		public LW_type(String example, String description, String operMask, 
 				Function< Number, Number> x, Number mask) {
-			this(example, description, operMask, 
-					 new SimulationCode()
-            {
-                public void simulate(ProgramStatement statement) throws ProcessingException
-               {
-                  Number[] operands = statement.getOperands();
-                  try
-                  {
-                	 if(mask != null)
-                		 RV32IRegisters.updateRegister(operands[0].intValue(),
-                				 x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
-                         		RV32IRegisters.getValue(operands[2]), operands[1])));
-                	 else
-                		 RV32IRegisters.updateRegister(operands[0].intValue(),
-						          x.apply(GenMath.add(
-						          		RV32IRegisters.getValue(operands[2]), operands[1])));
-                  } 
-                  catch (AddressErrorException e)
-                  {
-                      throw new ProcessingException(statement, e);
-                  }
-               }
-            });
+			this(example, description, operMask,
+					statement -> {
+					   Number[] operands = statement.getOperands();
+					   try
+					   {
+						  if(mask != null)
+							  RVIRegisters.updateRegister(operands[0].intValue(),
+									  x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
+									  RVIRegisters.getValue(operands[2]), operands[1])));
+						  else
+							  RVIRegisters.updateRegister(operands[0].intValue(),
+									   x.apply(GenMath.add(
+											   RVIRegisters.getValue(operands[2]), operands[1])));
+					   }
+					   catch (AddressErrorException e)
+					   {
+						   throw new ProcessingException(statement, e);
+					   }
+					});
 		}
 
 		public LW_type(String example, String description, String operMask, 

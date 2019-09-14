@@ -5,7 +5,7 @@ import mars.Globals;
 import mars.ProcessingException;
 import mars.ProgramStatement;
 import mars.mips.hardware.MemoryConfigurations;
-import mars.mips.hardware.RV32IRegisters;
+import mars.mips.hardware.RVIRegisters;
 import mars.simulator.DelayedBranch;
 
 public class B_type extends BasicInstruction{
@@ -24,22 +24,18 @@ public class B_type extends BasicInstruction{
 	
 	public B_type(String example, String description, String operMask, 
 			BiFunction< Number,  Number, Number> x) {
-		this(example, description, operMask, 
-				new SimulationCode()
-				{
-					public void simulate(ProgramStatement statement) throws ProcessingException
-					{
-						 Number[] operands = statement.getOperands();
-						 
-	                     if (x.apply(RV32IRegisters.getValue(operands[0])
-	                        ,RV32IRegisters.getValue(operands[1])).intValue() == 1)
-	                     {
-	                    	if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-	                    		processBranch(operands[2].intValue());
-	                    	else
-	                    		processBranch(operands[2].longValue());
-	                     }                   
-					}
+		this(example, description, operMask,
+				statement -> {
+					 Number[] operands = statement.getOperands();
+
+					 if (x.apply(RVIRegisters.getValue(operands[0])
+						, RVIRegisters.getValue(operands[1])).intValue() == 1)
+					 {
+						if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+							processBranch(operands[2].intValue());
+						else
+							processBranch(operands[2].longValue());
+					 }
 				});
 	}
 	
@@ -55,13 +51,13 @@ public class B_type extends BasicInstruction{
         if (Globals.getSettings().getDelayedBranchingEnabled()) {
            // Register the branch target address (absolute Number address).
         	
-           DelayedBranch.register(GenMath.add(RV32IRegisters.getProgramCounter(),
+           DelayedBranch.register(GenMath.add(RVIRegisters.getProgramCounter(),
         		   GenMath.sll(displacement, 2)));
         } 
         else {
            // Decrement needed because PC has already been incremented
-           RV32IRegisters.setProgramCounter(
-        		   GenMath.add(RV32IRegisters.getProgramCounter(),
+           RVIRegisters.setProgramCounter(
+        		   GenMath.add(RVIRegisters.getProgramCounter(),
                 		   GenMath.sll(displacement, 2))); // - Instruction.INSTRUCTION_LENGTH);	 
         } 
      }

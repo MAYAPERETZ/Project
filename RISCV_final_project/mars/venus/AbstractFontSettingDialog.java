@@ -45,14 +45,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public abstract class AbstractFontSettingDialog extends JDialog  {
     
       JDialog editorDialog;
-      JComboBox fontFamilySelector, fontStyleSelector;
-      JSlider fontSizeSelector;
-      JSpinner fontSizeSpinSelector;
-      JLabel fontSample;
+      private JComboBox fontFamilySelector, fontStyleSelector;
+      private JSlider fontSizeSelector;
+      private JSpinner fontSizeSpinSelector;
+      private JLabel fontSample;
       protected Font currentFont;
    	
    	// Used to determine upon OK, whether or not anything has changed.
-      String initialFontFamily, initialFontStyle, initialFontSize; 
+    private String initialFontFamily, initialFontStyle, initialFontSize;
    	  
    	  /**
    	   *  Create a new font chooser.  Has pertinent JDialog parameters.
@@ -110,31 +110,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          fontSizeSelector = new JSlider(EditorFont.MIN_SIZE, EditorFont.MAX_SIZE, currentFont.getSize());
          fontSizeSelector.setToolTipText("Use slider to select font size from "+EditorFont.MIN_SIZE+" to "+EditorFont.MAX_SIZE+".");
          fontSizeSelector.addChangeListener(
-                new ChangeListener() {
-                   public void stateChanged(ChangeEvent e) {
-                     Integer value = new Integer(((JSlider)e.getSource()).getValue());
-                     fontSizeSpinSelector.setValue(value);
-                     fontSample.setFont(getFont());
-                  }
-               });  
+                 e -> {
+                   Integer value = new Integer(((JSlider)e.getSource()).getValue());
+                   fontSizeSpinSelector.setValue(value);
+                   fontSample.setFont(getFont());
+                });
          SpinnerNumberModel fontSizeSpinnerModel = new SpinnerNumberModel(currentFont.getSize(), EditorFont.MIN_SIZE, EditorFont.MAX_SIZE, 1); 
          fontSizeSpinSelector = new JSpinner(fontSizeSpinnerModel);
          fontSizeSpinSelector.setToolTipText("Current font size in points.");
          fontSizeSpinSelector.addChangeListener(
-                new ChangeListener() {
-                   public void stateChanged(ChangeEvent e) {
-                     Object value = ((JSpinner)e.getSource()).getValue();
-                     fontSizeSelector.setValue(((Integer)value).intValue());
-                     fontSample.setFont(getFont());
-                  }
-               });  
+                 e -> {
+                   Object value = ((JSpinner)e.getSource()).getValue();
+                   fontSizeSelector.setValue(((Integer)value).intValue());
+                   fontSample.setFont(getFont());
+                });
 			// Action listener to update sample when family or style selected
-         ActionListener updateSample = 
-             new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                  fontSample.setFont(getFont());
-               }
-            };	
+         ActionListener updateSample =
+                 e -> fontSample.setFont(getFont());
          fontFamilySelector.addActionListener(updateSample);
          fontStyleSelector.addActionListener(updateSample);
       	
@@ -160,63 +152,62 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          return contents;
       }  
 
-       // Build component containing the buttons for dialog control
-   	 // Such as OK, Cancel, Reset, Apply, etc.  These may vary
-   	 // by application   
-	   protected abstract Component buildControlPanel();
+        // Build component containing the buttons for dialog control
+        // Such as OK, Cancel, Reset, Apply, etc.  These may vary
+        // by application
+        protected abstract Component buildControlPanel();
 
    
-       public Font getFont() {
-         return EditorFont.createFontFromStringValues(
-                     (String) fontFamilySelector.getSelectedItem(), 
-            			(String) fontStyleSelector.getSelectedItem(), 
-            			fontSizeSpinSelector.getValue().toString() );
-      }
+        public Font getFont() {
+            return EditorFont.createFontFromStringValues(
+                     (String) fontFamilySelector.getSelectedItem(),
+                        (String) fontStyleSelector.getSelectedItem(),
+                        fontSizeSpinSelector.getValue().toString() );
+        }
    	
-   	// User has clicked "Apply" or "Apply and Close" button.
-       protected void performApply() {
-         apply(this.getFont());
-      }
+        // User has clicked "Apply" or "Apply and Close" button.
+        protected void performApply() {
+        apply(this.getFont());
+        }
    	    	
-   	// We're finished with this modal dialog.
-       protected void closeDialog() {
-         this.setVisible(false);
-         this.dispose();
-      }
+        // We're finished with this modal dialog.
+        protected void closeDialog() {
+            this.setVisible(false);
+            this.dispose();
+        }
    	
-   	// Reset font to its initial setting
-       protected void reset() {
-         fontFamilySelector.setSelectedItem(initialFontFamily);
-         fontStyleSelector.setSelectedItem(initialFontStyle);
-         fontSizeSelector.setValue(EditorFont.sizeStringToSizeInt(initialFontSize));
-         fontSizeSpinSelector.setValue(new Integer(EditorFont.sizeStringToSizeInt(initialFontSize)));
-      }
+        // Reset font to its initial setting
+        protected void reset() {
+            fontFamilySelector.setSelectedItem(initialFontFamily);
+            fontStyleSelector.setSelectedItem(initialFontStyle);
+            fontSizeSelector.setValue(EditorFont.sizeStringToSizeInt(initialFontSize));
+            fontSizeSpinSelector.setValue(EditorFont.sizeStringToSizeInt(initialFontSize));
+        }
    	 
-   	/**
-   	 *  Apply the given font.  Left for the client to define.
-   	 *
-   	 *  @param font a font to be applied by the client.
-   	 */
-       protected abstract void apply(Font font);
+        /**
+        *  Apply the given font.  Left for the client to define.
+        *  @param font a font to be applied by the client.
+        */
+        protected abstract void apply(Font font);
    	
    
-   /////////////////////////////////////////////////////////////////////
-   //
-   // Method and two classes to permit one or more horizontal separators
-   // within a combo box list.  I obtained this code on 13 July 2007 
-   // from http://www.codeguru.com/java/articles/164.shtml.  Author
-   // is listed: Nobuo Tamemasa.  Code is old, 1999, but fine for this.
-   // I will use it to separate the short list of "common" font
-   // families from the very long list of all font families.  No attempt
-   // to keep a list of recently-used fonts like Word does.  The list
-   // of common font families is static.
-   //
-   /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+    //
+    // Method and two classes to permit one or more horizontal separators
+    // within a combo box list.  I obtained this code on 13 July 2007
+    // from http://www.codeguru.com/java/articles/164.shtml.  Author
+    // is listed: Nobuo Tamemasa.  Code is old, 1999, but fine for this.
+    // I will use it to separate the short list of "common" font
+    // families from the very long list of all font families.  No attempt
+    // to keep a list of recently-used fonts like Word does.  The list
+    // of common font families is static.
+    //
+    /////////////////////////////////////////////////////////////////////
    
-      private static String SEPARATOR = "___SEPARATOR____";
+    private static String SEPARATOR = "___SEPARATOR____";
    
-   // Given an array of string arrays, will produce a Vector contenating
-   // the arrays with a separator between each.
+    // Given an array of string arrays, will produce a Vector contenating
+    // the arrays with a separator between each.
        private Vector makeVectorData(String[][] str) {
          boolean needSeparator = false;
          Vector data = new Vector();
@@ -236,7 +227,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private class ComboBoxRenderer extends JLabel implements ListCellRenderer {
          JSeparator separator;
       
-          public ComboBoxRenderer() {
+          ComboBoxRenderer() {
             setOpaque(true);
             setBorder(new EmptyBorder(1, 1, 1, 1));
             separator = new JSeparator(JSeparator.HORIZONTAL);

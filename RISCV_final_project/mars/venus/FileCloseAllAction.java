@@ -41,7 +41,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    	
        public void actionPerformed(ActionEvent e){
-	   		 mainUI.mainPane.editTabbedPane.setVisible(false);
-		      mainUI.editor.closeAll();
+           mainUI.mainPane.editTabbedPane.setVisible(false);
+           mainUI.editor.closeAll();
       }
    }

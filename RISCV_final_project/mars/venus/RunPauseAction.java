@@ -1,9 +1,9 @@
-   package mars.venus;
+package mars.venus;
 
-   import mars.simulator.Simulator;
-   import javax.swing.*;
-   import java.awt.event.ActionEvent;
-   import java.util.Observable;
+import mars.simulator.Simulator;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.util.Observable;
 	
 	/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -33,32 +33,31 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-   /**
-    * Action class for the Run -> Pause menu item (and toolbar icon)
-    */
-	public class RunPauseAction extends RunAction  {
+/**
+* Action class for the Run -> Pause menu item (and toolbar icon)
+*/
+public class RunPauseAction extends RunAction  {
    	
-		public RunPauseAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-			super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-		}
-   		 
-		public void actionPerformed(ActionEvent e) {
-			Simulator.getInstance().stopExecution(this);
-			// RunGoAction's "paused" method will do the cleanup.
-		}
+	public RunPauseAction(String name, Icon icon, String descrip,
+						 Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+		super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+	}
 
-		@Override
-		public void update(Observable arg0, Object arg1) {
-			super.update(arg0, arg1);
-			switch ((int)arg1) { 
-			case FileStatus.RUNNABLE:
-			    this.setEnabled(status = false);
-             	break;
-			case FileStatus.RUNNING:
-				this.setEnabled(status = true);
-              	break;
-           }
-        }
-      	   	
+	public void actionPerformed(ActionEvent e) {
+		Simulator.getInstance().stopExecution(this);
+		// RunGoAction's "paused" method will do the cleanup.
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		super.update(arg0, arg1);
+		switch ((int)arg1) {
+		case FileStatus.RUNNABLE:
+			this.setEnabled(status = false);
+			break;
+		case FileStatus.RUNNING:
+			this.setEnabled(status = true);
+			break;
+	   }
+	}
 }

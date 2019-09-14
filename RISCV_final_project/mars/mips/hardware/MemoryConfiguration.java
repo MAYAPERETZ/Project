@@ -33,8 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * "configuration" refers to the starting memory addresses for
  * the various memory segments.
  * The default configuration is based on SPIM.  Starting with MARS 3.7,
- * the configuration can be changed.  
- * 
+ * the configuration can be changed.
  * @author Pete Sanderson 
  * @version August 2009
  */
@@ -155,7 +154,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       public Number getStackLimitAddress() {
          return configurationItemValues[19];
       }
-      
       public Number getMemoryMapLimitAddress() {
          return configurationItemValues[20];
       }   
