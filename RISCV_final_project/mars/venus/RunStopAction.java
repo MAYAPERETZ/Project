@@ -1,6 +1,7 @@
 package mars.venus;
 
 import mars.simulator.Simulator;
+import java.util.Observable;
 
 /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -47,6 +48,9 @@ public class RunStopAction extends RunAction  {
         // RunGoAction's "stopped" method will take care of the cleanup.
     }
 
+    /**
+     * @see ChangeableAction#update(Observable, Object)
+     */
     @Override
     public void update(java.util.Observable arg0, Object arg1) {
           super.update(arg0, arg1);

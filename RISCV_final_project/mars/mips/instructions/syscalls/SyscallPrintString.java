@@ -1,5 +1,5 @@
    package mars.mips.instructions.syscalls;
-   import mars.mips.instructions.GenMath;
+   import mars.util.GenMath;
    import mars.util.*;
    import mars.mips.hardware.*;
 	import mars.*;

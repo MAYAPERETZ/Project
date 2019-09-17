@@ -14,13 +14,15 @@ import java.util.Observable;
 public class RunAction extends ChangeableAction{
 
 	protected boolean status = false;
-	
+
 	protected RunAction(String name, Icon icon, String descrip, Integer mnemonic,
 			KeyStroke accel, GUI mainUI2, NewObservable newObservable) {
 		super(name, icon, descrip, mnemonic, accel, mainUI2, newObservable);
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 	  switch ((int)arg1) {

@@ -31,10 +31,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
 *  Abstraction to represent a register of a RISCV Assembler.
+*  Integrated to RISCV architecture by Maya Peretz in September 2019.
 *   @author Jason Bumgarner, Jason Shrewsbury, Ben Sherman
-*   @version June 2003
-**/
-    
+*   @version September 2019
+*/
 public class Register extends Observable {
     private String name;
     private int number;
@@ -52,7 +52,6 @@ public class Register extends Observable {
     *  @param num The number of the register.
     *  @param val The initial (and reset) value of the register.
     */
-   	  
     public Register(String n, int num, Number val){
         name= n;
         number=num;
@@ -74,7 +73,6 @@ public class Register extends Observable {
     *  of the READ operation.
     *   @return value The value of the Register.
     */
-   	  
     public synchronized Number getValue(){
         notifyAnyObservers(AccessNotice.READ);
         return value;
@@ -96,7 +94,6 @@ public class Register extends Observable {
     public Number getResetValue(){
         return resetValue;
     }
-
 
     /**
     *  Returns the number of the Register.
@@ -131,7 +128,6 @@ public class Register extends Observable {
     *  Change the register's reset value; the value to which it will be
     *  set when <tt>resetValue()</tt> is called.
     */
-
     public synchronized void changeResetValue(Number reset) {
         resetValue = reset;
     }

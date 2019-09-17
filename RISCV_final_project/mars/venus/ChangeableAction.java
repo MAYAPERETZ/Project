@@ -5,12 +5,12 @@ import java.util.Observer;
 import javax.swing.Icon;
 import javax.swing.KeyStroke;
 
-
 /**
  * parent class for Action subclasses to be defined for every menu/toolbar
  * option which its state is changeable
  * @author Maya Peretz
- * 
+ * @version September 2019
+ *
  */
 public class ChangeableAction extends GuiAction implements Observer{
 
@@ -27,8 +27,8 @@ public class ChangeableAction extends GuiAction implements Observer{
 		newObservable.addObserver(this);
 	}
 	
-	/** Determines from FileStatus what the menu state (enabled/disabled)should be.
-	*
+	/**
+	*  Determines from FileStatus what the menu state (enabled/disabled)should be.
 	*/
     @Override
 	public void update(Observable arg0, Object arg1) {

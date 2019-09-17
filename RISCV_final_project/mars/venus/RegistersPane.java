@@ -28,83 +28,86 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
+*/
+
+/**
+*  Contains tabbed areas in the UI to display register contents
+*   @author Sanderson
+*   @version August 2005
+*/
+
+/*
+    FIXME: This class can be implemented in a more efficient way combining all
+            RegisterWindow, Coprocessor0Window and Coprocessor1Window classes
+            into a base class
+
  */
+public class RegistersPane extends JInternalFrame {
+	RegistersWindow regsTab;
+	Coprocessor1Window cop1Tab;
+	Coprocessor0Window cop0Tab;
+	private JTabbedPane jTabbedPane;
 
 	/**
-	*  Contains tabbed areas in the UI to display register contents
-	*   @author Sanderson
-	*   @version August 2005
+	*  Constructor for the RegistersPane class.
 	**/
-
-    public class RegistersPane extends JInternalFrame {
-		RegistersWindow regsTab;
-		Coprocessor1Window cop1Tab;
-		Coprocessor0Window cop0Tab;
-		private JTabbedPane jTabbedPane;
-
-		private GUI mainUI;
-
-		/**
-		*  Constructor for the RegistersPane class.
-		**/
-		public RegistersPane(GUI mainUI2, RegistersWindow regs, Coprocessor1Window cop1,
-							  Coprocessor0Window cop0){
-		   super("", true, false, false, false);
-		   setFrameIcon(null);
-		   this.mainUI = mainUI2;
-		   regsTab = regs;
-		   cop1Tab = cop1;
-		   cop0Tab = cop0;
-		   regsTab.setVisible(true);
-		   cop1Tab.setVisible(true);
-		   cop0Tab.setVisible(true);
-		   jTabbedPane = new JTabbedPane();
-		   jTabbedPane.addTab( "Registers",  regsTab);
-		   jTabbedPane.addTab("Coproc 1",  cop1Tab);
-		   jTabbedPane.addTab( "Coproc 0",  cop0Tab);
-		   add(jTabbedPane);
-		   setVisible(true);
-
-		}
-   	
-		/**
-		* Return component containing integer register set.
-		* @return integer register window
-		*/
-		public RegistersWindow getRegistersWindow() {
-			return regsTab;
-		}
-
-		/**
-		* Return component containing coprocessor 1 (floating point) register set.
-		* @return floating point register window
-		*/
-		public Coprocessor1Window getCoprocessor1Window() {
-			return cop1Tab;
-		}
-
-		/**
-		* Return component containing coprocessor 0 (exceptions) register set.
-		* @return exceptions register window
-		*/
-		public Coprocessor0Window getCoprocessor0Window() {
-			return cop0Tab;
-		}
-
-		/**
-		* Sets current tab of the register pane
-		* @param jComponent the tab to be set as current
-		*/
-		public void setCurrentTab(JComponent jComponent){
-			jTabbedPane.setSelectedComponent(jComponent);
-		}
-
-		/**
-		* Return current tab of the register pane
-		* @return current tab of the register pane
-		*/
-		public JComponent getCurrentTab(){
-			return (JComponent)jTabbedPane.getSelectedComponent();
-		}
+	public RegistersPane(RegistersWindow regs, Coprocessor1Window cop1,
+						 Coprocessor0Window cop0){
+	   super("", true, false, false, false);
+	   setFrameIcon(null);
+		regsTab = regs;
+	   cop1Tab = cop1;
+	   cop0Tab = cop0;
+	   regsTab.setVisible(true);
+	   cop1Tab.setVisible(true);
+	   cop0Tab.setVisible(true);
+	   jTabbedPane = new JTabbedPane();
+	   jTabbedPane.addTab( "Registers",  regsTab);
+	   jTabbedPane.addTab("Coproc 1",  cop1Tab);
+	   jTabbedPane.addTab( "Coproc 0",  cop0Tab);
+	   add(jTabbedPane);
+	   setVisible(true);
 
 	}
+
+	/**
+	* Return component containing integer register set.
+	* @return integer register window
+	*/
+	public RegistersWindow getRegistersWindow() {
+		return regsTab;
+	}
+
+	/**
+	* Return component containing coprocessor 1 (floating point) register set.
+	* @return floating point register window
+	*/
+	public Coprocessor1Window getCoprocessor1Window() {
+		return cop1Tab;
+	}
+
+	/**
+	* Return component containing coprocessor 0 (exceptions) register set.
+	* @return exceptions register window
+	*/
+	public Coprocessor0Window getCoprocessor0Window() {
+		return cop0Tab;
+	}
+
+	/**
+	* Sets current tab of the register pane
+	* @param jComponent the tab to be set as current
+	*/
+	public void setCurrentTab(JComponent jComponent){
+		jTabbedPane.setSelectedComponent(jComponent);
+	}
+
+	/**
+	* Return current tab of the register pane
+	* @return current tab of the register pane
+	*/
+	public JComponent getCurrentTab(){
+		return (JComponent)jTabbedPane.getSelectedComponent();
+	}
+
+}

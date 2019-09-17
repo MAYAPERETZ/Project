@@ -163,9 +163,9 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="../../mars/assembler/Token.html#Token-mars.assembler.TokenTypes-java.lang.String-mars.MIPSprogram-int-int-">Token</a></span>&#8203;(<a href="../../mars/assembler/TokenTypes.html" title="class in mars.assembler">TokenTypes</a>&nbsp;type,
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="../../mars/assembler/Token.html#Token-mars.assembler.TokenTypes-java.lang.String-mars.RISCVprogram-int-int-">Token</a></span>&#8203;(<a href="../../mars/assembler/TokenTypes.html" title="class in mars.assembler">TokenTypes</a>&nbsp;type,
      java.lang.String&nbsp;value,
-     <a href="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</a>&nbsp;sourceMIPSprogram,
+     <a href="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</a>&nbsp;sourceRISCVprogram,
      int&nbsp;line,
      int&nbsp;start)</code></th>
 <td class="colLast">
@@ -239,7 +239,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../mars/assembler/Token.html#setOriginal-mars.MIPSprogram-int-">setOriginal</a></span>&#8203;(<a href="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</a>&nbsp;origProgram,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="../../mars/assembler/Token.html#setOriginal-mars.RISCVprogram-int-">setOriginal</a></span>&#8203;(<a href="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</a>&nbsp;origProgram,
            int&nbsp;origSourceLine)</code></th>
 <td class="colLast">
 <div class="block">Set original program and line number for this token.</div>
@@ -289,7 +289,7 @@ extends java.lang.Object</pre>
 <h4>Token</h4>
 <pre>public&nbsp;Token&#8203;(<a href="../../mars/assembler/TokenTypes.html" title="class in mars.assembler">TokenTypes</a>&nbsp;type,
              java.lang.String&nbsp;value,
-             <a href="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</a>&nbsp;sourceMIPSprogram,
+             <a href="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</a>&nbsp;sourceRISCVprogram,
              int&nbsp;line,
              int&nbsp;start)</pre>
 <div class="block">Constructor for Token class.</div>
@@ -297,7 +297,7 @@ extends java.lang.Object</pre>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>type</code> - The token type that this token has. (e.g. REGISTER_NAME)</dd>
 <dd><code>value</code> - The source value for this token (e.g. $t3)</dd>
-<dd><code>sourceMIPSprogram</code> - The MIPSprogram object containing this token</dd>
+<dd><code>sourceRISCVprogram</code> - The MIPSprogram object containing this token</dd>
 <dd><code>line</code> - The line number in source program in which this token appears.</dd>
 <dd><code>start</code> - The starting position in that line number of this token's source value.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>

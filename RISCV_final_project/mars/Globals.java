@@ -1,12 +1,11 @@
    package mars;
    import mars.mips.instructions.syscalls.*;
    import mars.mips.instructions.*;
-   import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
+   import mars.mips.hardware.memory.Memory;
 import mars.assembler.*;
    import mars.venus.*;
    import mars.util.*;
-   import java.io.*;
+
    import java.util.*;
 	
 /*
@@ -52,7 +51,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /** The set of implemented MIPS instructions. **/
       public static InstructionSet instructionSet;
    /** the program currently being worked with.  Used by GUI only, not command line. **/
-      public static MIPSprogram program;
+      public static RISCVprogram program;
    /** Symbol table for file currently being assembled. **/
       public static SymbolTable symbolTable;
     /** Simulated MIPS memory component. **/

@@ -1,11 +1,12 @@
-   package mars.mips.instructions;
-   import mars.simulator.*;
-   import mars.mips.hardware.*;
-   import mars.mips.instructions.syscalls.*;
-   import mars.*;
-   import mars.util.*;
-   import java.util.*;
-   import java.io.*;
+package mars.mips.instructions;
+
+import mars.simulator.*;
+import mars.mips.hardware.*;
+import mars.mips.instructions.syscalls.*;
+import mars.*;
+import mars.util.*;
+import java.util.*;
+import java.io.*;
 
 	/*
 Copyright (c) 2003-2013,  Pete Sanderson and Kenneth Vollmar
@@ -40,12 +41,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * The instruction may either be basic (translates into binary machine code) or
  * extended (translates into sequence of one or more basic instructions).
  *
+ * Modified by Maya Peretz in 2019
+ *
  * @author Pete Sanderson and Ken Vollmar
- * @version August 2003-5
+ * @version September 2019
  */
 
-    public class InstructionSet
-   {
+    public class InstructionSet {
       private ArrayList instructionList;
 	  private ArrayList opcodeMatchMaps;
       private SyscallLoader syscallLoader;
@@ -85,12 +87,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 new BasicInstruction("nop",
             	 "Null operation : machine code is all zeroes",
                 "000000 00000 00000 00000 00000 000000",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {
-                  }
-               }));
+                        statement -> {
+                        }));
          
          // Adds the register x[rs2]  to register x[rs1] and writes the result to x[rd].
          // Arithmetic overflow is ignored.
@@ -195,7 +193,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "0000000tttttsssss001fffff0110011",GenMath::sll));
          
          instructionList.add(
-                 new I_typeShift("slli t1,t2,10",
+                 new I_type.I_typeShift("slli t1,t2,10",
              	 "Shift Left Logical Immediate. Shifts register t2 by 10 bit positions. The vacated bits are filled with zeros abd the result is written "
              	 + "\nto t1. For RV32I, the instruction is only legal when shmat[5] = 0",
                  "0000000tttttsssss001fffff0110011",GenMath::sll));
@@ -216,7 +214,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          // the upper bits are ignored.
          
          instructionList.add(
-                 new I_typeShift("srli t1,t2,offset",
+                 new I_type.I_typeShift("srli t1,t2,offset",
              	 "Shift Right Logical Immediate. Shifts register t2 right by shmat bits positions and writes the result to t1.",
                  "0000000tttttsssss101fffff0010011",GenMath::srl));
                 
@@ -235,7 +233,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       
          
          instructionList.add(
-                 new I_typeShift("srai t1,t2,10",
+                 new I_type.I_typeShift("srai t1,t2,10",
                  "Shift Right Arithmetic. Shifts register t2 right by 10 bit positions.",
                  "0100000tttttsssss101fffff0010011",GenMath::sra));
 
@@ -318,37 +316,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  new I_type("sltiu t1,t2,-100",
                          "Set If Less Than Immediate, Unsigned. Compares t2 and the sign-extended immidiate as unsigned numbers, and writes 1 to t1 if t2 is smaller, or 0 if not.",
                           "ttttttttttttsssss011fffff0110011", GenMath::ltu));
-         /*
-         instructionList.add(
-                new BasicInstruction("break 100", 
-            	 "Break execution with code : Terminate program execution with specified exception code",
-            	 
-                "000000 ffffffffffffffffffff 001101",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {  // At this time I don't have exception processing or trap handlers
-                     // so will just halt execution with a message.
-                     int[] operands = statement.getOperands();
-                     throw new ProcessingException(statement, "break instruction executed; code = "+
-                          operands[0]+".", Exceptions.BREAKPOINT_EXCEPTION);
-                  }
-               }));	
-         instructionList.add(
-                new BasicInstruction("break", 
-            	 "Break execution : Terminate program execution with exception",
-            	 
-                "000000 00000 00000 00000 00000 001101",
-                new SimulationCode()
-               {
-                   public void simulate(ProgramStatement statement) throws ProcessingException
-                  {  // At this time I don't have exception processing or trap handlers
-                     // so will just halt execution with a message.
-                     throw new ProcessingException(statement, "break instruction executed; no code given.",
-                        Exceptions.BREAKPOINT_EXCEPTION);
-                  }
-               }));	
-               */				
+
          instructionList.add(
                 new BasicInstruction("syscall", 
             	 "Issue a system call : Execute the system call specified by value in $v0",
@@ -924,47 +892,49 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         ////////////// READ PSEUDO-INSTRUCTION SPECS FROM DATA FILE AND ADD //////////////////////
          addPseudoInstructions();
-      	
+
+         /*
+            FIXME: Have not checked the syscalls. Just modified the files so they won't have
+                    unresolved references. Need to implement.
+          */
         ////////////// GET AND CREATE LIST OF SYSCALL FUNCTION OBJECTS ////////////////////
          syscallLoader = new SyscallLoader();
          syscallLoader.loadSyscalls();
       	
         // Initialization step.  Create token list for each instruction example.  This is
         // used by parser to determine user program correct syntax.
-         for (int i = 0; i < instructionList.size(); i++)
-         {
-            Instruction inst = (Instruction) instructionList.get(i);
-            inst.createExampleTokenList();
-         }
+          for (Object o : instructionList) {
+              Instruction inst = (Instruction) o;
+              inst.createExampleTokenList();
+          }
 
 		 HashMap maskMap = new HashMap();
 		 ArrayList matchMaps = new ArrayList();
-		 for (int i = 0; i < instructionList.size(); i++) {
-		 	Object rawInstr = instructionList.get(i);
-			if (rawInstr instanceof BasicInstruction) {
-				BasicInstruction basic = (BasicInstruction) rawInstr;
-				Integer mask = basic.getOpcodeMask();
-				Integer match = basic.getOpcodeMatch();
-				HashMap matchMap = (HashMap) maskMap.get(mask);
-				if (matchMap == null) {
-					matchMap = new HashMap();
-					maskMap.put(mask, matchMap);
-					matchMaps.add(new MatchMap(mask, matchMap));
-				}
-				matchMap.put(match, basic);
-			}
-		 }
+          for (Object rawInstr : instructionList) {
+              if (rawInstr instanceof BasicInstruction) {
+                  BasicInstruction basic = (BasicInstruction) rawInstr;
+                  Integer mask = basic.getOpcodeMask();
+                  Integer match = basic.getOpcodeMatch();
+                  HashMap matchMap = (HashMap) maskMap.get(mask);
+                  if (matchMap == null) {
+                      matchMap = new HashMap();
+                      maskMap.put(mask, matchMap);
+                      matchMaps.add(new MatchMap(mask, matchMap));
+                  }
+                  matchMap.put(match, basic);
+              }
+          }
 		 Collections.sort(matchMaps);
 		 this.opcodeMatchMaps = matchMaps;
       }
 
 	public BasicInstruction findByBinaryCode(int binaryInstr) {
 		ArrayList matchMaps = this.opcodeMatchMaps;
-		for (int i = 0; i < matchMaps.size(); i++) {
-			MatchMap map = (MatchMap) matchMaps.get(i);
-			BasicInstruction ret = map.find(binaryInstr);
-			if (ret != null) return ret;
-		}
+        for (Object matchMap : matchMaps) {
+            MatchMap map = (MatchMap) matchMap;
+            BasicInstruction ret = map.find(binaryInstr);
+            if (ret != null) return ret;
+        }
 		return null;
 	}
    	
@@ -1044,52 +1014,46 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    	
     /**
-     *  Given an operator mnemonic, will return the corresponding Instruction object(s)
-     *  from the instruction set.  Uses straight linear search technique.
-     *  @param name operator mnemonic (e.g. addi, sw,...)
-     *  @return list of corresponding Instruction object(s), or null if not found.
-     */
-       public ArrayList matchOperator(String name)
-      {
+    *  Given an operator mnemonic, will return the corresponding Instruction object(s)
+    *  from the instruction set.  Uses straight linear search technique.
+    *  @param name operator mnemonic (e.g. addi, sw,...)
+    *  @return list of corresponding Instruction object(s), or null if not found.
+    */
+    public ArrayList matchOperator(String name) {
          ArrayList matchingInstructions = null;
         // Linear search for now....
-         for (int i = 0; i < instructionList.size(); i++)
-         {
-            if (((Instruction) instructionList.get(i)).getName().equalsIgnoreCase(name))
-            {
-               if (matchingInstructions == null) 
-                  matchingInstructions = new ArrayList();
-               matchingInstructions.add(instructionList.get(i));
-            }
-         }
+          for (Object o : instructionList) {
+              if (((Instruction) o).getName().equalsIgnoreCase(name)) {
+                  if (matchingInstructions == null)
+                      matchingInstructions = new ArrayList();
+                  matchingInstructions.add(o);
+              }
+          }
          return matchingInstructions;
-      }
+    }
    
    
     /**
-     *  Given a string, will return the Instruction object(s) from the instruction
-     *  set whose operator mnemonic prefix matches it.  Case-insensitive.  For example
-     *  "s" will match "sw", "sh", "sb", etc.  Uses straight linear search technique.
-     *  @param name a string
-     *  @return list of matching Instruction object(s), or null if none match.
-     */
-       public ArrayList prefixMatchOperator(String name)
-      {
-         ArrayList matchingInstructions = null;
+    *  Given a string, will return the Instruction object(s) from the instruction
+    *  set whose operator mnemonic prefix matches it.  Case-insensitive.  For example
+    *  "s" will match "sw", "sh", "sb", etc.  Uses straight linear search technique.
+    *  @param name a string
+    *  @return list of matching Instruction object(s), or null if none match.
+    */
+    public ArrayList prefixMatchOperator(String name) {
+        ArrayList matchingInstructions = null;
         // Linear search for now....
-         if (name != null) {
-            for (int i = 0; i < instructionList.size(); i++)
-            {
-               if (((Instruction) instructionList.get(i)).getName().toLowerCase().startsWith(name.toLowerCase()))
-               {
-                  if (matchingInstructions == null) 
+        if (name != null) {
+         for (Object o : instructionList) {
+             if (((Instruction) o).getName().toLowerCase().startsWith(name.toLowerCase())) {
+                 if (matchingInstructions == null)
                      matchingInstructions = new ArrayList();
-                  matchingInstructions.add(instructionList.get(i));
-               }
-            }
+                 matchingInstructions.add(o);
+             }
          }
-         return matchingInstructions;
-      }
+        }
+        return matchingInstructions;
+    }
    	
    	/*
    	 * Method to find and invoke a syscall given its service number.  Each syscall
@@ -1156,7 +1120,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		private int maskLength; // number of 1 bits in mask
 		private HashMap matchMap;
 
-		public MatchMap(int mask, HashMap matchMap) {
+		MatchMap(int mask, HashMap matchMap) {
 			this.mask = mask;
 			this.matchMap = matchMap;
 
@@ -1181,7 +1145,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 		}
 
 		public BasicInstruction find(int instr) {
-			int match = Integer.valueOf(instr & mask);
+			int match = instr & mask;
 			return (BasicInstruction) matchMap.get(match);
 		}
 	}

@@ -38,44 +38,41 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
 public class MemoryAccessNotice extends AccessNotice {
-   private Number address;
-	private int length;
-	private Number value;
+    private Number address;
+    private int length;
+    private Number value;
 
-  /** Constructor will be called only within this package, so assume
-   *  address and length are in valid ranges.
-	*/
-   MemoryAccessNotice(int type, Number address, int length, Number value) {
-     super(type);
-	  this.address = address;
-	  this.length = length;
-	  this.value = value;
-  }
-  /** Constructor will be called only within this package, so assume
-   *  address is in valid range.
-	*/
- public  MemoryAccessNotice(int type, Number address, Number value) {
-     super(type);
-	  this.address = address;
-	  this.length = Memory.WORD_LENGTH_BYTES;
-	  this.value = value;
-  }
-  /** Fetch the memory address that was accessed. */
-  public Number getAddress() {
-     return address;
-  }
-/*  *//***
-   *  Fetch the length in bytes of the access operation (4,2,1). *//*
-  public int getLength() {
-     return length;
-  }*/
-  /** Fetch the value of the access operation (the value read or written). */
-  public Number getValue() {
-     return value;
-  }
-  /** String representation indicates access type, address and length in bytes */
-  public String toString() {
-     return ((this.getAccessType()==AccessNotice.READ) ? "R " : "W ") +
-	         "Mem " + address + " " + length + "B = "+value;
-  }
+    /** Constructor will be called only within this package, so assume
+    *  address and length are in valid ranges.
+    */
+    MemoryAccessNotice(int type, Number address, int length, Number value) {
+        super(type);
+        this.address = address;
+        this.length = length;
+        this.value = value;
+    }
+    /** Constructor will be called only within this package, so assume
+    *  address is in valid range.
+    */
+    public  MemoryAccessNotice(int type, Number address, Number value) {
+        super(type);
+        this.address = address;
+        this.length = Memory.WORD_LENGTH_BYTES;
+        this.value = value;
+    }
+    /** Fetch the memory address that was accessed. */
+    public Number getAddress() {
+        return address;
+    }
+
+    /** Fetch the value of the access operation (the value read or written). */
+    public Number getValue() {
+        return value;
+    }
+
+    /** String representation indicates access type, address and length in bytes */
+    public String toString() {
+        return ((this.getAccessType()==AccessNotice.READ) ? "R " : "W ") +
+            "Mem " + address + " " + length + "B = "+value;
+    }
 }

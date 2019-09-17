@@ -38,12 +38,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
-  *  Represents the collection of MIPS registers.
-  *   @author Jason Bumgarner, Jason Shrewsbury
-  *   @version June 2003
-  **/
+*  Represents the collection of RISCV's RVI registers.
+*  Integrated to RISCV architecture by Maya Peretz in September 2019.
+*   @author Jason Bumgarner, Jason Shrewsbury
+*   @version September 2019
+*/
 
-    public  class RVIRegisters {
+public class RVIRegisters {
    
       public static final int GLOBAL_POINTER_REGISTER = 3;
       public static final int STACK_POINTER_REGISTER = 2;
@@ -71,14 +72,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	 );
          												  
     private static Register programCounter = new Register("pc", 32, Memory.getInstance().getTextTable().getBaseAddress());
-
       
     /**
     *  This method updates the register value who's Number is num.  Also handles the lo and hi registers
     *   @param num Register to set the value of.
     *   @param val The desired value for the register.
-    **/
-
+    */
     public static Number updateRegister(Number num, Number val){
         Number old = 0;
         int num2 = num.intValue();
@@ -90,13 +89,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
         return old;
     }
-
        
     /**
     *  Sets the value of the register given to the value given.
     *   @param reg Name of register to set the value of.
     *   @param val The desired value for the register.
-    **/
+    */
     public static void updateRegister(String reg, int val){
         if (!reg.equals("zero")){
             for (int i=0; i< regFile.size(); i++){
@@ -112,25 +110,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  Returns the value of the register who's Number is num.
     *   @param num The register number.
     *   @return The value of the given register.
-    **/
-
+    */
     public static Number getValue(Number num){
        return regFile.get(num.intValue()).getValue();
     }
 
-
     /**
-     *  For getting the Number representation of the register.
-     *   @param n The string formatted register name to look for.
-     *   @return The Number of the register represented by the string
-     *   or -1 if no match.
-     **/
+    *  For getting the Number representation of the register.
+    *   @param n The string formatted register name to look for.
+    *   @return The Number of the register represented by the string
+    *   or -1 if no match.
+    */
     public static int getNumber(String n){
         int j=-1;
-        for (int i=0; i< regFile.size(); i++){
-            if(regFile.get(i).getName().equals(n)) {
-               j = regFile.get(i).getNumber();
-               break;
+        for (Register register : regFile) {
+            if (register.getName().equals(n)) {
+                j = register.getNumber();
+                break;
             }
         }
         return j;
@@ -139,7 +135,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
     *  For returning the set of registers.
     *   @return The set of registers.
-    **/
+    */
     public static ArrayList<Register> getRegisters(){
      return regFile;
     }
@@ -148,8 +144,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  Get register object corresponding to given name.  If no match, return null.
     *   @param rname The register name, either in $0 or $zero format.
     *   @return The register object,or null if not found.
-    **/
-
+    */
     public static Register getUserRegister(String rname) {
          Register reg;
          if (rname.charAt(0) == 'x') {
@@ -184,8 +179,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  branches, as it will NOT record a backstep entry with the restore value.
     *  If you need backstepping capability, use setProgramCounter instead.
     *   @param value The value to set the Program Counter to.
-    **/
-
+    */
     public static void initializeProgramCounter(long value){
      programCounter.setValue(value);
     }
@@ -201,8 +195,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param startAtMain  If true, will set program counter to address of statement labeled
     *  'main' (or other defined start label) if defined.  If not defined, or if parameter false,
     *  will set program counter to default reset value.
-    **/
-
+    */
     public static void initializeProgramCounter(boolean startAtMain) {
         Number mainAddr = Globals.symbolTable.getAddress(SymbolTable.getStartLabel());
         if (startAtMain && !isEq(mainAddr, SymbolTable.NOT_FOUND) &&
@@ -219,8 +212,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  incrementPC() method. Use this only when processing jumps and branches.
     *   @param value The value to set the Program Counter to.
     *   @return previous PC value
-    **/
-
+    */
     public static Number setProgramCounter(Number value){
          Number old = programCounter.getValue();
          programCounter.setValue(value);
@@ -232,7 +224,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
     *  For returning the program counters value.
     *  @return The program counters value as an int.
-    **/
+    */
     public static Number getProgramCounter(){
         return programCounter.getValue();
     }
@@ -248,8 +240,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
     *  For returning the program counter's initial (reset) value.
     *  @return The program counter's initial value
-    **/
-
+    */
     public static int getInitialProgramCounter(){
         return (int) programCounter.getResetValue();
     }
@@ -261,14 +252,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  using only the command switches, not registry settings.  It can be called
     *  from tools running stand-alone, and this is done in
     *  <code>AbstractMarsToolAndApplication</code>.
-    **/
-
+    */
     public static void resetRegisters(){
-         for(int i=0; i< regFile.size(); i++)
-            regFile.get(i).resetValue();
+        for (Register register : regFile) register.resetValue();
 
-         initializeProgramCounter(Globals .getSettings().getStartAtMain());// replaces "programCounter.resetValue()", DPS 3/3/09
-
+        initializeProgramCounter(Globals .getSettings().getStartAtMain());// replaces "programCounter.resetValue()", DPS 3/3/09
     }
       
     /**
@@ -283,15 +271,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }
 
     /**
-     *  Each individual register is a separate object and Observable.  This handy method
-     *  will add the given Observer to each one.  Currently does not apply to Program
-     *  Counter.
-     * @param observer the observer to be added
-     */
+    *  Each individual register is a separate object and Observable.  This handy method
+    *  will add the given Observer to each one.  Currently does not apply to Program
+    *  Counter.
+    * @param observer the observer to be added
+    */
     public static void addRegistersObserver(Observer observer) {
-         for (int i=0; i<regFile.size(); i++)
-            regFile.get(i).addObserver(observer);
-      }
+        for (Register register : regFile) register.addObserver(observer);
+    }
 
     /**
     * Each individual register is a separate object and Observable.  This handy method
@@ -300,7 +287,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param observer the observer to be deleted
     */
     public static void deleteRegistersObserver(Observer observer) {
-         for (int i=0; i<regFile.size(); i++)
-            regFile.get(i).deleteObserver(observer);
+        for (Register register : regFile) register.deleteObserver(observer);
     }
-   }
+}

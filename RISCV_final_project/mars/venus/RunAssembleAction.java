@@ -77,7 +77,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                mainUI.editor.save();
             }
             try{
-               Globals.program = new MIPSprogram();
+               Globals.program = new RISCVprogram();
                ArrayList filesToAssemble;
                if (Globals.getSettings().getAssembleAllEnabled()) {// setting calls for multiple file assembly 
                   filesToAssemble = FilenameFinder.getFilenameList(
@@ -164,7 +164,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          String result = preamble;
          int lineLength = result.length();
          for (int i=0; i<programList.size(); i++) {
-            String filename = ((MIPSprogram)programList.get(i)).getFilename();
+            String filename = ((RISCVprogram)programList.get(i)).getFilename();
             result += filename + ((i<programList.size()-1)?", ":"");
             lineLength += filename.length();
             if (lineLength > LINE_LENGTH_LIMIT) {

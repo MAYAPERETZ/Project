@@ -33,10 +33,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-    /**
-    * Action  for the Edit -> Redo menu item
-    */
-    public class EditRedoAction extends ChangeableAction{
+/**
+* Action  for the Edit -> Redo menu item
+*/
+public class EditRedoAction extends ChangeableAction{
 
     public EditRedoAction(String name, Icon icon, String descrip,
                  Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
@@ -67,5 +67,5 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         setEnabled(editPane != null && editPane.getUndoManager().canRedo());
     }
 
-   }
+}
 	

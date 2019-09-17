@@ -3,13 +3,13 @@ package mars.mips.hardware.memory;
 import static mars.util.Math2.*;
 import mars.Globals;
 import mars.mips.hardware.MemoryConfigurations;
-import static mars.mips.instructions.GenMath.*;
+import static mars.util.GenMath.*;
 
 /**
- * Represents a block table object in memory.
- * @author Maya Peretz
- * @version September 2019
- */
+* Represents a block table object in memory.
+* @author Maya Peretz
+* @version September 2019
+*/
 
 public class BlockTable extends AbstractBlockTable<Number>{
 
@@ -118,15 +118,16 @@ public class BlockTable extends AbstractBlockTable<Number>{
 		}
 		return (operation == op.STORE)? oldValue : value;
 		}
+
 	/*
-	 * Helper method to store 4 byte value in table that represents MIPS memory.
-	 * Originally used just for data segment, but now also used for stack.
-	 * Both use different tables but same storage method and same table size
-	 * and block size.  Assumes address is word aligned, no endian processing.
-	 * Modified 29 Dec 2005 to return overwritten value.
-	 * Modified 14 Sep 2019 to generic function in order to support 64 bit architecture as well
-	 * @author Pete Sanderson
-	 */
+	* Helper method to store 4 byte value in table that represents MIPS memory.
+	* Originally used just for data segment, but now also used for stack.
+	* Both use different tables but same storage method and same table size
+	* and block size.  Assumes address is word aligned, no endian processing.
+	* Modified 29 Dec 2005 to return overwritten value.
+	* Modified 14 Sep 2019 to generic function in order to support 64 bit architecture as well
+	* @author Pete Sanderson
+	*/
 	synchronized Number storeWordInTable(Number address, Number value, final int shift) {
 		Number oldValue;
  		int block, offset;
@@ -150,11 +151,11 @@ public class BlockTable extends AbstractBlockTable<Number>{
 	}
 
 	/*
-	 * Helper method to fetch 4 byte value from table that represents RISCV memory.
-	 * Originally used just for data segment, but now also used for stack.
-	 * Both use different tables but same storage method and same table size
-	 * and block size.  Assumes word alignment, no endian processing.
-	 */
+	* Helper method to fetch 4 byte value from table that represents RISCV memory.
+	* Originally used just for data segment, but now also used for stack.
+	* Both use different tables but same storage method and same table size
+	* and block size.  Assumes word alignment, no endian processing.
+	*/
 	synchronized Number fetchWordFromTable(Number address, boolean getOrNull, final int shift) {
 		Number relative = (this instanceof StackBlockTable) ? sub(baseAddress, address) : 
 			sub(address, baseAddress);
@@ -168,12 +169,13 @@ public class BlockTable extends AbstractBlockTable<Number>{
            value = blockTable[block][offset];
         }
         return value;
-    }     
+    }
+
 	/*
-	 * Returns result of substituting specified byte of source value into specified byte
-	 * of destination value. Byte positions are 0-1-2-3, listed from most to least
-	 * significant.  No endian issues.  This is a private helper method used by get() & set().
-	 */
+	* Returns result of substituting specified byte of source value into specified byte
+	* of destination value. Byte positions are 0-1-2-3, listed from most to least
+	* significant.  No endian issues.  This is a private helper method used by get() & set().
+	*/
 	private synchronized Number replaceByte(Number sourceValue, Number NumberPosInSource,
 											Number destValue, Number NumberPosInDest, int restOfTheBytes) {
 

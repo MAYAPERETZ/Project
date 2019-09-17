@@ -1,11 +1,9 @@
 package mars;
 
-
- 
 /*
- * SplashDemo.java
- *
- */
+* SplashDemo.java
+*
+*/
  
 import java.awt.*;
 import java.awt.event.*;
@@ -48,6 +46,5 @@ public class MarsSplashScreen extends Frame implements ActionListener {
         System.exit(0);
     }
 
-     
  
 }

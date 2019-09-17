@@ -134,7 +134,6 @@ public class SettingsExceptionHandlerAction extends GuiAction  {
         exceptionHandlerDialog.dispose();
     }
 
-
     /////////////////////////////////////////////////////////////////////////////////
     // Associated action class: exception handler setting.  Attached to check box.
     private class ExceptionHandlerSettingAction implements ActionListener {
@@ -145,9 +144,8 @@ public class SettingsExceptionHandlerAction extends GuiAction  {
         }
     }
 
-
-/////////////////////////////////////////////////////////////////////////////////
-// Associated action class: selecting exception handler file.  Attached to handler selector.
+    /////////////////////////////////////////////////////////////////////////////////
+    // Associated action class: selecting exception handler file.  Attached to handler selector.
     private class ExceptionHandlerSelectionAction implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             JFileChooser chooser = new JFileChooser();

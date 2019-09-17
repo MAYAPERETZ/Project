@@ -1,14 +1,15 @@
-   package mars.mips.dump;
+package mars.mips.dump;
 
-   import mars.Globals;
-   import mars.mips.hardware.*;
+import mars.Globals;
+import mars.mips.hardware.AddressErrorException;
 import mars.mips.hardware.memory.Memory;
-   import mars.mips.instructions.GenMath;
-   import mars.util.Binary;
-   import mars.util.Math2;
-   import mars.venus.NumberDisplayBaseChooser;
-
-   import java.io.*;
+import mars.util.GenMath;
+import mars.util.Math2;
+import mars.venus.NumberDisplayBaseChooser;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
 
@@ -38,58 +39,59 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Class that represents the "hexadecimal text" memory dump format.  The output 
- * is a text file with one word of MIPS memory per line.  The word is formatted
- * using hexadecimal characters, e.g. 3F205A39.
- * @author Pete Sanderson 
- * @version December 2007
+* Class that represents the "hexadecimal text" memory dump format.  The output
+* is a text file with one word of MIPS memory per line.  The word is formatted
+* using hexadecimal characters, e.g. 3F205A39.
+* @author Pete Sanderson
+* @version December 2007
+*/
+/*
+    FIXME: have not checked this class. Might work as it is,
+            But have not made any meaningful changes but fixing unresolved files.
+            Need to check and implement if necessary.
  */
-
-
-    public class HexTextDumpFormat extends AbstractDumpFormat {
+public class HexTextDumpFormat extends AbstractDumpFormat {
    
-   /**
-   *  Constructor.  There is no standard file extension for this format.
-   */
-       public HexTextDumpFormat() {
-         super("Hexadecimal Text", "HexText", "Written as hex characters to text file", null);
-      }
+    /**
+    *  Constructor.  There is no standard file extension for this format.
+    */
+    public HexTextDumpFormat() {
+        super("Hexadecimal Text", "HexText", "Written as hex characters to text file", null);
+    }
    
-   
-   /**
-   *  Write MIPS memory contents in hexadecimal text format.  Each line of
-   *  text contains one memory word written in hexadecimal characters.  Written
-	*  using PrintStream's println() method.
-   *  Adapted by Pete Sanderson from code written by Greg Gibeling.
-   *
-   *  @param  file  File in which to store MIPS memory contents.  
-   *  @param firstAddress first (lowest) memory address to dump.  In bytes but
-   *  must be on word boundary.
-   *  @param lastAddress last (highest) memory address to dump.  In bytes but
-   *  must be on word boundary.  Will dump the word that starts at this address.
-   *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
-   *  @throws IOException if error occurs during file output.
-   */
-       public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
-        throws AddressErrorException, IOException {
-         PrintStream out = new PrintStream(new FileOutputStream(file));
-         String string;
-         try {
+    /**
+    *  Write RISCV memory contents in hexadecimal text format.  Each line of
+    *  text contains one memory word written in hexadecimal characters.  Written
+    *  using PrintStream's println() method.
+    *  Adapted by Pete Sanderson from code written by Greg Gibeling.
+    *
+    *  @param  file  File in which to store MIPS memory contents.
+    *  @param firstAddress first (lowest) memory address to dump.  In bytes but
+    *  must be on word boundary.
+    *  @param lastAddress last (highest) memory address to dump.  In bytes but
+    *  must be on word boundary.  Will dump the word that starts at this address.
+    *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
+    *  @throws IOException if error occurs during file output.
+    */
+    public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
+    throws AddressErrorException, IOException {
+        PrintStream out = new PrintStream(new FileOutputStream(file));
+        String string;
+        try {
             for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = GenMath.add(address, Memory.WORD_LENGTH_BYTES)) {
-               Number temp = Globals.memory.getRawWordOrNull(address);
-               if (temp == null) 
-                  break;
-               string = NumberDisplayBaseChooser.formatNumber(temp, 16);
-               int i = 0;
-               while (i++ < string.length()) {
-                  string = '0' + string;
-               }
-               out.println(string);
+                Number temp = Globals.memory.getRawWordOrNull(address);
+                if (temp == null)
+                    break;
+                string = NumberDisplayBaseChooser.formatNumber(temp, 16);
+                int i = 0;
+                while (i++ < string.length())
+                    string = '0' + string;
+                out.println(string);
             }
-         } 
-         finally { 
-            out.close(); 
-         }
-      }
-   
-   }
+        }
+        finally {
+            out.close();
+        }
+    }
+
+}

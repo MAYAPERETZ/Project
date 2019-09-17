@@ -41,29 +41,29 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
       private TokenTypes type;
       private String value;
-      private MIPSprogram sourceMIPSprogram;
+      private RISCVprogram sourceRISCVprogram;
       private int sourceLine, sourcePos;
    // original program and line will differ from the above if token was defined in an included file
-      private MIPSprogram originalMIPSprogram;
+      private RISCVprogram originalRISCVprogram;
       private int originalSourceLine;  
    /**
     * Constructor for Token class.
     * 
     * @param type The token type that this token has. (e.g. REGISTER_NAME)
     * @param value The source value for this token (e.g. $t3)
-    * @param sourceMIPSprogram The MIPSprogram object containing this token
+    * @param sourceRISCVprogram The RISCVprogram object containing this token
     * @param line The line number in source program in which this token appears.
     * @param start The starting position in that line number of this token's source value.
     * @see TokenTypes
     **/
     
-       public Token(TokenTypes type, String value, MIPSprogram sourceMIPSprogram, int line, int start) {
+       public Token(TokenTypes type, String value, RISCVprogram sourceRISCVprogram, int line, int start) {
          this.type = type;
          this.value = value;
-         this.sourceMIPSprogram = sourceMIPSprogram;
+         this.sourceRISCVprogram = sourceRISCVprogram;
          this.sourceLine = line;
          this.sourcePos = start; 
-         this.originalMIPSprogram = sourceMIPSprogram;
+         this.originalRISCVprogram = sourceRISCVprogram;
          this.originalSourceLine = line;
       }
 
@@ -77,18 +77,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param origProgram MIPS program containing this token.
     * @param origSourceLine Line within that program of this token.
     **/  		
-       public void setOriginal(MIPSprogram origProgram, int origSourceLine) {
-         this.originalMIPSprogram = origProgram;
+       public void setOriginal(RISCVprogram origProgram, int origSourceLine) {
+         this.originalRISCVprogram = origProgram;
          this.originalSourceLine = origSourceLine;
       }
 		
    /**
     * Produces original program containing this token.
     * 
-    * @return MIPSprogram of origin for this token.
+    * @return RISCVprogram of origin for this token.
     **/
-       public MIPSprogram getOriginalProgram() {
-         return this.originalMIPSprogram;
+       public RISCVprogram getOriginalProgram() {
+         return this.originalRISCVprogram;
       }
 		
    /**
@@ -143,13 +143,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    
    /**
-    * Produces MIPSprogram object associated with this token.
+    * Produces RISCVprogram object associated with this token.
     * 
-    * @return  MIPSprogram object associated with this token.
+    * @return  RISCVprogram object associated with this token.
     **/
     
-       public MIPSprogram getSourceMIPSprogram() {
-         return sourceMIPSprogram;
+       public RISCVprogram getSourceRISCVprogram() {
+         return sourceRISCVprogram;
       }
    
    /**

@@ -54,10 +54,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 public class EditPane extends JPanel implements Observer {
-   
+
     private MARSTextEditingArea sourceCode;
     private GUI mainUI;
-    private String currentDirectoryPath;
     private JLabel caretPositionLabel;
     private JCheckBox showLineNumbers;
     private JLabel lineNumbers;
@@ -71,7 +70,7 @@ public class EditPane extends JPanel implements Observer {
         super(new BorderLayout());
         this.mainUI = appFrame;
       	// user.dir, user's current working directory, is guaranteed to have a value
-        currentDirectoryPath = System.getProperty("user.dir");
+        String currentDirectoryPath = System.getProperty("user.dir");
       	// We want to be notified of editor font changes! See update() below.
         Globals.getSettings().addObserver(this);
         this.fileStatus = new FileStatus();
@@ -186,7 +185,8 @@ public class EditPane extends JPanel implements Observer {
     /**
     *  For initializing the source code when opening an ASM file
     *   @param s String containing text
-    *   @param editable set true if code is editable else false
+    *   @param editable set {@code true} if code is editable else {@code false}
+    *   @param editable set {@code true} if code is editable else {@code false}
     */
     public void setSourceCode(String s, boolean editable){
         sourceCode.setSourceCode(s, editable);
@@ -229,11 +229,12 @@ public class EditPane extends JPanel implements Observer {
       }
    
    
-      /** Calculate and return number of lines in source code text.
-   	 * Do this by counting newline characters then adding one if last line does
-   	 * not end with newline character.
-   	 */
-   	 
+    /**
+    * Calculates and return number of lines in source code text.
+    * Do this by counting newline characters then adding one if last line does
+    * not end with newline character.
+    */
+
     /*  IMPLEMENTATION NOTE:
     * Tried repeatedly to use StringTokenizer to count lines but got bad results
     * on empty lines (consecutive delimiters) even when returning delimiter as token.
@@ -252,7 +253,7 @@ public class EditPane extends JPanel implements Observer {
     }
    
     /**
-    * Get source code text
+    * Gets source code text
     * @return Sting containing source code
     */
     public String getSource(){
@@ -261,7 +262,7 @@ public class EditPane extends JPanel implements Observer {
    	
    
     /**
-    *  Set the editing status for this EditPane's associated document.
+    *  Sets the editing status for this EditPane's associated document.
     *  For the argument, use one of the constants from class FileStatus.
     * @param fileStatus the status constant from class FileStatus
     */
@@ -271,7 +272,7 @@ public class EditPane extends JPanel implements Observer {
    
    
     /**
-    *  Get the editing status for this EditPane's associated document.
+    *  Gets the editing status for this EditPane's associated document.
     *  This will be one of the constants from class FileStatus.
      * @return the editing status for this EditPane's associated document
     */
@@ -309,33 +310,28 @@ public class EditPane extends JPanel implements Observer {
     public boolean hasUnsavedEdits() {
         return this.fileStatus.hasUnsavedEdits();
     }
-   
+
+    /**
+    * Delegates to corresponding FileStatus method
+    */
+    public boolean isNew() {
+        return this.fileStatus.isNew();
+    }
       
-   	/**
-   	 * Delegates to corresponding FileStatus method
-   	 */   	
-      public boolean isNew() {
-         return this.fileStatus.isNew();
-      }
-   
-      
-   	/**
-   	 * Delegates to text area's requestFocusInWindow method.
-   	 */
-         	
-      public void tellEditingComponentToRequestFocusInWindow() {
-         this.sourceCode.requestFocusInWindow();
-      }
-   		
-      
-   	/**
-   	 * Delegates to corresponding FileStatus method
-   	 */   		
-      public void updateStaticFileStatus() {
-         fileStatus.updateStaticFileStatus();
-      }
-   	
-   	
+    /**
+    * Delegates to text area's requestFocusInWindow method.
+    */
+    public void tellEditingComponentToRequestFocusInWindow() {
+        this.sourceCode.requestFocusInWindow();
+    }
+
+    /**
+    * Delegates to corresponding FileStatus method
+    */
+    public void updateStaticFileStatus() {
+        fileStatus.updateStaticFileStatus();
+    }
+
     /**
     *  get the manager in charge of Undo and Redo operations
     *  @return the UnDo manager
@@ -417,7 +413,7 @@ public class EditPane extends JPanel implements Observer {
    	 
     /**
     *  get editor's line number display status
-    *  @return true if editor is current displaying line numbers, false otherwise.
+    *  @return {@code true} if editor is current displaying line numbers, {@code false} otherwise.
     */
     public boolean showingLineNumbers() {
         return showLineNumbers.isSelected();
@@ -425,7 +421,7 @@ public class EditPane extends JPanel implements Observer {
    
     /**
     *  enable or disable checkbox that controls display of line numbers
-    *  @param enabled True to enable box, false to disable.
+    *  @param enabled {@code true} to enable box, {@code false} to disable.
     */
     public void setShowLineNumbersEnabled(boolean enabled) {
         showLineNumbers.setEnabled(enabled);
@@ -533,7 +529,7 @@ public class EditPane extends JPanel implements Observer {
     * at the current cursor location, and wraps around when the end of the string
     * is reached.
     * @param find the text to locate in the string
-    * @param caseSensitive true if search is to be case-sensitive, false otherwise
+    * @param caseSensitive {@code true} if search is to be case-sensitive, {@code false} otherwise
     * @return TEXT_FOUND or TEXT_NOT_FOUND, depending on the result.
     */
     public int doFindText(String find, boolean caseSensitive) {
@@ -548,7 +544,7 @@ public class EditPane extends JPanel implements Observer {
     *
     * @param find the text to locate in the string
     * @param replace the text to replace the find text with - if the find text exists
-    * @param caseSensitive true for case sensitive. false to ignore case
+    * @param caseSensitive {@code true} for case sensitive. {@code false} to ignore case
     * @return Returns TEXT_FOUND if not initially at end of selected match and matching
     * occurrence is found.  Returns TEXT_NOT_FOUND if the text is not matched.
     * Returns TEXT_REPLACED_NOT_FOUND_NEXT if replacement is successful but there are
@@ -564,14 +560,12 @@ public class EditPane extends JPanel implements Observer {
     *  undo all of them.
     * @param find the text to locate in the string
     * @param replace the text to replace the find text with - if the find text exists 
-    * @param caseSensitive true for case sensitive. false to ignore case
+    * @param caseSensitive {@code true} for case sensitive. {@code false} to ignore case
     * @return the number of occurrences that were matched and replaced.
     */   
     public int doReplaceAll(String find, String replace, boolean caseSensitive) {
         return sourceCode.doReplaceAll(find, replace, caseSensitive);
     }
-   
-   	 
    	
     /**
     *  Update, if source code is visible, when Font setting changes.

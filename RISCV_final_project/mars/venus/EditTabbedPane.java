@@ -61,30 +61,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          setVisible(false);
          setOpaque(true);
          setBorder(null);
-      //   setEnabled(false);
          this.mainUI = mainUI2;
          this.editor = editor;
          this.fileOpener = new FileOpener(editor);
          this.mainPane = mainPane;
          this.editor.setEditTabbedPane(this);
          this.addChangeListener(
-                new ChangeListener() {
-                   public void stateChanged(ChangeEvent e) {
-                     EditPane editPane = (EditPane) getSelectedComponent();
-                     if (editPane != null) {
-                        // New IF statement to permit free traversal of edit panes w/o invalidating
-                     	// assembly if assemble-all is selected.  DPS 9-Aug-2011
-                        if (Globals.getSettings().getBooleanSetting(mars.Settings.ASSEMBLE_ALL_ENABLED)) { 
-                           EditTabbedPane.this.updateTitles(editPane); 
-                        } 
-                        else {
-                           EditTabbedPane.this.updateTitlesAndMenuState(editPane); 
-                           EditTabbedPane.this.mainPane.getExecutePane().clearPane();
-                        }
-                        editPane.tellEditingComponentToRequestFocusInWindow();
-                     }
-                  }
-               });	
+                 e -> {
+                   EditPane editPane = (EditPane) getSelectedComponent();
+                   if (editPane != null) {
+                      // New IF statement to permit free traversal of edit panes w/o invalidating
+                       // assembly if assemble-all is selected.  DPS 9-Aug-2011
+                      if (Globals.getSettings().getBooleanSetting(Settings.ASSEMBLE_ALL_ENABLED)) {
+                         EditTabbedPane.this.updateTitles(editPane);
+                      }
+                      else {
+                         EditTabbedPane.this.updateTitlesAndMenuState(editPane);
+                         EditTabbedPane.this.mainPane.getExecutePane().clearPane();
+                      }
+                      editPane.tellEditingComponentToRequestFocusInWindow();
+                   }
+                });
       }
    	  
    	/**
@@ -161,7 +158,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  Carries out all necessary operations to implement
     *  the Open operation from the File menu.  This
     *  begins with an Open File dialog.
-    *  @return true if file was opened, false otherwise.
+    *  @return {@code true} if file was opened, {@code false} otherwise.
     */   	
        public boolean openFile() {
          return fileOpener.openFile();
@@ -170,7 +167,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
      * Carries out all necessary operations to open the
      * specified file in the editor.
-     *  @return true if file was opened, false otherwise.
+     *  @return {@code true} if file was opened, {@code false} otherwise.
      */
        public boolean openFile(File file) {
          return fileOpener.openFile(file);
@@ -182,7 +179,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  the Close operation from the File menu.  May return
     *  false, for instance when file has unsaved changes
     *  and user selects Cancel from the warning dialog.
-    *  @return true if file was closed, false otherwise.
+    *  @return {@code true} if file was closed, {@code false} otherwise.
     */
        public boolean closeCurrentFile() {
          EditPane editPane = getCurrentEditTab();
@@ -202,8 +199,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     *  Carries out all necessary operations to implement
     *  the Close All operation from the File menu.
-    *  @return true if files closed, false otherwise.
-    */   	
+    *  @return {@code true} if files closed, {@code false} otherwise.
+    */
        public boolean closeAllFiles() {
          boolean result = true;
          boolean unsavedChanges = false;
@@ -260,7 +257,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	
    	/**
    	 * Saves file under existing name.  If no name, will invoke Save As. 
-   	 * @return true if the file was actually saved.
+   	 * @return {@code true} if the file was actually saved; {@code false} otherwise.
    	 */   	
        public boolean saveCurrentFile() {
          EditPane editPane = getCurrentEditTab();
@@ -307,7 +304,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	/**
    	 * Pops up a dialog box to do "Save As" operation.  If necessary
    	 * an additional overwrite dialog is performed.
-   	 * @return true if the file was actually saved.
+   	 * @return {@code true} if the file was actually saved; {@code false} otherwise.
    	 */
        public boolean saveAsCurrentFile() {
          EditPane editPane = getCurrentEditTab();
@@ -403,7 +400,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	/**
    	 * Saves all files currently open in the editor.
    	 * 
-   	 * @return true if operation succeeded otherwise false.
+   	 * @return {@code true} if operation succeeded; otherwise {@code false}.
    	 */   	
        public boolean saveAllFiles() {
          boolean result = false;
@@ -632,7 +629,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             FileStatus.setFile(theFile);
             FileStatus.set(FileStatus.OPENING);// DPS 9-Aug-2011
             if (theFile.canRead()) {
-               Globals.program = new MIPSprogram();
+               Globals.program = new RISCVprogram();
                try {
                   Globals.program.readSource(currentFilePath);
                } 

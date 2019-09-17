@@ -42,12 +42,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 public class RunClearBreakpointsAction extends RunAction implements TableModelListener  {
 
     /**
-    * Create the object and register with text segment window as a listener on its table model.
-    * The table model has not been created yet, so text segment window will hang onto this
-    * registration info and transfer it to the table model upon creation (which happens with
-    * each successful assembly).
-    * @param observable
-    */
+     *
+     * Create the object and register with text segment window as a listener on its table model.
+     * The table model has not been created yet, so text segment window will hang onto this
+     * registration info and transfer it to the table model upon creation (which happens with
+     * each successful assembly)
+     */
     public RunClearBreakpointsAction(String name, Icon icon, String descrip,
                          Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
      super(name, icon, descrip, mnemonic, accel, mainUI, observable);

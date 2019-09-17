@@ -2,7 +2,6 @@ package mars.util;
 
 import mars.Globals;
 import mars.mips.hardware.MemoryConfigurations;
-import mars.mips.instructions.GenMath;
 import mars.venus.NumberDisplayBaseChooser;
 import java.util.Arrays;
 	
@@ -292,7 +291,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param value The number value to convert.
     * @return String containing '0', '1', ...'F' which form hexadecimal equivalent of the number.
     */
-
     public static String NumberToHexString(Number value, String hexLength) {
         String leadingZero = "0";
         String leadingX = "0x";
@@ -457,7 +455,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         return new String(result);
     }
 
-
     /**
     * Attempt to validate given string whose characters represent a 64 bit long.
     * Long.decode() is insufficient because it will not allow incorporation of
@@ -506,15 +503,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  64 bit long value.
     *  @param longValue The long value from which to extract bits.
     *  @return int containing high order 32 bits of argument
-    **/
-
+    */
     public static int highOrderLongToInt(long longValue) {
     return (int) (longValue >> 32);  // high order 32 bits
     }
 
     /**
-     * @see Binary#highOrderLongToInt(long)
-     */
+    * @see Binary#highOrderLongToInt(long)
+    */
     public static int highOrderLongToInt(Number longValue) {
         return (int) (longValue.longValue() >> 32);  // high order 32 bits
     }
@@ -524,7 +520,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  64 bit long value.
     *  @param longValue The long value from which to extract bits.
     *  @return int containing low order 32 bits of argument
-    **/
+    */
     public static int lowOrderLongToInt(long longValue) {
         return (int) (longValue << 32 >> 32);  // low order 32 bits
     }
@@ -535,7 +531,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param l Integer to form the high-order 32 bits of result.
     * @param m Integer to form the high-order 32 bits of result.
     * @return long containing concatenated 32 bit int values.
-    **/
+    */
     public static long twoIntsToLong(int l, int m) {
         return (((long)l) << 32) | (((long)m) & 0xFFFFFFFFL);
     }
@@ -555,8 +551,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *   @param value The value to read the bit from.
     *   @param bit bit position in range 0 (least significant) to 63 (most)
     *   @return 0 if the bit position contains 0, and 1 otherwise.
-    **/
-
+    */
     public static int bitValue(long value, int bit) {
         return (int) (1L & (value >> bit));
     }
@@ -567,11 +562,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param bit bit position in range 0 (least significant) to 31 (most)
     * @return value possibly modified with given bit set to 1.
     */
-   	  
     public static int setBit(int value, int bit) {
         return value | ( 1 << bit) ;
     }
-   	
    	
     /**
     * Sets the specified bit of the specified value to 0, and returns the result.
@@ -579,7 +572,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param bit bit position in range 0 (least significant) to 31 (most)
     * @return value possibly modified with given bit set to 0.
     */
-   	  
     public static int clearBit(int value, int bit) {
         return value &  ~(1 << bit);
     }
@@ -593,18 +585,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param replace value to place into that byte position - use low order 8 bits
     * @return value modified value.
     */
-   	  
     public static int setByte(int value, int bite, int replace) {
         return value & ~(0xFF << (bite<<3)) | ((replace & 0xFF) << (bite<<3)) ;
     }
-   	
    	
     /**
     *  Gets the specified byte of the specified value.
     *   @param value The value in which the byte is to be retrieved.
     *   @param bite byte position in range 0 (least significant) to 3 (most)
     *   @return zero-extended byte value in low order byte.
-    **/
+    */
     public static int getByte(int value, int bite) {
         return value << ((3-bite)<<3) >>> 24;
     }
@@ -618,8 +608,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public static int getByte(long value, int bite) {
         return (int)(value << ((7-bite)<<7) >>> 56);
     }
-     
-           // KENV 1/4/05
+
+    // KENV 1/4/05
     /**
     * Parsing method to see if a string represents a hex number.
     *  As per http://java.sun.com/j2se/1.4.2/docs/api/java/lang/Integer.html#decode(java.lang.String),
@@ -663,8 +653,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      return false; // default
     }
    
-   
-   
            // KENV 1/4/05
     /**
     * Parsing method to see if a string represents an octal number.
@@ -673,46 +661,42 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *      Signopt 0 OctalDigits
     *
     * @param v String containing numeric digits (could be decimal, octal, or hex)
-    *
     * @return Returns <tt>true</tt> if string represents an octal number, else returns <tt>false</tt>.
     */
-       public static boolean isOctal(String v)
-      {
-               // Don't mistake "0" or a string that starts "0x" for an octal string
-         try
-         {
-                 // we don't care what value Binary.stringToInt(v) returns, just whether it threw exception
-            int dontCare = Binary.stringToInt(v);
-         
-            if (isHex(v)) 
-               return false; // String starts with "0" but continues "0x", so not octal
+    public static boolean isOctal(String v) {
+           // Don't mistake "0" or a string that starts "0x" for an octal string
+     try {
+             // we don't care what value Binary.stringToInt(v) returns, just whether it threw exception
+        int dontCare = Binary.stringToInt(v);
 
-             // sign is optional but if present can only be -
-             if (v.charAt(0) == '-' && v.charAt(1) == '0')  // Has to have more digits than the leading zero
-               return true;  // Form is Sign 0.... and the entire string is parseable as a number
-            
-            else if ((v.charAt(0) == '0') &&
-                     (v.length() > 1) )  // Has to have more digits than the leading zero
-               return true;  // Form is 0.... and the entire string is parseable as a number
-         
-         }
-             catch (StringIndexOutOfBoundsException | NumberFormatException e)
-            {
-               return false;
-            }
+        if (isHex(v))
+           return false; // String starts with "0" but continues "0x", so not octal
 
-          return false; // default
-      }
+         // sign is optional but if present can only be -
+         if (v.charAt(0) == '-' && v.charAt(1) == '0')  // Has to have more digits than the leading zero
+           return true;  // Form is Sign 0.... and the entire string is parseable as a number
+
+        else if ((v.charAt(0) == '0') &&
+                 (v.length() > 1) )  // Has to have more digits than the leading zero
+           return true;  // Form is 0.... and the entire string is parseable as a number
+
+     }
+    catch (StringIndexOutOfBoundsException | NumberFormatException e) {
+        return false;
+    }
+
+      return false; // default
+    }
    
-       public static Number signExtend(Number val, int operandsLen, int totalBits) {
-    	   int shift = totalBits - operandsLen;
-    	   return GenMath.sra(GenMath.sll(val, shift), shift);
-       }
+    public static Number signExtend(Number val, int operandsLen, int totalBits) {
+        int shift = totalBits - operandsLen;
+        return GenMath.sra(GenMath.sll(val, shift), shift);
+    }
        
-       public static int sizeof(Number number){
-           if (number instanceof Integer)
-               return Integer.BYTES;
-           return Long.BYTES;
-       }
-      
-   }
+    public static int sizeof(Number number){
+        if (number instanceof Integer)
+           return Integer.BYTES;
+        return Long.BYTES;
+    }
+
+}

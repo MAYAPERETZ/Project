@@ -1,14 +1,19 @@
 package mars.mips.instructions;
 
-import java.util.function.BiFunction;
 import mars.Globals;
-import mars.ProcessingException;
-import mars.ProgramStatement;
 import mars.mips.hardware.MemoryConfigurations;
 import mars.mips.hardware.RVIRegisters;
 import mars.simulator.DelayedBranch;
+import mars.util.GenMath;
 
-public class B_type extends BasicInstruction{
+import java.util.function.BiFunction;
+
+/**
+ * This class represents the B-type instructions of RISCV.
+ * @author Maya Peretz
+ * @version September 2019
+ */
+public class B_type extends BasicInstruction.WithImmediateField{
 	
 	private final int SECOND_TO_FIFTH_BITS =  0x0000001e;
 	private final int TWELVETH_BIT = 0x00000800;
@@ -17,13 +22,18 @@ public class B_type extends BasicInstruction{
 	
 	public B_type() {}
 	
-	public B_type(String example, String description, String operMask,
-			SimulationCode simCode) {
+	private B_type(String example, String description, String operMask,
+				   SimulationCode simCode) {
 		super(example, description, operMask, simCode);
 	}
-	
-	public B_type(String example, String description, String operMask, 
-			BiFunction< Number,  Number, Number> x) {
+
+	/**
+	 * {@inheritDoc}
+	 * @param x a function receiving two parameters of type {@code Number} which
+	 *          returns a {@code Number} value.
+	 */
+	B_type(String example, String description, String operMask,
+		   BiFunction<Number, Number, Number> x) {
 		this(example, description, operMask,
 				statement -> {
 					 Number[] operands = statement.getOperands();
@@ -38,12 +48,14 @@ public class B_type extends BasicInstruction{
 					 }
 				});
 	}
-	
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int computeOperands(Number [] operands) {
 		return (getOpcode()|InstCodeUtil.getFunct3(this)|InstCodeUtil.computeRs1(operands[0].intValue())|
-				InstCodeUtil.computeRs2(operands[1].intValue())|computeImm(operands[2].intValue()));
+				InstCodeUtil.computeRs2(operands[1].intValue())| computeImmFromInst(operands[2].intValue()));
 	}
 	
     private static void processBranch(Number displacement) {
@@ -62,30 +74,41 @@ public class B_type extends BasicInstruction{
         } 
      }
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Number [] returnOperands(int instructionCode) {
 		Number [] operands = new Number[3];
 		operands[0] = InstCodeUtil.getRs1(instructionCode);
 		operands[1] = InstCodeUtil.getRs2(instructionCode);
-		operands[2] = getImm(instructionCode);
+		operands[2] = computeImmFromOperand(instructionCode);
 		return operands;
 	}
 
-	
-	private int computeImm(long args) {
-	return (int) (((args&SECOND_TO_FIFTH_BITS)<<7)|((args&TWELVETH_BIT)>>>4)|
-					((args&SIXTH_TO_ELEVENTH_BITS)<<20)|((args&0x00001000)<<19));
+	/**
+	 * {@inheritDoc}
+	 */
+	int computeImmFromInst(int instructionCode) {
+	return (((instructionCode&SECOND_TO_FIFTH_BITS)<<7)|((instructionCode&TWELVETH_BIT)>>>4)|
+					((instructionCode&SIXTH_TO_ELEVENTH_BITS)<<20)|((instructionCode&0x00001000)<<19));
 	}
-	
-	private int getImm(int args) {
-		return (((args>>>7)&SECOND_TO_FIFTH_BITS)|((args<<4)&TWELVETH_BIT)|
-				((args>>>20)&SIXTH_TO_ELEVENTH_BITS)|((args>>>19)&THIRTEENTH_BIT));
-	}
-	
 
-	public static class NegB_type extends B_type {
+	/**
+	 * {@inheritDoc}
+	 */
+	int computeImmFromOperand(int operand) {
+		return (((operand>>>7)&SECOND_TO_FIFTH_BITS)|((operand<<4)&TWELVETH_BIT)|
+				((operand>>>20)&SIXTH_TO_ELEVENTH_BITS)|((operand>>>19)&THIRTEENTH_BIT));
+	}
+
+	/**
+	 * Represents a subclass of B_type where the function given to the constructor is the
+	 * negate function of the {@link B_type#B_type(String, String, String, BiFunction)}
+	 */
+	static class NegB_type extends B_type {
 		
-		public NegB_type(String example, String description, String operMask, BiFunction<Number, Number, Number> x) {
+		NegB_type(String example, String description, String operMask, BiFunction<Number, Number, Number> x) {
 			super(example, description, operMask, x.andThen(e->GenMath.xor(e, 1)));
 		}
 		

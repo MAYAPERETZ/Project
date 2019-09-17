@@ -122,9 +122,9 @@ Represents one token in the input MIPS program.  Each Token carries, along with 
 <B>Constructor Summary</B></FONT></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../../mars/assembler/Token.html#Token(mars.assembler.TokenTypes, java.lang.String, mars.MIPSprogram, int, int)">Token</A></B>(<A HREF="../../mars/assembler/TokenTypes.html" title="class in mars.assembler">TokenTypes</A>&nbsp;type,
+<TD><CODE><B><A HREF="../../mars/assembler/Token.html#Token(mars.assembler.TokenTypes, java.lang.String, mars.RISCVprogram, int, int)">Token</A></B>(<A HREF="../../mars/assembler/TokenTypes.html" title="class in mars.assembler">TokenTypes</A>&nbsp;type,
       <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;value,
-      <A HREF="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;sourceMIPSprogram,
+      <A HREF="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;sourceRISCVprogram,
       int&nbsp;line,
       int&nbsp;start)</CODE>
 
@@ -200,7 +200,7 @@ Represents one token in the input MIPS program.  Each Token carries, along with 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>&nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../mars/assembler/Token.html#setOriginal(mars.MIPSprogram, int)">setOriginal</A></B>(<A HREF="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;origProgram,
+<TD><CODE><B><A HREF="../../mars/assembler/Token.html#setOriginal(mars.RISCVprogram, int)">setOriginal</A></B>(<A HREF="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;origProgram,
             int&nbsp;origSourceLine)</CODE>
 
 <BR>
@@ -245,19 +245,19 @@ Represents one token in the input MIPS program.  Each Token carries, along with 
 </TR>
 </TABLE>
 
-<A NAME="Token(mars.assembler.TokenTypes, java.lang.String, mars.MIPSprogram, int, int)"><!-- --></A><H3>
+<A NAME="Token(mars.assembler.TokenTypes, java.lang.String, mars.RISCVprogram, int, int)"><!-- --></A><H3>
 Token</H3>
 <PRE>
 public <B>Token</B>(<A HREF="../../mars/assembler/TokenTypes.html" title="class in mars.assembler">TokenTypes</A>&nbsp;type,
              <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;value,
-             <A HREF="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;sourceMIPSprogram,
+             <A HREF="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;sourceRISCVprogram,
              int&nbsp;line,
              int&nbsp;start)</PRE>
 <DL>
 <DD>Constructor for Token class.
 <P>
 <DL>
-<DT><B>Parameters:</B><DD><CODE>type</CODE> - The token type that this token has. (e.g. REGISTER_NAME)<DD><CODE>value</CODE> - The source value for this token (e.g. $t3)<DD><CODE>sourceMIPSprogram</CODE> - The MIPSprogram object containing this token<DD><CODE>line</CODE> - The line number in source program in which this token appears.<DD><CODE>start</CODE> - The starting position in that line number of this token's source value.<DT><B>See Also:</B><DD><A HREF="../../mars/assembler/TokenTypes.html" title="class in mars.assembler"><CODE>TokenTypes</CODE></A></DL>
+<DT><B>Parameters:</B><DD><CODE>type</CODE> - The token type that this token has. (e.g. REGISTER_NAME)<DD><CODE>value</CODE> - The source value for this token (e.g. $t3)<DD><CODE>sourceRISCVprogram</CODE> - The MIPSprogram object containing this token<DD><CODE>line</CODE> - The line number in source program in which this token appears.<DD><CODE>start</CODE> - The starting position in that line number of this token's source value.<DT><B>See Also:</B><DD><A HREF="../../mars/assembler/TokenTypes.html" title="class in mars.assembler"><CODE>TokenTypes</CODE></A></DL>
 </DL>
 
 <!-- ============ METHOD DETAIL ========== -->
@@ -270,7 +270,7 @@ public <B>Token</B>(<A HREF="../../mars/assembler/TokenTypes.html" title="class 
 </TR>
 </TABLE>
 
-<A NAME="setOriginal(mars.MIPSprogram, int)"><!-- --></A><H3>
+<A NAME="setOriginal(mars.RISCVprogram, int)"><!-- --></A><H3>
 setOriginal</H3>
 <PRE>
 public void <B>setOriginal</B>(<A HREF="../../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;origProgram,

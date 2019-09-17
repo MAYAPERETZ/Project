@@ -48,6 +48,9 @@ public class RunPauseAction extends RunAction  {
 		// RunGoAction's "paused" method will do the cleanup.
 	}
 
+	/**
+	 * @see ChangeableAction#update(Observable, Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		super.update(arg0, arg1);

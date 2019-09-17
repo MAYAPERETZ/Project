@@ -1,16 +1,16 @@
-   package mars.venus;
+package mars.venus;
 
-   import mars.Globals;
-   import mars.ProcessingException;
-   import mars.mips.hardware.RVIRegisters;
-   import mars.mips.instructions.GenMath;
-   import mars.simulator.ProgramArgumentList;
-   import mars.simulator.Simulator;
-   import mars.util.SystemIO;
-   import javax.swing.*;
-   import java.awt.event.ActionEvent;
-	
-	/*
+import mars.Globals;
+import mars.ProcessingException;
+import mars.mips.hardware.RVIRegisters;
+import mars.util.GenMath;
+import mars.simulator.ProgramArgumentList;
+import mars.simulator.Simulator;
+import mars.util.SystemIO;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+
+/*
 Copyright (c) 2003-2007,  Pete Sanderson and Kenneth Vollmar
 
 Developed by Pete Sanderson (psanderson@otterbein.edu)
@@ -36,126 +36,118 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
- */
-	
-   /**
-    * Action class for the Run -> Go menu item (and toolbar icon)
+*/
+
+/**
+* Action class for the Run -> Go menu item (and toolbar icon)
+*/
+public class RunGoAction extends RunAction  {
+
+    public static int defaultMaxSteps = -1; // "forever", formerly 10000000; // 10 million
+    public static int maxSteps = defaultMaxSteps;
+    private String name;
+    private ExecutePane executePane;
+
+    public RunGoAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+    }
+
+    /**
+    * Action to take when GO is selected -- run the MIPS program!
     */
-    public class RunGoAction extends RunAction  {
-   	
-      public static int defaultMaxSteps = -1; // "forever", formerly 10000000; // 10 million
-      public static int maxSteps = defaultMaxSteps;  
-      private String name;
-      private ExecutePane executePane;
-   	
-       public RunGoAction(String name, Icon icon, String descrip,
-                             Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-      }
-   		 
-   		 /**
-   		  * Action to take when GO is selected -- run the MIPS program!
-   		  */
-       public void actionPerformed(ActionEvent e) {
-         name = this.getValue(Action.NAME).toString();
-         executePane = mainUI.getMainPane().getExecutePane();
-         if(FileStatus.isAssembled()){
-			   if (!mainUI.getStarted()) {
-               processProgramArgumentsIfAny();  // DPS 17-July-2008
-            }			
+    public void actionPerformed(ActionEvent e) {
+        name = this.getValue(Action.NAME).toString();
+        executePane = mainUI.getMainPane().getExecutePane();
+        if(FileStatus.isAssembled()){
+            if (!mainUI.getStarted())
+                processProgramArgumentsIfAny();  // DPS 17-July-2008
+
             if(mainUI.getReset()|| mainUI.getStarted()){
-            
-               mainUI.setStarted(true);  // added 8/27/05
-            	
-               mainUI.messagesPane.postMarsMessage(
+
+                mainUI.setStarted(true);  // added 8/27/05
+                mainUI.messagesPane.postMarsMessage(
                        name+": running "+FileStatus.getFile().getName()+"\n\n");
-               mainUI.getMessagesPane().selectRunMessageTab();
-               executePane.getTextSegmentWindow().setCodeHighlighting(false);
-               executePane.getTextSegmentWindow().unhighlightAllSteps();
-            	//FileStatus.set(FileStatus.RUNNING);
-               //mainUI.setMenuState(FileStatus.RUNNING);
-               mainUI.observable.notifyObserversOfSelectedTab(FileStatus.RUNNING);
-               try {
+                mainUI.getMessagesPane().selectRunMessageTab();
+                executePane.getTextSegmentWindow().setCodeHighlighting(false);
+                executePane.getTextSegmentWindow().unhighlightAllSteps();
+                mainUI.observable.notifyObserversOfSelectedTab(FileStatus.RUNNING);
+                try {
                   Number[] breakPoints = executePane.getTextSegmentWindow().getSortedBreakPointsArray();
                   boolean done = Globals.program.simulateFromPC(breakPoints,maxSteps,this);
-               } 
-                   catch (ProcessingException pe) {
-                  }
-            }            
-            else{
-               // This should never occur because at termination the Go and Step buttons are disabled.
-               JOptionPane.showMessageDialog(mainUI,"reset "+mainUI.getReset()+" started "+mainUI.getStarted());//"You must reset before you can execute the program again.");                 
+                }
+                catch (ProcessingException ignored) { }
             }
-         }
-         else{
+            else
+                // This should never occur because at termination the Go and Step buttons are disabled.
+                JOptionPane.showMessageDialog(mainUI,"reset "+ mainUI.getReset()+ " started "+mainUI.getStarted());//"You must reset before you can execute the program again.");
+        }
+        else
             // note: this should never occur since "Go" is only enabled after successful assembly.
             JOptionPane.showMessageDialog(mainUI,"The program must be assembled before it can be run.");
-         }		
-      }
-      
-   	/**
-   	 *  Method to be called when Pause is selected through menu/toolbar/shortcut.  This should only
-   	 *  happen when MIPS program is running (FileStatus.RUNNING).  See VenusUI.java for enabled
-   	 *  status of menu items based on FileStatus.  Set GUI as if at breakpoint or executing
-   	 *  step by step.
-   	 */
-      
-       public void paused(boolean done, int pauseReason, ProcessingException pe) {
+    }
+
+    /**
+    *  Method to be called when Pause is selected through menu/toolbar/shortcut.  This should only
+    *  happen when MIPS program is running (FileStatus.RUNNING).  See VenusUI.java for enabled
+    *  status of menu items based on FileStatus.  Set GUI as if at breakpoint or executing
+    *  step by step.
+    */
+    public void paused(boolean done, int pauseReason, ProcessingException pe) {
         // I doubt this can happen (pause when execution finished), but if so treat it as stopped.
-         if (done) {
-            stopped(pe,Simulator.NORMAL_TERMINATION);
+        if (done) {
+            stopped(pe, Simulator.NORMAL_TERMINATION);
             return;
-         }
-         if (pauseReason == Simulator.BREAKPOINT) {
+        }
+        if (pauseReason == Simulator.BREAKPOINT)
             mainUI.messagesPane.postMarsMessage(
                        name+": execution paused at breakpoint: "+FileStatus.getFile().getName()+"\n\n");
-         } 
-         else {
-            mainUI.messagesPane.postMarsMessage(
-                       name+": execution paused by user: "+FileStatus.getFile().getName()+"\n\n");			
-         }
-         mainUI.getMessagesPane().selectMarsMessageTab();
-         executePane.getTextSegmentWindow().setCodeHighlighting(true);
-         executePane.getTextSegmentWindow().highlightStepAtPC();
-         executePane.getRegistersWindow().updateRegisters();
-         executePane.getCoprocessor1Window().updateRegisters();
-         executePane.getCoprocessor0Window().updateRegisters();
-         executePane.getDataSegmentWindow().updateValues();
-         FileStatus.set(FileStatus.RUNNABLE);
-         mainUI.setReset(false);
-      }
-   
-   	/**
-   	 *  Method to be called when Stop is selected through menu/toolbar/shortcut.  This should only
-   	 *  happen when MIPS program is running (FileStatus.RUNNING).  See VenusUI.java for enabled
-   	 *  status of menu items based on FileStatus.  Display finalized values as if execution
-   	 *  terminated due to completion or exception.
-   	 */   	  
-   	  
-       public void stopped(ProcessingException pe, int reason) {
-         // show final register and data segment values.
-         executePane.getRegistersWindow().updateRegisters();
-         executePane.getCoprocessor1Window().updateRegisters();
-         executePane.getCoprocessor0Window().updateRegisters();
-         executePane.getDataSegmentWindow().updateValues();
-         FileStatus.set(FileStatus.TERMINATED);
-         SystemIO.resetFiles(); // close any files opened in MIPS program
-      	// Bring coprocessor 0 to the front if terminated due to exception.
-         if (pe != null) {
+
+        else mainUI.messagesPane.postMarsMessage(
+                    name+": execution paused by user: "+FileStatus.getFile().getName()+"\n\n");
+
+        mainUI.getMessagesPane().selectMarsMessageTab();
+        executePane.getTextSegmentWindow().setCodeHighlighting(true);
+        executePane.getTextSegmentWindow().highlightStepAtPC();
+        executePane.getRegistersWindow().updateRegisters();
+        executePane.getCoprocessor1Window().updateRegisters();
+        executePane.getCoprocessor0Window().updateRegisters();
+        executePane.getDataSegmentWindow().updateValues();
+        FileStatus.set(FileStatus.RUNNABLE);
+        mainUI.setReset(false);
+    }
+
+    /**
+    *  Method to be called when Stop is selected through menu/toolbar/shortcut.  This should only
+    *  happen when RISCV program is running (FileStatus.RUNNING).
+    * @see GUI for enabled status of menu items based on FileStatus.
+    * Display finalized values as if execution
+    *  terminated due to completion or exception.
+    */
+    public void stopped(ProcessingException pe, int reason) {
+        // show final register and data segment values.
+        executePane.getRegistersWindow().updateRegisters();
+        executePane.getCoprocessor1Window().updateRegisters();
+        executePane.getCoprocessor0Window().updateRegisters();
+        executePane.getDataSegmentWindow().updateValues();
+        FileStatus.set(FileStatus.TERMINATED);
+        SystemIO.resetFiles(); // close any files opened in MIPS program
+        // Bring coprocessor 0 to the front if terminated due to exception.
+        if (pe != null) {
             mainUI.getRegistersPane().setCurrentTab(executePane.getCoprocessor0Window());
             executePane.getTextSegmentWindow().setCodeHighlighting(true);
             executePane.getTextSegmentWindow().unhighlightAllSteps();
             executePane.getTextSegmentWindow().highlightStepAtAddress(GenMath.sub(RVIRegisters.getProgramCounter(), 4));
-         }
-         switch (reason) {
-            case Simulator.NORMAL_TERMINATION : 
+        }
+        switch (reason) {
+            case Simulator.NORMAL_TERMINATION :
                mainUI.getMessagesPane().postMarsMessage(
                              "\n"+name+": execution completed successfully.\n\n");
                mainUI.getMessagesPane().postRunMessage(
                              "\n-- program is finished running --\n\n");
                mainUI.getMessagesPane().selectRunMessageTab();
                break;
-            case Simulator.CLIFF_TERMINATION : 
+            case Simulator.CLIFF_TERMINATION :
                mainUI.getMessagesPane().postMarsMessage(
                              "\n"+name+": execution terminated by null instruction.\n\n");
                mainUI.getMessagesPane().postRunMessage(
@@ -180,32 +172,29 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                break;
             case Simulator.BREAKPOINT : // should never get here
                break;
-         }
-         RunGoAction.resetMaxSteps();
-         mainUI.setReset(false);
-      }
-   	
-   	/**
-   	 * Reset max steps limit to default value at termination of a simulated execution.
-   	 */
-   	 
-       public static void resetMaxSteps() {
-         maxSteps = defaultMaxSteps;
-      }
-   	
-		////////////////////////////////////////////////////////////////////////////////////
-		// Method to store any program arguments into MIPS memory and registers before
-		// execution begins. Arguments go into the gap between $sp and kernel memory.  
-		// Argument pointers and count go into runtime stack and $sp is adjusted accordingly.
-		// $a0 gets argument count (argc), $a1 gets stack address of first arg pointer (argv).
-       private void processProgramArgumentsIfAny() {
-         String programArguments = executePane.getTextSegmentWindow().getProgramArguments();
-         if (programArguments == null || programArguments.length() == 0 ||
-			    !Globals.getSettings().getProgramArguments()) {
+        }
+        RunGoAction.resetMaxSteps();
+        mainUI.setReset(false);
+    }
+
+    /**
+    * Reset max steps limit to default value at termination of a simulated execution.
+    */
+    public static void resetMaxSteps() {
+        maxSteps = defaultMaxSteps;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////
+    // Method to store any program arguments into MIPS memory and registers before
+    // execution begins. Arguments go into the gap between $sp and kernel memory.
+    // Argument pointers and count go into runtime stack and $sp is adjusted accordingly.
+    // $a0 gets argument count (argc), $a1 gets stack address of first arg pointer (argv).
+    private void processProgramArgumentsIfAny() {
+        String programArguments = executePane.getTextSegmentWindow().getProgramArguments();
+        if (programArguments == null || programArguments.length() == 0 ||
+            !Globals.getSettings().getProgramArguments())
             return;
-         }
-			new ProgramArgumentList(programArguments).storeProgramArguments();
-      }
-		
-   	
-   }
+        new ProgramArgumentList(programArguments).storeProgramArguments();
+    }
+
+}

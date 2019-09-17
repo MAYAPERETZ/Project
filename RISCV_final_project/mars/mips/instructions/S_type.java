@@ -6,19 +6,34 @@ import mars.Globals;
 import mars.ProcessingException;
 import mars.mips.hardware.AddressErrorException;
 import mars.mips.hardware.RVIRegisters;
+import mars.util.GenMath;
 
-public class S_type extends BasicInstruction{
+/**
+ * This class represents the S-type instructions of RISCV.
+ * @author Maya Peretz
+ * @version September 2019
+ */
+public class S_type extends BasicInstruction.WithImmediateField{
 
 	private final int FIRST_TO_FIFTH_BITS =  0x0000001f;
 	private final int SIXTH_TO_THIRTEENTH_BITS = 0x00000fe0;
-	
-	public S_type(String example, String description, String operMask,
-			SimulationCode simCode) {
+
+	/**
+	 * {@inheritDoc}
+	 */
+	S_type(String example, String description, String operMask,
+		   SimulationCode simCode) {
 		super(example, description, operMask, simCode);
 	}
 
-	public S_type(String example, String description, String operMask, 
-			NewFunction< Number, Number, Number> x, Number mask) {
+	/**
+	* {@inheritDoc}
+	* @param x a function receiving two parameters of type {@code Number} which returns
+	 *       a {@code Number} value.
+	* @param mask a mask of a number
+	*/
+	S_type(String example, String description, String operMask,
+		   NewFunction<Number, Number, Number> x, Number mask) {
 		this(example, description, operMask,
 				statement -> {
 				   Number[] operands = statement.getOperands();
@@ -30,10 +45,10 @@ public class S_type extends BasicInstruction{
 				   try
 				   {
 
-					//  if(mask != null)
-					//			 x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
-					//			  RVIRegisters.getValue(operands[2]), operands[1]), RVIRegisters.getValue(operands[0]));
-					//  else
+					  if(mask != null)
+								 x.compose(e-> GenMath.and(e, mask)).apply(GenMath.add(
+								  RVIRegisters.getValue(operands[2]), operands[1]), RVIRegisters.getValue(operands[0]));
+					  else
 						  x.apply(GenMath.add(
 										   RVIRegisters.getValue(operands[2]), operands[1])
 							  , RVIRegisters.getValue(operands[0]));
@@ -46,34 +61,48 @@ public class S_type extends BasicInstruction{
 				});
 	}
 
+	/**
+	* {@inheritDoc}
+	* @param x function receiving two parameters of type Number which return a Number value.
+	*/
 	public S_type(String example, String description, String operMask, 
 			NewFunction< Number, Number, Number> x) {
 		this(example, description, operMask, x, null);
 	}
-		
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int computeOperands(Number [] operands) {
-		return (getOpcode()|computeImm(operands[1].intValue())|InstCodeUtil.getFunct3(this)|
+		return (getOpcode()| computeImmFromOperand(operands[1].intValue())|InstCodeUtil.getFunct3(this)|
 				InstCodeUtil.computeRs1((int)operands[2])|InstCodeUtil.computeRs2(this, operands[0]));
 	}
-	
-	
+
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public Number [] returnOperands(int instructionCode) {
 		Number [] operands = new Number[3];
 		operands[0] = InstCodeUtil.getRs1(instructionCode);
 		operands[1] = InstCodeUtil.getRs2(instructionCode);
-		operands[2] = getImm(instructionCode);
+		operands[2] = computeImmFromInst(instructionCode);
 		return operands;
 	}
-	 
-	private int getImm(int args) {
-		return  (((args & FIRST_TO_FIFTH_BITS)<<7) |((args & SIXTH_TO_THIRTEENTH_BITS)<<15));
+
+	/**
+	 * {@inheritDoc}
+	 */
+	int computeImmFromInst(int instructionCode) {
+		return  (((instructionCode & FIRST_TO_FIFTH_BITS)<<7) |((instructionCode & SIXTH_TO_THIRTEENTH_BITS)<<15));
 	}
 
-	private int computeImm(int args) {
-		return  (int)(((args>>7) & FIRST_TO_FIFTH_BITS) |((args>>15)& SIXTH_TO_THIRTEENTH_BITS));
-
+	/**
+	 * {@inheritDoc}
+	 */
+	int computeImmFromOperand(int operand) {
+		return ((operand>>7) & FIRST_TO_FIFTH_BITS) |((operand>>15)& SIXTH_TO_THIRTEENTH_BITS);
 	}
 	
 	@FunctionalInterface

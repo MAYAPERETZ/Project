@@ -45,7 +45,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @version August 2003
  **/
 
-    public class MIPSprogram {
+    public class RISCVprogram {
    
    // See explanation of method inSteppedExecution() below.
       private boolean steppedExecution = false;
@@ -226,7 +226,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          } 
              catch (Exception e) {
                errors = new ErrorList();
-               errors.add(new ErrorMessage((MIPSprogram)null,0,0,e.toString()));
+               errors.add(new ErrorMessage((RISCVprogram)null,0,0,e.toString()));
                throw new ProcessingException(errors);
             }
          return;
@@ -249,12 +249,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * reading and tokenizing all the source files.  There may be only one.
     * @param filenames  ArrayList containing the source file name(s) in no particular order
     * @param leadFilename String containing name of source file that needs to go first and 
-    * will be represented by "this" MIPSprogram object.
+    * will be represented by "this" RISCVprogram object.
     * @param exceptionHandler String containing name of source file containing exception
     * handler.  This will be assembled first, even ahead of leadFilename, to allow it to
     * include "startup" instructions loaded beginning at 0x00400000.  Specify null or
     * empty String to indicate there is no such designated exception handler.
-    * @return ArrayList containing one MIPSprogram object for each file to assemble.
+    * @return ArrayList containing one RISCVprogram object for each file to assemble.
     * objects for any additional files (send ArrayList to assembler)
     * @throws ProcessingException Will throw exception if errors occured while reading or tokenizing.
     **/
@@ -268,10 +268,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          for (int i=0; i<filenames.size(); i++) {
             String filename = (String) filenames.get(i);  
-            MIPSprogram preparee = (filename.equals(leadFilename)) ? this : new MIPSprogram();
+            RISCVprogram preparee = (filename.equals(leadFilename)) ? this : new RISCVprogram();
             preparee.readSource(filename);
             preparee.tokenize();
-         	// I want "this" MIPSprogram to be the first in the list...except for exception handler
+         	// I want "this" RISCVprogram to be the first in the list...except for exception handler
             if (preparee == this && MIPSprogramsToAssemble.size()>0) {
                MIPSprogramsToAssemble.add(leadFilePosition,preparee);
             } 
@@ -285,7 +285,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * Assembles the MIPS source program. All files comprising the program must have 
     * already been tokenized.  Assembler warnings are not considered errors.
-    * @param MIPSprogramsToAssemble ArrayList of MIPSprogram objects, each representing a tokenized source file.
+    * @param MIPSprogramsToAssemble ArrayList of RISCVprogram objects, each representing a tokenized source file.
     * @param extendedAssemblerEnabled A boolean value - true means extended (pseudo) instructions
     * are permitted in source code and false means they are to be flagged as errors.
     * @throws ProcessingException Will throw exception if errors occured while assembling.
@@ -300,7 +300,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * Assembles the MIPS source program. All files comprising the program must have 
     * already been tokenized.
-    * @param MIPSprogramsToAssemble ArrayList of MIPSprogram objects, each representing a tokenized source file.
+    * @param MIPSprogramsToAssemble ArrayList of RISCVprogram objects, each representing a tokenized source file.
     * @param extendedAssemblerEnabled A boolean value - true means extended (pseudo) instructions
     * are permitted in source code and false means they are to be flagged as errors
     * @param warningsAreErrors A boolean value - true means assembler warnings will be considered errors and terminate
@@ -358,7 +358,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public boolean simulateFromPC(Number[] breakPoints, Number maxSteps, AbstractAction a) throws ProcessingException {
          steppedExecution = false;
          Simulator sim = Simulator.getInstance();
-         return sim.simulate(this, RVIRegisters.getProgramCounter(), maxSteps, breakPoints, a);
+         return sim.simulate(RVIRegisters.getProgramCounter(), maxSteps, breakPoints, a);
       }
    
    
@@ -373,7 +373,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public boolean simulateStepAtPC(AbstractAction a) throws ProcessingException {
          steppedExecution = true;
          Simulator sim = Simulator.getInstance();
-         boolean done = sim.simulate(this, RVIRegisters.getProgramCounter(), 1, null,a);
+         boolean done = sim.simulate(RVIRegisters.getProgramCounter(), 1, null,a);
          return done;
       }
    
@@ -389,7 +389,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
    /**
     * Instantiates a new {@link MacroPool} and sends reference of this
-    * {@link MIPSprogram} to it
+    * {@link RISCVprogram} to it
     * 
     * @return instatiated MacroPool
     * @author M.H.Sekhavat <sekhavat17@gmail.com>
@@ -417,4 +417,4 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          this.macroPool = macroPool;
       }
     
-   }  // MIPSprogram
+   }  // RISCVprogram

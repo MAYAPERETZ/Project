@@ -56,9 +56,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             InputStream is = PropertiesFile.class.getResourceAsStream("/"+file+".properties");
             properties.load(is);
          } 
-             catch (IOException ioe) { } // If it doesn't work, properties will be empty
-             catch (NullPointerException npe) { } 
-         return properties;
+             catch (IOException | NullPointerException ignored) { } // If it doesn't work, properties will be empty
+           return properties;
       }
    }
 

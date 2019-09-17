@@ -1,7 +1,7 @@
 package mars.venus;
 import javax.swing.*;
 
-	/*
+/*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
 
 Developed by Pete Sanderson (psanderson@otterbein.edu)
@@ -27,66 +27,64 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
- */
+*/
+
+/**
+*  Creates the tabbed areas in the UI and also created the internal windows that
+*  exist in them.
+*   @author Maya Peretz
+**/
+
+public class MainPane extends JInternalFrame{
+    EditPane editTab;
+    ExecutePane executeTab;
+    EditTabbedPane editTabbedPane;
+    private JTabbedPane jTabbedPane;
 
     /**
-    *  Creates the tabbed areas in the UI and also created the internal windows that
-    *  exist in them.
-    *   @author Maya Peretz
+    *  Constructor for the MainPane class.
     **/
+    public MainPane(GUI mainUI2, Editor editor, RegistersWindow regs,
+                    Coprocessor1Window cop1Regs,Coprocessor0Window cop0Regs){
+        super("", false, false, false, false);
+        setFrameIcon(null);
+        editTabbedPane = new EditTabbedPane(mainUI2, editor, this);
+        executeTab = new ExecutePane(regs, cop1Regs, cop0Regs);
+        jTabbedPane = new JTabbedPane();
+        add(jTabbedPane);
+        jTabbedPane.addTab("Editor", editTabbedPane);
+        jTabbedPane.addTab("Execute", executeTab);
+        setVisible(true);
+    }
 
-    public class MainPane extends JInternalFrame{
-        EditPane editTab;
-        ExecutePane executeTab;
-        EditTabbedPane editTabbedPane;
-        private GUI mainUI;
-        private JTabbedPane jTabbedPane;
+    /**
+    * Returns current edit pane.  Implementation changed for MARS 4.0 support
+    * for multiple panes, but specification is same.
+    * @return the editor pane
+    */
 
-        /**
-        *  Constructor for the MainPane class.
-        **/
-        public MainPane(GUI mainUI2, Editor editor, RegistersWindow regs,
-                        Coprocessor1Window cop1Regs,Coprocessor0Window cop0Regs){
-            super("", false, false, false, false);
-            setFrameIcon(null);
-            this.mainUI = mainUI2;
-            editTabbedPane = new EditTabbedPane(mainUI2, editor, this);
-            executeTab = new ExecutePane(mainUI2, regs, cop1Regs, cop0Regs);
-            jTabbedPane = new JTabbedPane();
-            add(jTabbedPane);
-            jTabbedPane.addTab("Editor", editTabbedPane);
-            jTabbedPane.addTab("Execute", executeTab);
-            setVisible(true);
-        }
+    public EditPane getEditPane() {
+        return editTabbedPane.getCurrentEditTab();
+    }
 
-        /**
-        * Returns current edit pane.  Implementation changed for MARS 4.0 support
-        * for multiple panes, but specification is same.
-        * @return the editor pane
-        */
+    /**
+    * Returns component containing editor display
+    * @return the editor tabbed pane
+    */
+    public JComponent getEditTabbedPane() {
+        return editTabbedPane;
+    }
 
-        public EditPane getEditPane() {
-            return editTabbedPane.getCurrentEditTab();
-        }
+    /**
+    * returns component containing execution-time display
+    * @return the execute pane
+    */
+    public ExecutePane getExecutePane() {
+        return executeTab;
+    }
 
-        /**
-        * Returns component containing editor display
-        * @return the editor tabbed pane
-        */
-        public JComponent getEditTabbedPane() {
-            return editTabbedPane;
-        }
-
-        /**
-        * returns component containing execution-time display
-        * @return the execute pane
-        */
-        public ExecutePane getExecutePane() {
-            return executeTab;
-        }
-
-        public void setCurrentTab(JComponent jComponent){
-            jTabbedPane.setSelectedComponent(jComponent);
-        }
+    public void setCurrentTab(JComponent jComponent){
+        jTabbedPane.setSelectedComponent(jComponent);
+    }
 
 }

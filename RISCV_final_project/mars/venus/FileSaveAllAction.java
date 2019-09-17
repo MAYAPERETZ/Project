@@ -31,17 +31,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
  
-    /**
-    * Action  for the File -> Close All menu item
-    */   			
-    public class FileSaveAllAction extends ChangeableAction{
-   	 
+/**
+* Action  for the File -> Close All menu item
+*/
+public class FileSaveAllAction extends ChangeableAction{
+
     public FileSaveAllAction(String name, Icon icon, String descrip,
                      Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
         super(name, icon, descrip, mnemonic, accel, mainUI, observable);
     }
-   	
+
     public void actionPerformed(ActionEvent e){
         mainUI.editor.saveAll();
     }
-   }
+}

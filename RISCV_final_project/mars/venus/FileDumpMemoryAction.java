@@ -1,6 +1,6 @@
 package mars.venus;
 import mars.*;
-import mars.mips.instructions.GenMath;
+import mars.util.GenMath;
 import mars.util.*;
 import mars.mips.dump.*;
 import mars.mips.hardware.*;
@@ -94,7 +94,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
             // A series of parallel arrays representing the memory segments that can be dumped.
             String[] segmentArray = MemoryDump.getSegmentNames();
-            Number[] baseAddressArray = MemoryDump.getBaseAddresses(segmentArray);
+            Number[] baseAddressArray = MemoryDump.getBaseAddresses();
             Number[] limitAddressArray = MemoryDump.getLimitAddresses(segmentArray);
             Number[] highAddressArray = new Number[segmentArray.length];
 

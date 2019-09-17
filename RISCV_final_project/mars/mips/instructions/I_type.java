@@ -1,19 +1,33 @@
 package mars.mips.instructions;
 
 import mars.ProcessingException;
-import mars.ProgramStatement;
 import mars.mips.hardware.AddressErrorException;
 import mars.mips.hardware.RVIRegisters;
+import mars.simulator.Exceptions;
+import mars.util.GenMath;
 
-public class I_type extends BasicInstruction{
+/**
+ * This class represents the I-type instructions of RISCV.
+ * @author Maya Peretz
+ * @version September 2019
+ */
+public class I_type extends BasicInstruction.WithImmediateField{
 
-	public I_type(String example, String description, String operMask,
-			SimulationCode simCode) {
+	/**
+	 *	{@inheritDoc}
+	 */
+	I_type(String example, String description, String operMask,
+		   SimulationCode simCode) {
 		super(example, description, operMask, simCode);
 	}
 
-	public I_type(String example, String description, String operMask, 
-			java.util.function.BiFunction< Number,  Number, Number> x) {
+	/**
+	 * {@inheritDoc}
+	 * @param x a function receiving two parameters of type {@code Number} which
+	 *          returns a {@code Number} value.
+	 */
+	I_type(String example, String description, String operMask,
+		   java.util.function.BiFunction<Number, Number, Number> x) {
 		this(example, description, operMask,
 				statement -> {
 					 Number[] operands = statement.getOperands();
@@ -22,7 +36,10 @@ public class I_type extends BasicInstruction{
 
 				});
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int computeOperands(Number [] operands) {
 		int rs1 = 1, imm = 2;
@@ -31,35 +48,56 @@ public class I_type extends BasicInstruction{
 			imm = 1;
 		}
 		return (getOpcode()|InstCodeUtil.computeRd((int)operands[0])|
-				InstCodeUtil.getFunct3(this)|InstCodeUtil.computeRs1((int)operands[rs1])|computeImm(operands[imm].intValue()));
+				InstCodeUtil.getFunct3(this)|InstCodeUtil.computeRs1((int)operands[rs1])| computeImmFromOperand(operands[imm].intValue()));
 	}
-	
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Number [] returnOperands(int instructionCode) {
 		Number [] operands = new Number[4];
 		operands[0] = InstCodeUtil.getRd(instructionCode);
 		operands[1] = InstCodeUtil.getRs1(instructionCode);
-		operands[2] = getImm(instructionCode);
+		operands[2] = computeImmFromInst(instructionCode);
 		operands[3] = 0;
 		return operands;
 	}
 
-	private int getImm(int args) {
-		return ((args & (InstCodeUtil.mask5|InstCodeUtil.mask6))>>20);
+	/**
+	 * {@inheritDoc}
+	 */
+	int computeImmFromInst(int instructionCode) {
+		return ((instructionCode & (InstCodeUtil.mask5|InstCodeUtil.mask6))>>20);
 	}
-	private int computeImm(int args) {
-		return (int)((args<<20)& (InstCodeUtil.mask5|InstCodeUtil.mask6));
-	}
-	
-	public static class LW_type extends I_type{
 
-		public LW_type(String example, String description, String operMask, SimulationCode simCode) {
+	/**
+	 * {@inheritDoc}
+	 */
+	int computeImmFromOperand(int operand) {
+		return (operand<<20)& (InstCodeUtil.mask5|InstCodeUtil.mask6);
+	}
+
+	/**
+	 * This class represents the loading instructions (like lw).
+	 * In loading instructions, the order of the operands in the instruction is not as in regular
+	 * I-type instruction; so this class was created to overcome this issue.
+	 */
+	static class LW_type extends I_type{
+
+		/**
+		 * {@inheritDoc}
+		 */
+		LW_type(String example, String description, String operMask, SimulationCode simCode) {
 			super(example, description, operMask, simCode);
 		}
 
-		public LW_type(String example, String description, String operMask, 
-				Function< Number, Number> x, Number mask) {
+		/**
+		 * {@inheritDoc}
+		 * @param mask a mask of a number
+		 */
+		LW_type(String example, String description, String operMask,
+				Function<Number, Number> x, Number mask) {
 			this(example, description, operMask,
 					statement -> {
 					   Number[] operands = statement.getOperands();
@@ -67,7 +105,7 @@ public class I_type extends BasicInstruction{
 					   {
 						  if(mask != null)
 							  RVIRegisters.updateRegister(operands[0].intValue(),
-									  x.compose(e->GenMath.and(e, mask)).apply(GenMath.add(
+									  x.compose(e-> GenMath.and(e, mask)).apply(GenMath.add(
 									  RVIRegisters.getValue(operands[2]), operands[1])));
 						  else
 							  RVIRegisters.updateRegister(operands[0].intValue(),
@@ -81,8 +119,11 @@ public class I_type extends BasicInstruction{
 					});
 		}
 
-		public LW_type(String example, String description, String operMask, 
-				Function< Number, Number> x) {
+		/**
+		 * {@inheritDoc}
+		 */
+		LW_type(String example, String description, String operMask,
+				Function<Number, Number> x) {
 			this(example, description, operMask, x, null);
 		}
 
@@ -95,5 +136,48 @@ public class I_type extends BasicInstruction{
 			java.util.Objects.requireNonNull(before);
 			return (V v) -> apply(before.apply(v));
 		}
+	}
+
+	/**
+	 * Represents the shift instructions of I-type
+	 */
+	static class I_typeShift extends I_type{
+
+		/**
+		 * {@inheritDoc}
+		 */
+		private I_typeShift(String example, String description, String operMask,
+							SimulationCode simCode) {
+			super(example, description, operMask, simCode);
+		}
+
+		/**
+		 * {@inheritDoc}
+		 * @param x a function receiving two parameters of type {@code Number} which return a
+		 * 			{@code Number} value.
+		 */
+		I_typeShift(String example, String description, String operMask,
+					Function<Number, Number, Number> x) {
+			this(example, description, operMask,
+					statement -> {
+						Number[] operands = statement.getOperands();
+						Number y = x.compose(GenMath::shiftImm).apply(RVIRegisters.getValue(operands[1]), operands[2]);
+						if(y != null)
+							RVIRegisters.updateRegister(operands[0].intValue(), y);
+						else throw new ProcessingException(statement, "Illegal Instruction: shmat[5] = 1)"
+								, Exceptions.ILLEGAL_INSTRUCTION_EXCEPTION);
+
+					});
+		}
+
+		@FunctionalInterface
+		interface Function<A, B, C> {
+			C apply(A one, B b);
+			default <D extends Number> Function<D, B, C> compose(Function<? super D, ? super B, ? extends A> before){
+				return (D d, B b) -> apply(before.apply(d, b ), b);
+			}
+		}
+
+
 	}
 }

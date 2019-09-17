@@ -2,11 +2,13 @@ package mars.util;
 
 import java.util.List;
 
-import mars.mips.instructions.GenMath;
-
+/**
+ * Some util class to make easier operations on an {@code Number} object.
+ * @author Maya Peretz
+ * @version September 2019
+ */
 public class Math2 {
 
-	
 	public static boolean isLtz(Number x) {
 		return GenMath.lt(x, 0).intValue() == 1;
 	}
@@ -37,7 +39,7 @@ public class Math2 {
 		Number y = a.remove(0);
 		Number z = a.remove(0);
 		a.add(0, GenMath.mul(y, z));
-		return temp = chainedAndThen(a, x);
+		return chainedAndThen(a, x);
 	}
 	
 	public static Number compose( Function<Number, Number, 
@@ -56,11 +58,5 @@ public class Math2 {
 	    	return (D d, B b) -> apply((A) c, before.apply(d, b ));
 	     }
 	}
-	
-	
-	public static void main(String [] args) {
-		System.out.println(Math2.compose(GenMath::sub, GenMath::sll, 4, 1, 1));
-		System.out.println(Math2.andThen(GenMath::sub, GenMath::sll, 4, 1, 1));
 
-	}
 }

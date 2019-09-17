@@ -57,7 +57,10 @@ public class RunToggleBreakpointsAction extends RunAction  {
 	public void actionPerformed(ActionEvent e) {
 		Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow().toggleBreakpoints();
 	}
-   	   
+
+	/**
+	 * @see ChangeableAction#update(Observable, Object)
+	 */
 	public void update(Observable arg0, Object arg1) {
 		super.update(arg0, arg1);
 		if ((int)arg1 == FileStatus.TERMINATED)

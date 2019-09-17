@@ -58,7 +58,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          for (int i=0; i< segmentNames.length; i++) {
             if (segmentNames[i].equals(segment)) {
                Number[] bounds = new Number[2];
-               bounds[0] = getBaseAddresses(segmentNames)[i];
+               bounds[0] = getBaseAddresses()[i];
                bounds[1] = getLimitAddresses(segmentNames)[i];
                return bounds;
             }
@@ -67,46 +67,40 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    
    	   
-   	/**
-   	 * Get the names of segments available for memory dump.
-   	 * @return array of Strings, each string is segment name (e.g. ".text", ".data")
-   	 */
-   
-       public static String[] getSegmentNames() {
-         return segmentNames;
-      }
+    /**
+    * Get the names of segments available for memory dump.
+    * @return array of Strings, each string is segment name (e.g. ".text", ".data")
+    */
+    public static String[] getSegmentNames() {
+        return segmentNames;
+    }
    		
-   		
-   		/**
-   		 * Get the MIPS memory base address(es) of the specified segment name(s).
-   		 * If invalid segment name is provided, will throw NullPointerException, so
-   		 * I recommend getting segment names from getSegmentNames().
-   		 *
-   		 * @param segments Array of Strings containing segment names (".text", ".data")
-   		 * @return Array of int containing corresponding base addresses.
-   		 */
-       public static Number[] getBaseAddresses(String[] segments) {
-         baseAddresses[0] = Memory.getInstance().getTextTable().getBaseAddress();
-         baseAddresses[1] = Memory.getInstance().getDataTable().getBaseAddress();
-         return baseAddresses;
-      }
+    /**
+    * Get the RISCV memory base address(es) of the specified segment name(s).
+    * If invalid segment name is provided, will throw NullPointerException, so
+    * I recommend getting segment names from getSegmentNames().
+    *
+    * @return Array of int containing corresponding base addresses.
+    */
+    public static Number[] getBaseAddresses() {
+        baseAddresses[0] = Memory.getInstance().getTextTable().getBaseAddress();
+        baseAddresses[1] = Memory.getInstance().getDataTable().getBaseAddress();
+        return baseAddresses;
+    }
    	
-   	
-   		/**
-   		 * Get the MIPS memory limit address(es) of the specified segment name(s).
-   		 * If invalid segment name is provided, will throw NullPointerException, so
-   		 * I recommend getting segment names from getSegmentNames().
-   		 *
-   		 * @param segments Array of Strings containing segment names (".text", ".data")
-   		 * @return Array of int containing corresponding limit addresses.
-   		 */   
-       public static Number[] getLimitAddresses(String[] segments) {
-         limitAddresses[0] = Memory.getInstance().getTextTable().getLimitAddress();
-         limitAddresses[1] = Memory.getInstance().getDataTable().getLimitAddress();
-         return limitAddresses;
-      }				
-   			
-   			
+    /**
+    * Get the MIPS memory limit address(es) of the specified segment name(s).
+    * If invalid segment name is provided, will throw NullPointerException, so
+    * I recommend getting segment names from getSegmentNames().
+    *
+    * @param segments Array of Strings containing segment names (".text", ".data")
+    * @return Array of int containing corresponding limit addresses.
+    */
+    public static Number[] getLimitAddresses(String[] segments) {
+        limitAddresses[0] = Memory.getInstance().getTextTable().getLimitAddress();
+        limitAddresses[1] = Memory.getInstance().getDataTable().getLimitAddress();
+        return limitAddresses;
+    }
    
     /**
     *  Look for first "null" memory value in an address range.  For text segment (binary code), this
@@ -122,11 +116,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public static int getAddressOfFirstNull(int baseAddress, int limitAddress) throws AddressErrorException {
         int address = baseAddress;
             for (; address < limitAddress; address += Memory.WORD_LENGTH_BYTES) {
-            if (Globals.memory.getRawWordOrNull(address) == null)
-               break;
-
-        }
-    return address;
+                if (Globals.memory.getRawWordOrNull(address) == null)
+                   break;
+            }
+        return address;
     }
    
-   }
+}

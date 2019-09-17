@@ -31,19 +31,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
  
-    /**
-    * Action  for the File -> Close menu item
-    */   			
-    public class FileCloseAction extends ChangeableAction{
-   	 
-        public FileCloseAction(String name, Icon icon, String descrip,
-        Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+/**
+* Action  for the File -> Close menu item
+*/
+public class FileCloseAction extends ChangeableAction{
+
+    public FileCloseAction(String name, Icon icon, String descrip,
+    Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+    super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+    }
+
+    public void actionPerformed(ActionEvent e){
+        if(mainUI.mainPane.editTabbedPane.getTabCount() == 1)
+            mainUI.mainPane.editTabbedPane.setVisible(false);
+            mainUI.editor.close();
         }
-   	
-        public void actionPerformed(ActionEvent e){
-            if(mainUI.mainPane.editTabbedPane.getTabCount() == 1)
-                mainUI.mainPane.editTabbedPane.setVisible(false);
-                mainUI.editor.close();
-            }
-        }
+}

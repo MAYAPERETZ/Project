@@ -1,14 +1,12 @@
-   package mars.mips.dump;
+package mars.mips.dump;
 
-   import mars.Globals;
-   import mars.mips.hardware.*;
+import mars.Globals;
+import mars.mips.hardware.*;
 import mars.mips.hardware.memory.Memory;
-   import mars.util.Binary;
-   import mars.util.Math2;
-   import static mars.mips.instructions.GenMath.*;
-
-
-   import java.io.*;
+import mars.util.Binary;
+import mars.util.Math2;
+import static mars.util.GenMath.*;
+import java.io.*;
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
 
@@ -45,49 +43,53 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @version December 2007
  */
 
+/*
+    FIXME: have not checked this class. Might work as it is,
+            But have not made any meaningful changes but fixing unresolved files.
+            Need to check and implement if necessary.
+ */
+public class BinaryDumpFormat extends AbstractDumpFormat {
 
-    public class BinaryDumpFormat extends AbstractDumpFormat {
+    /**
+    *  Constructor.  There is no standard file extension for this format.
+    */
+    public BinaryDumpFormat() {
+ super("Binary", "Binary", "Written as byte stream to binary file", null);
+}
+
    
-   /**
-   *  Constructor.  There is no standard file extension for this format.
-   */
-       public BinaryDumpFormat() {
-         super("Binary", "Binary", "Written as byte stream to binary file", null);
-      }
-   
-   
-   /**
-   *  Write MIPS memory contents in pure binary format.  One byte at a time
-	*  using PrintStream's write() method.  Adapted by Pete Sanderson from
-	*  code written by Greg Gibeling.
-	*
-   *  @param  file  File in which to store MIPS memory contents.  
-   *  @param firstAddress first (lowest) memory address to dump.  In bytes but
-   *  must be on word boundary.
-   *  @param lastAddress last (highest) memory address to dump.  In bytes but
-   *  must be on word boundary.  Will dump the word that starts at this address.
-	*  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
-	*  @throws IOException if error occurs during file output.
-   */
+    /**
+    *  Write RISCV memory contents in pure binary format.  One byte at a time
+    *  using PrintStream's write() method.  Adapted by Pete Sanderson from
+    *  code written by Greg Gibeling.
+    *
+    *  @param  file  File in which to store RISCV memory contents.
+    *  @param firstAddress first (lowest) memory address to dump.  In bytes but
+    *  must be on word boundary.
+    *  @param lastAddress last (highest) memory address to dump.  In bytes but
+    *  must be on word boundary.  Will dump the word that starts at this address.
+    *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
+    *  @throws IOException if error occurs during file output.
+    */
        
-       @Override
-       public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress) 
-    		   throws AddressErrorException, IOException {
-         PrintStream out = new PrintStream(new FileOutputStream(file));
-         try {
+    @Override
+    public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
+       throws AddressErrorException, IOException {
+        PrintStream out = new PrintStream(new FileOutputStream(file));
+        try {
             for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = add(address, Memory.WORD_LENGTH_BYTES)) {
                Number temp = Globals.memory.getRawWordOrNull(address);
-               if (temp == null) 
+               if (temp == null)
                   break;
                 Number word = temp;
                 for (int i = 0; i < Binary.sizeof(firstAddress); i++)
                   out.write(and(srl(word, sll(i, (Binary.sizeof(firstAddress)/8))), 0xFF).intValue());
             }
-         } 
-         finally { 
-            out.close(); 
-         }
-      }
+        }
+        finally {
+            out.close();
+        }
+    }
 
 
 

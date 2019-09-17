@@ -44,15 +44,21 @@ public class BasicInstruction extends Instruction {
     private SimulationCode simulationCode;
 	private int opcodeMask;  // integer with 1's where constants required (0/1 become 1, f/s/t become 0)
 	private int opcodeMatch; // integer matching constants required (0/1 become 0/1, f/s/t become 0)
+
 	/**
-	 * BasicInstruction constructor.
-	 * 
-	 * @param example An example usage of the instruction, as a String.
-	 * @param instrFormat The format is R, I, I-branch or J.
-	 * @param operMask The opcode mask is a 32 character string that contains the opcode in binary in the appropriate bit positions and codes for operand positions ('f', 's', 't') in the remainding positions.
-     * @param simCode The inline definition of an object and class which anonymously implements the SimulationCode interface.
-     * @see SimulationCode
-	 **/
+	* BasicInstruction constructor.
+	*/
+	 public BasicInstruction() {}
+
+	/**
+	* BasicInstruction constructor.
+	*
+	* @param example An example usage of the instruction, as a String.
+	* @param operMask The opcode mask is a 32 character string that contains the opcode in binary in the appropriate bit positions and codes for operand positions ('f', 's', 't') in the remainding positions.
+	* @param simCode The inline definition of an object and class which anonymously implements the SimulationCode interface.
+	* @see SimulationCode
+	*/
+
 	/* codes for operand positions are:
 	 * f == First operand
 	 * s == Second operand
@@ -67,9 +73,6 @@ public class BasicInstruction extends Instruction {
 	 * It can also be used at runtime to match a binary machine instruction to the correct
 	 * instruction simulator -- it needs to match all and only the 0's and 1's.
 	 */
-	
-	public BasicInstruction() {}
-	
 	public BasicInstruction(String example, String description, 
 	                 String operMask, SimulationCode simCode) {
         this.exampleFormat = example;
@@ -93,29 +96,27 @@ public class BasicInstruction extends Instruction {
 						  this(example,"",operMask,simCode);
 		}
 		
-      /**
-       * Gets the 32-character operation mask.  Each mask position represents a 
-       * bit position in the 32-bit machine instruction.  Operation codes and
-       * unused bits are represented in the mask by 1's and 0's.  Operand codes
-       * are represented by 'f', 's', and 't' for bits occupied by first, secon
-       * and third operand, respectively.
-       *
-       * @return The 32 bit mask, as a String
-       */
+	/**
+	* Gets the 32-character operation mask.  Each mask position represents a
+	* bit position in the 32-bit machine instruction.  Operation codes and
+	* unused bits are represented in the mask by 1's and 0's.  Operand codes
+	* are represented by 'f', 's', and 't' for bits occupied by first, secon
+	* and third operand, respectively.
+	*
+	* @return The 32 bit mask, as a String
+	*/
 	public String getOperationMask() {
-	    return operationMask;
+		return operationMask;
 	}
-
 	
 	/**
-	 * Gets the SimulationCode object.  It is really an object of an anonymous
-	 * class that implements the SimulationCode interface.  Such an object has but one
-	 * method: Simulate().
-	 * 
-	 * @return the SimulationCode object for this instruction.
-	 * @see SimulationCode
-	 **/
-	 
+	* Gets the SimulationCode object.  It is really an object of an anonymous
+	* class that implements the SimulationCode interface.  Such an object has but one
+	* method: Simulate().
+	*
+	* @return the SimulationCode object for this instruction.
+	* @see SimulationCode
+	*/
 	public SimulationCode getSimulationCode() {
 	    return simulationCode;
 	}
@@ -127,14 +128,42 @@ public class BasicInstruction extends Instruction {
 	public int getOpcodeMatch() {
 		return this.opcodeMatch;
 	}
-	
-	
-	protected int getOpcode() {
+
+	int getOpcode() {
 		return InstCodeUtil.mask1 & Binary.binaryStringToInt(this.getOperationMask().substring(25));
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public Number[] returnOperands(int instructionCode) {
 		return null;
+	}
+
+	abstract static class WithImmediateField extends BasicInstruction{
+
+		WithImmediateField(String example, String description, String operMask,
+						   SimulationCode simCode) {
+			super(example, description, operMask, simCode);
+		}
+
+		WithImmediateField(){}
+
+		/**
+		 * Calculates the immediate field of the instruction
+		 * @param instructionCode	The instruction code for which the immediate
+		 *                          field is calculated from
+		 * @return The instruction code for which the immediate
+		 *         field is calculated from
+		 */
+		abstract int computeImmFromInst(int instructionCode);
+
+		/**
+		* Given an operand, calculate the immediate field of the instruction
+		* @param operand	an operand used to calculate the immediate field of the instruction
+		* @return	the immediate field of the J-type instruction
+		*/
+		abstract int computeImmFromOperand(int operand);
 	}
 }

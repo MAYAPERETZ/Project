@@ -1,15 +1,15 @@
-   package mars.venus;
-   import mars.simulator.*;
-   import mars.*;
-   import mars.util.*;
-   import java.util.*;
-   import java.awt.*;
-   import java.awt.event.*;
-   import javax.swing.*;
-   import javax.swing.text.*;
-   import javax.swing.border.*;
-   import javax.swing.event.*;
-   import java.io.*;
+package mars.venus;
+
+import mars.util.EditorFont;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Vector;
 	
 	/*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
@@ -111,7 +111,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          fontSizeSelector.setToolTipText("Use slider to select font size from "+EditorFont.MIN_SIZE+" to "+EditorFont.MAX_SIZE+".");
          fontSizeSelector.addChangeListener(
                  e -> {
-                   Integer value = new Integer(((JSlider)e.getSource()).getValue());
+                   Integer value = ((JSlider) e.getSource()).getValue();
                    fontSizeSpinSelector.setValue(value);
                    fontSample.setFont(getFont());
                 });
@@ -121,7 +121,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          fontSizeSpinSelector.addChangeListener(
                  e -> {
                    Object value = ((JSpinner)e.getSource()).getValue();
-                   fontSizeSelector.setValue(((Integer)value).intValue());
+                   fontSizeSelector.setValue((Integer) value);
                    fontSample.setFont(getFont());
                 });
 			// Action listener to update sample when family or style selected
@@ -211,15 +211,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private Vector makeVectorData(String[][] str) {
          boolean needSeparator = false;
          Vector data = new Vector();
-         for (int i=0;i<str.length;i++) {
-            if (needSeparator) {
-               data.addElement(SEPARATOR);
-            }
-            for (int j=0;j<str[i].length;j++) {
-               data.addElement(str[i][j]);
-               needSeparator = true;
-            }
-         }
+           for (String[] strings : str) {
+               if (needSeparator)
+                   data.addElement(SEPARATOR);
+
+               for (String string : strings) {
+                   data.addElement(string);
+                   needSeparator = true;
+               }
+           }
          return data;    
       }
    

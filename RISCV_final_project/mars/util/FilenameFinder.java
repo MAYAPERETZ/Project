@@ -1,15 +1,15 @@
-   package mars.util;
+package mars.util;
 
-   import javax.swing.filechooser.FileFilter;
-   import java.io.File;
-   import java.io.IOException;
-   import java.net.URI;
-   import java.net.URISyntaxException;
-   import java.util.ArrayList;
-   import java.util.Enumeration;
-   import java.util.StringTokenizer;
-   import java.util.zip.ZipEntry;
-   import java.util.zip.ZipFile;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.StringTokenizer;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 	
 	/*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
@@ -127,11 +127,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             return filenameList;      
           
          }
-             catch (URISyntaxException e) {
-               e.printStackTrace();
-               return filenameList;
-            } 
-             catch (IOException e) {
+             catch (URISyntaxException | IOException e) {
                e.printStackTrace();
                return filenameList;
             }
@@ -258,8 +254,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          return filenameList;
       }
-   
-   
    	
    /**
     * Return list of file names.  Given a list of file names, it will return the list 
@@ -332,7 +326,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  @param extensions ArrayList of Strings, each string is acceptable filename extension.
    	 *  @param description String containing description to be added in parentheses after list of extensions.
    	 *  @param acceptDirectories boolean value true if directories are accepted by the filter, false otherwise.
-   	 *  @return a FileFilter object that accepts files with given extensions, and directories if so indicated.
+   	 *  @return a {@code FileFilter} object that accepts files with given extensions, and directories if so indicated.
    	 */
    	 
        public static FileFilter getFileFilter(ArrayList extensions, String description, boolean acceptDirectories) {
@@ -344,7 +338,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  All directories are accepted by the filter.
    	 *  @param extensions ArrayList of Strings, each string is acceptable filename extension
    	 *  @param description String containing description to be added in parentheses after list of extensions.
-   	 *  @return a FileFilter object that accepts files with given extensions, and directories if so indicated.
+   	 *  @return a {@code FileFilter} object that accepts files with given extensions, and directories if so indicated.
    	 */		 
    	 
        public static FileFilter getFileFilter(ArrayList extensions, String description) {
@@ -356,7 +350,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  @param extension String containing acceptable filename extension.
    	 *  @param description String containing description to be added in parentheses after list of extensions.
    	 *  @param acceptDirectories boolean value true if directories are accepted by the filter, false otherwise.
-   	 *  @return a FileFilter object that accepts files with given extensions, and directories if so indicated.
+   	 *  @return a {@code FileFilter} object that accepts files with given extensions, and directories if so indicated.
    	 */
    	 
        public static FileFilter getFileFilter(String extension, String description, boolean acceptDirectories) {
@@ -370,9 +364,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  All directories are accepted by the filter.
    	 *  @param extension String containing acceptable filename extension
    	 *  @param description String containing description to be added in parentheses after list of extensions.
-   	 *  @return a FileFilter object that accepts files with given extensions, and directories if so indicated.
-   	 */		 
-   	 
+   	 *  @return a {@code FileFilter} object that accepts files with given extensions, and directories if so indicated.
+   	 */
        public static FileFilter getFileFilter(String extension, String description) {
          ArrayList extensions = new ArrayList();
          extensions.add(extension);
@@ -383,7 +376,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 *  Determine if given filename ends with given extension.
    	 *  @param name A String containing the file name
    	 *  @param extension A String containing the file extension.  Leading period is optional.
-   	 *  @return Returns true if filename ends with given extension, false otherwise.
+   	 *  @return Returns {@code true} if filename ends with given extension, {@code false} otherwise.
    	 */
    	 // For assured results, make sure extension starts with "."	(will add it if not there) 
        public static boolean fileExtensionMatch(String name, String extension) {

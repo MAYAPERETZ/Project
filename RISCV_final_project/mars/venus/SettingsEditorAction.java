@@ -42,15 +42,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    /**
     * Action class for the Settings menu item for text editor settings.
     */
-    public class SettingsEditorAction extends GuiAction  {
+public class SettingsEditorAction extends GuiAction  {
     
-      JDialog editorDialog;
-      JComboBox fontFamilySelector, fontStyleSelector;
-      JSlider tabSizeSelector;
-      JTextField fontSizeDisplay;
-   	
-   	// Used to determine upon OK, whether or not anything has changed.
-      String initialFontFamily, initialFontStyle, initialFontSize; 
+    private JDialog editorDialog;
+    JComboBox fontFamilySelector, fontStyleSelector;
+    JSlider tabSizeSelector;
+    JTextField fontSizeDisplay;
+
+    // Used to determine upon OK, whether or not anything has changed.
+    String initialFontFamily, initialFontStyle, initialFontSize;
    	  
     /**
     *  Create a new SettingsEditorAction.  Has all the GuiAction parameters.
@@ -69,65 +69,64 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         editorDialog.setVisible(true);
     }
    	
-      private static final int gridVGap = 2;
-      private static final int gridHGap = 2;
+    private static final int gridVGap = 2;
+    private static final int gridHGap = 2;
 
-       private static final String GENERIC_TOOL_TIP_TEXT = "Use generic editor (original MARS editor, similar to Notepad) instead of language-aware styled editor";
-   
-      private static final String SAMPLE_TOOL_TIP_TEXT = "Current setting; modify using buttons to the right";
-      private static final String FOREGROUND_TOOL_TIP_TEXT = "Click, to select text color";
-      private static final String BOLD_TOOL_TIP_TEXT = "Toggle text bold style";
-      private static final String ITALIC_TOOL_TIP_TEXT = "Toggle text italic style";
-      private static final String DEFAULT_TOOL_TIP_TEXT = "Check, to select defaults (disables buttons)";
-      private static final String BOLD_BUTTON_TOOL_TIP_TEXT = "B";
-      private static final String ITALIC_BUTTON_TOOL_TIP_TEXT = "I";
-   	
-      private static final String TAB_SIZE_TOOL_TIP_TEXT = "Current tab size in characters";
-      private static final String BLINK_SPINNER_TOOL_TIP_TEXT = "Current blinking rate in milliseconds";
-      private static final String BLINK_SAMPLE_TOOL_TIP_TEXT = "Displays current blinking rate";
-      private static final String CURRENT_LINE_HIGHLIGHT_TOOL_TIP_TEXT = "Check, to highlight line currently being edited";
-      private static final String AUTO_INDENT_TOOL_TIP_TEXT = "Check, to enable auto-indent to previous line when Enter key is pressed";
-      private static final String[] POPUP_GUIDANCE_TOOL_TIP_TEXT = { "Turns off instruction and directive guide popup while typing",
-                                                                     "Generates instruction guide popup after first letter of potential instruction is typed",
-         																				"Generates instruction guide popup after second letter of potential instruction is typed"
+    private static final String GENERIC_TOOL_TIP_TEXT = "Use generic editor (original MARS editor, similar to Notepad) instead of language-aware styled editor";
+
+    private static final String SAMPLE_TOOL_TIP_TEXT = "Current setting; modify using buttons to the right";
+    private static final String FOREGROUND_TOOL_TIP_TEXT = "Click, to select text color";
+    private static final String BOLD_TOOL_TIP_TEXT = "Toggle text bold style";
+    private static final String ITALIC_TOOL_TIP_TEXT = "Toggle text italic style";
+    private static final String DEFAULT_TOOL_TIP_TEXT = "Check, to select defaults (disables buttons)";
+    private static final String BOLD_BUTTON_TOOL_TIP_TEXT = "B";
+    private static final String ITALIC_BUTTON_TOOL_TIP_TEXT = "I";
+
+    private static final String TAB_SIZE_TOOL_TIP_TEXT = "Current tab size in characters";
+    private static final String BLINK_SPINNER_TOOL_TIP_TEXT = "Current blinking rate in milliseconds";
+    private static final String BLINK_SAMPLE_TOOL_TIP_TEXT = "Displays current blinking rate";
+    private static final String CURRENT_LINE_HIGHLIGHT_TOOL_TIP_TEXT = "Check, to highlight line currently being edited";
+    private static final String AUTO_INDENT_TOOL_TIP_TEXT = "Check, to enable auto-indent to previous line when Enter key is pressed";
+    private static final String[] POPUP_GUIDANCE_TOOL_TIP_TEXT = { "Turns off instruction and directive guide popup while typing",
+                                                                 "Generates instruction guide popup after first letter of potential instruction is typed",
+                                                                                    "Generates instruction guide popup after second letter of potential instruction is typed"
          																				};
-   	
    	// Concrete font chooser class. 
-       private class EditorFontDialog extends AbstractFontSettingDialog {
-       
-         private JButton[] foregroundButtons;
-         private JLabel[] samples;
-         private JToggleButton[] bold, italic;
-         private JCheckBox[] useDefault;
-      	
-         private int[] syntaxStyleIndex;
-         private SyntaxStyle[] defaultStyles,initialStyles, currentStyles;
-         private Font previewFont;
+    private class EditorFontDialog extends AbstractFontSettingDialog {
+
+        private JButton[] foregroundButtons;
+        private JLabel[] samples;
+        private JToggleButton[] bold, italic;
+        private JCheckBox[] useDefault;
+
+        private int[] syntaxStyleIndex;
+        private SyntaxStyle[] defaultStyles,initialStyles, currentStyles;
+        private Font previewFont;
 
         private JPanel syntaxStylePanel;
         private JPanel otherSettingsPanel; /////4 Aug 2010
-      	
-         private JSlider tabSizeSelector;
-         private JSpinner tabSizeSpinSelector;
+
+        private JSlider tabSizeSelector;
+        private JSpinner tabSizeSpinSelector;
         private JSpinner blinkRateSpinSelector;
         private JCheckBox lineHighlightCheck, genericEditorCheck, autoIndentCheck;
-         private Caret blinkCaret;
-         private JTextField blinkSample;
+        private Caret blinkCaret;
+        private JTextField blinkSample;
         private JRadioButton[] popupGuidanceOptions;
-      	// Flag to indicate whether any syntax style buttons have been clicked
-      	// since dialog created or most recent "apply".
-         private boolean syntaxStylesAction = false; 
-         
-         private int initialEditorTabSize, initialCaretBlinkRate, initialPopupGuidance;
-         private boolean initialLineHighlighting, initialGenericTextEditor, initialAutoIndent;
-      	  
-          public EditorFontDialog(Frame owner, String title, boolean modality, Font font) {
+        // Flag to indicate whether any syntax style buttons have been clicked
+        // since dialog created or most recent "apply".
+        private boolean syntaxStylesAction = false;
+
+        private int initialEditorTabSize, initialCaretBlinkRate, initialPopupGuidance;
+        private boolean initialLineHighlighting, initialGenericTextEditor, initialAutoIndent;
+
+        EditorFontDialog(Frame owner, String title, boolean modality, Font font) {
             super(owner, title, modality, font);
             if (Globals.getSettings().getBooleanSetting(Settings.GENERIC_TEXT_EDITOR)) {
-               syntaxStylePanel.setVisible(false);
-               otherSettingsPanel.setVisible(false); 
+                syntaxStylePanel.setVisible(false);
+                otherSettingsPanel.setVisible(false);
             }
-         }
+        }
          
       	 // build the dialog here
           protected JPanel buildDialogPanel() {

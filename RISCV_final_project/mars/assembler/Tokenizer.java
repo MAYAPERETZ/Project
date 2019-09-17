@@ -50,7 +50,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public class Tokenizer {
    
       private ErrorList errors;
-      private MIPSprogram sourceMIPSprogram;
+      private RISCVprogram sourceRISCVprogram;
       private HashMap<String,String> equivalents; // DPS 11-July-2012
    	// The 8 escaped characters are: single quote, double quote, backslash, newline (linefeed),
    	// tab, backspace, return, form feed.  The characters and their corresponding decimal codes:
@@ -66,25 +66,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    
    /**
-    *  Constructor for use with existing MIPSprogram.  Designed to be used with Macro feature.
-    *  @param program A previously-existing MIPSprogram object or null if none.
+    *  Constructor for use with existing RISCVprogram.  Designed to be used with Macro feature.
+    *  @param program A previously-existing RISCVprogram object or null if none.
     */	       
-       public Tokenizer(MIPSprogram program){
+       public Tokenizer(RISCVprogram program){
          errors = new ErrorList();
-         sourceMIPSprogram = program;
+         sourceRISCVprogram = program;
       }
    
    /**
     * Will tokenize a complete MIPS program.  MIPS is line oriented (not free format),
     * so we will be line-oriented too.
     *
-    * @param p The MIPSprogram to be tokenized.
+    * @param p The RISCVprogram to be tokenized.
     * @return An ArrayList representing the tokenized program.  Each list member is a TokenList
     * that represents a tokenized source statement from the MIPS program.
     **/
    
-       public ArrayList tokenize(MIPSprogram p) throws ProcessingException {
-         sourceMIPSprogram = p;
+       public ArrayList tokenize(RISCVprogram p) throws ProcessingException {
+         sourceRISCVprogram = p;
          equivalents = new HashMap<String,String>(); // DPS 11-July-2012
          ArrayList tokenList = new ArrayList();
          //ArrayList source = p.getSourceList();
@@ -102,7 +102,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          	// This IF statement will replace original source with source modified by .eqv substitution.
          	// Not needed by assembler, but looks better in the Text Segment Display.
             if (sourceLine.length() > 0 && sourceLine != currentLineTokens.getProcessedLine()) {
-               source.set(i,new SourceLine(currentLineTokens.getProcessedLine(),source.get(i).getMIPSprogram(), source.get(i).getLineNumber())); 
+               source.set(i,new SourceLine(currentLineTokens.getProcessedLine(),source.get(i).getRISCVprogram(), source.get(i).getLineNumber()));
             } 
          }
          if (errors.errorsOccurred()) {
@@ -120,7 +120,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    // files that themselves have .include.  Plus it will detect and report recursive
    // includes both direct and indirect.
    // DPS 11-Jan-2013
-       private ArrayList<SourceLine> processIncludes(MIPSprogram program, Map<String,String> inclFiles) throws ProcessingException {
+       private ArrayList<SourceLine> processIncludes(RISCVprogram program, Map<String,String> inclFiles) throws ProcessingException {
          ArrayList source = program.getSourceList();
          ArrayList<SourceLine> result = new ArrayList<SourceLine>(source.size());
          for (int i=0; i<source.size(); i++) {
@@ -145,7 +145,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      throw new ProcessingException(errors);
                   }
                   inclFiles.put(filename, filename);
-                  MIPSprogram incl = new MIPSprogram();
+                  RISCVprogram incl = new RISCVprogram();
                   try {
                      incl.readSource(filename);
                   }
@@ -183,7 +183,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
        public TokenList tokenizeExampleInstruction(String example) throws ProcessingException {
          TokenList result = new TokenList();
-         result = tokenizeLine(sourceMIPSprogram, 0, example, false);
+         result = tokenizeLine(sourceRISCVprogram, 0, example, false);
          if (errors.errorsOccurred()) {
             throw new ProcessingException(errors);
          }
@@ -220,7 +220,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
    // Modified for release 4.3, to preserve existing API.
        public TokenList tokenizeLine(int lineNum, String theLine) {
-         return tokenizeLine(sourceMIPSprogram, lineNum, theLine, true);
+         return tokenizeLine(sourceRISCVprogram, lineNum, theLine, true);
       }
 
    /**
@@ -258,7 +258,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public TokenList tokenizeLine(int lineNum, String theLine, ErrorList callerErrorList, boolean doEqvSubstitutes) {
          ErrorList saveList = this.errors;
          this.errors = callerErrorList;
-         TokenList tokens = this.tokenizeLine(sourceMIPSprogram, lineNum, theLine,doEqvSubstitutes);
+         TokenList tokens = this.tokenizeLine(sourceRISCVprogram, lineNum, theLine,doEqvSubstitutes);
          this.errors = saveList;
          return tokens;
       }	
@@ -268,14 +268,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * they are noted in an ErrorMessage object which is added to the provided ErrorList
     * instead of the Tokenizer's error list. Will NOT throw an exception.
     *
-    * @param program  MIPSprogram containing this line of source
+    * @param program  RISCVprogram containing this line of source
     * @param lineNum  line number from source code (used in error message)
     * @param theLine String containing source code
     * @param doEqvSubstitutes boolean param set true to perform .eqv substitutions, else false
     * @return the generated token list for that line
     * 
     **/		
-       public TokenList tokenizeLine(MIPSprogram program, int lineNum, String theLine, boolean doEqvSubstitutes) {
+       public TokenList tokenizeLine(RISCVprogram program, int lineNum, String theLine, boolean doEqvSubstitutes) {
          TokenTypes tokenType;
          TokenList result = new TokenList();
          if (theLine.length() == 0)
@@ -450,7 +450,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// contains a symbol that was previously defined in an .eqv directive, in which case
    	// the substitution needs to be made.
    	// DPS 11-July-2012
-       private TokenList processEqv(MIPSprogram program, int lineNum, String theLine, TokenList tokens) {
+       private TokenList processEqv(RISCVprogram program, int lineNum, String theLine, TokenList tokens) {
       	// See if it is .eqv directive.  If so, record it...
       	// Have to assure it is a well-formed statement right now (can't wait for assembler).
       
@@ -529,8 +529,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 
    
    // Given candidate token and its position, will classify and record it.
-       private void processCandidateToken(char[] token, MIPSprogram program, int line, String theLine, 
-       int tokenPos, int tokenStartPos, TokenList tokenList) {
+       private void processCandidateToken(char[] token, RISCVprogram program, int line, String theLine,
+                                          int tokenPos, int tokenStartPos, TokenList tokenList) {
          String value = new String(token, 0, tokenPos);
          if (value.length() > 0 && value.charAt(0)=='\'') value = preprocessCharacterLiteral(value);
          TokenTypes type = TokenTypes.matchTokenType(value);

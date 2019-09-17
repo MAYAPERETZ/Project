@@ -99,7 +99,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
       
         // Client is responsible for catching NumberFormatException
-         return new Integer(input.trim());
+         return Integer.valueOf(input.trim());
       }
    	
    	
@@ -147,14 +147,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public static double readDouble(int serviceNumber)
       {
          String input = "0";
-         if (Globals.getGui() == null)
-         {
+         if (Globals.getGui() == null) {
             try
             {
                input = getInputReader().readLine();
             } 
-                catch (IOException e)
-               {}
+            catch (IOException ignored) {}
          } 
          else
          {
@@ -162,9 +160,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                input = Globals.getGui().getMessagesPane().getInputString(
                     "Enter a double value (syscall "+serviceNumber+")");
             } 
-            else {
-               input = Globals.getGui().getMessagesPane().getInputString(-1);
-            }
+            else input = Globals.getGui().getMessagesPane().getInputString(-1);
+
          }
          return new Double(input.trim());
       
@@ -185,7 +182,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @return the entered string, truncated to maximum length if necessary
     */
     public static String readString(int serviceNumber, int maxLength) {
-        String input = "";
+        String input;
 
             if (Globals.getSettings().getBooleanSetting(Settings.POPUP_SYSCALL_INPUT)) {
                input = Globals.getGui().getMessagesPane().getInputString(
@@ -200,8 +197,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
 
         if (input.length() > maxLength)
-        // Modified DPS 13-July-2011.  Originally: return input.substring(0, maxLength);
-        return (maxLength <= 0) ? "" : input.substring(0, maxLength);
+            // Modified DPS 13-July-2011.  Originally: return input.substring(0, maxLength);
+            return (maxLength <= 0) ? "" : input.substring(0, maxLength);
         else return  input;
     }
    
@@ -246,8 +243,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @return number of bytes written, or -1 on error
     */
    
-       public static int writeToFile(int fd, byte[] myBuffer, int lengthRequested)
-      {
+       public static int writeToFile(int fd, byte[] myBuffer, int lengthRequested) {
        /////////////// DPS 8-Jan-2013  ////////////////////////////////////////////////////
        /// Write to STDOUT or STDERR file descriptor while using IDE - write to Messages pane. 
          if ((fd==STDOUT || fd==STDERR) && Globals.getGui() != null) {
@@ -258,10 +254,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        ///////////////////////////////////////////////////////////////////////////////////
        //// When running in command mode, code below works for either regular file or STDOUT/STDERR
       
-         if (!FileIOData.fdInUse(fd, 1)) // Check the existence of the "write" fd
-         {
-            fileErrorString = new String(
-                    "File descriptor " + fd + " is not open for writing");
+         if (!FileIOData.fdInUse(fd, 1)){ // Check the existence of the "write" fd
+            fileErrorString = "File descriptor " + fd + " is not open for writing";
             return -1;
          }
          // retrieve FileOutputStream from storage
@@ -312,7 +306,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @return number of bytes read, 0 on EOF, or -1 on error
     */
        public static int readFromFile(int fd, byte[] myBuffer, int lengthRequested) {
-         int retValue = -1;  
+         int retValue;
        /////////////// DPS 8-Jan-2013  //////////////////////////////////////////////////
        /// Read from STDIN file descriptor while using IDE - get input from Messages pane. 
          if (fd==STDIN && Globals.getGui() != null) {
@@ -328,8 +322,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        
          if (!FileIOData.fdInUse(fd, 0)) // Check the existence of the "read" fd
          {
-            fileErrorString = new String(
-                    "File descriptor " + fd + " is not open for reading");
+            fileErrorString = "File descriptor " + fd + " is not open for reading";
             return -1;
          }
         // retrieve FileInputStream from storage
@@ -346,14 +339,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          } 
              catch (IOException e)
             {
-               fileErrorString = new String(
-                    "IO Exception on read of file with fd " + fd);
+               fileErrorString = "IO Exception on read of file with fd " + fd;
                return -1;
             } 
-             catch (IndexOutOfBoundsException e)
-            {
-               fileErrorString = new String(
-                    "IndexOutOfBoundsException on read of file with fd" + fd);
+             catch (IndexOutOfBoundsException e) {
+               fileErrorString = "IndexOutOfBoundsException on read of file with fd" + fd;
                return -1;
             }
          return retValue;
@@ -361,9 +351,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       } // end readFromFile
    
    
-   /**
+    /**
     * Open a file for either reading or writing. Note that read/write flag is NOT
-    * IMPLEMENTED.  Also note that file permission modes are also NOT IMPLEMENTED. 
+    * IMPLEMENTED.  Also note that file permission modes are also NOT IMPLEMENTED.
     *
     * @param filename string containing filename
     * @param flags 0 for read, 1 for write
@@ -375,8 +365,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         // of the filename, flag, and the File???putStream associated with
         // that file descriptor.
 
-        int retValue = -1;
-        char ch[] = { ' '}; // Need an array to convert to String
+        int retValue;
         FileInputStream inputStream;
         FileOutputStream outputStream;
         int fdToUse;

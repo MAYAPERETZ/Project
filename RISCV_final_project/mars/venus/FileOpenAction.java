@@ -31,23 +31,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
  
-    /**
-    * Action  for the File -> Open menu item
-    */
-    public class FileOpenAction extends ChangeableAction {
+/**
+* Action  for the File -> Open menu item
+*/
+public class FileOpenAction extends ChangeableAction {
 
-        public FileOpenAction(String name, Icon icon, String descrip,
-                         Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-        }
-   	 
-        /**
-        * Launch a file chooser for name of file to open
-        * @param e component triggering this call
-        */
-        public void actionPerformed(ActionEvent e) {
-             mainUI.editor.open();
-             mainUI.getMainPane().setCurrentTab(mainUI.getMainPane().getEditTabbedPane());
-        }
-   
-   }      
+    public FileOpenAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+    }
+
+    /**
+    * Launch a file chooser for name of file to open
+    * @param e component triggering this call
+    */
+    public void actionPerformed(ActionEvent e) {
+         mainUI.editor.open();
+         mainUI.getMainPane().setCurrentTab(mainUI.getMainPane().getEditTabbedPane());
+    }
+
+}

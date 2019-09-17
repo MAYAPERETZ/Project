@@ -7,17 +7,35 @@ import java.util.function.Function;
 import mars.mips.hardware.RVIRegisters;
 import mars.util.Binary;
 
+/**
+ * This class represents the R-type instructions of RISCV.
+ * @author Maya Peretz
+ * @Version September 2019
+ */
 public class R_type extends BasicInstruction{
-	
 
-	public R_type(String example, String description, String operMask,
-			SimulationCode simCode) {
+	/**
+	* {@inheritDoc}
+	*/
+	R_type(String example, String description, String operMask,
+		   SimulationCode simCode) {
 		super(example, description, operMask, simCode);
 	}
 
-	public R_type(String example, String description, String operMask,
-				  BiFunction< Number,  Number, Number> x, Function<Number,Number> y,
-				  Function<Number, Number> z, BiFunction<Number, Number, Number>w) {
+	/**
+	 * {@inheritDoc}
+	 * @param x a function receiving two parameters of type {@code Number} which returns a
+	 * 			{@code Number} value.
+	 * @param y a function receiving a single parameter of type {@code Number} which
+	 *          returns a {@code Number} value.
+	 * @param z	a function receiving a single parameter of type {@code Number}
+	 *          which returns a {@code Number} value.
+	 * @param w	a function receiving two parameters of type {@code Number} which
+	 *          returns a {@code Number} value.
+	 */
+	R_type(String example, String description, String operMask,
+		   BiFunction<Number, Number, Number> x, Function<Number, Number> y,
+		   Function<Number, Number> z, BiFunction<Number, Number, Number> w) {
 		this(example, description, operMask,
 				statement -> {
 					 Number[] operands = statement.getOperands();
@@ -31,12 +49,15 @@ public class R_type extends BasicInstruction{
 				});
 	}
 
-	public R_type(String example, String description, String operMask,
-				  Function<Number,Number> y,
-				  Function<Number, Number> z, BiFunction<Number, Number, Number>w) {
+	R_type(String example, String description, String operMask,
+		   Function<Number, Number> y,
+		   Function<Number, Number> z, BiFunction<Number, Number, Number> w) {
 		this(example, description, operMask, null, y, z, w);
 	}
 
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public int computeOperands(Number [] operands) {
 		return (getOpcode()|InstCodeUtil.computeRd((int)operands[0])|InstCodeUtil.getFunct3(this)|
@@ -44,7 +65,10 @@ public class R_type extends BasicInstruction{
 				InstCodeUtil.computeRs2(this, operands[2])
 				| getFunct7());
 	}
-	
+
+	/**
+	* {@inheritDoc}
+	*/
 	@Override
 	public Number [] returnOperands(int instructionCode) {
 		Number [] operands = new Number[3];
@@ -58,31 +82,42 @@ public class R_type extends BasicInstruction{
 		return InstCodeUtil.mask6 & (Binary.binaryStringToInt(this.getOperationMask().substring(0, 7))<<25);
 	}
 
-	public static class RVI extends R_type{
+	/**
+	 * This class represents the RVI instructions
+	 */
+	static class RVI extends R_type{
 
-		public RVI(String example, String description, String operMask,
-				   SimulationCode simCode){
+		RVI(String example, String description, String operMask,
+			SimulationCode simCode){
 			super(example, description, operMask, simCode);
 		}
 
-		public RVI(String example, String description, String operMask, BiFunction<Number, Number, Number> x) {
+		RVI(String example, String description, String operMask, BiFunction<Number, Number, Number> x) {
 			super(example, description, operMask, x, RVIRegisters::getValue, RVIRegisters::getValue,
 					RVIRegisters::updateRegister);
 		}
 	}
-	
-	
+
+	/**
+	 * This class represents the R-type instructions of RISCV with rm field
+	 */
 	public static class WithRmField extends R_type implements Observer{
 
 		public static int rmMode = 0; // rm register default value
 
+		/**
+		 * {@inheritDoc}
+		 */
 		public WithRmField(String example, String description, String operMask,
 						   BiFunction< Number,  Number, Number> x, Function<Number, Number> y,
 						   Function<Number, Number> z, BiFunction<Number, Number, Number>w) {
 			super(example, description, operMask, x, y, z, w);
 		}
 
-		public WithRmField(String example, String description, String operMask, SimulationCode simCode){
+		/**
+		 * {@inheritDoc}
+		 */
+		WithRmField(String example, String description, String operMask, SimulationCode simCode){
 			super(example, description, operMask, simCode);
 		}
 
@@ -93,28 +128,41 @@ public class R_type extends BasicInstruction{
 		
 	}
 
+	/**
+	 * This class represents the RVM instructions of RISCV
+	 */
+	static class RVM extends R_type.RVI{
 
-	public static class RVM extends R_type.RVI{
-
-		public RVM(String example, String description, String funct3,
-				   SimulationCode simCode) {
+		/**
+		 * {@inheritDoc}
+		 * @param funct3 the funct3 field value
+		 */
+		RVM(String example, String description, String funct3,
+			SimulationCode simCode) {
 			super(example, description, "0000001tttttsssss"+ funct3+"fffff0110011", simCode);
 		}
 
-		public RVM(String example, String description, String funct3	,
-				   BiFunction<Number, Number, Number> x) {
+		/**
+		 * {@inheritDoc}
+		 * @param funct3 the funct3 field value
+		 */
+		RVM(String example, String description, String funct3,
+			BiFunction<Number, Number, Number> x) {
 			super(example, description, "0000001tttttsssss"+ funct3+"fffff0110011", x);
 		}
 
 	}
 
-	public static class Div extends RVM {
-		public Div(String example, String description, String funct3,
-					   Function<Number, Number, Number> x) {
+	/**
+	* This class represents the division-related instructions of RISCV
+	*/
+	static class Div extends RVM {
+		Div(String example, String description, String funct3,
+			Function<Number, Number, Number> x) {
 			super(example, description, funct3,
 					statement -> {
 						Number[] operands = statement.getOperands();
-						if (RVIRegisters.getValue(operands[2]) == (Number) 0) {
+						if (RVIRegisters.getValue(operands[2]).equals((Number) 0)) {
 							// Note: no exceptions, and undefined results for zero divide
 							return;
 						}

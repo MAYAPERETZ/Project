@@ -1,7 +1,7 @@
    package mars.venus;
 
    import mars.Globals;
-   import mars.MIPSprogram;
+   import mars.RISCVprogram;
    import mars.assembler.Symbol;
    import mars.assembler.SymbolTable;
    import mars.mips.hardware.memory.Memory;
@@ -180,7 +180,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          Box allSymtabTables = Box.createVerticalBox();
          for (int i=0; i<MIPSprogramsAssembled.size(); i++) {
             listOfLabelsForSymbolTable.add(new LabelsForSymbolTable(
-                        (MIPSprogram) MIPSprogramsAssembled.get(i)));
+                        (RISCVprogram) MIPSprogramsAssembled.get(i)));
          }
          ArrayList tableNames = new ArrayList();
          JTableHeader tableHeader = null;
@@ -304,22 +304,22 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    ///////////////////////////////////////////////////////////////////
    // Represents one symbol table for the display.
        private class LabelsForSymbolTable {
-         private MIPSprogram myMIPSprogram;
+         private RISCVprogram myRISCVprogram;
          private Object[][] labelData;
          private JTable labelTable;	 
          private ArrayList symbols;
          private SymbolTable symbolTable;
          private String tableName;
       	
-      	// Associated MIPSprogram object.  If null, this represents global symbol table.
-          public LabelsForSymbolTable(MIPSprogram myMIPSprogram) {
-            this.myMIPSprogram = myMIPSprogram;
-            symbolTable = (myMIPSprogram == null)
+      	// Associated RISCVprogram object.  If null, this represents global symbol table.
+          public LabelsForSymbolTable(RISCVprogram myRISCVprogram) {
+            this.myRISCVprogram = myRISCVprogram;
+            symbolTable = (myRISCVprogram == null)
                            ? Globals.symbolTable
-               				: myMIPSprogram.getLocalSymbolTable();
-            tableName = (myMIPSprogram == null)
+               				: myRISCVprogram.getLocalSymbolTable();
+            tableName = (myRISCVprogram == null)
                          ? "(global)"
-               	       : new File(myMIPSprogram.getFilename()).getName();
+               	       : new File(myRISCVprogram.getFilename()).getName();
          }
       	 
       	 // Returns file name of associated file for local symbol table or "(global)"    
@@ -334,9 +334,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	
           // builds the Table containing labels and addresses for this symbol table.
           private JTable generateLabelTable() {
-            SymbolTable symbolTable = (myMIPSprogram == null)
+            SymbolTable symbolTable = (myRISCVprogram == null)
                                       ? Globals.symbolTable
-               							  : myMIPSprogram.getLocalSymbolTable();
+               							  : myRISCVprogram.getLocalSymbolTable();
             int addressBase = Globals.getGui().getMainPane().getExecutePane().getAddressDisplayBase();
             if (textLabels.isSelected() && dataLabels.isSelected()) {
                symbols = symbolTable.getAllSymbols();

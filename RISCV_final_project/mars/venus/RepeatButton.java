@@ -35,8 +35,7 @@ import java.awt.event.MouseListener;
  * firing anyway, except to process all ActionListeners internally.  But 
  * realistically, it probably doesn't matter.  
  */
-public class RepeatButton extends JButton 
-		implements ActionListener, MouseListener {
+public class RepeatButton extends JButton implements ActionListener, MouseListener {
 
 	/**
 	* The pressed state for this button.
@@ -300,23 +299,5 @@ public class RepeatButton extends JButton
 	* Testing flag.  Set in main method.
 	*/
 	private static boolean testing = false;
- 
-	/**
-	* Main method, for testing.  Creates a frame with both styles of menu.
-	* @param  args  the command-line arguments
-	*/
-	public static void main(String[] args) {
-		testing = true;
-		JFrame f = new JFrame("RepeatButton Test");
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JPanel p = new JPanel();
-		RepeatButton b = new RepeatButton("hold me");
-		b.setActionCommand("test");
-		b.addActionListener(b);
-		p.add(b);
-		f.getContentPane().add(p);
-		f.pack();
-		f.setVisible(true);
-	}
 }

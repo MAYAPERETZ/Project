@@ -1,6 +1,7 @@
 package mars.mips.instructions;
-import mars.*;
-import mars.mips.hardware.FloatingPointException;
+
+import mars.ProcessingException;
+import mars.ProgramStatement;
 
 /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -48,6 +49,6 @@ public interface SimulationCode {
      * @param statement A ProgramStatement representing the MIPS instruction to simulate. 
      * @throws ProcessingException This is a run-time exception generated during simulation.
      **/
-     
-	public void simulate(ProgramStatement statement) throws ProcessingException;
+
+    void simulate(ProgramStatement statement) throws ProcessingException;
 }

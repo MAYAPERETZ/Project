@@ -35,7 +35,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
  
 public class Editor {
-   
+
     public static final int MIN_TAB_SIZE = 1;
     public static final int MAX_TAB_SIZE = 32;
     public static final int MIN_BLINK_RATE = 0;     // no flashing
@@ -79,9 +79,9 @@ public class Editor {
    
     /**
     *  Get name of current directory for Open operation.
-    *  @return String containing directory pathname.  Returns null if there is
-    *   no EditTabbedPane.  Returns default, directory MARS is launched from, if
-    *   no Opens have been performed.
+    *  @return {@code String} containing directory pathname.  Returns null if there is
+    *  no EditTabbedPane.  Returns default, directory MARS is launched from, if
+    *  no Opens have been performed.
     */
    	
     public String getCurrentOpenDirectory() {
@@ -126,7 +126,6 @@ public class Editor {
         this.currentSaveDirectory = currentSaveDirectory;
     }
    	
-   	
     /**
     * Generates a default file name
     * @return returns string mipsN.asm, where N is 1,2,3,...
@@ -135,7 +134,6 @@ public class Editor {
         newUsageCount++;
         return "mips"+newUsageCount+".asm";
     }
-    
    
     /** Places name of file currently being edited into its edit tab and
     *  the application's title bar.  The edit tab will contain only
@@ -170,7 +168,7 @@ public class Editor {
 
     /**
     *  Perform "close" operation on current tab's file.
-    *  @return true if succeeded, else false.
+    *  @return {@code true} if succeeded, else {@code false}.
     */
     public boolean close() {
         return editTabbedPane.closeCurrentFile();
@@ -178,7 +176,7 @@ public class Editor {
 
     /**
     *  Close all currently open files.
-    *  @return true if succeeded, else false.
+    *  @return {@code true} if succeeded, else {@code false}.
     */
     public boolean closeAll() {
         return editTabbedPane.closeAllFiles();
@@ -186,7 +184,7 @@ public class Editor {
 
     /**
     *  Perform "save" operation on current tab's file.
-    *  @return true if succeeded, else false.
+    *  @return {@code true} if succeeded, else {@code false}.
     */
     public boolean save() {
         return editTabbedPane.saveCurrentFile();
@@ -194,7 +192,7 @@ public class Editor {
 
     /**
     *  Perform "save as" operation on current tab's file.
-    *  @return true if succeeded, else false.
+    *  @return {@code true} if succeeded, else {@code false}.
     */
     public boolean saveAs() {
         return editTabbedPane.saveAsCurrentFile();
@@ -202,7 +200,7 @@ public class Editor {
 		
     /**
     *  Perform save operation on all open files (tabs).
-    *  @return true if succeeded, else false.
+    *  @return {@code true} if succeeded, else {@code false}.
     */
     public boolean saveAll() {
         return editTabbedPane.saveAllFiles();
@@ -210,22 +208,21 @@ public class Editor {
    	
     /**
     *  Open file in a new tab.
-    *  @return true if succeeded, else false.
+    *  @return {@code true} if succeeded, else {@code false}.
     */
     public boolean open() {
         return editTabbedPane.openFile();
     }
-   
 
    /**
     * Called by several of the Action objects when there is potential
     * loss of editing changes.  Specifically: if there is a current
-    * file open for editing and its modify flag is true, then give user
+    * file open for editing and its modify flag is {@code true}, then give user
     * a dialog box with choice to save, discard edits, or cancel and
     * carry out the decision.  This applies to File->New, File->Open,
     * File->Close, and File->Exit.
     * @return false means user selected Cancel so caller should do that.
-    * Return of true means caller can proceed (edits were saved or discarded).
+    * Return of {@code true} means caller can proceed (edits were saved or discarded).
     */
     public boolean editsSavedOrAbandoned() {
         return editTabbedPane.editsSavedOrAbandoned();

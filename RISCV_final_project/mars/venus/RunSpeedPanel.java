@@ -33,12 +33,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
 /**
- * Class for the Run speed slider control.  One is created and can be obtained using
- * getInstance().
- *
- * @author Pete Sanderson
- * @version August 2005
- */
+* Class for the Run speed slider control.  One is created and can be obtained using
+* getInstance().
+*
+* @author Pete Sanderson
+* @version August 2005
+*/
 	 
 public class RunSpeedPanel extends JPanel {
     /** Constant that represents unlimited run speed.  Compare with return value of

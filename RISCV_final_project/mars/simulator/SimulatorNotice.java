@@ -38,45 +38,47 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
 public class SimulatorNotice {
-   private int action;
-	private Number maxSteps;
-	private double runSpeed;
-	private Number programCounter;
-	public static final int SIMULATOR_START = 0;
-	public static final int SIMULATOR_STOP  = 1;
+    private int action;
+    private Number maxSteps;
+    private double runSpeed;
+    private Number programCounter;
+    public static final int SIMULATOR_START = 0;
+    public static final int SIMULATOR_STOP  = 1;
 
-  /** Constructor will be called only within this package, so assume
-   *  address and length are in valid ranges.
-	*/
-   public SimulatorNotice(int action, Number maxSteps, double runSpeed, Number programCounter) {
-	  this.action = action;
-	  this.maxSteps = maxSteps;
-	  this.runSpeed = runSpeed;
-	  this.programCounter = programCounter;
-  }
+    /**
+    * Constructor will be called only within this package, so assume
+    *  address and length are in valid ranges.
+    */
+    public SimulatorNotice(int action, Number maxSteps, double runSpeed, Number programCounter) {
+        this.action = action;
+        this.maxSteps = maxSteps;
+        this.runSpeed = runSpeed;
+        this.programCounter = programCounter;
+    }
 
-  /** Fetch the memory address that was accessed. */
-  public int getAction() {
-     return this.action;
-  }
-  /** Fetch the length in bytes of the access operation (4,2,1). */
-  public Number getMaxSteps() {
-     return this.maxSteps;
-  }
-  /** Fetch the value of the access operation (the value read or written). */
-  public double getRunSpeed() {
-     return this.runSpeed;
-  }
+    /** Fetch the memory address that was accessed. */
+    public int getAction() {
+        return this.action;
+    }
+
+    /** Fetch the length in bytes of the access operation (4,2,1). */
+    public Number getMaxSteps() {
+        return this.maxSteps;
+    }
+    /** Fetch the value of the access operation (the value read or written). */
+    public double getRunSpeed() {
+        return this.runSpeed;
+    }
   
-  /** Fetch the value of the access operation (the value read or written). */
-  public Number getProgramCounter() {
-     return this.programCounter;
-  }
-  /** String representation indicates access type, address and length in bytes */
-  public String toString() {
-     return ((this.getAction()==SIMULATOR_START) ? "START " : "STOP  ") +
-	         "Max Steps " + this.maxSteps + " " + 
-				"Speed "+ ((this.runSpeed==mars.venus.RunSpeedPanel.UNLIMITED_SPEED)? "unlimited " : ""+this.runSpeed+" inst/sec") +
-				"Prog Ctr "+this.programCounter;
-  }
+    /** Fetch the value of the access operation (the value read or written). */
+    public Number getProgramCounter() {
+        return this.programCounter;
+    }
+    /** String representation indicates access type, address and length in bytes */
+    public String toString() {
+        return ((this.getAction()==SIMULATOR_START) ? "START " : "STOP  ") +
+             "Max Steps " + this.maxSteps + " " +
+                "Speed "+ ((this.runSpeed==mars.venus.RunSpeedPanel.UNLIMITED_SPEED)? "unlimited " : ""+this.runSpeed+" inst/sec") +
+                "Prog Ctr "+this.programCounter;
+    }
 }

@@ -53,7 +53,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * here primarily so both can share the Action objects.
     */
 	
- public class GUI extends JFrame{
+public class GUI extends JFrame{
     GUI mainUI;
     public JMenuBar menu;
     JToolBar toolbar;
@@ -151,7 +151,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         RegistersWindow registersTab = new RegistersWindow();
         Coprocessor1Window coprocessor1Tab = new Coprocessor1Window();
         Coprocessor0Window coprocessor0Tab = new Coprocessor0Window();
-        registersPane = new RegistersPane(mainUI, registersTab, coprocessor1Tab, coprocessor0Tab);
+        registersPane = new RegistersPane(registersTab, coprocessor1Tab, coprocessor0Tab);
         registersPane.setPreferredSize(registersPanePreferredSize);
 
         mainPane = new MainPane(mainUI, editor, registersTab, coprocessor1Tab, coprocessor0Tab);
@@ -444,190 +444,188 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
            }
      }
 
- /*
-  * build the menus and connect them to action objects (which serve as action listeners
-  * shared between menu item and corresponding toolbar icon).
-  */
- 
+    /*
+    * build the menus and connect them to action objects (which serve as action listeners
+    * shared between menu item and corresponding toolbar icon).
+    */
     private JMenuBar setUpMenuBar() {
    
-      Toolkit tk = Toolkit.getDefaultToolkit();
-      Class cs = this.getClass();
-      JMenuBar menuBar = new JMenuBar();
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        Class cs = this.getClass();
+        JMenuBar menuBar = new JMenuBar();
         // components of the menubar
         JMenu file = new JMenu("File");
-      file.setMnemonic(KeyEvent.VK_F);
+        file.setMnemonic(KeyEvent.VK_F);
         JMenu edit = new JMenu("Edit");
-      edit.setMnemonic(KeyEvent.VK_E);
+        edit.setMnemonic(KeyEvent.VK_E);
         JMenu run = new JMenu("Run");
-      run.setMnemonic(KeyEvent.VK_R);
-      //window = new JMenu("Window");
-      //window.setMnemonic(KeyEvent.VK_W);
+        run.setMnemonic(KeyEvent.VK_R);
+        //window = new JMenu("Window");
+        //window.setMnemonic(KeyEvent.VK_W);
         JMenu settings = new JMenu("Settings");
-      settings.setMnemonic(KeyEvent.VK_S);
+        settings.setMnemonic(KeyEvent.VK_S);
         JMenu help = new JMenu("Help");
-      help.setMnemonic(KeyEvent.VK_H); 
-   	// slight bug: user typing alt-H activates help menu item directly, not help menu
+        help.setMnemonic(KeyEvent.VK_H);
+        // slight bug: user typing alt-H activates help menu item directly, not help menu
 
         JMenuItem fileNew = new JMenuItem(fileNewAction);
-      fileNew.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"New16.png"))));
+        fileNew.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"New16.png"))));
         JMenuItem fileOpen = new JMenuItem(fileOpenAction);
-      fileOpen.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Open16.png"))));
+        fileOpen.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Open16.png"))));
         JMenuItem fileClose = new JMenuItem(fileCloseAction);
-      fileClose.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        fileClose.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         JMenuItem fileCloseAll = new JMenuItem(fileCloseAllAction);
-      fileCloseAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        fileCloseAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         JMenuItem fileSave = new JMenuItem(fileSaveAction);
-      fileSave.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Save16.png"))));
+        fileSave.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Save16.png"))));
         JMenuItem fileSaveAs = new JMenuItem(fileSaveAsAction);
-      fileSaveAs.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"SaveAs16.png"))));
+        fileSaveAs.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"SaveAs16.png"))));
         JMenuItem fileSaveAll = new JMenuItem(fileSaveAllAction);
-      fileSaveAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        fileSaveAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         JMenuItem fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
-      fileDumpMemory.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump16.png"))));
+        fileDumpMemory.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump16.png"))));
         JMenuItem filePrint = new JMenuItem(filePrintAction);
-      filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
+        filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
         JMenuItem fileExit = new JMenuItem(fileExitAction);
-      fileExit.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-      file.add(fileNew);
-      file.add(fileOpen);
-      file.add(fileClose);
-      file.add(fileCloseAll);
-      file.addSeparator();
-      file.add(fileSave);
-      file.add(fileSaveAs);
-      file.add(fileSaveAll);
-      if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
-         file.add(fileDumpMemory);
-      }
-      file.addSeparator();
-      file.add(filePrint);
-      file.addSeparator();
-      file.add(fileExit);
+        fileExit.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        file.add(fileNew);
+        file.add(fileOpen);
+        file.add(fileClose);
+        file.add(fileCloseAll);
+        file.addSeparator();
+        file.add(fileSave);
+        file.add(fileSaveAs);
+        file.add(fileSaveAll);
+        if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0)
+            file.add(fileDumpMemory);
+        file.addSeparator();
+        file.add(filePrint);
+        file.addSeparator();
+        file.add(fileExit);
 
         JMenuItem editUndo = new JMenuItem(editUndoAction);
-      editUndo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Undo16.png"))));//"Undo16.gif"))));
+        editUndo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Undo16.png"))));//"Undo16.gif"))));
         JMenuItem editRedo = new JMenuItem(editRedoAction);
-      editRedo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Redo16.png"))));//"Redo16.gif"))));      
+        editRedo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Redo16.png"))));//"Redo16.gif"))));
         JMenuItem editCut = new JMenuItem(editCutAction);
-      editCut.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Cut16.gif"))));
+        editCut.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Cut16.gif"))));
         JMenuItem editCopy = new JMenuItem(editCopyAction);
-      editCopy.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Copy16.png"))));//"Copy16.gif"))));
+        editCopy.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Copy16.png"))));//"Copy16.gif"))));
         JMenuItem editPaste = new JMenuItem(editPasteAction);
-      editPaste.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Paste16.png"))));//"Paste16.gif"))));
+        editPaste.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Paste16.png"))));//"Paste16.gif"))));
         JMenuItem editFindReplace = new JMenuItem(editFindReplaceAction);
-      editFindReplace.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find16.png"))));//"Paste16.gif"))));
+        editFindReplace.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find16.png"))));//"Paste16.gif"))));
         JMenuItem editSelectAll = new JMenuItem(editSelectAllAction);
-      editSelectAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-      edit.add(editUndo);
-      edit.add(editRedo);
-      edit.addSeparator();
-      edit.add(editCut);
-      edit.add(editCopy);
-      edit.add(editPaste);
-      edit.addSeparator();
-      edit.add(editFindReplace);
-      edit.add(editSelectAll);
+        editSelectAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        edit.add(editUndo);
+        edit.add(editRedo);
+        edit.addSeparator();
+        edit.add(editCut);
+        edit.add(editCopy);
+        edit.add(editPaste);
+        edit.addSeparator();
+        edit.add(editFindReplace);
+        edit.add(editSelectAll);
 
         JMenuItem runAssemble = new JMenuItem(runAssembleAction);
-      runAssemble.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble16.png"))));//"MyAssemble16.gif"))));
+        runAssemble.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble16.png"))));//"MyAssemble16.gif"))));
         JMenuItem runGo = new JMenuItem(runGoAction);
-      runGo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Play16.png"))));//"Play16.gif"))));
+        runGo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Play16.png"))));//"Play16.gif"))));
         JMenuItem runStep = new JMenuItem(runStepAction);
-      runStep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward16.png"))));//"MyStepForward16.gif"))));
+        runStep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward16.png"))));//"MyStepForward16.gif"))));
         JMenuItem runBackstep = new JMenuItem(runBackstepAction);
-      runBackstep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack16.png"))));//"MyStepBack16.gif"))));
+        runBackstep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack16.png"))));//"MyStepBack16.gif"))));
         JMenuItem runReset = new JMenuItem(runResetAction);
-      runReset.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Reset16.png"))));//"MyReset16.gif"))));
+        runReset.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Reset16.png"))));//"MyReset16.gif"))));
         JMenuItem runStop = new JMenuItem(runStopAction);
-    //  runStop.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Stop16.png"))));//"Stop16.gif"))));
+        //  runStop.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Stop16.png"))));//"Stop16.gif"))));
         JMenuItem runPause = new JMenuItem(runPauseAction);
-      runPause.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Pause16.png"))));//"Pause16.gif"))));
+        runPause.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Pause16.png"))));//"Pause16.gif"))));
         JMenuItem runClearBreakpoints = new JMenuItem(runClearBreakpointsAction);
-      runClearBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        runClearBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         JMenuItem runToggleBreakpoints = new JMenuItem(runToggleBreakpointsAction);
-      runToggleBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-   
-      run.add(runAssemble);
-      run.add(runGo);
-      run.add(runStep);
-      run.add(runBackstep);
-      run.add(runPause);
-      run.add(runStop);
-      run.add(runReset);
-      run.addSeparator();
-      run.add(runClearBreakpoints);
-      run.add(runToggleBreakpoints);
+        runToggleBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+
+        run.add(runAssemble);
+        run.add(runGo);
+        run.add(runStep);
+        run.add(runBackstep);
+        run.add(runPause);
+        run.add(runStop);
+        run.add(runReset);
+        run.addSeparator();
+        run.add(runClearBreakpoints);
+        run.add(runToggleBreakpoints);
 
         JCheckBoxMenuItem settingsLabel = new JCheckBoxMenuItem(settingsLabelAction);
-      settingsLabel.setSelected(Globals.getSettings().getLabelWindowVisibility());
+        settingsLabel.setSelected(Globals.getSettings().getLabelWindowVisibility());
         JCheckBoxMenuItem settingsPopupInput = new JCheckBoxMenuItem(settingsPopupInputAction);
-      settingsPopupInput.setSelected(Globals.getSettings().getBooleanSetting(Settings.POPUP_SYSCALL_INPUT));
-      settingsValueDisplayBase = new JCheckBoxMenuItem(settingsValueDisplayBaseAction);
-      settingsValueDisplayBase.setSelected(Globals.getSettings().getDisplayValuesInHex());//mainPane.getExecutePane().getValueDisplayBaseChooser().isSelected());
-      // Tell the corresponding JCheckBox in the Execute Pane about me -- it has already been created.
-     // mainPane.getExecutePane().getValueDisplayBaseChooser().setSettingsMenuItem(settingsValueDisplayBase);
-      settingsAddressDisplayBase = new JCheckBoxMenuItem(settingsAddressDisplayBaseAction);
-      settingsAddressDisplayBase.setSelected(Globals.getSettings().getDisplayAddressesInHex());//mainPane.getExecutePane().getValueDisplayBaseChooser().isSelected());
-      // Tell the corresponding JCheckBox in the Execute Pane about me -- it has already been created.
-      mainPane.getExecutePane().getAddressDisplayBaseChooser().setSettingsMenuItem();
+        settingsPopupInput.setSelected(Globals.getSettings().getBooleanSetting(Settings.POPUP_SYSCALL_INPUT));
+        settingsValueDisplayBase = new JCheckBoxMenuItem(settingsValueDisplayBaseAction);
+        settingsValueDisplayBase.setSelected(Globals.getSettings().getDisplayValuesInHex());//mainPane.getExecutePane().getValueDisplayBaseChooser().isSelected());
+        // Tell the corresponding JCheckBox in the Execute Pane about me -- it has already been created.
+        // mainPane.getExecutePane().getValueDisplayBaseChooser().setSettingsMenuItem(settingsValueDisplayBase);
+        settingsAddressDisplayBase = new JCheckBoxMenuItem(settingsAddressDisplayBaseAction);
+        settingsAddressDisplayBase.setSelected(Globals.getSettings().getDisplayAddressesInHex());//mainPane.getExecutePane().getValueDisplayBaseChooser().isSelected());
+        // Tell the corresponding JCheckBox in the Execute Pane about me -- it has already been created.
+        mainPane.getExecutePane().getAddressDisplayBaseChooser().setSettingsMenuItem();
         JCheckBoxMenuItem settingsExtended = new JCheckBoxMenuItem(settingsExtendedAction);
-      settingsExtended.setSelected(Globals.getSettings().getExtendedAssemblerEnabled());
+        settingsExtended.setSelected(Globals.getSettings().getExtendedAssemblerEnabled());
         JCheckBoxMenuItem settingsDelayedBranching = new JCheckBoxMenuItem(settingsDelayedBranchingAction);
-      settingsDelayedBranching.setSelected(Globals.getSettings().getDelayedBranchingEnabled());
+        settingsDelayedBranching.setSelected(Globals.getSettings().getDelayedBranchingEnabled());
         JCheckBoxMenuItem settingsSelfModifyingCode = new JCheckBoxMenuItem(settingsSelfModifyingCodeAction);
-      settingsSelfModifyingCode.setSelected(Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED));
+        settingsSelfModifyingCode.setSelected(Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED));
         JCheckBoxMenuItem settingsAssembleOnOpen = new JCheckBoxMenuItem(settingsAssembleOnOpenAction);
-      settingsAssembleOnOpen.setSelected(Globals.getSettings().getAssembleOnOpenEnabled());
+        settingsAssembleOnOpen.setSelected(Globals.getSettings().getAssembleOnOpenEnabled());
         JCheckBoxMenuItem settingsAssembleAll = new JCheckBoxMenuItem(settingsAssembleAllAction);
-      settingsAssembleAll.setSelected(Globals.getSettings().getAssembleAllEnabled());
+        settingsAssembleAll.setSelected(Globals.getSettings().getAssembleAllEnabled());
         JCheckBoxMenuItem settingsWarningsAreErrors = new JCheckBoxMenuItem(settingsWarningsAreErrorsAction);
-      settingsWarningsAreErrors.setSelected(Globals.getSettings().getWarningsAreErrors());
+        settingsWarningsAreErrors.setSelected(Globals.getSettings().getWarningsAreErrors());
         JCheckBoxMenuItem settingsStartAtMain = new JCheckBoxMenuItem(settingsStartAtMainAction);
-      settingsStartAtMain.setSelected(Globals.getSettings().getStartAtMain());
+        settingsStartAtMain.setSelected(Globals.getSettings().getStartAtMain());
         JCheckBoxMenuItem settingsProgramArguments = new JCheckBoxMenuItem(settingsProgramArgumentsAction);
-      settingsProgramArguments.setSelected(Globals.getSettings().getProgramArguments());
+        settingsProgramArguments.setSelected(Globals.getSettings().getProgramArguments());
         JMenuItem settingsEditor = new JMenuItem(settingsEditorAction);
         JMenuItem settingsHighlighting = new JMenuItem(settingsHighlightingAction);
         JMenuItem settingsExceptionHandler = new JMenuItem(settingsExceptionHandlerAction);
         JMenuItem settingsMemoryConfiguration = new JMenuItem(settingsMemoryConfigurationAction);
-   	
-      settings.add(settingsLabel);
-      settings.add(settingsProgramArguments);
-      settings.add(settingsPopupInput);
-      settings.add(settingsAddressDisplayBase);
-      settings.add(settingsValueDisplayBase);
-      settings.addSeparator();
-      settings.add(settingsAssembleOnOpen);
-      settings.add(settingsAssembleAll);
-      settings.add(settingsWarningsAreErrors);
-      settings.add(settingsStartAtMain);
-      settings.addSeparator();
-      settings.add(settingsExtended);
-      settings.add(settingsDelayedBranching);
-      settings.add(settingsSelfModifyingCode);
-      settings.addSeparator();
-      settings.add(settingsEditor);
-      settings.add(settingsHighlighting);
-      settings.add(settingsExceptionHandler);
-      settings.add(settingsMemoryConfiguration);
+
+        settings.add(settingsLabel);
+        settings.add(settingsProgramArguments);
+        settings.add(settingsPopupInput);
+        settings.add(settingsAddressDisplayBase);
+        settings.add(settingsValueDisplayBase);
+        settings.addSeparator();
+        settings.add(settingsAssembleOnOpen);
+        settings.add(settingsAssembleAll);
+        settings.add(settingsWarningsAreErrors);
+        settings.add(settingsStartAtMain);
+        settings.addSeparator();
+        settings.add(settingsExtended);
+        settings.add(settingsDelayedBranching);
+        settings.add(settingsSelfModifyingCode);
+        settings.addSeparator();
+        settings.add(settingsEditor);
+        settings.add(settingsHighlighting);
+        settings.add(settingsExceptionHandler);
+        settings.add(settingsMemoryConfiguration);
 
         JMenuItem helpHelp = new JMenuItem(helpHelpAction);
-      helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help16.png"))));//"Help16.gif"))));
+        helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help16.png"))));//"Help16.gif"))));
         JMenuItem helpAbout = new JMenuItem(helpAboutAction);
-      helpAbout.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
-      help.add(helpHelp);
-      help.addSeparator();
-      help.add(helpAbout);
+        helpAbout.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        help.add(helpHelp);
+        help.addSeparator();
+        help.add(helpAbout);
 
-      menuBar.add(file);
-      menuBar.add(edit);
-      menuBar.add(run);
-      menuBar.add(settings);
-      menuBar.add(help);
+        menuBar.add(file);
+        menuBar.add(edit);
+        menuBar.add(run);
+        menuBar.add(settings);
+        menuBar.add(help);
 
-      return menuBar;
-   }
+        return menuBar;
+    }
 
  /*
   * build the toolbar and connect items to action objects (which serve as action listeners
@@ -847,4 +845,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     this.menu.dispatchEvent(evt);
     }
 
+    private class ToolBarComponent extends JButton{
+
+        private ToolBarComponent(Action action) {
+            super(action);
+            this.setOpaque(false);
+            setFocusable(false);
+            setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+            setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        }
     }
+
+ }

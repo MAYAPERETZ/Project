@@ -6,12 +6,12 @@ import mars.Settings;
 import mars.mips.hardware.AccessNotice;
 import mars.mips.hardware.AddressErrorException;
 import mars.mips.hardware.MemoryConfigurations;
-import mars.mips.instructions.GenMath;
+import mars.util.GenMath;
 import mars.mips.instructions.Instruction;
 import mars.simulator.Exceptions;
 import java.util.*;
 import java.util.function.BiFunction;
-import static mars.mips.instructions.GenMath.*;
+import static mars.util.GenMath.*;
 import static mars.util.Math2.*;
 	
 	/*
@@ -203,7 +203,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
     * Returns the unique Memory instance, which becomes in essence global.
     */
-
     public static Memory getInstance() {
      return uniqueMemoryInstance;
     }
@@ -211,7 +210,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
     * Explicitly clear the contents of memory.  Typically done at start of assembly.
     */
-
     public void clear() {
        setConfiguration();
        initialize();
@@ -222,7 +220,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * collection of memory segment addresses. e.g. text segment starting at
     * address 0x00400000.  Configuration can be modified starting with MARS 3.7.
     */
-
     public void setConfiguration() {
         externBaseAddress = MemoryConfigurations.getCurrentConfiguration().getExternBaseAddress(); //0x10000000;
         globalPointer = MemoryConfigurations.getCurrentConfiguration().getGlobalPointer(); //0x10008000;
@@ -419,88 +416,85 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        }
    	
     ///////////////////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Starting at the given word address, write the given value over 4 bytes (a word).  
-     *  The address must be word-aligned.
-     * 
-     * @param address Starting address of Memory address to be set.
-     * @param value Value to be stored starting at that address.
-     * @return old value that was replaced by setWord operation.
-     * @throws AddressErrorException If address is not on word boundary.
-    **/ 
-       
-       public Number setWord(Number address, Number value) throws AddressErrorException {
-           return set(address, value, DataTypes.word, Globals.program.getBackStepper()::addMemoryRestoreWord);
-      }
+    /**
+    *  Starting at the given word address, write the given value over 4 bytes (a word).
+    *  The address must be word-aligned.
+    *
+    * @param address Starting address of Memory address to be set.
+    * @param value Value to be stored starting at that address.
+    * @return old value that was replaced by setWord operation.
+    * @throws AddressErrorException If address is not on word boundary.
+    */
+    public Number setWord(Number address, Number value) throws AddressErrorException {
+        return set(address, value, DataTypes.word, Globals.program.getBackStepper()::addMemoryRestoreWord);
+    }
    
-      
-       public Number setDoubleWord(Number address, Number value) throws AddressErrorException {
-           return set(address, value, DataTypes.doubleword, Globals.program.getBackStepper()::addMemoryRestoreDoubleWord);
-        }    
+
+    public Number setDoubleWord(Number address, Number value) throws AddressErrorException {
+        return set(address, value, DataTypes.doubleword, Globals.program.getBackStepper()::addMemoryRestoreDoubleWord);
+    }
    
-   
-    ///////////////////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Starting at the given halfword address, write the lower 16 bits of given value 
-     *  into 2 bytes (a halfword).  
-     * 
-     * @param address Starting address of Memory address to be set.
-     * @param value Value to be stored starting at that address.  Only low order 16 bits used.
-     * @return old value that was replaced by setHalf operation.
-     * @throws AddressErrorException If address is not on halfword boundary.
-    **/   
-       public Number setHalf(Number address, Number value) throws AddressErrorException {
-           return set(address, value, DataTypes.halfword, Globals.program.getBackStepper()::addMemoryRestoreByte);
-      }
    
     ///////////////////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Writes low order 8 bits of given value into specified Memory byte.
-     * 
-     * @param address Address of Memory byte to be set.
-     * @param value Value to be stored at that address.  Only low order 8 bits used.
-     * @return old value that was replaced by setByte operation.
-     **/
-     
-       public Number setByte(Number address, Number value) throws AddressErrorException {
-         return set(address, value, DataTypes.Byte, Globals.program.getBackStepper()::addMemoryRestoreByte);
-      }
+
+    /**
+    *  Starting at the given halfword address, write the lower 16 bits of given value
+    *  into 2 bytes (a halfword).
+    *
+    * @param address Starting address of Memory address to be set.
+    * @param value Value to be stored starting at that address.  Only low order 16 bits used.
+    * @return old value that was replaced by setHalf operation.
+    * @throws AddressErrorException If address is not on halfword boundary.
+    */
+    public Number setHalf(Number address, Number value) throws AddressErrorException {
+        return set(address, value, DataTypes.halfword, Globals.program.getBackStepper()::addMemoryRestoreByte);
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+    * Writes low order 8 bits of given value into specified Memory byte.
+    *
+    * @param address Address of Memory byte to be set.
+    * @param value Value to be stored at that address.  Only low order 8 bits used.
+    * @return old value that was replaced by setByte operation.
+    */
+    public Number setByte(Number address, Number value) throws AddressErrorException {
+        return set(address, value, DataTypes.Byte, Globals.program.getBackStepper()::addMemoryRestoreByte);
+    }
 
    ////////////////////////////////////////////////////////////////////////////////
-   /**
-    * Stores ProgramStatement in Text Segment.  
+
+    /**
+    * Stores ProgramStatement in Text Segment.
     * @param address Starting address of Memory address to be set.  Must be word boundary.
     * @param statement Machine code to be stored starting at that address -- for simulation
     * purposes, actually stores reference to ProgramStatement instead of 32-bit machine code.
     * @throws AddressErrorException If address is not on word boundary or is outside Text Segment.
     * @see ProgramStatement
-    **/
-   
-       public void setStatement(Number address, ProgramStatement statement) throws AddressErrorException {
-         if (!isEqz(rem(address, 4)) || !textBlockTable.inSegment(address) ||
-        		 kernelTextBlockTable.inSegment(address)) {
+    */
+    public void setStatement(Number address, ProgramStatement statement) throws AddressErrorException {
+        if (!isEqz(rem(address, 4)) || !textBlockTable.inSegment(address) ||
+             kernelTextBlockTable.inSegment(address)) {
             throw new AddressErrorException(
                "store address to text segment out of range or not aligned to word boundary ",
                Exceptions.ADDRESS_EXCEPTION_STORE, address);
-         }
-         if (textBlockTable.inSegment(address)) textBlockTable.storeProgramStatement(address, statement);
-         else kernelTextBlockTable.storeProgramStatement(address, statement);
-      }
-   	
-       
-      private Number set(Number address, Number value, DataTypes type,
-    		  BiFunction<Number,Number, Number> x) throws AddressErrorException {
-    	  if (!isEqz(GenMath.rem(address,type.getValue()))) {
-              throw new AddressErrorException("store address not aligned on "+ type +" boundary ",
-                 Exceptions.ADDRESS_EXCEPTION_STORE, address);
-          }
-    	  
-    	   
-          	 return (Globals.getSettings().getBackSteppingEnabled())
-          	 	? x.apply(address ,set(address ,value ,type.getValue()))
-          	 			: set(address, value, type.getValue());
-          	 	
-      }
+        }
+        if (textBlockTable.inSegment(address)) textBlockTable.storeProgramStatement(address, statement);
+        else kernelTextBlockTable.storeProgramStatement(address, statement);
+    }
+
+    private Number set(Number address, Number value, DataTypes type, BiFunction<Number,Number, Number> x)
+            throws AddressErrorException {
+
+        if (!isEqz(GenMath.rem(address,type.getValue()))) {
+            throw new AddressErrorException("store address not aligned on "+ type +" boundary ",
+                Exceptions.ADDRESS_EXCEPTION_STORE, address);
+        }
+
+        return (Globals.getSettings().getBackSteppingEnabled())
+        ? x.apply(address ,set(address ,value ,type.getValue())) : set(address, value, type.getValue());
+
+    }
    
  	
    /********************************  THE GETTER METHODS  ******************************/
@@ -538,113 +532,111 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @param address Starting address of Memory address to be read.
     * @param length Number of bytes to be read.
     * @return  Value stored starting at that address.
-    **/
-    
-       public Number get(Number address, int length) throws AddressErrorException {
-         return get(address, length, true);
-      }
+    */
+    public Number get(Number address, int length) throws AddressErrorException {
+        return get(address, length, true);
+    }
    	
-   	// Does the real work, but includes option to NOT notify observers.
-       private Number get(Number address, int length, boolean notify) throws AddressErrorException {
-         Number value = 0;
+    // Does the real work, but includes option to NOT notify observers.
+    private Number get(Number address, int length, boolean notify) throws AddressErrorException {
+        Number value = 0;
          
-         if(tables.isInAnyBlockTable(address)) {
-           	for(BlockTable table : tables) {
-          	 	if(table.inSegment(address)) {
-          		 	value = table.storeOrFetchNumbersInTable(
-          		 			address, length, value, (byteOrder == LITTLE_ENDIAN), BlockTable.op.FETCH);
-          		 	break;
-          	 	}
-           	}
-         }
-         else if (textBlockTable.inSegment(address)) {
-           // Burch Mod (Jan 2013): replace throw with calls to getStatementNoNotify & getBinaryStatement 
-           // DPS adaptation 5-Jul-2013: either throw or call, depending on setting
+        if(tables.isInAnyBlockTable(address)) {
+            for(BlockTable table : tables) {
+                if(table.inSegment(address)) {
+                    value = table.storeOrFetchNumbersInTable(
+                            address, length, value, (byteOrder == LITTLE_ENDIAN), BlockTable.op.FETCH);
+                    break;
+                }
+            }
+        }
+        else if (textBlockTable.inSegment(address)) {
+            // Burch Mod (Jan 2013): replace throw with calls to getStatementNoNotify & getBinaryStatement
+            // DPS adaptation 5-Jul-2013: either throw or call, depending on setting
             if (Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED)) {
                ProgramStatement stmt = getStatementNoNotify(address);
                value = stmt == null ? 0 : stmt.getBinaryStatement();
-            } 
-            else {
-               throw new AddressErrorException(
-                  "Cannot read directly from text segment!", 
-                  Exceptions.ADDRESS_EXCEPTION_LOAD, address);
             }
-         } 
-         else if (kernelTextBlockTable.inSegment(address)) {
-           // DEVELOPER: PLEASE USE getStatement() TO READ FROM KERNEL TEXT SEGMENT...
+            else {
+                throw new AddressErrorException(
+                "Cannot read directly from text segment!",
+                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+            }
+        }
+        else if (kernelTextBlockTable.inSegment(address)) {
+            // DEVELOPER: PLEASE USE getStatement() TO READ FROM KERNEL TEXT SEGMENT...
             throw new AddressErrorException(
-               "DEVELOPER: You must use getStatement() to read from kernel text segment!", 
+               "DEVELOPER: You must use getStatement() to read from kernel text segment!",
                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         } 
-         else {
-           // falls outside Mars addressing range
+        }
+        else {
+            // falls outside Mars addressing range
             throw new AddressErrorException("address out of range ",
-               Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         }
-         if (notify) notifyAnyObservers(AccessNotice.READ, address, length, value);
-         return value;
-      }
-   
+            Exceptions.ADDRESS_EXCEPTION_LOAD, address);
+        }
+        if (notify) notifyAnyObservers(AccessNotice.READ, address, length, value);
+            return value;
+    }
    
    /////////////////////////////////////////////////////////////////////////
-    /** 
-     *  Starting at the given word address, read a 4/8 byte word/double-word as an int/long.
-     *  It transfers the 32/64 bit value "raw" as stored in memory, and does not adjust
-     *  for byte order (big or little endian).  Address must be word/double-word-aligned.
-     *
-     *  @param address Starting address of word to be read.
-     *  @return  Word/Double-word (4 or 8 byte value respectively) stored starting at that address.
-     *  @throws AddressErrorException If address is not on word/double-word boundary.
-    **/
-        
+    /**
+    *  Starting at the given word address, read a 4/8 byte word/double-word as an int/long.
+    *  It transfers the 32/64 bit value "raw" as stored in memory, and does not adjust
+    *  for byte order (big or little endian).  Address must be word/double-word-aligned.
+    *
+    *  @param address Starting address of word to be read.
+    *  @return  Word/Double-word (4 or 8 byte value respectively) stored starting at that address.
+    *  @throws AddressErrorException If address is not on word/double-word boundary.
+    */
+
     // Note: the logic here is repeated in getRawWordOrNull() below.  Logic is
     // simplified by having this method just call getRawWordOrNull() then 
     // return either the int of its return value, or 0 if it returns null.
     // Doing so would be detrimental to simulation runtime performance, so
     // I decided to keep the duplicate logic.
-       public Number getRaw(Number address , final int shift) throws AddressErrorException {
-         Number value = 0;
-         int addressLength = (shift % 2)*WORD_LENGTH_BYTES;
-         if (!isEqz(rem(address, (addressLength + WORD_LENGTH_BYTES)))) {
+    public Number getRaw(Number address , final int shift) throws AddressErrorException {
+        Number value = 0;
+        int addressLength = (shift % 2)*WORD_LENGTH_BYTES;
+        if (!isEqz(rem(address, (addressLength + WORD_LENGTH_BYTES)))) {
             throw new AddressErrorException("address for fetch not aligned on word boundary",
                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         }
-         
-         if(tables.isInAnyBlockTable(address)) {
-            	for(BlockTable table : tables) {
-                    if(table.inSegment(address)) {
-                        if (!(table instanceof BlockTable.DataBlockTable)) {
-                            value = table.fetchWordFromTable(address, false, shift);
-                            break;
-                        } else{
-                            // DEVELOPER: PLEASE USE getStatement() TO READ FROM KERNEL TEXT SEGMENT...
-                            throw new AddressErrorException(
-                                    "DEVELOPER: You must use getStatement() to read from kernel text segment!",
-                                    Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-                        }
+        }
+
+        if(tables.isInAnyBlockTable(address)) {
+            for(BlockTable table : tables) {
+                if(table.inSegment(address)) {
+                    if (!(table instanceof BlockTable.DataBlockTable)) {
+                        value = table.fetchWordFromTable(address, false, shift);
+                        break;
+                    } else{
+                        // DEVELOPER: PLEASE USE getStatement() TO READ FROM KERNEL TEXT SEGMENT...
+                        throw new AddressErrorException(
+                                "DEVELOPER: You must use getStatement() to read from kernel text segment!",
+                                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
                     }
-           }
-       	 }
-         else if (textBlockTable.inSegment(address)) {
-           // Burch Mod (Jan 2013): replace throw with calls to getStatementNoNotify & getBinaryStatement 
-           // DPS adaptation 5-Jul-2013: either throw or call, depending on setting
+                }
+            }
+        }
+        else if (textBlockTable.inSegment(address)) {
+            // Burch Mod (Jan 2013): replace throw with calls to getStatementNoNotify & getBinaryStatement
+            // DPS adaptation 5-Jul-2013: either throw or call, depending on setting
             if (Globals.getSettings().getBooleanSetting(Settings.SELF_MODIFYING_CODE_ENABLED)) {
                ProgramStatement stmt = getStatementNoNotify(address);
                value = stmt == null ? 0 : stmt.getBinaryStatement();
-            } 
+            }
             else {
                throw new AddressErrorException(
-                  "Cannot read directly from text segment!", 
+                  "Cannot read directly from text segment!",
                   Exceptions.ADDRESS_EXCEPTION_LOAD, address);
             }
-         }
-         else  // falls outside Mars addressing range
-            throw new AddressErrorException("address out of range ", 
+        }
+        else  // falls outside Mars addressing range
+            throw new AddressErrorException("address out of range ",
                Exceptions.ADDRESS_EXCEPTION_LOAD, address);
-         
-         notifyAnyObservers(AccessNotice.READ, address, Memory.WORD_LENGTH_BYTES,value);
-         return value;
-      } 
+
+        notifyAnyObservers(AccessNotice.READ, address, Memory.WORD_LENGTH_BYTES,value);
+        return value;
+    }
        
        
        public Number getRawWord(Number address) throws AddressErrorException {
@@ -676,7 +668,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     **/
    	 
     // See note above, with getRawWord(), concerning duplicated logic.
-
     public Number getRawOrNull(Number address, final int shift) throws AddressErrorException {
         Number value = null;
         int addressLength = (shift % 2);
@@ -715,6 +706,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public Number getRawDoubleWordOrNull(Number address) throws AddressErrorException {
        return getRawOrNull(address, 3);
     }
+
     /**
     *  Look for first "null" memory value in an address range.  For text segment (binary code), this
     *  represents a word that does not contain an instruction.  Normally use this to find the end of
@@ -744,7 +736,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param address Starting address of word to be read.
     *  @return  Word (4-byte value) stored starting at that address.
     *  @throws AddressErrorException If address is not on word boundary.
-    **/
+    */
     public Number getWord(Number address) throws AddressErrorException {
         if (GenMath.rem(address, WORD_LENGTH_BYTES).intValue() != 0)
             throw new AddressErrorException("fetch address not aligned on double word boundary ",
@@ -761,7 +753,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param address Starting address of word to be read.
     *  @return  Double word (8-byte value) stored starting at that address.
     *  @throws AddressErrorException If address is not on word boundary.
-    **/
+    */
     public Number getDoubleWord(Number address) throws AddressErrorException {
         if (GenMath.rem(address,(2*WORD_LENGTH_BYTES)).intValue() != 0) {
             throw new AddressErrorException("fetch address not aligned on double word boundary ",
@@ -781,8 +773,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param address Starting address of word to be read.
     *  @return  Word (4-byte value) stored starting at that address.
     *  @throws AddressErrorException If address is not on word boundary.
-    **/
-
+    */
     public Number getWordNoNotify(Number address) throws AddressErrorException {
         if (GenMath.rem(address,WORD_LENGTH_BYTES).intValue() != 0) {
             throw new AddressErrorException("fetch address not aligned on word boundary ",
@@ -794,12 +785,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
+
     /**
     *  Starting at the given word address, read a 2 byte word into lower 16 bits of int.
     *  @param address Starting address of word to be read.
     *  @return  Halfword (2-byte value) stored starting at that address, stored in lower 16 bits.
     *  @throws AddressErrorException If address is not on halfword boundary.
-    **/
+    */
     public Number getHalf(Number address) throws AddressErrorException {
         if (GenMath.rem(address,2).intValue() != 0) {
             throw new AddressErrorException("fetch address not aligned on halfword boundary ",
@@ -812,11 +804,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
 
     ///////////////////////////////////////////////////////////////////////////////////////
+
     /**
     *  Reads specified Memory byte into low order 8 bits of int.
     *  @param address Address of Memory byte to be read.
     *  @return Value stored at that address.  Only low order 8 bits used.
-    **/
+    */
     public Number getByte(Number address) throws AddressErrorException {
         if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
             return get(address.intValue(), 1);
@@ -830,8 +823,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @return reference to ProgramStatement object associated with that address, or null if none.
     *  @throws AddressErrorException If address is not on word boundary or is outside Text Segment.
     *  @see ProgramStatement
-    **/
-
+    */
     public ProgramStatement getStatement(Number address) throws AddressErrorException {
         return getStatement(address, true);
     }
@@ -843,14 +835,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @return reference to ProgramStatement object associated with that address, or null if none.
     *  @throws AddressErrorException If address is not on word boundary or is outside Text Segment.
     *  @see ProgramStatement
-    **/
-
+    */
     public ProgramStatement getStatementNoNotify(Number address) throws AddressErrorException {
         return getStatement(address, false);
     }
    
    ////////////////////////////////////////////////////////////////////////////////
-   
+
     private ProgramStatement getStatement(Number address, boolean notify) throws AddressErrorException {
         if (!wordAligned(address)) {
             throw new AddressErrorException("fetch address for text segment not aligned to word boundary ",
@@ -870,7 +861,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         return new ProgramStatement(get(address, WORD_LENGTH_BYTES).intValue(), address);
     }
 
-
    /*********************************  THE UTILITIES  *************************************/ 
    
    /**
@@ -878,18 +868,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param address the address to check
     *  @return true if address is word-aligned, false otherwise
     */
-       public static boolean wordAligned(Number address) {
-         return isEqz(GenMath.rem(address, WORD_LENGTH_BYTES));
-      }
+    public static boolean wordAligned(Number address) {
+        return isEqz(GenMath.rem(address, WORD_LENGTH_BYTES));
+    }
    
-   /**
+    /**
     *  Utility to determine if given address is doubleword-aligned.
     *  @param address the address to check
     *  @return true if address is doubleword-aligned, false otherwise
     */
-       public static boolean doublewordAligned(Number address) {
-         return isEqz(GenMath.rem(address,(2*WORD_LENGTH_BYTES)));
-      }
+    public static boolean doublewordAligned(Number address) {
+        return isEqz(GenMath.rem(address,(2*WORD_LENGTH_BYTES)));
+    }
    
     /**
     *  Utility method to align given address to next full word boundary, if not already
@@ -898,15 +888,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @return address aligned to next word boundary (divisible by 4)
     */
     public static Number alignToDoubleWordBoundary(Number address) {
-     if (!wordAligned(address)) {
-        if (isLt(0, address))
-            address = add(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
-        else
-            address = sub(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
-     }
-     return address;
+        if (!wordAligned(address)) {
+            if (isLt(0, address))
+                address = add(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
+            else
+                address = sub(address, compose(GenMath::sub, GenMath::rem, address, WORD_LENGTH_BYTES, 4));
+        }
+        return address;
     }
-    
    	
    ///////////////////////////////////////////////////////////////////////////
    //  ALL THE OBSERVABLE STUFF GOES HERE.  FOR COMPATIBILITY, Memory IS STILL 
@@ -920,16 +909,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  so notices will come from the delegate, not the memory object.
     *  @param obs  the observer
     */
-
-       public void addObserver(Observer obs) {
-         try {  // split so start address always >= end address
+    public void addObserver(Observer obs) {
+        try {  // split so start address always >= end address
             this.addObserver(obs, 0, getStackTable().getBaseAddress());
             this.addObserver(obs,kernelTextBlockTable.getBaseAddress(),  getStackTable().getBaseAddress());
-         } 
-             catch (AddressErrorException aee) {
-               //System.out.println("Internal Error in Memory.addObserver: "+aee);
-            }
-      }
+        }
+        catch (AddressErrorException aee) {
+            System.out.println("Internal Error in Memory.addObserver: "+aee);
+        }
+    }
     
     /**
     *  Method to accept registration from observer for specific address.  This includes
@@ -938,11 +926,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param obs the observer
     *  @param addr the memory address which must be on word boundary
     */
-   
     public void addObserver(Observer obs, Number addr) throws AddressErrorException {
         this.addObserver(obs, addr, addr);
     }
-   
    
     /**
     *  Method to accept registration from observer for specific address range.  The
@@ -1006,7 +992,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  Overridden to be unavailable.  The notice that an Observer
     *  receives does not come from the memory object itself, but
     *  instead from a delegate.
-    *  @throws UnsupportedOperationException
     */
     public void notifyObservers() {
         throw new UnsupportedOperationException();
@@ -1122,7 +1107,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         		));  
     	  }
     	  
-    	  private final boolean isInAnyBlockTable(Number address) {
+    	  private boolean isInAnyBlockTable(Number address) {
     		  for(BlockTable table : this) {
     			  if(table.inSegment(address))
     		  		return true;

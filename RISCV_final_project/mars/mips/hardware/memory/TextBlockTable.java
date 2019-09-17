@@ -1,12 +1,11 @@
 package mars.mips.hardware.memory;
 
 import mars.ProgramStatement;
-import mars.mips.instructions.GenMath;
-import static mars.mips.instructions.GenMath.*;
+import mars.util.GenMath;
+import static mars.util.GenMath.*;
 import static mars.util.Math2.*;
 
 public class TextBlockTable extends AbstractBlockTable<ProgramStatement>{
-	//private ProgramStatement [][] blockTable;
 
     public TextBlockTable(int tableLen , Number baseAddress) {
     	super(tableLen, baseAddress);

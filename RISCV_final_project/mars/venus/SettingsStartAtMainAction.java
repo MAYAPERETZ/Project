@@ -38,7 +38,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 public class SettingsStartAtMainAction extends GuiAction  {
 
-   
     public SettingsStartAtMainAction(String name, Icon icon, String descrip,
                      Integer mnemonic, KeyStroke accel, GUI mainUI) {
     super(name, icon, descrip, mnemonic, accel, mainUI);

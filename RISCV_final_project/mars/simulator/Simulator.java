@@ -1,14 +1,14 @@
-   package mars.simulator;
-   import mars.*;
-   import mars.venus.*;
-   import mars.util.*;
-   import mars.mips.hardware.*;
-   import mars.mips.hardware.memory.Memory;
-   import mars.mips.instructions.*;
-   import java.util.*;
-   import javax.swing.*;
+package mars.simulator;
 
-   import static mars.util.Math2.*;
+import mars.*;
+import mars.venus.*;
+import mars.util.*;
+import mars.mips.hardware.*;
+import mars.mips.hardware.memory.Memory;
+import mars.mips.instructions.*;
+import java.util.*;
+import javax.swing.*;
+import static mars.util.Math2.*;
 
 	/*
 Copyright (c) 2003-2010,  Pete Sanderson and Kenneth Vollmar
@@ -104,7 +104,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
    /**
     * Simulate execution of given MIPS program.  It must have already been assembled.
-    * @param p The MIPSprogram to be simulated.
     * @param pc address of first instruction to simulate; this goes into program counter
     * @param maxSteps maximum number of steps to perform before returning false (0 or less means no max)
     * @param breakPoints array of breakpoint program counter values, use null if none
@@ -113,8 +112,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @throws ProcessingException Throws exception if run-time exception occurs.
     **/
     
-       public boolean simulate(MIPSprogram p, Number pc, Number maxSteps, Number[] breakPoints, AbstractAction actor) throws ProcessingException {
-         simulatorThread = new SimThread(p,pc,maxSteps,breakPoints,actor);
+       public boolean simulate(Number pc, Number maxSteps, Number[] breakPoints, AbstractAction actor) throws ProcessingException {
+         simulatorThread = new SimThread(pc,maxSteps,breakPoints,actor);
          simulatorThread.start();
       	
       	// Condition should only be true if run from command-line instead of GUI.
@@ -134,97 +133,93 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    		
    
-       /**
-   	  *  Set the volatile stop boolean variable checked by the execution
-   	  *  thread at the end of each MIPS instruction execution.  If variable
-   	  *  is found to be true, the execution thread will depart
-   	  *  gracefully so the main thread handling the GUI can take over.
-   	  *  This is used by both STOP and PAUSE features.
-   	  */     		
-       public void stopExecution(AbstractAction actor) {
-    	 System.out.println("stop execution: " +Thread.currentThread().getName());
-         if (simulatorThread != null) {
+    /**
+    *  Set the volatile stop boolean variable checked by the execution
+    *  thread at the end of each MIPS instruction execution.  If variable
+    *  is found to be true, the execution thread will depart
+    *  gracefully so the main thread handling the GUI can take over.
+    *  This is used by both STOP and PAUSE features.
+    */
+    public void stopExecution(AbstractAction actor) {
+        System.out.println("stop execution: " +Thread.currentThread().getName());
+        if (simulatorThread != null) {
             simulatorThread.setStop(actor);
-            for (StopListener l : stopListeners) {
+            for (StopListener l : stopListeners)
                l.stopped(this);
-            }
             simulatorThread = null;
-         }
-      }
+        }
+    }
    
-      /* This interface is required by the Asker class in MassagesPane
-       * to be notified about the fact that the user has requested to
-       * stop the execution. When that happens, it must unblock the
-       * simulator thread. */
-       public interface StopListener {
-          void stopped(Simulator s);
-      }
+    /* This interface is required by the Asker class in MassagesPane
+    * to be notified about the fact that the user has requested to
+    * stop the execution. When that happens, it must unblock the
+    * simulator thread. */
+    public interface StopListener {
+        void stopped(Simulator s);
+    }
    
-      private ArrayList<StopListener> stopListeners = new ArrayList<StopListener>(1);
-       public void addStopListener(StopListener l) {
-         stopListeners.add(l);
-      }
+    private ArrayList<StopListener> stopListeners = new ArrayList<StopListener>(1);
+    public void addStopListener(StopListener l) {
+    stopListeners.add(l);
+    }
    
-       public void removeStopListener(StopListener l) {
-         stopListeners.remove(l);
-      }
+    public void removeStopListener(StopListener l) {
+        stopListeners.remove(l);
+    }
    
-   	 // The Simthread object will call this method when it enters and returns from
-   	 // its construct() method.  These signal start and stop, respectively, of
-   	 // simulation execution.  The observer can then adjust its own state depending
-   	 // on the execution state.  Note that "stop" and "done" are not the same thing.
-   	 // "stop" just means it is leaving execution state; this could be triggered
-   	 // by Stop button, by Pause button, by Step button, by runtime exception, by
-   	 // instruction count limit, by breakpoint, or by end of simulation (truly done).
-       private void notifyObserversOfExecutionStart(Number maxSteps, Number programCounter) {
-         this.setChanged();
-         this.notifyObservers(new SimulatorNotice(SimulatorNotice.SIMULATOR_START,
-            maxSteps, RunSpeedPanel.getInstance().getRunSpeed(), programCounter) );
-      }
+    // The Simthread object will call this method when it enters and returns from
+    // its construct() method.  These signal start and stop, respectively, of
+    // simulation execution.  The observer can then adjust its own state depending
+    // on the execution state.  Note that "stop" and "done" are not the same thing.
+    // "stop" just means it is leaving execution state; this could be triggered
+    // by Stop button, by Pause button, by Step button, by runtime exception, by
+    // instruction count limit, by breakpoint, or by end of simulation (truly done).
+    private void notifyObserversOfExecutionStart(Number maxSteps, Number programCounter) {
+        this.setChanged();
+        this.notifyObservers(new SimulatorNotice(SimulatorNotice.SIMULATOR_START,
+        maxSteps, RunSpeedPanel.getInstance().getRunSpeed(), programCounter) );
+    }
    
-       private void notifyObserversOfExecutionStop(Number maxSteps, Number programCounter) {
-         this.setChanged();
-         this.notifyObservers(new SimulatorNotice(SimulatorNotice.SIMULATOR_STOP,
-            maxSteps, RunSpeedPanel.getInstance().getRunSpeed(), programCounter) );
-      }
+    private void notifyObserversOfExecutionStop(Number maxSteps, Number programCounter) {
+        this.setChanged();
+        this.notifyObservers(new SimulatorNotice(SimulatorNotice.SIMULATOR_STOP,
+        maxSteps, RunSpeedPanel.getInstance().getRunSpeed(), programCounter) );
+    }
    	 
    	 
-   	/**
-   	 * SwingWorker subclass to perform the simulated execution in background thread.
-   	 * It is "interrupted" when main thread sets the "stop" variable to true.
-   	 * The variable is tested before the next MIPS instruction is simulated.  Thus
-   	 * interruption occurs in a tightly controlled fashion.
-   	 *
-   	 * See SwingWorker.java for more details on its functionality and usage.  It is
-   	 * provided by Sun Microsystems for download and is not part of the Swing library.
-   	 */ 	
+    /**
+    * SwingWorker subclass to perform the simulated execution in background thread.
+    * It is "interrupted" when main thread sets the "stop" variable to true.
+    * The variable is tested before the next MIPS instruction is simulated.  Thus
+    * interruption occurs in a tightly controlled fashion.
+    *
+    * See SwingWorker.java for more details on its functionality and usage.  It is
+    * provided by Sun Microsystems for download and is not part of the Swing library.
+    */
    		
-       class SimThread extends SwingWorker {
-//         private MIPSprogram p;
-         private Number pc, maxSteps;
-         private Number[] breakPoints;
-         private boolean done;
-         private ProcessingException pe;
-         private volatile boolean stop = false;
-         private volatile AbstractAction stopper;
-         private AbstractAction starter;
-         private int constructReturnReason;
-         
+    class SimThread extends SwingWorker {
+        private Number pc, maxSteps;
+        private Number[] breakPoints;
+        private boolean done;
+        private ProcessingException pe;
+        private volatile boolean stop = false;
+        private volatile AbstractAction stopper;
+        private AbstractAction starter;
+        private int constructReturnReason;
 
       
-         /**
-      	 *  SimThread constructor.  Receives all the information it needs to simulate execution.
-      	 *
-      	 *  @param p  the MIPSprogram to be simulated
-      	 *  @param pc address in text segment of first instruction to simulate
-      	 *  @param maxSteps  maximum number of instruction steps to simulate.  Default of -1 means no maximum
-      	 *  @param breakPoints  array of breakpoints (instruction addresses) specified by user
-      	 *  @param starter the GUI component responsible for this call, usually GO or STEP.  null if none.
-      	 */
-          SimThread(MIPSprogram p, Number pc, Number maxSteps, Number[] breakPoints, AbstractAction starter) {
+        /**
+        *  SimThread constructor.  Receives all the information it needs to simulate execution.
+        *
+        *  @param pc address in text segment of first instruction to simulate
+        *  @param maxSteps  maximum number of instruction steps to simulate.  Default of -1 means no maximum
+        *  @param breakPoints  array of breakpoints (instruction addresses) specified by user
+        *  @param starter the GUI component responsible for this call, usually GO or STEP.  null if none.
+        */
+        SimThread(Number pc, Number maxSteps, Number[] breakPoints, AbstractAction starter) {
             super(Globals.getGui()!=null);
-        	//super();
-//            this.p = p;
+            //super();
+            //            this.p = p;
             this.pc = pc;
             this.maxSteps = maxSteps;
             this.breakPoints = breakPoints;
@@ -232,29 +227,29 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             this.pe = null;
             this.starter = starter;
             this.stopper = null;
-         }
+        }
           
 
-      	/**
-      	 * Sets to "true" the volatile boolean variable that is tested after each
-      	 * MIPS instruction is executed.  After calling this method, the next test
-      	 * will yield "true" and "construct" will return.
-      	 *
-      	 * @param actor the Swing component responsible for this call.  
-      	 */
-          public void setStop(AbstractAction actor) {
+        /**
+        * Sets to "true" the volatile boolean variable that is tested after each
+        * RISCV instruction is executed.  After calling this method, the next test
+        * will yield "true" and "construct" will return.
+        *
+        * @param actor the Swing component responsible for this call.
+        */
+        public void setStop(AbstractAction actor) {
             stop = true;
             stopper = actor;
-         }
+        }
       	
       
-      	/**
-      	 *  This is comparable to the Runnable "run" method (it is called by
-      	 *  SwingWorker's "run" method).  It simulates the program
-      	 *  execution in the backgorund.
-      	 *
-      	 *  @return  boolean value true if execution done, false otherwise
-      	 */
+        /**
+        *  This is comparable to the Runnable "run" method (it is called by
+        *  SwingWorker's "run" method).  It simulates the program
+        *  execution in the backgorund.
+        *
+        *  @return  boolean value true if execution done, false otherwise
+        */
       	
           public Object construct() {
             // The next two statements are necessary for GUI to be consistently updated
@@ -280,7 +275,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             } 
                 catch (AddressErrorException e) {
                   ErrorList el = new ErrorList();
-                  el.add(new ErrorMessage((MIPSprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RVIRegisters.getProgramCounter())));
+                  el.add(new ErrorMessage((RISCVprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RVIRegisters.getProgramCounter())));
                   this.pe = new ProcessingException(el, e);
 						// Next statement is a hack.  Previous statement sets EPC register to ProgramCounter-4
 						// because it assumes the bad address comes from an operand so the ProgramCounter has already been
@@ -291,7 +286,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   this.done = true;
                   SystemIO.resetFiles(); // close any files opened in MIPS program
                   Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                  return new Boolean(done);
+                  return done;
                }
             int steps = 0;
          	
@@ -361,7 +356,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            this.done = true;
                            SystemIO.resetFiles(); // close any files opened in MIPS program
                            Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                           return new Boolean(done); // execution completed without error.
+                           return done; // execution completed without error.
                         } 
                         else {
                            // See if an exception handler is present.  Assume this is the case
@@ -373,7 +368,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            try {
                               exceptionHandler = Globals.memory.getStatement(Memory.exceptionHandlerAddress);
                            } 
-                               catch (AddressErrorException aee) { } // will not occur with this well-known addres
+                               catch (AddressErrorException ignored) { } // will not occur with this well-known addres
                            if (exceptionHandler != null) {
                               RVIRegisters.setProgramCounter(Memory.exceptionHandlerAddress);
                            } 
@@ -383,7 +378,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                               this.done = true;
                               SystemIO.resetFiles(); // close any files opened in MIPS program
                               Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                              return new Boolean(done);
+                              return done;
                            }
                         }
                      }
@@ -400,11 +395,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             	
             	// Volatile variable initialized false but can be set true by the main thread.
             	// Used to stop or pause a running MIPS program.  See stopSimulation() above.
-               if (stop == true) { 
+               if (stop) {
                   this.constructReturnReason = PAUSE_OR_STOP;
                   this.done = false;
                   Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                  return new Boolean(done);
+                  return done;
                }
             	//	Return if we've reached a breakpoint.					
                if((breakPoints != null) && 
@@ -412,7 +407,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                   this.constructReturnReason = BREAKPOINT;
                   this.done = false;
                   Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                  return new Boolean(done); // false;
+                  return done; // false;
                }
             	// Check number of MIPS instructions executed.  Return if at limit (-1 is no limit).
                if (isLt(0, maxSteps)) {
@@ -421,7 +416,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      this.constructReturnReason = MAX_STEPS;
                      this.done = false;
                      Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                     return new Boolean(done);// false;
+                     return done;// false;
                   }
                }
 
@@ -438,7 +433,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                           RunSpeedPanel.getInstance().getRunSpeed() < RunSpeedPanel.UNLIMITED_SPEED) {
                      try { Thread.sleep((int)(1000/RunSpeedPanel.getInstance().getRunSpeed())); // make sure it's never zero!
                      } 
-                         catch (InterruptedException e) {}
+                         catch (InterruptedException ignored) {}
                   }
                }
                
@@ -450,7 +445,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                } 
                    catch (AddressErrorException e) {
                      ErrorList el = new ErrorList();
-                     el.add(new ErrorMessage((MIPSprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RVIRegisters.getProgramCounter())));
+                     el.add(new ErrorMessage((RISCVprogram)null,0,0,"invalid program counter value: "+Binary.currentNumToHexString(RVIRegisters.getProgramCounter())));
                      this.pe = new ProcessingException(el,e);
 						   // Next statement is a hack.  Previous statement sets EPC register to ProgramCounter-4
 						   // because it assumes the bad address comes from an operand so the ProgramCounter has already been
@@ -461,7 +456,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      this.done = true;
                      SystemIO.resetFiles(); // close any files opened in MIPS program
                      Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-                     return  new Boolean(done);
+                     return done;
                   }
             }
             // DPS July 2007.  This "if" statement is needed for correct program
@@ -478,7 +473,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             this.done = true;
             SystemIO.resetFiles(); // close any files opened in MIPS program
             Simulator.getInstance().notifyObserversOfExecutionStop(maxSteps, pc);
-            return new Boolean(done); // true;  // execution completed
+            return done; // true;  // execution completed
          }
          
       	
@@ -521,8 +516,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                }
              
             }
-            return;
-         }
+          }
          
       }
    	

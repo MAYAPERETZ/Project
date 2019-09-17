@@ -125,7 +125,6 @@ public class DelayedBranch {
 	*  visibility.
 	*  @return true if branch is registered but not triggered, false otherwise.
 	*/
-
 	static boolean isRegistered() {
 		return state == REGISTERED;
 	}
@@ -135,11 +134,9 @@ public class DelayedBranch {
 	*  but becomes false after clear() is called.  This method has package visibility.
 	*  @return true if branch is registered but not triggered, false otherwise.
 	*/
-
 	static boolean isTriggered() {
 		return state == TRIGGERED;
 	}
-
 
 	/**
 	*  Return branch target address.  This should be retrieved only to set the program

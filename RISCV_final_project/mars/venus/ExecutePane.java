@@ -37,28 +37,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * @author Sanderson and Team JSpim
     **/
 
-    public class ExecutePane extends JDesktopPane implements Observer {
-      private RegistersWindow registerValues;
-      private Coprocessor1Window coprocessor1Values;
-      private Coprocessor0Window coprocessor0Values;
-      private DataSegmentWindow dataSegment;
-      private TextSegmentWindow  textSegment;
-      private LabelsWindow labelValues;
-      private GUI mainUI;   
-      private NumberDisplayBaseChooser valueDisplayBase;
-      private NumberDisplayBaseChooser addressDisplayBase;
-      private boolean labelWindowVisible;
-   
-   /**
-   * initialize the Execute pane with major components
-   * @param mainUI2 the parent GUI
-   * @param regs window containing integer register set
-   * @param cop1Regs window containing Coprocessor 1 register set
-   * @param cop0Regs window containing Coprocessor 0 register set
-   */
-   
-    public ExecutePane(GUI mainUI2, RegistersWindow regs, Coprocessor1Window cop1Regs, Coprocessor0Window cop0Regs) {
-        this.mainUI = mainUI2;
+public class ExecutePane extends JDesktopPane implements Observer {
+    private RegistersWindow registerValues;
+    private Coprocessor1Window coprocessor1Values;
+    private Coprocessor0Window coprocessor0Values;
+    private DataSegmentWindow dataSegment;
+    private TextSegmentWindow  textSegment;
+    private LabelsWindow labelValues;
+        private NumberDisplayBaseChooser valueDisplayBase;
+    private NumberDisplayBaseChooser addressDisplayBase;
+    private boolean labelWindowVisible;
+
+    /**
+    * initialize the Execute pane with major components
+    * @param regs window containing integer register set
+    * @param cop1Regs window containing Coprocessor 1 register set
+    * @param cop0Regs window containing Coprocessor 0 register set
+    */
+    public ExecutePane(RegistersWindow regs, Coprocessor1Window cop1Regs, Coprocessor0Window cop0Regs) {
         // Although these are displayed in Data Segment, they apply to all three internal
         // windows within the Execute pane.  So they will be housed here.
         addressDisplayBase = new NumberDisplayBaseChooser("Hexadecimal Addresses",
@@ -143,7 +139,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     * to the right of the text segment and the latter is shrunk accordingly.
     * @param visibility set to true or false
     */
-   	 
     public void setLabelWindowVisibility(boolean visibility) {
         if (!visibility && labelWindowVisible) {
             labelWindowVisible = false;
@@ -161,11 +156,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
     }
    	 
-    /** Clears out all components of the Execute tab: text segment
+    /**
+    *  Clears out all components of the Execute tab: text segment
     * display, data segment display, label display and register display.
     * This will typically be done upon File->Close, Open, New.
     */
-
     public void clearPane() {
         this.getTextSegmentWindow().clearWindow();
         this.getDataSegmentWindow().clearWindow();
@@ -256,7 +251,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public NumberDisplayBaseChooser getAddressDisplayBaseChooser() {
         return addressDisplayBase;
     }
-
 
     /*
     * created by Maya Peretz in 04/20/2019.

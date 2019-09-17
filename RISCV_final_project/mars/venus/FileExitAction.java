@@ -31,21 +31,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 	
-    /**
-    * Action  for the File -> Exit menu item
-    */   			
-    public class FileExitAction extends ChangeableAction {
-   	 
-        public FileExitAction(String name, Icon icon, String descrip,
-                         Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-        }
+/**
+* Action  for the File -> Exit menu item
+*/
+public class FileExitAction extends ChangeableAction {
 
-        /**
-        * Exit MARS, unless one or more files have unsaved edits and user cancels.
-        */
-        public void actionPerformed(ActionEvent e){
-            if (mainUI.editor.closeAll())
-                System.exit(0);
-        }
-   }   
+    public FileExitAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+    }
+
+    /**
+    * Exit MARS, unless one or more files have unsaved edits and user cancels.
+    */
+    public void actionPerformed(ActionEvent e){
+        if (mainUI.editor.closeAll())
+            System.exit(0);
+    }
+}

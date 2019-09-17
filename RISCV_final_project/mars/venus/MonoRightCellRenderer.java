@@ -37,18 +37,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * Strings containing either the decimal or hexidecimal version
  * of the integer value.
  */
-    class MonoRightCellRenderer extends DefaultTableCellRenderer {
-    	public MonoRightCellRenderer() {
-    		setBackground(Color.WHITE);
-    	} 
-      public static final Font MONOSPACED_PLAIN_12POINT = new Font("Arial",Font.BOLD,12); 
-     
-       public Component getTableCellRendererComponent(JTable table, Object value, 
-                            boolean isSelected, boolean hasFocus, int row, int column) {	
-         JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, 
-                                    isSelected, hasFocus, row, column);
-         cell.setFont(MONOSPACED_PLAIN_12POINT);
-         cell.setHorizontalAlignment(SwingConstants.RIGHT);
-         return cell;
-      }  
-   }
+class MonoRightCellRenderer extends DefaultTableCellRenderer {
+    MonoRightCellRenderer() {
+        setBackground(Color.WHITE);
+    }
+    static final Font MONOSPACED_PLAIN_12POINT = new Font("Arial",Font.BOLD,12);
+
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                        boolean isSelected, boolean hasFocus, int row, int column) {
+        JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value,
+                                isSelected, hasFocus, row, column);
+        cell.setFont(MONOSPACED_PLAIN_12POINT);
+        cell.setHorizontalAlignment(SwingConstants.RIGHT);
+        return cell;
+    }
+}

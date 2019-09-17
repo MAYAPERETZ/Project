@@ -31,20 +31,20 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
  
+/**
+* Action  for the File -> Save menu item
+*/
+public class FileSaveAction extends ChangeableAction{
+
+    public FileSaveAction(String name, Icon icon, String descrip,
+                     Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
+        super(name, icon, descrip, mnemonic, accel, mainUI, observable);
+    }
+
     /**
-    * Action  for the File -> Save menu item
-    */   			
-    public class FileSaveAction extends ChangeableAction{
-   	 
-        public FileSaveAction(String name, Icon icon, String descrip,
-                         Integer mnemonic, KeyStroke accel, GUI mainUI, NewObservable observable) {
-            super(name, icon, descrip, mnemonic, accel, mainUI, observable);
-        }
-   
-        /**
-        * saves the file, if not alredy saved it will do a saveAs
-        */
-        public void actionPerformed(ActionEvent e){
-            mainUI.editor.save();
-        }
-   }
+    * saves the file, if not alredy saved it will do a saveAs
+    */
+    public void actionPerformed(ActionEvent e){
+        mainUI.editor.save();
+    }
+}

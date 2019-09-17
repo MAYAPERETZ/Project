@@ -1,7 +1,7 @@
-   package mars.mips.dump;
+package mars.mips.dump;
 
-   import mars.mips.hardware.*;
-   import java.io.*;
+import mars.mips.hardware.*;
+import java.io.*;
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
 
@@ -40,41 +40,45 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @version December 2007
  */
 
-
-    public interface DumpFormat {
+/*
+    FIXME: have not checked this class. Might work as it is,
+            But have not made any meaningful changes but fixing unresolved files.
+            Need to check and implement if necessary.
+ */
+public interface DumpFormat {
    
-   /**
-   *  Get the file extension associated with this format.
-   *  @return String containing file extension -- without the leading "." -- or
-	*  null if there is no standard extension.
-   */
-       public String getFileExtension();
+    /**
+    *  Get the file extension associated with this format.
+    *  @return String containing file extension -- without the leading "." -- or
+    *  null if there is no standard extension.
+    */
+    String getFileExtension();
    
-   /**
-   *  Get a short description of the format, suitable
-   *  for displaying along with the extension, if any, in the file
-   *  save dialog and also for displaying as a tool tip.
-	*  @return String containing short description to go with the extension
-	*  or as tool tip when mouse hovers over GUI component representing
-	*  this format.
-   */
-       public String getDescription();
+    /**
+    *  Get a short description of the format, suitable
+    *  for displaying along with the extension, if any, in the file
+    *  save dialog and also for displaying as a tool tip.
+    *  @return String containing short description to go with the extension
+    *  or as tool tip when mouse hovers over GUI component representing
+    *  this format.
+    */
+    String getDescription();
 
 
     /**
-     * A short one-word descriptor that will be used by the MARS
-     * command line parser (and the MARS command line user) to specify
-     * that this format is to be used.
-     * @return A short one-word descriptor that will be used by the MARS
-     */
-    public String getCommandDescriptor();
-		 
-   /**
-    * Descriptive name for the format. 
-	 * @return Format name.
-	 *
+    * A short one-word descriptor that will be used by the MARS
+    * command line parser (and the MARS command line user) to specify
+    * that this format is to be used.
+    * @return A short one-word descriptor that will be used by the MARS
     */
-       public String toString();
+    String getCommandDescriptor();
+		 
+    /**
+    * Descriptive name for the format.
+    * @return Format name.
+    *
+    */
+    String toString();
 	    
    /**
    *  Write MIPS memory contents according to the
@@ -88,7 +92,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
    *  @throws IOException if error occurs during file output.
    */
-       public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
+   void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
 		    throws AddressErrorException, IOException;
    
    }

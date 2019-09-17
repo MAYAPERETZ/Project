@@ -1,8 +1,14 @@
-package mars.mips.instructions;
+package mars.util;
 import java.math.BigInteger;
 import mars.mips.hardware.MemoryConfigurations;
 
-
+/**
+* This class contain arithmetic functions for abstract numbers (i.e, 32/64 bit long number).
+* Unfortunately, Java doesn't support operands overload, so this class was needed to make this abstraction.
+* Note that each function's name is identical to its relative command in RISCV.
+* @author Maya Peretz
+* @version September 2019
+*/
 public class GenMath {
 
 	public static<T extends Number> T add(T x, T y){
@@ -16,7 +22,6 @@ public class GenMath {
 	        return (T) Integer.valueOf(x.intValue() + y.intValue());
 	  
 	 }
-	
 	
 	public static<T extends Number> T sub(T x, T y){
 
@@ -92,8 +97,6 @@ public class GenMath {
 	        return (T) Integer.valueOf(x.intValue() / y.intValue());
 	    }
 	 }
-	
-	
 	
 	
 	public static<T extends Number> T divu(T x, T y){
@@ -244,7 +247,6 @@ public class GenMath {
 
 	    if (x == null || y == null) 
 	        return null;
-	    	
 	    
 	    if (MemoryConfigurations.getCurrentComputingArchitecture() == 64) 
 	        return  (T) ((x.longValue() == y.longValue()) ? Long.valueOf(1) : Long.valueOf(0));

@@ -36,16 +36,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  * @author Pete Sanderson 
  * @version August 2003
- **/
+ */
 public class AddressErrorException extends Exception {  
-   private long address;
-	private int type;  // Exceptions.ADDRESS_EXCEPTION_LOAD,Exceptions.ADDRESS_EXCEPTION_STORE 
-
+    private long address;
+    private int type;  // Exceptions.ADDRESS_EXCEPTION_LOAD,Exceptions.ADDRESS_EXCEPTION_STORE
 
     /**
     * Constructor for the AddressErrorException class
     * @param addr The erroneous memory address.
-    **/
+    */
     public AddressErrorException(String message, int exceptType, long addr) {
         super(message+Binary.currentNumToHexString(addr));
         if (Globals.debug)
@@ -66,16 +65,15 @@ public class AddressErrorException extends Exception {
     /**
     * Get the erroneous memory address.
     * @return The erroneous memory address.
-    **/
+    */
     public long getAddress() {
         return address;
     }
 	
     /**
     * Get the exception type (load or store).
-    *
     * @return Exception type: Exceptions.ADDRESS_EXCEPTION_LOAD, Exceptions.ADDRESS_EXCEPTION_STORE
-    **/
+    */
     public int getType() {
         return type;
     }

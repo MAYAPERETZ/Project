@@ -4,7 +4,7 @@
    import mars.mips.hardware.*;
    import mars.util.*;
    import java.util.*;
-   import static mars.mips.instructions.GenMath.*;
+   import static mars.util.GenMath.*;
    import static mars.util.Math2.*;
 
 /*
@@ -46,7 +46,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
     public class ProgramStatement {
-      private MIPSprogram sourceMIPSprogram;
+      private RISCVprogram sourceRISCVprogram;
       private String source, basicAssemblyStatement, machineStatement;
       private TokenList originalTokenList, strippedTokenList;
       private BasicStatementList basicStatementList;
@@ -62,7 +62,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
      * Constructor for ProgramStatement when there are links back to all source and token 
      * information.  These can be used by a debugger later on.
-     * @param sourceMIPSprogram The MIPSprogram object that contains this statement
+     * @param sourceRISCVprogram The RISCVprogram object that contains this statement
      * @param source The corresponding MIPS source statement.
      * @param origTokenList Complete list of Token objects (includes labels, comments, parentheses, etc)
      * @param strippedTokenList List of Token objects with all but operators and operands removed.
@@ -70,9 +70,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * @param textAddress The Text Segment address in memory where the binary machine code for this statement
      * is stored.
      **/
-      public ProgramStatement(MIPSprogram sourceMIPSprogram, String source, TokenList origTokenList, TokenList strippedTokenList,
-                            Instruction inst, Number textAddress, int sourceLine) {
-         this.sourceMIPSprogram = sourceMIPSprogram;
+      public ProgramStatement(RISCVprogram sourceRISCVprogram, String source, TokenList origTokenList, TokenList strippedTokenList,
+                              Instruction inst, Number textAddress, int sourceLine) {
+         this.sourceRISCVprogram = sourceRISCVprogram;
          this.source = source;
          this.originalTokenList = origTokenList;
          this.strippedTokenList = strippedTokenList;
@@ -100,7 +100,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * is stored.
      **/
        public ProgramStatement(int binaryStatement, Number textAddress) {
-         this.sourceMIPSprogram = null;
+         this.sourceRISCVprogram = null;
          this.binaryStatement = binaryStatement;
          this.textAddress = textAddress;
          this.originalTokenList = this.strippedTokenList = null;
@@ -154,7 +154,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                } 
                    catch (Exception e) {
                     // should never happen; should be caught before now...
-                     errors.add(new ErrorMessage(this.sourceMIPSprogram, token.getSourceLine(), token.getStartPos(),"invalid register name"));
+                     errors.add(new ErrorMessage(this.sourceRISCVprogram, token.getSourceLine(), token.getStartPos(),"invalid register name"));
                      return;
                   }
                this.operands[this.numOperands++] = registerNumber;
@@ -166,7 +166,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                basicStatementList.addString(basicStatementElement);
                if (registerNumber < 0) {
                     // should never happen; should be caught before now...
-                  errors.add(new ErrorMessage(this.sourceMIPSprogram, token.getSourceLine(), token.getStartPos(),"invalid register name"));
+                  errors.add(new ErrorMessage(this.sourceRISCVprogram, token.getSourceLine(), token.getStartPos(),"invalid register name"));
                   return;
                }
                this.operands[this.numOperands++] = registerNumber;
@@ -178,15 +178,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                basicStatementList.addString(basicStatementElement);
                if (registerNumber < 0) {
                     // should never happen; should be caught before now...
-                  errors.add(new ErrorMessage(this.sourceMIPSprogram, token.getSourceLine(), token.getStartPos(),"invalid FPU register name"));
+                  errors.add(new ErrorMessage(this.sourceRISCVprogram, token.getSourceLine(), token.getStartPos(),"invalid FPU register name"));
                   return;
                }
                this.operands[this.numOperands++] = registerNumber;
             } 
             else if (tokenType == TokenTypes.IDENTIFIER) {
-               Number address = this.sourceMIPSprogram.getLocalSymbolTable().getAddressLocalOrGlobal(tokenValue);
+               Number address = this.sourceRISCVprogram.getLocalSymbolTable().getAddressLocalOrGlobal(tokenValue);
                if (isEq(address, SymbolTable.NOT_FOUND)) { // symbol used without being defined
-                  errors.add(new ErrorMessage(this.sourceMIPSprogram, token.getSourceLine(), token.getStartPos(),
+                  errors.add(new ErrorMessage(this.sourceRISCVprogram, token.getSourceLine(), token.getStartPos(),
                                    "Symbol \""+tokenValue+"\" not found in symbol table."));
                   return;
                }
@@ -358,11 +358,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
     
     /**
-     * Produces MIPSprogram object representing the source file containing this statement.
-     * @return The MIPSprogram object.  May be null...
+     * Produces RISCVprogram object representing the source file containing this statement.
+     * @return The RISCVprogram object.  May be null...
      **/
-       public MIPSprogram getSourceMIPSprogram() {
-         return sourceMIPSprogram;
+       public RISCVprogram getSourceRISCVprogram() {
+         return sourceRISCVprogram;
       }	
      
     /**
@@ -370,7 +370,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
      * @return The file name.
      **/         
        public String getSourceFile() {
-         return (sourceMIPSprogram == null) ? "" : sourceMIPSprogram.getFilename();
+         return (sourceRISCVprogram == null) ? "" : sourceRISCVprogram.getFilename();
       }	
    
    

@@ -1,25 +1,20 @@
-   package mars.assembler;
+package mars.assembler;
 
-   import java.util.ArrayList;
-   import java.util.Collections;
-   import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-   import mars.ErrorList;
-   import mars.ErrorMessage;
-   import mars.Globals;
-   import mars.MIPSprogram;
-   import mars.ProcessingException;
-   import mars.ProgramStatement;
-   import mars.mips.hardware.AddressErrorException;
+import mars.*;
+import mars.mips.hardware.AddressErrorException;
 import mars.mips.hardware.memory.Memory;
 import mars.mips.instructions.BasicInstruction;
-   import mars.mips.instructions.ExtendedInstruction;
-import mars.mips.instructions.GenMath;
+import mars.mips.instructions.ExtendedInstruction;
+import mars.util.GenMath;
 import mars.mips.instructions.Instruction;
-   import mars.util.Binary;
-   import mars.util.SystemIO;
-   import static mars.mips.instructions.GenMath.*;
-   import static mars.util.Math2.*;
+import mars.util.Binary;
+import mars.util.SystemIO;
+import static mars.util.GenMath.*;
+import static mars.util.Math2.*;
 /*
  Copyright (c) 2003-2012,  Pete Sanderson and Kenneth Vollmar
 
@@ -49,9 +44,9 @@ import mars.mips.instructions.Instruction;
  */
 
 /**
- * An Assembler is capable of assembling a MIPS program. It has only one public
+ * An Assembler is capable of assembling a RISCV program. It has only one public
  * method, <tt>assemble()</tt>, which implements a two-pass assembler. It
- * translates MIPS source code into binary machine code.
+ * translates RISCV source code into binary machine code.
  * 
  * @author Pete Sanderson
  * @version August 2003
@@ -67,7 +62,7 @@ import mars.mips.instructions.Instruction;
       private boolean autoAlign;
       private Directives currentDirective;
       private Directives dataDirective;
-      private MIPSprogram fileCurrentlyBeingAssembled;
+      private RISCVprogram fileCurrentlyBeingAssembled;
       private TokenList globalDeclarationList;
       private UserKernelAddressSpace textAddress;
       private UserKernelAddressSpace dataAddress;
@@ -79,7 +74,7 @@ import mars.mips.instructions.Instruction;
     * already been tokenized. Warnings are not considered errors.
     * 
     * @param p
-    *            A MIPSprogram object representing the program source.
+    *            A RISCVprogram object representing the program source.
     * @param extendedAssemblerEnabled
     *            A boolean value that if true permits use of extended (pseudo)
     *            instructions in the source code. If false, these are flagged
@@ -91,7 +86,7 @@ import mars.mips.instructions.Instruction;
     * 
     * @see ProgramStatement
     **/
-      public ArrayList assemble(MIPSprogram p, boolean extendedAssemblerEnabled)
+      public ArrayList assemble(RISCVprogram p, boolean extendedAssemblerEnabled)
        	throws ProcessingException {
          return assemble(p, extendedAssemblerEnabled, false);
       }
@@ -101,7 +96,7 @@ import mars.mips.instructions.Instruction;
     * already been tokenized.
     * 
     * @param p
-    *            A MIPSprogram object representing the program source.
+    *            A RISCVprogram object representing the program source.
     * @param extendedAssemblerEnabled
     *            A boolean value that if true permits use of extended (pseudo)
     *            instructions in the source code. If false, these are flagged
@@ -118,8 +113,8 @@ import mars.mips.instructions.Instruction;
     * 
     * @see ProgramStatement
     **/
-      public ArrayList assemble(MIPSprogram p, boolean extendedAssemblerEnabled,
-       	boolean warningsAreErrors) throws ProcessingException {
+      public ArrayList assemble(RISCVprogram p, boolean extendedAssemblerEnabled,
+                                boolean warningsAreErrors) throws ProcessingException {
          ArrayList programFiles = new ArrayList();
          programFiles.add(p);
          return this.assemble(programFiles, extendedAssemblerEnabled, warningsAreErrors);
@@ -140,7 +135,7 @@ import mars.mips.instructions.Instruction;
     * errors.
     * 
     * @param tokenizedProgramFiles
-    *            An ArrayList of MIPSprogram objects, each produced from a
+    *            An ArrayList of RISCVprogram objects, each produced from a
     *            different source code file, representing the program source.
     * @param extendedAssemblerEnabled
     *            A boolean value that if true permits use of extended (pseudo)
@@ -163,7 +158,7 @@ import mars.mips.instructions.Instruction;
     * files must have already been tokenized.
     * 
     * @param tokenizedProgramFiles
-    *            An ArrayList of MIPSprogram objects, each produced from a
+    *            An ArrayList of RISCVprogram objects, each produced from a
     *            different source code file, representing the program source.
     * @param extendedAssemblerEnabled
     *            A boolean value that if true permits use of extended (pseudo)
@@ -206,7 +201,7 @@ import mars.mips.instructions.Instruction;
          for (int fileIndex = 0; fileIndex < tokenizedProgramFiles.size(); fileIndex++) {
             if (errors.errorLimitExceeded())
                break;
-            this.fileCurrentlyBeingAssembled = (MIPSprogram) tokenizedProgramFiles.get(fileIndex); 
+            this.fileCurrentlyBeingAssembled = (RISCVprogram) tokenizedProgramFiles.get(fileIndex);
          // List of labels declared ".globl". new list for each file assembled
             this.globalDeclarationList = new TokenList();
          // Parser begins by default in text segment until directed otherwise.
@@ -238,7 +233,7 @@ import mars.mips.instructions.Instruction;
                for (int z=0; z<((TokenList)tokenList.get(i)).size(); z++) { 
                   Token t = ((TokenList) tokenList.get(i)).get(z);
                	// record this token's original source program and line #. Differs from final, if .include used
-                  t.setOriginal(sourceLineList.get(i).getMIPSprogram(),sourceLineList.get(i).getLineNumber());
+                  t.setOriginal(sourceLineList.get(i).getRISCVprogram(),sourceLineList.get(i).getLineNumber());
                }           	
                statements = this.parseLine((TokenList) tokenList.get(i),
                   sourceLineList.get(i).getSource(), 
@@ -264,7 +259,7 @@ import mars.mips.instructions.Instruction;
                .getLocalSymbolTable());
             accumulatedDataSegmentForwardReferences.add(currentFileDataSegmentForwardReferences);
             currentFileDataSegmentForwardReferences.clear();
-         } // end of first-pass loop for each MIPSprogram
+         } // end of first-pass loop for each RISCVprogram
       
       
       
@@ -282,96 +277,95 @@ import mars.mips.instructions.Instruction;
             System.out.println("Assembler second pass begins");
       // SECOND PASS OF ASSEMBLER GENERATES BASIC ASSEMBLER THEN MACHINE CODE.
       // Generates basic assembler statements...
-         for (int fileIndex = 0; fileIndex < tokenizedProgramFiles.size(); fileIndex++) {
+         for (Object tokenizedProgramFile : tokenizedProgramFiles) {
             if (errors.errorLimitExceeded())
                break;
-            this.fileCurrentlyBeingAssembled = (MIPSprogram) tokenizedProgramFiles.get(fileIndex);
+            this.fileCurrentlyBeingAssembled = (RISCVprogram) tokenizedProgramFile;
             ArrayList parsedList = fileCurrentlyBeingAssembled.getParsedList();
             ProgramStatement statement;
-            for (int i = 0; i < parsedList.size(); i++) {
-               statement = (ProgramStatement) parsedList.get(i);
+            for (Object o : parsedList) {
+               statement = (ProgramStatement) o;
                statement.buildBasicStatementFromBasicInstruction(errors);
                if (errors.errorsOccurred()) {
                   throw new ProcessingException(errors);
                }
                if (statement.getInstruction() instanceof BasicInstruction) {
                   this.machineList.add(statement);
-               } 
-               else {
-               // It is a pseudo-instruction:
-               // 1. Fetch its basic instruction template list
-               // 2. For each template in the list,
-               // 2a. substitute operands from source statement
-               // 2b. tokenize the statement generated by 2a.
-               // 2d. call parseLine() to generate basic instrction
-               // 2e. add returned programStatement to the list
-               // The templates, and the instructions generated by filling
-               // in the templates, are specified
-               // in basic format (e.g. mnemonic register reference $zero
-               // already translated to $0).
-               // So the values substituted into the templates need to be
-               // in this format. Since those
-               // values come from the original source statement, they need
-               // to be translated before
-               // substituting. The next method call will perform this
-               // translation on the original
-               // source statement. Despite the fact that the original
-               // statement is a pseudo
-               // instruction, this method performs the necessary
-               // translation correctly.
+               } else {
+                  // It is a pseudo-instruction:
+                  // 1. Fetch its basic instruction template list
+                  // 2. For each template in the list,
+                  // 2a. substitute operands from source statement
+                  // 2b. tokenize the statement generated by 2a.
+                  // 2d. call parseLine() to generate basic instrction
+                  // 2e. add returned programStatement to the list
+                  // The templates, and the instructions generated by filling
+                  // in the templates, are specified
+                  // in basic format (e.g. mnemonic register reference $zero
+                  // already translated to $0).
+                  // So the values substituted into the templates need to be
+                  // in this format. Since those
+                  // values come from the original source statement, they need
+                  // to be translated before
+                  // substituting. The next method call will perform this
+                  // translation on the original
+                  // source statement. Despite the fact that the original
+                  // statement is a pseudo
+                  // instruction, this method performs the necessary
+                  // translation correctly.
                   ExtendedInstruction inst = (ExtendedInstruction) statement.getInstruction();
                   String basicAssembly = statement.getBasicAssemblyStatement();
                   int sourceLine = statement.getSourceLine();
                   TokenList theTokenList = new Tokenizer().tokenizeLine(sourceLine,
-                     basicAssembly, errors, false);
-               
-               // ////////////////////////////////////////////////////////////////////////////
-               // If we are using compact memory config and there is a compact expansion, use it
+                          basicAssembly, errors, false);
+
+                  // ////////////////////////////////////////////////////////////////////////////
+                  // If we are using compact memory config and there is a compact expansion, use it
                   ArrayList templateList;
                   //if (compactTranslationCanBeApplied(statement)) {
                   //   templateList = inst.getCompactBasicIntructionTemplateList();
                   //} 
-                //  else {
-                    templateList = inst.getBasicIntructionTemplateList();
-                 // }
-               
-               // subsequent ProgramStatement constructor needs the correct text segment address.
+                  //  else {
+                  templateList = inst.getBasicIntructionTemplateList();
+                  // }
+
+                  // subsequent ProgramStatement constructor needs the correct text segment address.
                   textAddress.set(statement.getAddress());
-               // Will generate one basic instruction for each template in the list.
+                  // Will generate one basic instruction for each template in the list.
                   for (int instrNumber = 0; instrNumber < templateList.size(); instrNumber++) {
                      String instruction = ExtendedInstruction.makeTemplateSubstitutions(
-                        this.fileCurrentlyBeingAssembled,
-                        (String) templateList.get(instrNumber), theTokenList);
-                  // 23 Jan 2008 by DPS. Template substitution may result in no instruction.
-                  // If this is the case, skip remainder of loop iteration. This should only
-                  // happen if template substitution was for "nop" instruction but delayed branching
-                  // is disabled so the "nop" is not generated.
+                             this.fileCurrentlyBeingAssembled,
+                             (String) templateList.get(instrNumber), theTokenList);
+                     // 23 Jan 2008 by DPS. Template substitution may result in no instruction.
+                     // If this is the case, skip remainder of loop iteration. This should only
+                     // happen if template substitution was for "nop" instruction but delayed branching
+                     // is disabled so the "nop" is not generated.
                      if (instruction == null || instruction == "") {
                         continue;
                      }
-                  
-                  // All substitutions have been made so we have generated
-                  // a valid basic instruction!
+
+                     // All substitutions have been made so we have generated
+                     // a valid basic instruction!
                      if (Globals.debug)
                         System.out.println("PSEUDO generated: " + instruction);
-                  // For generated instruction: tokenize, build program
-                  // statement, add to list.
+                     // For generated instruction: tokenize, build program
+                     // statement, add to list.
                      TokenList newTokenList = new Tokenizer().tokenizeLine(sourceLine,
-                        instruction, errors,false);
+                             instruction, errors, false);
                      ArrayList instrMatches = this.matchInstruction(newTokenList.get(0));
                      Instruction instr = OperandFormat.bestOperandMatch(newTokenList,
-                        instrMatches);
-                  // Only first generated instruction is linked to original source
+                             instrMatches);
+                     // Only first generated instruction is linked to original source
                      ProgramStatement ps = new ProgramStatement(
-                        this.fileCurrentlyBeingAssembled,
-                        (instrNumber == 0) ? statement.getSource() : "", newTokenList,
-                        newTokenList, instr, textAddress.get(), statement.getSourceLine());
+                             this.fileCurrentlyBeingAssembled,
+                             (instrNumber == 0) ? statement.getSource() : "", newTokenList,
+                             newTokenList, instr, textAddress.get(), statement.getSourceLine());
                      textAddress.increment(Instruction.INSTRUCTION_LENGTH);
                      ps.buildBasicStatementFromBasicInstruction(errors);
                      this.machineList.add(ps);
                   } // end of FOR loop, repeated for each template in list.
                } // end of ELSE part for extended instruction.
-              	
+
             } // end of assembler second pass.
          }
          if (Globals.debug)
@@ -392,7 +386,7 @@ import mars.mips.instructions.Instruction;
             } 
                catch (AddressErrorException e) {
                   Token t = statement.getOriginalTokenList().get(0);
-                  errors.add(new ErrorMessage(t.getSourceMIPSprogram(), t.getSourceLine(), t
+                  errors.add(new ErrorMessage(t.getSourceRISCVprogram(), t.getSourceLine(), t
                      .getStartPos(), "Invalid address for text segment: " + e.getAddress()));
                }
          }
@@ -424,8 +418,8 @@ import mars.mips.instructions.Instruction;
          for (int i = 0; i < instructions.size() - 1; i++) {
             ProgramStatement ps1 = (ProgramStatement) instructions.get(i);
             ProgramStatement ps2 = (ProgramStatement) instructions.get(i + 1);
-            if (ps1.getAddress() == ps2.getAddress()) {
-               errors.add(new ErrorMessage(ps2.getSourceMIPSprogram(), ps2.getSourceLine(), 0,
+            if (ps1.getAddress().equals(ps2.getAddress())) {
+               errors.add(new ErrorMessage(ps2.getSourceRISCVprogram(), ps2.getSourceLine(), 0,
                   "Duplicate text segment address: "
                   		+ mars.venus.NumberDisplayBaseChooser.formatUnsignedNumber(ps2
                   				.getAddress(), (Globals.getSettings()
@@ -537,7 +531,7 @@ import mars.mips.instructions.Instruction;
       // so this will catch anything, including a misspelling of a valid directive (which is
       // a nice thing to do).
          if (tokenType == TokenTypes.IDENTIFIER && token.getValue().charAt(0) == '.') {
-            errors.add(new ErrorMessage(ErrorMessage.WARNING, token.getSourceMIPSprogram(), token
+            errors.add(new ErrorMessage(ErrorMessage.WARNING, token.getSourceRISCVprogram(), token
                .getSourceLine(), token.getStartPos(), "MARS does not recognize the "
                + token.getValue() + " directive.  Ignored."));
             return null;
@@ -575,7 +569,7 @@ import mars.mips.instructions.Instruction;
          // Here's the place to flag use of extended (pseudo) instructions
          // when setting disabled.
             if (inst instanceof ExtendedInstruction && !extendedAssemblerEnabled) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(),
                   "Extended (pseudo) instruction or format not permitted.  See Settings."));
             }
@@ -601,19 +595,7 @@ import mars.mips.instructions.Instruction;
          if (tokenListBeginsWithLabel(tokens))
             current.addLabel(tokens.get(0).getValue());
       }
-   
-   // Determine whether or not a compact (16-bit) translation from
-   // pseudo-instruction to basic instruction can be applied. If
-   // the argument is a basic instruction, obviously not. If an
-   // extended instruction, we have to be operating under a 16-bit
-   // memory model and the instruction has to have defined an
-   // alternate compact translation.
-   //   private boolean compactTranslationCanBeApplied(ProgramStatement statement) {
-    //     return (statement.getInstruction() instanceof ExtendedInstruction
-    //        && Globals.memory.usingCompactMemoryConfiguration() && ((ExtendedInstruction) statement
-   //         	.getInstruction()).hasCompactTranslation());
-   //   }
-   
+
    // //////////////////////////////////////////////////////////////////////////////////
    // Pre-process the token list for a statement by stripping off any comment.
    // NOTE: the ArrayList parameter is not modified; a new one is cloned and
@@ -654,18 +636,16 @@ import mars.mips.instructions.Instruction;
          else {
             Token token = tokens.get(0);
             if (tokenListBeginsWithLabel(tokens)) {
-               if (token.getType() == TokenTypes.OPERATOR) {
+               if (token.getType() == TokenTypes.OPERATOR)
                   // an instruction name was used as label (e.g. lw:), so change its token type
                   token.setType(TokenTypes.IDENTIFIER);
-               }
                fileCurrentlyBeingAssembled.getLocalSymbolTable().addSymbol(token,
                   (this.inDataSegment) ? dataAddress.get() : textAddress.get(),
                   this.inDataSegment, this.errors);
                return true;
             } 
-            else {
-               return false;
-            }
+            else return false;
+
          }
       } // parseLabel()
    
@@ -685,29 +665,28 @@ import mars.mips.instructions.Instruction;
          if (Globals.debug)
             System.out.println("line " + token.getSourceLine() + " is directive " + direct);
          if (direct == null) {
-            errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(), token
+            errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(), token
                .getStartPos(), "\"" + token.getValue()
                + "\" directive is invalid or not implemented in MARS"));
-            return;
          }
          else if (direct == Directives.EQV) { /* EQV added by DPS 11 July 2012 */
             // Do nothing.  This was vetted and processed during tokenizing.
          } 
          else if (direct == Directives.MACRO) {
             if (tokens.size() < 2) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" directive requires at least one argument."));
                return;
             }
             if (tokens.get(1).getType() != TokenTypes.IDENTIFIER) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   tokens.get(1).getStartPos(), "Invalid Macro name \""
                   		+ tokens.get(1).getValue() + "\""));
                return;
             }
             if (inMacroSegment) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "Nested macros are not allowed"));
                return;
             }
@@ -720,7 +699,7 @@ import mars.mips.instructions.Instruction;
                	|| arg.getType() == TokenTypes.LEFT_PAREN)
                   continue;
                if (!Macro.tokenIsMacroParameter(arg.getValue(), true)) {
-                  errors.add(new ErrorMessage(arg.getSourceMIPSprogram(), arg.getSourceLine(),
+                  errors.add(new ErrorMessage(arg.getSourceRISCVprogram(), arg.getSourceLine(),
                      arg.getStartPos(), "Invalid macro argument '" + arg.getValue() + "'"));
                   return;
                }
@@ -729,12 +708,12 @@ import mars.mips.instructions.Instruction;
          } 
          else if (direct == Directives.END_MACRO) {
             if (tokens.size() > 1) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "invalid text after .END_MACRO"));
                return;
             }
             if (!inMacroSegment) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), ".END_MACRO without .MACRO"));
                return;
             }
@@ -743,8 +722,7 @@ import mars.mips.instructions.Instruction;
          } 
          else if (inMacroSegment) {
          // should not parse lines even directives in macro segment
-            return;
-         } 
+         }
          else if (direct == Directives.DATA || direct == Directives.KDATA) {
             this.inDataSegment = true;
             this.autoAlign = true;
@@ -780,14 +758,14 @@ import mars.mips.instructions.Instruction;
          else if (direct == Directives.ALIGN) {
             if (passesDataSegmentCheck(token)) {
                if (tokens.size() != 2) {
-                  errors.add(new ErrorMessage(token.getSourceMIPSprogram(),
+                  errors.add(new ErrorMessage(token.getSourceRISCVprogram(),
                      token.getSourceLine(), token.getStartPos(), "\"" + token.getValue()
                      		+ "\" requires one operand"));
                   return;
                }
                if (!TokenTypes.isIntegerTokenType(tokens.get(1).getType())
                	|| Binary.stringToInt(tokens.get(1).getValue()) < 0) {
-                  errors.add(new ErrorMessage(token.getSourceMIPSprogram(),
+                  errors.add(new ErrorMessage(token.getSourceRISCVprogram(),
                      token.getSourceLine(), token.getStartPos(), "\"" + token.getValue()
                      		+ "\" requires a non-negative integer"));
                   return;
@@ -805,14 +783,14 @@ import mars.mips.instructions.Instruction;
          else if (direct == Directives.SPACE) {
             if (passesDataSegmentCheck(token)) {
                if (tokens.size() != 2) {
-                  errors.add(new ErrorMessage(token.getSourceMIPSprogram(),
+                  errors.add(new ErrorMessage(token.getSourceRISCVprogram(),
                      token.getSourceLine(), token.getStartPos(), "\"" + token.getValue()
                      		+ "\" requires one operand"));
                   return;
                }
                if (!TokenTypes.isIntegerTokenType(tokens.get(1).getType())
                	|| Binary.stringToInt(tokens.get(1).getValue()) < 0) {
-                  errors.add(new ErrorMessage(token.getSourceMIPSprogram(),
+                  errors.add(new ErrorMessage(token.getSourceRISCVprogram(),
                      token.getSourceLine(), token.getStartPos(), "\"" + token.getValue()
                      		+ "\" requires a non-negative integer"));
                   return;
@@ -823,14 +801,14 @@ import mars.mips.instructions.Instruction;
          } 
          else if (direct == Directives.EXTERN) {
             if (tokens.size() != 3) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" directive requires two operands (label and size)."));
                return;
             }
             if (!TokenTypes.isIntegerTokenType(tokens.get(2).getType())
             	|| Binary.stringToInt(tokens.get(2).getValue()) < 0) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" requires a non-negative integer size"));
                return;
@@ -844,13 +822,13 @@ import mars.mips.instructions.Instruction;
             }
          } 
          else if (direct == Directives.SET) {
-            errors.add(new ErrorMessage(ErrorMessage.WARNING, token.getSourceMIPSprogram(), token
+            errors.add(new ErrorMessage(ErrorMessage.WARNING, token.getSourceRISCVprogram(), token
                .getSourceLine(), token.getStartPos(),
                "MARS currently ignores the .set directive."));
          } 
          else if (direct == Directives.GLOBL) {
             if (tokens.size() < 2) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" directive requires at least one argument."));
                return;
@@ -862,7 +840,7 @@ import mars.mips.instructions.Instruction;
             // local symbol table to global symbol table.
                Token label = tokens.get(i);
                if (label.getType() != TokenTypes.IDENTIFIER) {
-                  errors.add(new ErrorMessage(token.getSourceMIPSprogram(),
+                  errors.add(new ErrorMessage(token.getSourceRISCVprogram(),
                      token.getSourceLine(), token.getStartPos(), "\"" + token.getValue()
                      		+ "\" directive argument must be label."));
                   return;
@@ -871,10 +849,9 @@ import mars.mips.instructions.Instruction;
             }
          } 
          else {
-            errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(), token
+            errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(), token
                .getStartPos(), "\"" + token.getValue()
                + "\" directive recognized but not yet implemented."));
-            return;
          }
       } // executeDirective()
    
@@ -914,14 +891,13 @@ import mars.mips.instructions.Instruction;
          Directives direct = this.dataDirective;
          if (direct == Directives.WORD || direct == Directives.HALF || direct == Directives.BYTE
          	|| direct == Directives.FLOAT || direct == Directives.DOUBLE) {
-            if (tokens.size() > 0) {
-               storeNumeric(tokens, direct, errors);
-            }
+            if (tokens.size() > 0) storeNumeric(tokens, direct, errors);
+
          } 
          else if (direct == Directives.ASCII || direct == Directives.ASCIIZ) {
-            if (passesDataSegmentCheck(tokens.get(0))) {
+            if (passesDataSegmentCheck(tokens.get(0)))
                storeStrings(tokens, direct, errors);
-            }
+
          }
       } // executeDirectiveContinuation()
    
@@ -930,20 +906,20 @@ import mars.mips.instructions.Instruction;
    // recognized as OPERATOR, there is a problem.
       private ArrayList matchInstruction(Token token) { 
          if (token.getType() != TokenTypes.OPERATOR) {
-            if (token.getSourceMIPSprogram().getLocalMacroPool()
+            if (token.getSourceRISCVprogram().getLocalMacroPool()
             	.matchesAnyMacroName(token.getValue()))
-               this.errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token
+               this.errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token
                   .getSourceLine(), token.getStartPos(), "forward reference or invalid parameters for macro \""
                   + token.getValue() + "\""));
             else
-               this.errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token
+               this.errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token
                   .getSourceLine(), token.getStartPos(), "\"" + token.getValue()
                   + "\" is not a recognized operator"));
             return null;
          }
          ArrayList inst = Globals.instructionSet.matchOperator(token.getValue());
          if (inst == null) { // This should NEVER happen...
-            this.errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+            this.errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                token.getStartPos(), "Internal Assembler error: \"" + token.getValue()
                		+ "\" tokenized OPERATOR then not recognized"));
          }
@@ -1024,7 +1000,7 @@ import mars.mips.instructions.Instruction;
           * Binary.stringToInt(valueToken.getValue()), lengthInBytes);
           * this.textAddress.increment(lengthInBytes); } } catch
           * (AddressErrorException e) { errors.add(new
-          * ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+          * ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
           * token.getStartPos(), "\""+this.textAddress.get()+
           * "\" is not a valid text segment address")); } }
           ************************************************************************/
@@ -1039,7 +1015,6 @@ import mars.mips.instructions.Instruction;
             if (Directives.isFloatingDirective(directive))
                storeRealNumber(token, directive, errors);
          }
-         return;
       } // storeNumeric()
    
    // //////////////////////////////////////////////////////////////////////////////
@@ -1064,7 +1039,7 @@ import mars.mips.instructions.Instruction;
             }
           
             if (DataTypes.outOfRange(directive, fullvalue)) {
-               errors.add(new ErrorMessage(ErrorMessage.WARNING, token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(ErrorMessage.WARNING, token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" is out-of-range for a signed value and possibly truncated"));
             }
@@ -1086,11 +1061,10 @@ import mars.mips.instructions.Instruction;
                   Globals.memory.set(this.textAddress.get(), value, lengthInBytes);
                } 
                   catch (AddressErrorException e) {
-                     errors.add(new ErrorMessage(token.getSourceMIPSprogram(),
+                     errors.add(new ErrorMessage(token.getSourceRISCVprogram(),
                         token.getSourceLine(), token.getStartPos(), "\""
                         	+ this.textAddress.get()
                         	+ "\" is not a valid text segment address"));
-                     return;
                   }
             }
          } // end of "if integer token type"
@@ -1109,13 +1083,13 @@ import mars.mips.instructions.Instruction;
             } // Data segment check done previously, so this "else" will not be.
             // See 11/20/06 note above.
             else {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" label as directive operand not permitted in text segment"));
             }
          } // end of "if label"
          else {
-            errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(), token
+            errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(), token
                .getStartPos(), "\"" + token.getValue()
                + "\" is not a valid integer constant or label"));
          }
@@ -1134,20 +1108,20 @@ import mars.mips.instructions.Instruction;
                value = Double.parseDouble(token.getValue());
             } 
                catch (NumberFormatException nfe) {
-                  errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+                  errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                      token.getStartPos(), "\"" + token.getValue()
                      	+ "\" is not a valid floating point constant"));
                   return;
                }
             if (DataTypes.outOfRange(directive, value)) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" is an out-of-range value"));
                return;
             }
          } 
          else {
-            errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(), token
+            errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(), token
                .getStartPos(), "\"" + token.getValue()
                + "\" is not a valid floating point constant"));
             return;
@@ -1180,7 +1154,7 @@ import mars.mips.instructions.Instruction;
          for (int i = tokenStart; i < tokens.size(); i++) {
             token = tokens.get(i);
             if (token.getType() != TokenTypes.QUOTED_STRING) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(),
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(),
                   token.getStartPos(), "\"" + token.getValue()
                   		+ "\" is not a valid character string"));
             } 
@@ -1231,7 +1205,7 @@ import mars.mips.instructions.Instruction;
                         DataTypes.CHAR_SIZE);
                   } 
                      catch (AddressErrorException e) {
-                        errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token
+                        errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token
                            .getSourceLine(), token.getStartPos(), "\""
                            + this.dataAddress.get() + "\" is not a valid data segment address"));
                      }
@@ -1242,7 +1216,7 @@ import mars.mips.instructions.Instruction;
                      Globals.memory.set(this.dataAddress.get(), 0, DataTypes.CHAR_SIZE);
                   } 
                      catch (AddressErrorException e) {
-                        errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token
+                        errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token
                            .getSourceLine(), token.getStartPos(), "\""
                            + this.dataAddress.get() + "\" is not a valid data segment address"));
                      }
@@ -1256,7 +1230,7 @@ import mars.mips.instructions.Instruction;
    // Simply check to see if we are in data segment. Generate error if not.
       private boolean passesDataSegmentCheck(Token token) {
          if (!this.inDataSegment) {
-            errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(), token
+            errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(), token
                .getStartPos(), "\"" + token.getValue()
                + "\" directive cannot appear in text segment"));
             return false;
@@ -1278,7 +1252,7 @@ import mars.mips.instructions.Instruction;
             Globals.memory.set(this.dataAddress.get(), value, lengthInBytes);
          } 
             catch (AddressErrorException e) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(), token
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(), token
                   .getStartPos(), "\"" + this.dataAddress.get()
                   + "\" is not a valid data segment address"));
                return this.dataAddress.get();
@@ -1302,7 +1276,7 @@ import mars.mips.instructions.Instruction;
             Globals.memory.setDoubleWord(this.dataAddress.get(), Double.doubleToLongBits(value));
          } 
             catch (AddressErrorException e) {
-               errors.add(new ErrorMessage(token.getSourceMIPSprogram(), token.getSourceLine(), token
+               errors.add(new ErrorMessage(token.getSourceRISCVprogram(), token.getSourceLine(), token
                   .getStartPos(), "\"" + this.dataAddress.get()
                   + "\" is not a valid data segment address"));
                return;
@@ -1460,8 +1434,7 @@ import mars.mips.instructions.Instruction;
                   try {
                      Globals.memory.set(entry.patchAddress, labelAddress, entry.length);
                   } 
-                     catch (AddressErrorException aee) {
-                     }
+                     catch (AddressErrorException ignored) { }
                   forwardReferenceList.remove(i);
                   i--; // needed because removal shifted the remaining list indices down
                   count++;
@@ -1474,11 +1447,11 @@ import mars.mips.instructions.Instruction;
       // undefined labels.
          private void generateErrorMessages(ErrorList errors) {
             DataSegmentForwardReference entry;
-            for (int i = 0; i < forwardReferenceList.size(); i++) {
-               entry = (DataSegmentForwardReference) forwardReferenceList.get(i);
-               errors.add(new ErrorMessage(entry.token.getSourceMIPSprogram(), entry.token
-                  .getSourceLine(), entry.token.getStartPos(), "Symbol \""
-                  + entry.token.getValue() + "\" not found in symbol table."));
+            for (Object o : forwardReferenceList) {
+               entry = (DataSegmentForwardReference) o;
+               errors.add(new ErrorMessage(entry.token.getSourceRISCVprogram(), entry.token
+                       .getSourceLine(), entry.token.getStartPos(), "Symbol \""
+                       + entry.token.getValue() + "\" not found in symbol table."));
             }
          }
       

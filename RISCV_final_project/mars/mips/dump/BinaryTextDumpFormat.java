@@ -1,11 +1,10 @@
-   package mars.mips.dump;
+package mars.mips.dump;
 
-   import mars.Globals;
-   import mars.mips.hardware.*;
+import mars.Globals;
+import mars.mips.hardware.*;
 import mars.mips.hardware.memory.Memory;
-import mars.mips.instructions.GenMath;
+import mars.util.GenMath;
 import mars.util.Math2;
-
 import java.io.*;
 /*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
@@ -43,8 +42,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @version December 2007
  */
 
-
-    public class BinaryTextDumpFormat extends AbstractDumpFormat {
+/*
+    FIXME: have not checked this class. Might work as it is,
+            But have not made any meaningful changes but fixing unresolved files.
+            Need to check and implement if necessary.
+ */
+public class BinaryTextDumpFormat extends AbstractDumpFormat {
    
    /**
    *  Constructor.  There is no standard file extension for this format.
@@ -54,39 +57,38 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       }
    
    
-   /**
-   *  Write MIPS memory contents in binary text format.  Each line of
-   *  text contains one memory word written as 32 '0' and '1' characters.  Written
-   *  using PrintStream's println() method.
-   *  Adapted by Pete Sanderson from code written by Greg Gibeling.
-   *
-   *  @param  file  File in which to store MIPS memory contents.  
-   *  @param firstAddress first (lowest) memory address to dump.  In bytes but
-   *  must be on word boundary.
-   *  @param lastAddress last (highest) memory address to dump.  In bytes but
-   *  must be on word boundary.  Will dump the word that starts at this address.
-   *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
-   *  @throws IOException if error occurs during file output.
-   */
-       public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress) 
-        throws AddressErrorException, IOException {
-         PrintStream out = new PrintStream(new FileOutputStream(file));
-         String string = null;
-         try {
+    /**
+    *  Write MIPS memory contents in binary text format.  Each line of
+    *  text contains one memory word written as 32 '0' and '1' characters.  Written
+    *  using PrintStream's println() method.
+    *  Adapted by Pete Sanderson from code written by Greg Gibeling.
+    *
+    *  @param  file  File in which to store MIPS memory contents.
+    *  @param firstAddress first (lowest) memory address to dump.  In bytes but
+    *  must be on word boundary.
+    *  @param lastAddress last (highest) memory address to dump.  In bytes but
+    *  must be on word boundary.  Will dump the word that starts at this address.
+    *  @throws AddressErrorException if firstAddress is invalid or not on a word boundary.
+    *  @throws IOException if error occurs during file output.
+    */
+    public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
+    throws AddressErrorException, IOException {
+        PrintStream out = new PrintStream(new FileOutputStream(file));
+        String string = null;
+        try {
             for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = GenMath.add(address, Memory.WORD_LENGTH_BYTES)) {
-               Number temp = Globals.memory.getRawWordOrNull(address);
-               if (temp == null) 
-                  break;
-               string = Integer.toBinaryString(temp.intValue());
-               while (string.length() < 32) {
-                  string = '0' + string;
-               }
-               out.println(string);
+                Number temp = Globals.memory.getRawWordOrNull(address);
+                if (temp == null)
+                    break;
+                string = Integer.toBinaryString(temp.intValue());
+                while (string.length() < 32)
+                    string = '0' + string;
+                out.println(string);
             }
-         } 
-         finally { 
-            out.close(); 
-         }
-      }
-   
-   }
+        }
+        finally {
+            out.close();
+        }
+    }
+
+}

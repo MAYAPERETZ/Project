@@ -29,14 +29,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Object provided to Observers of runtime access to MIPS register.
- * Observer can get the access type (R/W) and register number.
- * 
- * @author Pete Sanderson 
- * @version July 2005
- */
-
+* Object provided to Observers of runtime access to MIPS register.
+* Observer can get the access type (R/W) and register number.
+*
+* @author Pete Sanderson
+* @version July 2005
+*/
 public class RegisterAccessNotice extends AccessNotice {
+
     private String registerName;
 
     /**

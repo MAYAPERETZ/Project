@@ -1,9 +1,9 @@
-   package mars.mips.instructions;
-   import mars.*;
-   import mars.util.*;
-   import mars.assembler.*;
-   import mars.mips.hardware.*;
-   import java.util.*;
+package mars.mips.instructions;
+import mars.*;
+import mars.util.*;
+import mars.assembler.*;
+import mars.mips.hardware.*;
+import java.util.*;
 	
 	/*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar
@@ -205,7 +205,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	 * @return String representing basic assembler statement.
    	 */
    
-       public static String makeTemplateSubstitutions(MIPSprogram program, String template, TokenList theTokenList) {
+       public static String makeTemplateSubstitutions(RISCVprogram program, String template, TokenList theTokenList) {
          String instruction = template;
          int index;
          // Added 22 Jan 2008 by DPS.  The DBNOP template means to generate a "nop" instruction if delayed branching

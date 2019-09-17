@@ -5,9 +5,9 @@ import mars.simulator.*;
 import mars.mips.hardware.*;
 import mars.mips.hardware.memory.Memory;
 import mars.mips.hardware.memory.MemoryAccessNotice;
-import mars.mips.instructions.GenMath;
+import mars.util.GenMath;
 import static mars.util.Math2.*;
-import static mars.mips.instructions.GenMath.*;
+import static mars.util.GenMath.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -43,12 +43,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
    
-	/**
-	  *  Represents the Data Segment window, which is a type of JInternalFrame.
-	  *   @author Sanderson and Bumgarner
-	  **/
+/**
+*  Represents the Data Segment window, which is a type of JInternalFrame.
+*   @author Sanderson and Bumgarner
+*/
     
-   public class DataSegmentWindow extends JInternalFrame implements Observer {
+public class DataSegmentWindow extends JInternalFrame implements Observer {
 
        private static  Object[][] dataData;
    
@@ -173,9 +173,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  });
          features.add(asciiDisplayCheckBox);
          addButtonActionListenersAndInitialize();
-         for (int i=0; i<choosers.length; i++) {
-            features.add(choosers[i]);
-         }
+         for (NumberDisplayBaseChooser chooser : choosers)
+            features.add(chooser);
+
       }  
    
    
@@ -218,9 +218,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             													 (int)addressCell.getX()+1,
             													 (int)addressCell.getY()+1, 1, false);
          MouseListener[] mouseListeners = dataTable.getMouseListeners();
-         for (int i=0; i<mouseListeners.length; i++)
-            mouseListeners[i].mousePressed(fakeMouseEvent);
-
+         for (MouseListener mouseListener : mouseListeners) mouseListener.mousePressed(fakeMouseEvent);
       }
    
      /**
@@ -411,7 +409,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// Check distance from stack pointer.  Can be on either side of it...
          thisDistance = abs(sub(address, RVIRegisters.getValue(RVIRegisters.STACK_POINTER_REGISTER)));
          if (isLt(thisDistance, shortDistance)) {
-            shortDistance = thisDistance;
             desiredComboBoxIndex = STACK_POINTER_BASE_ADDRESS_INDEX;
          }      	
          return desiredComboBoxIndex;
@@ -585,7 +582,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         	try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
          }
@@ -636,9 +632,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          disableAllButtons();
       }
    
-   	/*
-   	 * Do this initially and upon reset.
-   	 */
+      /*
+      * Do this initially and upon reset.
+      */
       private void disableAllButtons() {
          baseAddressSelector.setEnabled(false);
          globButton.setEnabled(false);
@@ -653,9 +649,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          dataButton.setEnabled(false);
       }
    
-   	/*
-   	 * Do this upon reset.
-   	 */
+      /*
+      * Do this upon reset.
+      */
       private void enableAllButtons() {
          baseAddressSelector.setEnabled(true);
          globButton.setEnabled(true);
@@ -670,10 +666,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          dataButton.setEnabled(true);
       }
    	
-   	/*
-   	 * Establish action listeners for the data segment navigation buttons.
-   	 */
-   	
+      /*
+      * Establish action listeners for the data segment navigation buttons.
+      */
       private void addButtonActionListenersAndInitialize() {
          // set initial states
          disableAllButtons();
@@ -699,26 +694,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       	// add the action listeners to maintain button state and table contents
       	// Currently there is no memory upper bound so next button always enabled.
       
-         globButton.addActionListener( 
-               new ActionListener() {
-                  public void actionPerformed(ActionEvent ae) {
-                     userOrKernelMode = USER_MODE;
-                  	// get $gp global pointer, but guard against it having value below data segment
-                     if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
-                    	 firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                    			 , RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER).intValue());
-                     else
-                    	 firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
-                    			 , RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER).longValue());
-                  	// updateModelForMemoryRange requires argument to be multiple of 4
-                  	// but for cleaner display we'll make it multiple of 32 (last nibble is 0).  
-                  	// This makes it easier to mentally calculate address from row address + column offset.
-                     firstAddress = sub(firstAddress, rem(firstAddress, NumberS_PER_ROW));
-                     homeAddress = firstAddress; 
-                     firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
-                     updateModelForMemoryRange(firstAddress);
-                  }
-               });
+         globButton.addActionListener(
+                 ae -> {
+                    userOrKernelMode = USER_MODE;
+                    // get $gp global pointer, but guard against it having value below data segment
+                    if(MemoryConfigurations.getCurrentComputingArchitecture() == 32)
+                       firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
+                                , RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER).intValue());
+                    else
+                       firstAddress = max(Globals.memory.getInstance().getDataTable().getBaseAddress()
+                                , RVIRegisters.getValue(RVIRegisters.GLOBAL_POINTER_REGISTER).longValue());
+                    // updateModelForMemoryRange requires argument to be multiple of 4
+                    // but for cleaner display we'll make it multiple of 32 (last nibble is 0).
+                    // This makes it easier to mentally calculate address from row address + column offset.
+                    firstAddress = sub(firstAddress, rem(firstAddress, NumberS_PER_ROW));
+                    homeAddress = firstAddress;
+                    firstAddress = setFirstAddressAndPrevNextButtonEnableStatus(firstAddress);
+                    updateModelForMemoryRange(firstAddress);
+                 });
       	
          stakButton.addActionListener(
                  ae -> {
@@ -899,112 +892,107 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       
    	
    	
-   	////////////////////////////////////////////////////////////////////////
-   	// Class representing memory data table data
-   	
-      class DataTableModel extends AbstractTableModel {
-         String[] columnNames;
-         Object[][] data;         
-      	
-         public DataTableModel(Object[][] d, String [] n){
-            data=d;
-            columnNames= n;
-         }
-      
-         public int getColumnCount() {
-            return columnNames.length;
-         }
-        
-         public int getRowCount() {
-            return data.length;
-         }
-      
-         public String getColumnName(int col) {
-            return columnNames[col];
-         }
-      
-         public Object getValueAt(int row, int col) {
-            return data[row][col];
-         }
-      
-        /*
-         * The cells in the Address column are not editable.  
-      	* Value cells are editable except when displayed 
-      	* in ASCII view - don't want to give the impression
-      	* that ASCII text can be entered directly because
-      	* it can't.  It is possible but not worth the
-      	* effort to implement.
-         */
-         public boolean isCellEditable(int row, int col) {
-            //Note that the data/cell address is constant,
-            //no matter where the cell appears onscreen.
-            if (col != ADDRESS_COLUMN && !asciiDisplay)
-               return true;
-            else
-               return false;
+   ////////////////////////////////////////////////////////////////////////
+   // Class representing memory data table data
 
+   class DataTableModel extends AbstractTableModel {
+      String[] columnNames;
+      Object[][] data;
+
+      public DataTableModel(Object[][] d, String [] n){
+         data=d;
+         columnNames= n;
+      }
+
+      public int getColumnCount() {
+         return columnNames.length;
+      }
+
+      public int getRowCount() {
+         return data.length;
+      }
+
+      public String getColumnName(int col) {
+         return columnNames[col];
+      }
+
+      public Object getValueAt(int row, int col) {
+         return data[row][col];
+      }
+      
+      /*
+      * The cells in the Address column are not editable.
+      * Value cells are editable except when displayed
+      * in ASCII view - don't want to give the impression
+      * that ASCII text can be entered directly because
+      * it can't.  It is possible but not worth the
+      * effort to implement.
+      */
+      public boolean isCellEditable(int row, int col) {
+         //Note that the data/cell address is constant,
+         //no matter where the cell appears onscreen.
+         if (col != ADDRESS_COLUMN && !asciiDisplay)
+            return true;
+         else return false;
+      }
+
+      /*
+      * JTable uses this method to determine the default renderer/
+      * editor for each cell.
+      */
+      public Class getColumnClass(int c) {
+      return getValueAt(0, c).getClass();
+      }
+      /*
+      * Update cell contents in table model.  This method should be called
+      * only when user edits cell, so input validation has to be done.  If
+      * value is valid, MIPS memory is updated.
+      */
+      public void setValueAt(Object value, int row, int col) {
+         int val=0;
+         long address=0;
+         try {
+            val = Binary.stringToInt((String) value);
          }
-      
-      
-      
-        /*
-         * JTable uses this method to determine the default renderer/
-         * editor for each cell.  
-         */
-         public Class getColumnClass(int c) {
-            return getValueAt(0, c).getClass();
-         }
-        /*
-         * Update cell contents in table model.  This method should be called
-      	* only when user edits cell, so input validation has to be done.  If
-      	* value is valid, MIPS memory is updated.
-         */
-         public void setValueAt(Object value, int row, int col) {
-            int val=0;
-            long address=0;
-            try {
-               val = Binary.stringToInt((String) value);
-            }
-               catch (NumberFormatException nfe) {
-                  data[row][col] = "INVALID";
-                  fireTableCellUpdated(row, col);
-                  return;
-               }
-         
-               // calculate address from row and column
-            try {
-               address = Binary.stringToInt((String)data[row][ADDRESS_COLUMN]) + (col-1)*NumberS_PER_VALUE;  // KENV 1/6/05
-            }
-               catch (NumberFormatException nfe) {
-                  //  can't really happen since memory addresses are completely under
-                  // the control of my software.
-               }
-         	//  Assures that if changed during MIPS program execution, the update will
-         	//  occur only between MIPS instructions.
-            synchronized (Globals.memoryAndRegistersLock) {
-               try {
-                  Globals.memory.setRawWord(address,val);
-               } 
-                // somehow, user was able to display out-of-range address.  Most likely to occur between
-                // stack base and Kernel.  Also text segment with self-modifying-code setting off.
-                  catch (AddressErrorException aee) {
-                     return;
-                  }
-            }// end synchronized block
-            int valueBase = Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase();
-            data[row][col] = NumberDisplayBaseChooser.formatIntNumber(val, valueBase); 
+         catch (NumberFormatException nfe) {
+            data[row][col] = "INVALID";
             fireTableCellUpdated(row, col);
             return;
          }
-      
-      
-        /*
-         * Update cell contents in table model.  Does not affect MIPS memory.
-         */
-         private void setDisplayAndModelValueAt(Object value, int row, int col) {
-            data[row][col] = value;
-            fireTableCellUpdated(row, col);
+         
+               // calculate address from row and column
+         try {
+            address = Binary.stringToInt((String)data[row][ADDRESS_COLUMN]) + (col-1)*NumberS_PER_VALUE;  // KENV 1/6/05
          }
+            catch (NumberFormatException nfe) {
+               //  can't really happen since memory addresses are completely under
+               // the control of my software.
+            }
+         //  Assures that if changed during MIPS program execution, the update will
+         //  occur only between MIPS instructions.
+         synchronized (Globals.memoryAndRegistersLock) {
+            try {
+               Globals.memory.setRawWord(address,val);
+            }
+             // somehow, user was able to display out-of-range address.  Most likely to occur between
+             // stack base and Kernel.  Also text segment with self-modifying-code setting off.
+               catch (AddressErrorException aee) {
+                  return;
+               }
+         }// end synchronized block
+         int valueBase = Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase();
+         data[row][col] = NumberDisplayBaseChooser.formatIntNumber(val, valueBase);
+         fireTableCellUpdated(row, col);
+      }
+      
+      
+      /*
+      * Update cell contents in table model.  Does not affect MIPS memory.
+      */
+      private void setDisplayAndModelValueAt(Object value, int row, int col) {
+         data[row][col] = value;
+         fireTableCellUpdated(row, col);
+      }
       
        
       }  

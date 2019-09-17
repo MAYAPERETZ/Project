@@ -30,12 +30,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Represents the list of tokens in a single line of RISCV code.  It uses, but is not
- * a subclass of, ArrayList.
- * 
- * @author Pete Sanderson 
- * @version August 2003
- */
+* Represents the list of tokens in a single line of RISCV code.  It uses, but is not
+* a subclass of, ArrayList.
+*
+* @author Pete Sanderson
+* @version August 2003
+*/
 
 public class TokenList implements Cloneable {
 	

@@ -40,10 +40,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 /**
 *  Represents Coprocessor 1, the Floating Point Unit (FPU)
-*   Modified September 2019 by Maya Peretz; Integrated and evolved the code
-*   so it would match RISCV
+*  Integrated to RISCV architecture by Maya Peretz in September 2019.
 *  @author 	Pete Sanderson
-*  @version July 2005
+*  @version September 2019
 **/
 
 // Adapted from RegisterFile class developed by Bumgarner et al in 2003.
@@ -71,9 +70,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	protected static final float POSITIZE_INF = 0;
     	
     	private static final int SIGN_MASK_32 = 0x80000000;
-    	private static final int MANTISA_SIGN_MASK_32 = 0x00400000;
-    	private static final int SIGN_MASK_64 = 0x80000000;
-    	private static final int MANTISA_SIGN_MASK_64 = 0x00400000;
+    	private static final int MANTISA_SIGN_MASK_32 = 0x00800000;
+    	private static final long SIGN_MASK_64 = 0x8000000000000000L;
+    	private static final long MANTISA_SIGN_MASK_64 = 0x0008000000000000L;
     	
     	private static final int RNE = 0;
     	private static final int RTZ = 1;
@@ -83,8 +82,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     	private static final int DYNAMIC = 7;
     	
     	// need to complete
-    	
-    	
+
     	enum AccruedExceptionFlagEncoding{
     		NV,
     		DZ,
@@ -125,15 +123,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 					  new Register.FPRegister("ft8", 28, 0), new Register.FPRegister("ft9", 29, 0),
 					  new Register.FPRegister("ft10", 30, 0), new Register.FPRegister("ft11", 31, 0)
 			  ));
-      private static Register fcsr = new Register("fcsr",32, 0);
+	private static Register fcsr = new Register("fcsr",32, 0);
 
    
 	/**
 	*  Sets the value of the FPU register given to the value given.
 	*   @param reg Register to set the value of.
 	*   @param val The desired float value for the register.
-	**/
-
+	*/
 	public static void setRegister(int reg, float val){
 		if(reg >= 0 && reg < registers.size()) {
 			long longVal =  0;
@@ -146,8 +143,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*  Sets the value of the FPU register given to the double value given.
 	*   @param reg Register to set the value of.
 	*   @param val The desired double value for the register.
-	**/
-
+	*/
 	public static void setRegister(int reg, double val){
 		 long bits = Double.doubleToRawLongBits(val);
 		 registers.get(reg).setValue(bits);
@@ -157,8 +153,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*  Sets the value of the FPU register pair given to the long value  given.
 	*   @param reg Register to set the value of.
 	*   @param val The desired double value for the register.
-	**/
-
+	*/
 	public static void setRegister(int reg, long val) {
 		registers.get(reg).setValue(val); // low order 32 bits
 	}
@@ -167,8 +162,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*  Gets the float value stored in the given FPU register.
 	*   @param reg Register to get the value of.
 	*   @return The  float value stored by that register.
-	**/
-
+	*/
 	public static Float getFloatValue(Number reg){
 		float result = 0F;
 		if(reg.intValue() >= 0 && reg.intValue() < registers.size())
@@ -180,18 +174,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*  Gets the float value stored in the given FPU register.
 	*  @param reg Register to get the value of.
 	*  @return The  float value stored by that register.
-	**/
-
+	*/
 	public static float getFloatValueString(String reg) {
 		return getFloatValue(getRegisterNumber(reg));
 	}
 
-
 	/**
-	 * Gets the double value stored in the given FPU register.
-	 * @param reg Register to get the value of.
-	 * @return the double value stored in the given FPU register
-	 */
+	* Gets the double value stored in the given FPU register.
+	* @param reg Register to get the value of.
+	* @return the double value stored in the given FPU register
+	*/
 	public static double getDoubleValue(int reg) {
 		return Double.longBitsToDouble(registers.get(reg).getValue().longValue());
 	}
@@ -200,25 +192,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*  Gets the double value stored in the given FPU register.
 	*  @param reg String value representation of the register to get the value of.
 	*  @return the double value stored in the given FPU register
-	**/
-
+	*/
 	public static double getDoubleValue(String reg){
 	 return getDoubleValue(getRegisterNumber(reg));
 	}
 
 	/***
-	 * Gets the long value stored in the given FPU register.
-	 * @param reg
-	 * @return
-	 */
+	* Gets the long value stored in the given FPU register.
+	* @param reg the register number
+	* @return the long value stored in the given FPU register.
+	*/
 	public static long getLongValue(Number reg){
 	 return registers.get(reg.intValue()).getValue().longValue();
 	}
 
 	/***
 	 * Gets the long value of a register giving a string value of the register
-	 * @param reg
-	 * @return
+	 * @param reg a {@code String} format of the register number
+	 * @return the long value of a register giving a string value of the register
 	 */
 	public static long getLongValue(String reg){
 		 return getLongValue(getRegisterNumber(reg));
@@ -240,9 +231,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	 registers.get(num2).setType(val);
 	 return old;
 	}
- 
-	public static long setFCSR(long value){
-	   long old = fcsr.getValue().longValue();
+
+	/**
+	 * Set the FCSR register value
+	 * @param value the value to set in the FCSR register.
+	 * @return the old value of the FCSR register
+	 */
+	/*
+	 Fixme: Please make a patch so the back stepper would record the values of the FCSR as well
+			Maybe it's already behaves as expected; Need to check
+
+	*/
+	public static long setFCSR(int value){
+	   int old = fcsr.getValue().intValue();
 	   fcsr.setValue(value);
 	   if (Globals.getSettings().getBackSteppingEnabled()) {
 		  Globals.program.getBackStepper().addFCSRRestore(old);
@@ -250,6 +251,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	   return old;
 	}
 
+	/*
+	 FIXME: Please make a patch so the back stepper would record the values of the instructions calling
+	  this function, and the FCSR as well
+	  Maybe it's already behaves as expected; Need to check
+	*/
+
+	/*
+		FIXME: Need to implement inexact exception as well, but as far as I know,
+			 	JAVA floating-point number implementation is not perfectly accurate;
+			 	This means that it's implementation requires a whole new implementation for
+			 	the numbers.
+	 */
 	public static Number updateRegisterWithExecptions(Number num, Number val) throws FloatingPointException {
 	   Number old = 0;
 	   int num2 = num.intValue();
@@ -261,7 +274,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	   else if (Coprocessor1.isNan(val))
 		   throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
 
-	   // need to implemtent the inexact exception, don't know how...
+	   // need to implemtent the inexact exception...
 
 	   old = (Globals.getSettings().getBackSteppingEnabled())
 					  ? Globals.program.getBackStepper().addCoprocessor1Restore(num2 , registers.get(num2).setValue(val).longValue())
@@ -276,8 +289,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*  Float.intBitsToFloat() to get the equivent float.
 	*   @param num The FPU register number.
 	*   @return The int value of the given register.
-	**/
-
+	*/
 	public static int getIntValue(Number num){
 		return registers.get(num.intValue()).getValue().intValue();
 	}
@@ -286,23 +298,22 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	* For getting the number representation of the FPU register.
 	* @param n The string formatted register name to look for.
 	* @return The number of the register represented by the string.
-	**/
-
+	*/
 	public static int getRegisterNumber(String n){
-	int j=-1;
-	for (int i=0; i< registers.size(); i++){
-	if(registers.get(i).getName().equals(n)) {
-	   j= registers.get(i).getNumber();
-	   break;
-	}
-	}
-	return j;
+		int j=-1;
+		for (Register.FPRegister register : registers) {
+			if (register.getName().equals(n)) {
+				j = register.getNumber();
+				break;
+			}
+		}
+		return j;
 	}
       
 	/**
 	* For returning the set of registers.
 	* @return The set of registers.
-	**/
+	*/
 	public static ArrayList<Register.FPRegister> getRegisters(){
 		return registers;
 	}
@@ -311,7 +322,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	* Get register object corresponding to given name.  If no match, return null.
 	* @param rName The FPU register name, must be "f0" through "f31".
 	* @return The register object,or null if not found.
-	**/
+	*/
 	public static Register.FPRegister getRegister(String rName) {
 	   Register.FPRegister reg;
 	   if (rName.charAt(0) == 'f' && Character.isDigit(rName.charAt(0))) {
@@ -331,12 +342,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	   {
 		 reg = null; // just to be sure
 				 // just do linear search; there aren't that many registers
-				for (int i=0; i < registers.size(); i++) {
-				   if (rName.equals(registers.get(i).getName())) {
-					  reg = registers.get(i);
-					  break;
-				   }
-				}
+		   for (Register.FPRegister register : registers) {
+			   if (rName.equals(register.getName())) {
+				   reg = register;
+				   break;
+			   }
+		   }
 	   }
 	   return reg;
 	}
@@ -345,30 +356,25 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	*	Method to reinitialize the values of the registers.
 	**/
 	public static void resetRegisters(){
-		for(int i=0; i < registers.size(); i++)
-			registers.get(i).resetValue();
+		for (Register.FPRegister register : registers) register.resetValue();
 		fcsr.resetValue();
 	}
-      
-   
+
 	/**
 	*  Each individual register is a separate object and Observable.  This handy method
 	*  will add the given Observer to each one.
 	*/
 	public static void addRegistersObserver(Observer observer) {
-		for (int i=0; i<registers.size(); i++)
-			registers.get(i).addObserver(observer);
+		for (Register.FPRegister register : registers) register.addObserver(observer);
 		fcsr.addObserver(observer);
 	}
-
    
 	/**
 	*  Each individual register is a separate object and Observable.  This handy method
 	*  will delete the given Observer from each one.
 	*/
 	public static void deleteRegistersObserver(Observer observer) {
-		for (int i=0; i<registers.size(); i++)
-			registers.get(i).deleteObserver(observer);
+		for (Register.FPRegister register : registers) register.deleteObserver(observer);
 		fcsr.deleteObserver(observer);
 	}
 
@@ -377,7 +383,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	 * @param val the value to get the fclass for.
 	 * @return the fclass of the value
 	 */
-	public static int getFclass(Number val){
+	private static int getFclass(Number val){
 		if(val instanceof Float)
 			return getFclass(val.floatValue());
 		return getFclass(val.doubleValue());
@@ -404,8 +410,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			  value > (-Float.MIN_NORMAL))
 		  return fclass.NEGATIVE_SUBNORMAL.ordinal();
 		else if(Float.isNaN(value)) {
-			//FIXME: Change the conditon below so it won't be always false
-			return ((Float.floatToIntBits(value)&MANTISA_SIGN_MASK_32) == 1) ?
+			return ((Float.floatToIntBits(value)&MANTISA_SIGN_MASK_32) == MANTISA_SIGN_MASK_32) ?
 			fclass.qNan.ordinal(): fclass.sNan.ordinal();
 		}
 
@@ -435,8 +440,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 			  value > (-Double.MIN_NORMAL))
 		  return fclass.NEGATIVE_SUBNORMAL.ordinal();
 		else if(Double.isNaN(value)) {
-			//FIXME: Change the conditon below so it won't be always false
-		  return ((Double.doubleToLongBits(value)&MANTISA_SIGN_MASK_64) == 1) ?
+		  return ((Double.doubleToLongBits(value)&MANTISA_SIGN_MASK_64) == MANTISA_SIGN_MASK_64) ?
 			fclass.qNan.ordinal(): fclass.sNan.ordinal();
 		}
 
@@ -490,18 +494,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	 * @param value the value to be determined whether it's a Nan
 	 * @return true if a given value is Nan
 	 */
-	public static boolean isNan(Number value) {
+	private static boolean isNan(Number value) {
 		if(value instanceof Float)
 			return Float.isNaN(value.floatValue());
 		return Double.isNaN(value.doubleValue());
 	}
 
 	/**
-	 * Returns true if a given value is an infinite value
-	 * @param value the value to be determined whether it's an infinite value
-	 * @return true if a given value is infinite value
-	 */
-	public static boolean isInfinite(Number value) {
+	* Returns true if a given value is an infinite value
+	* @param value the value to be determined whether it's an infinite value
+	* @return true if a given value is infinite value
+	*/
+	private static boolean isInfinite(Number value) {
 		if(value instanceof Float)
 			return Float.isInfinite(value.floatValue());
 		return Double.isInfinite(value.doubleValue());
@@ -530,12 +534,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	}
 
 	/**
-	 * Returns the rounding of a given value according to the rounding technique
-	 * Note: the rounding has not been tested.
-	 * Moreover, the rounding might be inaccurate due to the class and method being used
-	 * to round the value (BigDecimal's methods, which are considered inaccurate)
-	 * @param value the value to be rounded
-	 * @return the rounding of a given value
+	* Returns the rounding of a given value according to the rounding technique
+	* Note: the rounding has not been tested.
+	* Moreover, the rounding might be inaccurate due to the class and method being used
+	* to round the value (BigDecimal's methods, which are considered inaccurate)
+	* @param value the value to be rounded
+	* @return the rounding of a given value
+	*/
+
+	/*
+	 * FIXME: JAVA uses IEEE-754 floating-point numbers, which are not perfectly precise.
+	 *  If you have a better implementation, feel free to fix it ;)
 	 */
 	public static int round(float value) {
 
@@ -557,7 +566,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	}
 
 	/**
-	 * @see Coprocessor1#round(float)
+	* @see Coprocessor1#round(float)
+	*/
+
+	/*
+	 * FIXME: JAVA uses IEEE-754 floating-point numbers, which are not perfectly precise.
+	 *  If you have a better implementation, feel free to fix it ;)
 	 */
 	public static long round(double value) {
 

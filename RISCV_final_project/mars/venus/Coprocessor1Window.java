@@ -38,11 +38,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 
-  /**
-    *  Sets up a window to display Coprocessor 1 registers in the Registers pane of the UI.
-	 *   @author Pete Sanderson 2005
-	 **/
-    
+/**
+*  Sets up a window to display Coprocessor 1 registers in the Registers pane of the UI.
+*  @author Pete Sanderson 2005
+*/
+
+/*
+    FIXME: This class can be implemented in a more efficient way combining all
+            RegisterWindow, Coprocessor0Window and Coprocessor1Window classes
+            into a base class
+
+ */
 public class Coprocessor1Window extends JPanel implements Observer {
     private static JTable table;
     private static ArrayList<Register.FPRegister> registers;
@@ -64,13 +70,16 @@ public class Coprocessor1Window extends JPanel implements Observer {
         // Display registers in table contained in scroll pane.
         this.setLayout(new BorderLayout()); // table display will occupy entire width if widened
         table = new MyTippedJTable(new RegTableModel(setupWindow()));
-        table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(20);
-        table.getColumnModel().getColumn(NUMBER_COLUMN).setPreferredWidth(70);
-        table.getColumnModel().getColumn(VALUE_COLUMN).setPreferredWidth(130);
+        table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(25);
+        table.getColumnModel().getColumn(NUMBER_COLUMN).setPreferredWidth(25);
+        table.getColumnModel().getColumn(VALUE_COLUMN).setPreferredWidth(60);
         // Display register values (String-ified) right-justified in mono font
-        table.getColumnModel().getColumn(NAME_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.LEFT));
-        table.getColumnModel().getColumn(NUMBER_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.RIGHT));
-        table.getColumnModel().getColumn(VALUE_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.RIGHT));
+        EventQueue.invokeLater(() -> table.setRowHeight(Globals.getGui().registersPane.regsTab.getHeight() / table.getRowCount()));
+        table.setShowVerticalLines(false);
+        table.setFont(new Font("Arial",Font.BOLD,12));
+        table.getColumnModel().getColumn(NAME_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.CENTER));
+        table.getColumnModel().getColumn(NUMBER_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.CENTER));
+        table.getColumnModel().getColumn(VALUE_COLUMN).setCellRenderer(new RegisterCellRenderer(MonoRightCellRenderer.MONOSPACED_PLAIN_12POINT, SwingConstants.CENTER));
         this.add(new JScrollPane(table, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER));
     }
   
@@ -78,8 +87,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
     /**
     *  Sets up the data for the window.
     *  @return The array object with the data for the window.
-    **/
-   	
+    */
     public Object[][] setupWindow(){
         int valueBase = NumberDisplayBaseChooser.getBase(settings.getDisplayValuesInHex());
         registers = Coprocessor1.getRegisters();
@@ -91,6 +99,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
         tableData[i][2]= NumberDisplayBaseChooser.formatNumber(registers.get(i).getValue().longValue(),valueBase);//formatNumber(floatValue,NumberDisplayBaseChooser.getBase(settings.getDisplayValuesInHex()));
 
         }
+        // Added by Maya Peretz in September 2019 to support FCSR register.
         tableData[32][0]= "fcsr";
         tableData[32][1]= "";
         tableData[32][2]= NumberDisplayBaseChooser.formatUnsignedInteger((int)(Coprocessor1.getFCSR().getValue().intValue()),valueBase);
@@ -137,15 +146,13 @@ public class Coprocessor1Window extends JPanel implements Observer {
     */
     public void updateRegisters(int base) {
         registers = Coprocessor1.getRegisters();
-        for(int i=0; i< registers.size(); i++)
-            ((RegTableModel)table.getModel()).setDisplayAndModelValueAt(
-                NumberDisplayBaseChooser.formatNumber(registers.get(i),base), registers.get(i).getNumber(), VALUE_COLUMN);
+        for (Register.FPRegister register : registers)
+            ((RegTableModel) table.getModel()).setDisplayAndModelValueAt(
+                    NumberDisplayBaseChooser.formatNumber(register, base), register.getNumber(), VALUE_COLUMN);
         ((RegTableModel)table.getModel()).setDisplayAndModelValueAt(
             NumberDisplayBaseChooser.formatUnsignedInteger(Coprocessor1.getFCSR().getValue().intValue(),base)
             , Coprocessor1.getFCSR().getNumber(), VALUE_COLUMN);
-
     }
- 
    
     /**
     *  This method handles the updating of the GUI.  Does not affect actual register.
@@ -166,7 +173,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
     * Observables include:
     *   The Simulator object, which lets us know when it starts and stops running
     *   A register object, which lets us know of register operations
-    * The Simulator keeps us informed of when simulated MIPS execution is active.
+    * The Simulator keeps us informed of when simulated RISCV execution is active.
     * This is the only time we care about register operations.
     * @param observable The Observable object who is notifying us
     * @param obj Auxiliary object with additional information.
@@ -175,7 +182,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
          if (observable == mars.simulator.Simulator.getInstance()) {
             SimulatorNotice notice = (SimulatorNotice) obj;
             if (notice.getAction()==SimulatorNotice.SIMULATOR_START) {
-               // Simulated MIPS execution starts.  Respond to memory changes if running in timed
+               // Simulated RISCV execution starts.  Respond to memory changes if running in timed
             	// or stepped mode.
                if (notice.getRunSpeed() != RunSpeedPanel.UNLIMITED_SPEED || Math2.isEq(notice.getMaxSteps(),1)) {
                   Coprocessor1.addRegistersObserver(this);
@@ -183,7 +190,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
                }
             } 
             else {
-               // Simulated MIPS execution stops.  Stop responding.
+               // Simulated RISCV execution stops.  Stop responding.
                Coprocessor1.deleteRegistersObserver(this);
             }
          } 
@@ -221,7 +228,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
         private Font font;
         private int alignment;
 
-        public RegisterCellRenderer(Font font, int alignment) {
+        RegisterCellRenderer(Font font, int alignment) {
             super();
             this.font = font;
             this.alignment = alignment;
@@ -231,22 +238,22 @@ public class Coprocessor1Window extends JPanel implements Observer {
                         boolean isSelected, boolean hasFocus, int row, int column) {
             JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value,
                                     isSelected, hasFocus, row, column);
-            cell.setFont(font);
+            //cell.setFont(font);
             cell.setHorizontalAlignment(alignment);
             if (settings.getRegistersHighlighting() && highlighting && row==highlightRow) {
                cell.setBackground( settings.getColorSettingByPosition(Settings.REGISTER_HIGHLIGHT_BACKGROUND) );
                cell.setForeground( settings.getColorSettingByPosition(Settings.REGISTER_HIGHLIGHT_FOREGROUND) );
-                    cell.setFont( settings.getFontByPosition(Settings.REGISTER_HIGHLIGHT_FONT) );
+                   // cell.setFont( settings.getFontByPosition(Settings.REGISTER_HIGHLIGHT_FONT) );
             }
             else if (row%2==0) {
                cell.setBackground( settings.getColorSettingByPosition(Settings.EVEN_ROW_BACKGROUND) );
                cell.setForeground( settings.getColorSettingByPosition(Settings.EVEN_ROW_FOREGROUND) );
-                    cell.setFont( settings.getFontByPosition(Settings.EVEN_ROW_FONT) );
+                  //  cell.setFont( settings.getFontByPosition(Settings.EVEN_ROW_FONT) );
             }
             else {
                cell.setBackground( settings.getColorSettingByPosition(Settings.ODD_ROW_BACKGROUND) );
                cell.setForeground( settings.getColorSettingByPosition(Settings.ODD_ROW_FOREGROUND) );
-                    cell.setFont( settings.getFontByPosition(Settings.ODD_ROW_FONT) );
+                  //  cell.setFont( settings.getFontByPosition(Settings.ODD_ROW_FONT) );
             }
             return cell;
         }
@@ -260,7 +267,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
         final String[] columnNames =  {"Name", "Number", "Value"};
         Object[][] data;
 
-        public RegTableModel(Object[][] d){
+        RegTableModel(Object[][] d){
             data=d;
         }
 
@@ -294,10 +301,8 @@ public class Coprocessor1Window extends JPanel implements Observer {
         public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
-            if ((col == VALUE_COLUMN)) return true;
-            else return false;
+            return (col == VALUE_COLUMN);
         }
-      
       
         /*
          * Update cell contents in table model.  This method should be called
@@ -412,7 +417,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
       	
           //Implement table cell tool tips.
           public String getToolTipText(MouseEvent e) {
-            String tip = null;
+            String tip;
             java.awt.Point p = e.getPoint();
             int rowIndex = rowAtPoint(p);
             int colIndex = columnAtPoint(p);

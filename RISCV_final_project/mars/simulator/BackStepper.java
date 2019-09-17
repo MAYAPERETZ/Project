@@ -3,6 +3,7 @@ package mars.simulator;
 import mars.*;
 import mars.mips.hardware.*;
 import mars.mips.instructions.*;
+import mars.util.GenMath;
 import mars.util.Math2;
 
 /*
@@ -34,35 +35,34 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Used to "step backward" through execution, undoing each instruction.
- * @author Pete Sanderson
- * @version February 2006
- */
+* Used to "step backward" through execution, undoing each instruction.
+* @author Pete Sanderson
+* @version February 2006
+*/
  
-    public class BackStepper {
+public class BackStepper {
     // The types of "undo" actions.  Under 1.5, these would be enumerated type.
     // These fit better in the BackStep class below but inner classes cannot have static members.
-      private static final int MEMORY_RESTORE_RAW_WORD = 0;
-      private static final int MEMORY_RESTORE_WORD = 1;
-      private static final int MEMORY_RESTORE_HALF = 2;
-      private static final int MEMORY_RESTORE_BYTE = 3;
-      private static final int REGISTER_RESTORE = 4;
-      private static final int PC_RESTORE = 5;
-      private static final int COPROC0_REGISTER_RESTORE = 6;
-      private static final int COPROC1_REGISTER_RESTORE = 7;
-      private static final int COPROC1_CONDITION_CLEAR = 8;
-      private static final int COPROC1_CONDITION_SET = 9;
-      private static final int MEMORY_RESTORE_DOUBLE_WORD = 10;
-      private static final int FCSR_RESTORE = 11;
-      private static final int DO_NOTHING = 12;  // instruction does not write anything.
-      
-   
-      // Flag to mark BackStep object as prepresenting specific situation: user manipulates
-   	// memory/register value via GUI after assembling program but before running it.
-      private static final int NOT_PC_VALUE = -1;
-   	
-      private boolean engaged;
-      private BackstepStack backSteps;
+    private static final int MEMORY_RESTORE_RAW_WORD = 0;
+    private static final int MEMORY_RESTORE_WORD = 1;
+    private static final int MEMORY_RESTORE_HALF = 2;
+    private static final int MEMORY_RESTORE_BYTE = 3;
+    private static final int REGISTER_RESTORE = 4;
+    private static final int PC_RESTORE = 5;
+    private static final int COPROC0_REGISTER_RESTORE = 6;
+    private static final int COPROC1_REGISTER_RESTORE = 7;
+    private static final int COPROC1_CONDITION_CLEAR = 8;
+    private static final int COPROC1_CONDITION_SET = 9;
+    private static final int MEMORY_RESTORE_DOUBLE_WORD = 10;
+    private static final int FCSR_RESTORE = 11;
+    private static final int DO_NOTHING = 12;  // instruction does not write anything.
+
+    // Flag to mark BackStep object as prepresenting specific situation: user manipulates
+    // memory/register value via GUI after assembling program but before running it.
+    private static final int NOT_PC_VALUE = -1;
+
+    private boolean engaged;
+    private BackstepStack backSteps;
    	
    	// One can argue using java.util.Stack, given its clumsy implementation.
    	// A homegrown linked implementation will be more streamlined, but
@@ -71,118 +71,115 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// performance is not an issue.  Its Vector implementation may result
    	// in quicker garbage collection than a pure linked list implementation.
    
-       /**
-   	  * Create a fresh BackStepper.  It is enabled, which means all
-   	  * subsequent instruction executions will have their "undo" action
-   	  * recorded here.
-   	  */
-       public BackStepper() {
-         engaged = true;
-         backSteps = new BackstepStack(Globals.maximumBacksteps);
-      }
-   
-       /**
-   	  * Determine whether execution "undo" steps are currently being recorded.
-   	  * @return true if undo steps being recorded, false if not.
-   	  */
-       public boolean enabled() {
-         return engaged;
-      }
-   
-       /**
-   	  * Set enable status.
-   	  * @param state If true, will begin (or continue) recoding "undo" steps.  If false, will stop.
-   	  */
-       public void setEnabled(boolean state) {
-         engaged = state;
-      }
-   
-      /**
-   	 * Test whether there are steps that can be undone.
-   	 * @return true if there are no steps to be undone, false otherwise.
-   	 */
-       public boolean empty() {
-         return backSteps.empty();
-      }
+    /**
+    * Create a fresh BackStepper.  It is enabled, which means all
+    * subsequent instruction executions will have their "undo" action
+    * recorded here.
+    */
+    public BackStepper() {
+        engaged = true;
+        backSteps = new BackstepStack(Globals.maximumBacksteps);
+    }
+
+    /**
+    * Determine whether execution "undo" steps are currently being recorded.
+    * @return true if undo steps being recorded, false if not.
+    */
+    public boolean enabled() {
+        return engaged;
+    }
+
+    /**
+    * Set enable status.
+    * @param state If true, will begin (or continue) recoding "undo" steps.  If false, will stop.
+    */
+    public void setEnabled(boolean state) {
+        engaged = state;
+    }
+
+    /**
+    * Test whether there are steps that can be undone.
+    * @return true if there are no steps to be undone, false otherwise.
+    */
+    public boolean empty() {
+        return backSteps.empty();
+    }
+
+    /**
+    * Determine whether the next back-step action occurred as the result of
+    * an instruction that executed in the "delay slot" of a delayed branch.
+    * @return true if next backstep is instruction that executed in delay slot,
+    * false otherwise.
+    */
+    // Added 25 June 2007
+    public boolean inDelaySlot() {
+        return !empty() && backSteps.peek().inDelaySlot;
+    }
    	
-   	/**
-   	 * Determine whether the next back-step action occurred as the result of
-   	 * an instruction that executed in the "delay slot" of a delayed branch.
-   	 * @return true if next backstep is instruction that executed in delay slot,
-   	 * false otherwise.
-   	 */
-   	// Added 25 June 2007
-       public boolean inDelaySlot() {
-         return !empty() && backSteps.peek().inDelaySlot;
-      }
-   	
-      /**
-   	 *  Carry out a "back step", which will undo the latest execution step.
-   	 *  Does nothing if backstepping not enabled or if there are no steps to undo.
-   	 */
+    /**
+    *  Carry out a "back step", which will undo the latest execution step.
+    *  Does nothing if backstepping not enabled or if there are no steps to undo.
+    */
    	 
-   	 // Note that there may be more than one "step" in an instruction execution; for
-   	 // instance the multiply, divide, and double-precision floating point operations 
-   	 // all store their result in register pairs which results in two store operations.  
-   	 // Both must be undone transparently, so we need to detect that multiple steps happen
-   	 // together and carry out all of them here.  
-   	 // Use a do-while loop based on the backstep's program statement reference.
-   	 
-       public void backStep() {
-         if (engaged && !backSteps.empty()) {
-            ProgramStatement statement = ((BackStep)backSteps.peek()).ps;
-            engaged = false; // GOTTA DO THIS SO METHOD CALL IN SWITCH WILL NOT RESULT IN NEW ACTION ON STACK!
-            do {
-               BackStep step = (BackStep) backSteps.pop();
-               if (!Math2.isEq(step.pc, NOT_PC_VALUE)) {
-                  RVIRegisters.setProgramCounter(step.pc);
-               }
-               try {
-                  switch (step.action) {
-                     case MEMORY_RESTORE_RAW_WORD : 
-                        Globals.memory.setRawWord(step.param1, step.param2);
-                        break;
-                     case MEMORY_RESTORE_WORD : 
-                        Globals.memory.setWord(step.param1, step.param2);
-                        break;
-                     case MEMORY_RESTORE_HALF :
-                        Globals.memory.setHalf(step.param1, step.param2);
-                        break;
-                     case MEMORY_RESTORE_BYTE :
-                        Globals.memory.setByte(step.param1, step.param2);
-                        break;
-                     case REGISTER_RESTORE :
-                        RVIRegisters.updateRegister(step.param1.intValue(), step.param2);
-                        break;
-                     case PC_RESTORE : 
-                        RVIRegisters.setProgramCounter(step.param1);
-                        break;
-                     case COPROC0_REGISTER_RESTORE :
-                        Coprocessor0.updateRegister(Long.toHexString(step.param1.longValue()), step.param2);
-                        break;
-                     case COPROC1_REGISTER_RESTORE :
-                        Coprocessor1.updateRegister(step.param1.longValue(), step.param2.longValue());
-                        break;
-                     case MEMORY_RESTORE_DOUBLE_WORD :
-                         Globals.memory.setDoubleWord(step.param1, step.param2);
-                         break;
-                     case FCSR_RESTORE :
-                    	 Coprocessor1.setFCSR(step.param1.intValue());
-                    	 break;
-                     case DO_NOTHING :
-                        break;
-                  }
-                }
-                catch (Exception e) {
-                    // if the original action did not cause an exception this will not either.
-                    System.out.println("Internal MARS error: address exception while back-stepping.");
-                    System.exit(0);
-                }
-            } while (!backSteps.empty() && statement == ((BackStep)backSteps.peek()).ps);
-            engaged = true;  // RESET IT (was disabled at top of loop -- see comment)
-         }
-      }
-  
+    // Note that there may be more than one "step" in an instruction execution; for
+    // instance the multiply, divide, and double-precision floating point operations
+    // all store their result in register pairs which results in two store operations.
+    // Both must be undone transparently, so we need to detect that multiple steps happen
+    // together and carry out all of them here.
+    // Use a do-while loop based on the backstep's program statement reference.
+    public void backStep() {
+        if (engaged && !backSteps.empty()) {
+        ProgramStatement statement = ((BackStep)backSteps.peek()).ps;
+        engaged = false; // GOTTA DO THIS SO METHOD CALL IN SWITCH WILL NOT RESULT IN NEW ACTION ON STACK!
+        do {
+           BackStep step = backSteps.pop();
+           if (!Math2.isEq(step.pc, NOT_PC_VALUE))
+              RVIRegisters.setProgramCounter(step.pc);
+           try {
+              switch (step.action) {
+                 case MEMORY_RESTORE_RAW_WORD :
+                    Globals.memory.setRawWord(step.param1, step.param2);
+                    break;
+                 case MEMORY_RESTORE_WORD :
+                    Globals.memory.setWord(step.param1, step.param2);
+                    break;
+                 case MEMORY_RESTORE_HALF :
+                    Globals.memory.setHalf(step.param1, step.param2);
+                    break;
+                 case MEMORY_RESTORE_BYTE :
+                    Globals.memory.setByte(step.param1, step.param2);
+                    break;
+                 case REGISTER_RESTORE :
+                    RVIRegisters.updateRegister(step.param1.intValue(), step.param2);
+                    break;
+                 case PC_RESTORE :
+                    RVIRegisters.setProgramCounter(step.param1);
+                    break;
+                 case COPROC0_REGISTER_RESTORE :
+                    Coprocessor0.updateRegister(Long.toHexString(step.param1.longValue()), step.param2);
+                    break;
+                 case COPROC1_REGISTER_RESTORE :
+                    Coprocessor1.updateRegister(step.param1.longValue(), step.param2.longValue());
+                    break;
+                 case MEMORY_RESTORE_DOUBLE_WORD :
+                     Globals.memory.setDoubleWord(step.param1, step.param2);
+                     break;
+                 case FCSR_RESTORE :
+                     Coprocessor1.setFCSR(step.param1.intValue());
+                     break;
+                 case DO_NOTHING :
+                    break;
+              }
+            }
+            catch (Exception e) {
+                // if the original action did not cause an exception this will not either.
+                System.out.println("Internal MARS error: address exception while back-stepping.");
+                System.exit(0);
+            }
+        } while (!backSteps.empty() && statement == ((BackStep)backSteps.peek()).ps);
+        engaged = true;  // RESET IT (was disabled at top of loop -- see comment)
+        }
+    }
      
     /* Convenience method called below to get program counter value.  If it needs to be
     * be modified (e.g. to subtract 4) that can be done here in one place.
@@ -345,7 +342,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             backSteps.push(DO_NOTHING, pc);
         return 0;
     }
-   	
    		   	 	
     // Represents a "back step" (undo action) on the stack.
     private class BackStep {
@@ -396,71 +392,71 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// regardless of how many steps are executed.  This will speed things up a bit
    	// and make life easier for the garbage collector.
    	
-        private class BackstepStack {
-            private int capacity;
-            private int size;
-            private int top;
-            private BackStep[] stack;
-      
-            // Stack is created upon successful assembly or reset.  The one-time overhead of
-            // creating all the BackStep objects will not be noticed by the user, and enhances
-            // runtime performance by not having to create or recycle them during MIPS
-            // program execution.
-            private BackstepStack(int capacity) {
-                this.capacity = capacity;
-                this.size = 0;
-                this.top = -1;
-                this.stack = new BackStep[capacity];
-                for (int i=0; i<capacity; i++)
-                    this.stack[i] = new BackStep();
+    private class BackstepStack {
+        private int capacity;
+        private int size;
+        private int top;
+        private BackStep[] stack;
 
-            }
-      	
-            private synchronized boolean empty() {
-                return size==0;
-            }
-          
-            private synchronized void push(int act, Number programCounter, Number parm1, Number parm2) {
-                if (size==0) {
-                    top=0;
-                    size++;
-                }
-                else if (size < capacity) {
-                    top = (top + 1) % capacity;
-                    size++;
-                }
-                else  // size == capacity.  The top moves up one, replacing oldest entry (goodbye!)
-                 top = (top + 1) % capacity;
-                // We'll re-use existing objects rather than create/discard each time.
-                // Must use assign() method rather than series of assignment statements!
-                stack[top].assign(act, programCounter, parm1, parm2);
-            }
-      	
-            private synchronized void push(int act, Number programCounter, Number parm1) {
-                push(act, programCounter, parm1, 0);
-            }
+        // Stack is created upon successful assembly or reset.  The one-time overhead of
+        // creating all the BackStep objects will not be noticed by the user, and enhances
+        // runtime performance by not having to create or recycle them during MIPS
+        // program execution.
+        private BackstepStack(int capacity) {
+            this.capacity = capacity;
+            this.size = 0;
+            this.top = -1;
+            this.stack = new BackStep[capacity];
+            for (int i=0; i<capacity; i++)
+                this.stack[i] = new BackStep();
 
-            private synchronized void push(int act, Number programCounter) {
-                push(act, programCounter, 0, 0);
-            }
-         
-            // NO PROTECTION.  This class is used only within this file so there is no excuse
-            // for trying to pop from empty stack.
-            private synchronized BackStep pop() {
-                BackStep bs;
-                bs = stack[top];
-                if (size==1) top = -1;
-                else top = (top + capacity - 1) % capacity;
-                size--;
-                return bs;
-            }
-
-            // NO PROTECTION.  This class is used only within this file so there is no excuse
-            // for trying to peek from empty stack.
-            private synchronized BackStep peek() {
-                return stack[top];
-            }
-      			
         }
+
+        private synchronized boolean empty() {
+            return size==0;
+        }
+
+        private synchronized void push(int act, Number programCounter, Number parm1, Number parm2) {
+            if (size==0) {
+                top=0;
+                size++;
+            }
+            else if (size < capacity) {
+                top = (top + 1) % capacity;
+                size++;
+            }
+            else  // size == capacity.  The top moves up one, replacing oldest entry (goodbye!)
+             top = (top + 1) % capacity;
+            // We'll re-use existing objects rather than create/discard each time.
+            // Must use assign() method rather than series of assignment statements!
+            stack[top].assign(act, programCounter, parm1, parm2);
+        }
+
+        private synchronized void push(int act, Number programCounter, Number parm1) {
+            push(act, programCounter, parm1, 0);
+        }
+
+        private synchronized void push(int act, Number programCounter) {
+            push(act, programCounter, 0, 0);
+        }
+
+        // NO PROTECTION.  This class is used only within this file so there is no excuse
+        // for trying to pop from empty stack.
+        private synchronized BackStep pop() {
+            BackStep bs;
+            bs = stack[top];
+            if (size==1) top = -1;
+            else top = (top + capacity - 1) % capacity;
+            size--;
+            return bs;
+        }
+
+        // NO PROTECTION.  This class is used only within this file so there is no excuse
+        // for trying to peek from empty stack.
+        private synchronized BackStep peek() {
+            return stack[top];
+        }
+
+    }
    
 }
