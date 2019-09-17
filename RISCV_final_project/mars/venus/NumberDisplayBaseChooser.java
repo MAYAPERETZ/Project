@@ -1,8 +1,8 @@
 package mars.venus;
 
 import mars.*;
-import mars.mips.hardware.MemoryConfigurations;
-import mars.mips.hardware.Register;
+import mars.riscv.hardware.MemoryConfigurations;
+import mars.riscv.hardware.Register;
 import mars.util.*;
 import java.awt.*;
 import java.awt.event.*;

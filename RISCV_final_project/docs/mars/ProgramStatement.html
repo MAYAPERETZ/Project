@@ -131,11 +131,11 @@ Represents one assembly/machine statement.  This represents the "bare machine" l
  instruction with no source code to refer back to.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><B><A HREF="../mars/ProgramStatement.html#ProgramStatement(mars.RISCVprogram, java.lang.String, mars.assembler.TokenList, mars.assembler.TokenList, mars.mips.instructions.Instruction, int, int)">ProgramStatement</A></B>(<A HREF="../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;sourceRISCVprogram,
+<TD><CODE><B><A HREF="../mars/ProgramStatement.html#ProgramStatement(mars.RISCVprogram, java.lang.String, mars.assembler.TokenList, mars.assembler.TokenList, mars.riscv.instructions.Instruction, int, int)">ProgramStatement</A></B>(<A HREF="../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;sourceRISCVprogram,
                  <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;source,
                  <A HREF="../mars/assembler/TokenList.html" title="class in mars.assembler">TokenList</A>&nbsp;origTokenList,
                  <A HREF="../mars/assembler/TokenList.html" title="class in mars.assembler">TokenList</A>&nbsp;strippedTokenList,
-                 <A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.mips.instructions">Instruction</A>&nbsp;inst,
+                 <A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.riscv.instructions">Instruction</A>&nbsp;inst,
                  int&nbsp;textAddress,
                  int&nbsp;sourceLine)</CODE>
 
@@ -197,7 +197,7 @@ Represents one assembly/machine statement.  This represents the "bare machine" l
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>&nbsp;<A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.mips.instructions">Instruction</A></CODE></FONT></TD>
+<CODE>&nbsp;<A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.riscv.instructions">Instruction</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../mars/ProgramStatement.html#getInstruction()">getInstruction</A></B>()</CODE>
 
 <BR>
@@ -348,14 +348,14 @@ Represents one assembly/machine statement.  This represents the "bare machine" l
 </TR>
 </TABLE>
 
-<A NAME="ProgramStatement(mars.RISCVprogram, java.lang.String, mars.assembler.TokenList, mars.assembler.TokenList, mars.mips.instructions.Instruction, int, int)"><!-- --></A><H3>
+<A NAME="ProgramStatement(mars.RISCVprogram, java.lang.String, mars.assembler.TokenList, mars.assembler.TokenList, mars.riscv.instructions.Instruction, int, int)"><!-- --></A><H3>
 ProgramStatement</H3>
 <PRE>
 public <B>ProgramStatement</B>(<A HREF="../mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>&nbsp;sourceRISCVprogram,
                         <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;source,
                         <A HREF="../mars/assembler/TokenList.html" title="class in mars.assembler">TokenList</A>&nbsp;origTokenList,
                         <A HREF="../mars/assembler/TokenList.html" title="class in mars.assembler">TokenList</A>&nbsp;strippedTokenList,
-                        <A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.mips.instructions">Instruction</A>&nbsp;inst,
+                        <A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.riscv.instructions">Instruction</A>&nbsp;inst,
                         int&nbsp;textAddress,
                         int&nbsp;sourceLine)</PRE>
 <DL>
@@ -643,7 +643,7 @@ public <A HREF="../mars/assembler/TokenList.html" title="class in mars.assembler
 <A NAME="getInstruction()"><!-- --></A><H3>
 getInstruction</H3>
 <PRE>
-public <A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.mips.instructions">Instruction</A> <B>getInstruction</B>()</PRE>
+public <A HREF="../mars/mips/instructions/Instruction.html" title="class in mars.riscv.instructions">Instruction</A> <B>getInstruction</B>()</PRE>
 <DL>
 <DD>Produces Instruction object corresponding to this statement's operator.
 <P>

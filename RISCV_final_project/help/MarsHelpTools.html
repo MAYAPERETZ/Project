@@ -59,10 +59,10 @@ Beginning with Release 3.1, system calls (<tt>syscall</tt> instruction) are impl
 a technique similar to that for tools.  This permits anyone to add a new syscall by defining
 a new class that meets these requirements:
 <ol>
-<li>It implements the <tt>mars.mips.instructions.syscalls.Syscall</tt> interface, or
-extends the <tt>mars.mips.instructions.syscalls.AbstractSyscall</tt> class (which
+<li>It implements the <tt>mars.riscv.instructions.syscalls.Syscall</tt> interface, or
+extends the <tt>mars.riscv.instructions.syscalls.AbstractSyscall</tt> class (which
 provides default implementations of everything except the <tt>simulate()</tt> method).  
-<li>It is part of the <tt>mars.mips.instructions.syscalls</tt> package.
+<li>It is part of the <tt>mars.riscv.instructions.syscalls</tt> package.
 <li>It compiles cleanly into a ".class" file, stored in the 
 <tt>mars/mips/instructions/syscalls</tt> directory.
 </ol>

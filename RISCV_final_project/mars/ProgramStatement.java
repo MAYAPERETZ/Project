@@ -1,7 +1,7 @@
   package mars;
    import mars.assembler.*;
-   import mars.mips.instructions.*;
-   import mars.mips.hardware.*;
+   import mars.riscv.instructions.*;
+   import mars.riscv.hardware.*;
    import mars.util.*;
    import java.util.*;
    import static mars.util.GenMath.*;

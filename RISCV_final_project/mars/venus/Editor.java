@@ -132,7 +132,7 @@ public class Editor {
     */
     public String getNextDefaultFilename() {
         newUsageCount++;
-        return "mips"+newUsageCount+".asm";
+        return "riscv"+newUsageCount+".asm";
     }
    
     /** Places name of file currently being edited into its edit tab and

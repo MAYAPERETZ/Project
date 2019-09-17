@@ -332,8 +332,8 @@ A data cache simulator.  It can be run either as a stand-alone Java application 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../mars/tools/CacheSimulator.html#processMIPSUpdate(java.util.Observable, mars.mips.hardware.AccessNotice)">processMIPSUpdate</A></B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observable.html?is-external=true" title="class or interface in java.util">Observable</A>&nbsp;memory,
-                  <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.mips.hardware">AccessNotice</A>&nbsp;accessNotice)</CODE>
+<TD><CODE><B><A HREF="../../mars/tools/CacheSimulator.html#processMIPSUpdate(java.util.Observable, mars.riscv.hardware.AccessNotice)">processMIPSUpdate</A></B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observable.html?is-external=true" title="class or interface in java.util">Observable</A>&nbsp;memory,
+                  <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.riscv.hardware">AccessNotice</A>&nbsp;accessNotice)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Apply caching policies and update display when connected MIPS program accesses (data) memory.</TD>
@@ -363,7 +363,7 @@ A data cache simulator.  It can be run either as a stand-alone Java application 
 <TH ALIGN="left"><B>Methods inherited from class mars.tools.<A HREF="../../mars/tools/AbstractMarsToolAndApplication.html" title="class in mars.tools">AbstractMarsToolAndApplication</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
-<TD><CODE><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#action()">action</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver()">addAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver(int, int)">addAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver(mars.mips.hardware.Register)">addAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#buildButtonAreaMarsTool()">buildButtonAreaMarsTool</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#buildButtonAreaStandAlone()">buildButtonAreaStandAlone</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#buildHeadingArea()">buildHeadingArea</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#deleteAsObserver()">deleteAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#deleteAsObserver(mars.mips.hardware.Register)">deleteAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#getHelpComponent()">getHelpComponent</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#go()">go</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#isObserving()">isObserving</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#performSpecialClosingDuties()">performSpecialClosingDuties</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#update(java.util.Observable, java.lang.Object)">update</A></CODE></TD>
+<TD><CODE><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#action()">action</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver()">addAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver(int, int)">addAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver(mars.riscv.hardware.Register)">addAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#buildButtonAreaMarsTool()">buildButtonAreaMarsTool</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#buildButtonAreaStandAlone()">buildButtonAreaStandAlone</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#buildHeadingArea()">buildHeadingArea</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#deleteAsObserver()">deleteAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#deleteAsObserver(mars.riscv.hardware.Register)">deleteAsObserver</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#getHelpComponent()">getHelpComponent</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#go()">go</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#isObserving()">isObserving</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#performSpecialClosingDuties()">performSpecialClosingDuties</A>, <A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#update(java.util.Observable, java.lang.Object)">update</A></CODE></TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_javax.swing.JFrame"><!-- --></A>
@@ -528,16 +528,16 @@ protected <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/javax/swing/JCom
 </DL>
 <HR>
 
-<A NAME="processMIPSUpdate(java.util.Observable, mars.mips.hardware.AccessNotice)"><!-- --></A><H3>
+<A NAME="processMIPSUpdate(java.util.Observable, mars.riscv.hardware.AccessNotice)"><!-- --></A><H3>
 processMIPSUpdate</H3>
 <PRE>
 protected void <B>processMIPSUpdate</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observable.html?is-external=true" title="class or interface in java.util">Observable</A>&nbsp;memory,
-                                 <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.mips.hardware">AccessNotice</A>&nbsp;accessNotice)</PRE>
+                                 <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.riscv.hardware">AccessNotice</A>&nbsp;accessNotice)</PRE>
 <DL>
 <DD>Apply caching policies and update display when connected MIPS program accesses (data) memory.
 <P>
 <DD><DL>
-<DT><B>Overrides:</B><DD><CODE><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#processMIPSUpdate(java.util.Observable, mars.mips.hardware.AccessNotice)">processMIPSUpdate</A></CODE> in class <CODE><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html" title="class in mars.tools">AbstractMarsToolAndApplication</A></CODE></DL>
+<DT><B>Overrides:</B><DD><CODE><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#processMIPSUpdate(java.util.Observable, mars.riscv.hardware.AccessNotice)">processMIPSUpdate</A></CODE> in class <CODE><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html" title="class in mars.tools">AbstractMarsToolAndApplication</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>memory</CODE> - the attached memory<DD><CODE>accessNotice</CODE> - information provided by memory in MemoryAccessNotice object</DL>

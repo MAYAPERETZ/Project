@@ -1,7 +1,7 @@
 package mars.assembler;
 import mars.*;
 import mars.util.Binary;
-import mars.mips.instructions.*;
+import mars.riscv.instructions.*;
 import java.util.*;
 
 /*

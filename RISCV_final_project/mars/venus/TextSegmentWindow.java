@@ -2,9 +2,9 @@ package mars.venus;
 
 import mars.*;
 import mars.simulator.*;
-import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
-import mars.mips.hardware.memory.MemoryAccessNotice;
+import mars.riscv.hardware.*;
+import mars.riscv.hardware.memory.Memory;
+import mars.riscv.hardware.memory.MemoryAccessNotice;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

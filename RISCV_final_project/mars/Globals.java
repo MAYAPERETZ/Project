@@ -1,7 +1,7 @@
    package mars;
-   import mars.mips.instructions.syscalls.*;
-   import mars.mips.instructions.*;
-   import mars.mips.hardware.memory.Memory;
+   import mars.riscv.instructions.syscalls.*;
+   import mars.riscv.instructions.*;
+   import mars.riscv.hardware.memory.Memory;
 import mars.assembler.*;
    import mars.venus.*;
    import mars.util.*;

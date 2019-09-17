@@ -496,7 +496,7 @@ public class GUI extends JFrame{
         file.add(fileSave);
         file.add(fileSaveAs);
         file.add(fileSaveAll);
-        if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0)
+        if (new mars.riscv.dump.DumpFormatLoader().loadDumpFormats().size() > 0)
             file.add(fileDumpMemory);
         file.addSeparator();
         file.add(filePrint);
@@ -705,7 +705,7 @@ public class GUI extends JFrame{
       toolBar.add(open);
       toolBar.add(save);
       toolBar.add(saveAs);
-        //    if (new mars.mips.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
+        //    if (new mars.riscv.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
         //      toolBar.add(DumpMemory);
         //   }
         // toolBar.add(Print);

@@ -1,7 +1,7 @@
 package mars.venus;
 import mars.*;
 import mars.assembler.*;
-import mars.mips.instructions.*;
+import mars.riscv.instructions.*;
 import java.util.*;
 import java.io.*;
 import java.awt.*;
@@ -256,8 +256,8 @@ public class HelpHelpAction extends GuiAction {
      mipsHelpInfo.add(operandsScrollPane, BorderLayout.NORTH);
      // Below the label is a tabbed pane with categories of MIPS help
      JTabbedPane tabbedPane = new JTabbedPane();
-     tabbedPane.addTab("Basic Instructions", createMipsInstructionHelpPane("mars.mips.instructions.BasicInstruction"));
-     tabbedPane.addTab("Extended (pseudo) Instructions", createMipsInstructionHelpPane("mars.mips.instructions.ExtendedInstruction"));
+     tabbedPane.addTab("Basic Instructions", createMipsInstructionHelpPane("mars.riscv.instructions.BasicInstruction"));
+     tabbedPane.addTab("Extended (pseudo) Instructions", createMipsInstructionHelpPane("mars.riscv.instructions.ExtendedInstruction"));
      tabbedPane.addTab("Directives", createMipsDirectivesHelpPane());
      tabbedPane.addTab("Syscalls", createHTMLHelpPanel("SyscallHelp.html"));
      tabbedPane.addTab("Exceptions", createHTMLHelpPanel("ExceptionsHelp.html"));

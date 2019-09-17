@@ -1,8 +1,8 @@
 package mars.simulator;
 
 import mars.*;
-import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
+import mars.riscv.hardware.*;
+import mars.riscv.hardware.memory.Memory;
 import java.util.*;
 import static mars.util.Math2.*;
 import static mars.util.GenMath.*;

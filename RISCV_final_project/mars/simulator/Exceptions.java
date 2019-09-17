@@ -1,6 +1,6 @@
 package mars.simulator;
-import mars.mips.hardware.*;
-import mars.mips.instructions.*;
+import mars.riscv.hardware.*;
+import mars.riscv.instructions.*;
 import mars.util.*;
 
 /*

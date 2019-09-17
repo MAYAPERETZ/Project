@@ -348,7 +348,7 @@ An abstract class that provides generic components to facilitate implementation 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver(mars.mips.hardware.Register)">addAsObserver</A></B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A>&nbsp;reg)</CODE>
+<TD><CODE><B><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#addAsObserver(mars.riscv.hardware.Register)">addAsObserver</A></B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A>&nbsp;reg)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Add this app/tool as an Observer of the specified MIPS register.</TD>
@@ -397,7 +397,7 @@ An abstract class that provides generic components to facilitate implementation 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#deleteAsObserver(mars.mips.hardware.Register)">deleteAsObserver</A></B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A>&nbsp;reg)</CODE>
+<TD><CODE><B><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#deleteAsObserver(mars.riscv.hardware.Register)">deleteAsObserver</A></B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A>&nbsp;reg)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Delete this app/tool as an Observer of the specified MIPS register</TD>
@@ -465,8 +465,8 @@ An abstract class that provides generic components to facilitate implementation 
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
 <CODE>protected &nbsp;void</CODE></FONT></TD>
-<TD><CODE><B><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#processMIPSUpdate(java.util.Observable, mars.mips.hardware.AccessNotice)">processMIPSUpdate</A></B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observable.html?is-external=true" title="class or interface in java.util">Observable</A>&nbsp;resource,
-                  <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.mips.hardware">AccessNotice</A>&nbsp;notice)</CODE>
+<TD><CODE><B><A HREF="../../mars/tools/AbstractMarsToolAndApplication.html#processMIPSUpdate(java.util.Observable, mars.riscv.hardware.AccessNotice)">processMIPSUpdate</A></B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observable.html?is-external=true" title="class or interface in java.util">Observable</A>&nbsp;resource,
+                  <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.riscv.hardware">AccessNotice</A>&nbsp;notice)</CODE>
 
 <BR>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Override this method to process a received notice from MIPS Observable (memory or register)
@@ -865,11 +865,11 @@ public void <B>update</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/
 </DL>
 <HR>
 
-<A NAME="processMIPSUpdate(java.util.Observable, mars.mips.hardware.AccessNotice)"><!-- --></A><H3>
+<A NAME="processMIPSUpdate(java.util.Observable, mars.riscv.hardware.AccessNotice)"><!-- --></A><H3>
 processMIPSUpdate</H3>
 <PRE>
 protected void <B>processMIPSUpdate</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observable.html?is-external=true" title="class or interface in java.util">Observable</A>&nbsp;resource,
-                                 <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.mips.hardware">AccessNotice</A>&nbsp;notice)</PRE>
+                                 <A HREF="../../mars/mips/hardware/AccessNotice.html" title="class in mars.riscv.hardware">AccessNotice</A>&nbsp;notice)</PRE>
 <DL>
 <DD>Override this method to process a received notice from MIPS Observable (memory or register)
  It will only be called if the notice was generated as the result of MIPS instruction execution.
@@ -949,10 +949,10 @@ protected void <B>addAsObserver</B>(int&nbsp;lowEnd,
 </DL>
 <HR>
 
-<A NAME="addAsObserver(mars.mips.hardware.Register)"><!-- --></A><H3>
+<A NAME="addAsObserver(mars.riscv.hardware.Register)"><!-- --></A><H3>
 addAsObserver</H3>
 <PRE>
-protected void <B>addAsObserver</B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A>&nbsp;reg)</PRE>
+protected void <B>addAsObserver</B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A>&nbsp;reg)</PRE>
 <DL>
 <DD>Add this app/tool as an Observer of the specified MIPS register.
 <P>
@@ -986,10 +986,10 @@ protected void <B>deleteAsObserver</B>()</PRE>
 </DL>
 <HR>
 
-<A NAME="deleteAsObserver(mars.mips.hardware.Register)"><!-- --></A><H3>
+<A NAME="deleteAsObserver(mars.riscv.hardware.Register)"><!-- --></A><H3>
 deleteAsObserver</H3>
 <PRE>
-protected void <B>deleteAsObserver</B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A>&nbsp;reg)</PRE>
+protected void <B>deleteAsObserver</B>(<A HREF="../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A>&nbsp;reg)</PRE>
 <DL>
 <DD>Delete this app/tool as an Observer of the specified MIPS register
 <P>

@@ -2,7 +2,7 @@
 	
    import mars.assembler.*;
    import mars.simulator.*;
-   import mars.mips.hardware.*;
+   import mars.riscv.hardware.*;
 	
    import java.util.*;
    import java.io.*;

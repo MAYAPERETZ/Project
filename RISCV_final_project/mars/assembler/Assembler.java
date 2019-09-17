@@ -5,12 +5,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import mars.*;
-import mars.mips.hardware.AddressErrorException;
-import mars.mips.hardware.memory.Memory;
-import mars.mips.instructions.BasicInstruction;
-import mars.mips.instructions.ExtendedInstruction;
+import mars.riscv.hardware.AddressErrorException;
+import mars.riscv.hardware.memory.Memory;
+import mars.riscv.instructions.BasicInstruction;
+import mars.riscv.instructions.ExtendedInstruction;
 import mars.util.GenMath;
-import mars.mips.instructions.Instruction;
+import mars.riscv.instructions.Instruction;
 import mars.util.Binary;
 import mars.util.SystemIO;
 import static mars.util.GenMath.*;

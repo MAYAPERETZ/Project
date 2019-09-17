@@ -1,8 +1,8 @@
 package mars.util;
 
 import mars.Globals;
-import mars.mips.hardware.AddressErrorException;
-import mars.mips.hardware.memory.Memory;
+import mars.riscv.hardware.AddressErrorException;
+import mars.riscv.hardware.memory.Memory;
 import java.util.ArrayList;
 import java.util.HashMap;
 

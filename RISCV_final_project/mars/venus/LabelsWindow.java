@@ -4,7 +4,7 @@
    import mars.RISCVprogram;
    import mars.assembler.Symbol;
    import mars.assembler.SymbolTable;
-   import mars.mips.hardware.memory.Memory;
+   import mars.riscv.hardware.memory.Memory;
    import mars.util.Binary;
    import javax.swing.*;
    import javax.swing.table.AbstractTableModel;

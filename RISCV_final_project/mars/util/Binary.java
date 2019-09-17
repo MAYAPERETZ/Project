@@ -1,7 +1,7 @@
 package mars.util;
 
 import mars.Globals;
-import mars.mips.hardware.MemoryConfigurations;
+import mars.riscv.hardware.MemoryConfigurations;
 import mars.venus.NumberDisplayBaseChooser;
 import java.util.Arrays;
 	

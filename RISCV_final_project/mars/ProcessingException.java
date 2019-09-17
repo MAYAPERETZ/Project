@@ -1,8 +1,8 @@
 package mars;
 import mars.util.*;
-import mars.mips.hardware.*;
+import mars.riscv.hardware.*;
 import mars.util.GenMath;
-import mars.mips.instructions.Instruction;
+import mars.riscv.instructions.Instruction;
 import mars.simulator.*;
 
 /*

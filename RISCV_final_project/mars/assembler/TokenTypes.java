@@ -1,7 +1,7 @@
 package mars.assembler;
 import mars.*;
 import mars.util.*;
-import mars.mips.hardware.*;
+import mars.riscv.hardware.*;
 
 	/*
 Copyright (c) 2003-2008,  Pete Sanderson and Kenneth Vollmar

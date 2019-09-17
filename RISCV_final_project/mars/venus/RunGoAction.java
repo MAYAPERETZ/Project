@@ -2,7 +2,7 @@ package mars.venus;
 
 import mars.Globals;
 import mars.ProcessingException;
-import mars.mips.hardware.RVIRegisters;
+import mars.riscv.hardware.RVIRegisters;
 import mars.util.GenMath;
 import mars.simulator.ProgramArgumentList;
 import mars.simulator.Simulator;

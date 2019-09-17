@@ -9,9 +9,9 @@
 
    package mars.venus.editors.jeditsyntax.tokenmarker;
 
-   import mars.mips.hardware.RVIRegisters;
+   import mars.riscv.hardware.RVIRegisters;
    import mars.venus.editors.jeditsyntax.*;
-   import mars.mips.instructions.*;
+   import mars.riscv.instructions.*;
    import mars.assembler.*;
    import javax.swing.text.Segment;
    import java.util.*;
@@ -481,7 +481,7 @@
          	// add Instruction mnemonics
             java.util.ArrayList instructionSet = mars.Globals.instructionSet.getInstructionList();
             for (int i=0; i< instructionSet.size(); i++) {
-               cKeywords.add( ((mars.mips.instructions.Instruction)instructionSet.get(i)).getName(), Token.KEYWORD1 );
+               cKeywords.add( ((mars.riscv.instructions.Instruction)instructionSet.get(i)).getName(), Token.KEYWORD1 );
             }
          	// add assembler directives
             java.util.ArrayList directiveSet = mars.assembler.Directives.getDirectiveList();
@@ -489,13 +489,13 @@
                cKeywords.add( ((mars.assembler.Directives)directiveSet.get(i)).getName(), Token.KEYWORD2 );
             }
          	// add integer register file
-            ArrayList<mars.mips.hardware.Register> registerFile = RVIRegisters.getRegisters();
+            ArrayList<mars.riscv.hardware.Register> registerFile = RVIRegisters.getRegisters();
             for (int i=0; i< registerFile.size(); i++) {
                cKeywords.add( registerFile.get(i).getName(), Token.KEYWORD3 );
                cKeywords.add( ""+i, Token.KEYWORD3 );  // also recognize $0, $1, $2, etc
             }
          	// add Coprocessor 1 (floating point) register file
-            ArrayList<mars.mips.hardware.Register.FPRegister> coprocessor1RegisterFile = mars.mips.hardware.Coprocessor1.getRegisters();
+            ArrayList<mars.riscv.hardware.Register.FPRegister> coprocessor1RegisterFile = mars.riscv.hardware.Coprocessor1.getRegisters();
             for (int i=0; i< coprocessor1RegisterFile.size(); i++) {
                cKeywords.add( coprocessor1RegisterFile.get(i).getName(), Token.KEYWORD3 );
             }     

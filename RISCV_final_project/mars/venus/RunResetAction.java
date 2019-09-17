@@ -2,10 +2,10 @@ package mars.venus;
 
 import mars.Globals;
 import mars.ProcessingException;
-import mars.mips.hardware.Coprocessor0;
-import mars.mips.hardware.Coprocessor1;
-import mars.mips.hardware.RVIRegisters;
-import mars.mips.hardware.memory.Memory;
+import mars.riscv.hardware.Coprocessor0;
+import mars.riscv.hardware.Coprocessor1;
+import mars.riscv.hardware.RVIRegisters;
+import mars.riscv.hardware.memory.Memory;
 import mars.util.SystemIO;
 import javax.swing.*;
 import java.awt.event.ActionEvent;

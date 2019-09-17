@@ -54,8 +54,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../mars/mips/hardware/Coprocessor0.html" title="class in mars.mips.hardware"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../mars/mips/hardware/Coprocessor0.html" title="class in mars.riscv.hardware"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?mars/mips/hardware/Coprocessor1.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Coprocessor1.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -87,12 +87,12 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== START OF CLASS DATA ======== -->
 <H2>
 <FONT SIZE="-1">
-mars.mips.hardware</FONT>
+    mars.riscv.hardware</FONT>
 <BR>
 Class Coprocessor1</H2>
 <PRE>
 <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>mars.mips.hardware.Coprocessor1</B>
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>mars.riscv.hardware.Coprocessor1</B>
 </PRE>
 <HR>
 <DL>
@@ -259,7 +259,7 @@ Represents Coprocessor 1, the Floating Point Unit (FPU)
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A></CODE></FONT></TD>
+<CODE>static&nbsp;<A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../mars/mips/hardware/Coprocessor1.html#getRegister(java.lang.String)">getRegister</A></B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;rName)</CODE>
 
 <BR>
@@ -275,7 +275,7 @@ Represents Coprocessor 1, the Floating Point Unit (FPU)
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A>[]</CODE></FONT></TD>
+<CODE>static&nbsp;<A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A>[]</CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../mars/mips/hardware/Coprocessor1.html#getRegisters()">getRegisters</A></B>()</CODE>
 
 <BR>
@@ -522,7 +522,7 @@ setRegisterPairToDouble</H3>
 <PRE>
 public static void <B>setRegisterPairToDouble</B>(int&nbsp;reg,
                                            double&nbsp;val)
-                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Sets the value of the FPU register given to the double value given.  The register
   must be even-numbered, and the low order 32 bits are placed in it.  The high order
@@ -531,7 +531,7 @@ public static void <B>setRegisterPairToDouble</B>(int&nbsp;reg,
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to set the value of.<DD><CODE>val</CODE> - The desired double value for the register.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -541,7 +541,7 @@ setRegisterPairToDouble</H3>
 <PRE>
 public static void <B>setRegisterPairToDouble</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reg,
                                            double&nbsp;val)
-                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Sets the value of the FPU register given to the double value given.  The register
   must be even-numbered, and the low order 32 bits are placed in it.  The high order
@@ -550,7 +550,7 @@ public static void <B>setRegisterPairToDouble</B>(<A HREF="http://docs.oracle.co
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to set the value of.<DD><CODE>val</CODE> - The desired double value for the register.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -560,7 +560,7 @@ setRegisterPairToLong</H3>
 <PRE>
 public static void <B>setRegisterPairToLong</B>(int&nbsp;reg,
                                          long&nbsp;val)
-                                  throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                  throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Sets the value of the FPU register pair given to the long value containing 64 bit pattern
   given.  The register
@@ -570,7 +570,7 @@ public static void <B>setRegisterPairToLong</B>(int&nbsp;reg,
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to set the value of.  Must be even register of even/odd pair.<DD><CODE>val</CODE> - The desired double value for the register.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -580,7 +580,7 @@ setRegisterPairToLong</H3>
 <PRE>
 public static void <B>setRegisterPairToLong</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reg,
                                          long&nbsp;val)
-                                  throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                  throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Sets the value of the FPU register pair given to the long value containing 64 bit pattern
   given.  The register
@@ -590,7 +590,7 @@ public static void <B>setRegisterPairToLong</B>(<A HREF="http://docs.oracle.com/
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to set the value of.  Must be even register of even/odd pair.<DD><CODE>val</CODE> - The desired long value containing the 64 bits for the register pair.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -655,7 +655,7 @@ public static int <B>getIntFromRegister</B>(<A HREF="http://docs.oracle.com/java
 getDoubleFromRegisterPair</H3>
 <PRE>
 public static double <B>getDoubleFromRegisterPair</B>(int&nbsp;reg)
-                                        throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                        throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Gets the double value stored in the given FPU register.  The register
   must be even-numbered.
@@ -663,7 +663,7 @@ public static double <B>getDoubleFromRegisterPair</B>(int&nbsp;reg)
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to get the value of. Must be even number of even/odd pair.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -672,7 +672,7 @@ public static double <B>getDoubleFromRegisterPair</B>(int&nbsp;reg)
 getDoubleFromRegisterPair</H3>
 <PRE>
 public static double <B>getDoubleFromRegisterPair</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reg)
-                                        throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                        throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Gets the double value stored in the given FPU register.  The register
   must be even-numbered.
@@ -680,7 +680,7 @@ public static double <B>getDoubleFromRegisterPair</B>(<A HREF="http://docs.oracl
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to get the value of. Must be even number of even/odd pair.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -689,7 +689,7 @@ public static double <B>getDoubleFromRegisterPair</B>(<A HREF="http://docs.oracl
 getLongFromRegisterPair</H3>
 <PRE>
 public static long <B>getLongFromRegisterPair</B>(int&nbsp;reg)
-                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Gets a long representing the double value stored in the given double
   precision FPU register. 
@@ -698,7 +698,7 @@ public static long <B>getLongFromRegisterPair</B>(int&nbsp;reg)
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to get the value of. Must be even number of even/odd pair.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -707,7 +707,7 @@ public static long <B>getLongFromRegisterPair</B>(int&nbsp;reg)
 getLongFromRegisterPair</H3>
 <PRE>
 public static long <B>getLongFromRegisterPair</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;reg)
-                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></PRE>
+                                    throws <A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></PRE>
 <DL>
 <DD>Gets the double value stored in the given FPU register.  The register
   must be even-numbered.
@@ -715,7 +715,7 @@ public static long <B>getLongFromRegisterPair</B>(<A HREF="http://docs.oracle.co
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>reg</CODE> - Register to get the value of. Must be even number of even/odd pair.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware">InvalidRegisterAccessException</A></CODE> - if register ID is invalid or odd-numbered.</DL>
 </DD>
 </DL>
 <HR>
@@ -769,7 +769,7 @@ public static int <B>getRegisterNumber</B>(<A HREF="http://docs.oracle.com/javas
 <A NAME="getRegisters()"><!-- --></A><H3>
 getRegisters</H3>
 <PRE>
-public static <A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A>[] <B>getRegisters</B>()</PRE>
+public static <A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A>[] <B>getRegisters</B>()</PRE>
 <DL>
 <DD>For returning the set of registers.
 <P>
@@ -783,7 +783,7 @@ public static <A HREF="../../../mars/mips/hardware/Register.html" title="class i
 <A NAME="getRegister(java.lang.String)"><!-- --></A><H3>
 getRegister</H3>
 <PRE>
-public static <A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.mips.hardware">Register</A> <B>getRegister</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;rName)</PRE>
+public static <A HREF="../../../mars/mips/hardware/Register.html" title="class in mars.riscv.hardware">Register</A> <B>getRegister</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;rName)</PRE>
 <DL>
 <DD>Get register object corresponding to given name.  If no match, return null.
 <P>
@@ -959,8 +959,8 @@ public static int <B>getConditionFlagCount</B>()</PRE>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../mars/mips/hardware/Coprocessor0.html" title="class in mars.mips.hardware"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../mars/mips/hardware/Coprocessor0.html" title="class in mars.riscv.hardware"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?mars/mips/hardware/Coprocessor1.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Coprocessor1.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

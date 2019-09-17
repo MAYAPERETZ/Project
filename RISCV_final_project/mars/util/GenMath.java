@@ -1,6 +1,6 @@
 package mars.util;
 import java.math.BigInteger;
-import mars.mips.hardware.MemoryConfigurations;
+import mars.riscv.hardware.MemoryConfigurations;
 
 /**
 * This class contain arithmetic functions for abstract numbers (i.e, 32/64 bit long number).

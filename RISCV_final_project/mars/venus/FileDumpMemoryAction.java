@@ -2,9 +2,9 @@ package mars.venus;
 import mars.*;
 import mars.util.GenMath;
 import mars.util.*;
-import mars.mips.dump.*;
-import mars.mips.hardware.*;
-import mars.mips.hardware.memory.Memory;
+import mars.riscv.dump.*;
+import mars.riscv.hardware.*;
+import mars.riscv.hardware.memory.Memory;
 
 import java.awt.*;
 import java.awt.event.*;
