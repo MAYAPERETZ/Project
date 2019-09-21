@@ -306,8 +306,8 @@ public class GenMath {
 		if (x == null || y == null) 
 			return null;   	
 				    
-		return (T) GenMath.add(x, GenMath.sll(
-					GenMath.and(y, 0xfffff000), 12));
+		return (T) add(x, sll(
+					and(y, 0xfffff000), 12));
 	}
 }
 

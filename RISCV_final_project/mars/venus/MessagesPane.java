@@ -294,7 +294,7 @@ public class MessagesPane extends JInternalFrame{
     // The work of this method is done by "invokeLater" because
     // its JTextArea is maintained by the main event thread
     // but also used, via this method, by the execution thread for
-    // "print" syscalls. "invokeLater" schedules the code to be
+    // "print" ecalls. "invokeLater" schedules the code to be
     // run under the event-processing thread no matter what.
     // DPS, 23 Aug 2005.
     public void postRunMessage(String message) {
@@ -374,19 +374,19 @@ public class MessagesPane extends JInternalFrame{
   ////////////////////////////////////////////////////////////////////////////
   // Thread class for obtaining user input in the Run I/O window (MessagesPane)
   // Written by Ricardo Fern�ndez Pascual [rfernandez@ditec.um.es] December 2009.
-   class Asker implements Runnable {
-     ArrayBlockingQueue<String> resultQueue = new ArrayBlockingQueue<String>(1);
-     int initialPos;
-     int maxLen;
-      Asker(int maxLen) {
-        this.maxLen = maxLen;
+    class Asker implements Runnable {
+        ArrayBlockingQueue<String> resultQueue = new ArrayBlockingQueue<String>(1);
+        int initialPos;
+        int maxLen;
+        Asker(int maxLen) {
+            this.maxLen = maxLen;
             // initialPos will be set in run()
-     }
-     final DocumentListener listener =
-         new DocumentListener() {
-            public void insertUpdate(final DocumentEvent e) {
-              EventQueue.invokeLater(
-                      () -> {
+        }
+        final DocumentListener listener =
+            new DocumentListener() {
+                public void insertUpdate(final DocumentEvent e) {
+                    EventQueue.invokeLater(
+                        () -> {
                             try {
                                 String inserted = e.getDocument().getText(e.getOffset(), e.getLength());
                                 int i = inserted.indexOf('\n');
@@ -407,8 +407,9 @@ public class MessagesPane extends JInternalFrame{
                             catch (BadLocationException ex) {
                                 returnResponse();
                             }
-                     });
+                        });
             }
+
             public void removeUpdate(final DocumentEvent e) {
               EventQueue.invokeLater(
                       () -> {
@@ -418,6 +419,7 @@ public class MessagesPane extends JInternalFrame{
                         }
                      });
             }
+
             public void changedUpdate(DocumentEvent e) { }
         };
      final NavigationFilter navigationFilter =
@@ -457,25 +459,25 @@ public class MessagesPane extends JInternalFrame{
                   Simulator.getInstance().removeStopListener(stopListener);
                });
      }
-      void returnResponse() {
+    void returnResponse() {
         try {
            int p = Math.min(initialPos, run.getDocument().getLength());
            int l = Math.min(run.getDocument().getLength() - p, maxLen >= 0 ? maxLen : Integer.MAX_VALUE);
            resultQueue.offer(run.getText(p, l));
         }
-            catch (BadLocationException ex) {
-                // this cannot happen
-              resultQueue.offer("");
-           }
+        catch (BadLocationException ex) {
+            // this cannot happen
+          resultQueue.offer("");
+        }
      }
       String response() {
         EventQueue.invokeLater(this);
         try {
            return resultQueue.take();
         }
-            catch (InterruptedException ex) {
-              return null;
-           }
+        catch (InterruptedException ex) {
+          return null;
+        }
         finally {
            cleanup();
         }

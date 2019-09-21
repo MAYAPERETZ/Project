@@ -43,7 +43,7 @@ public class Register extends Observable {
     // volatile should be enough to allow safe multi-threaded access
     // w/o the use of synchronized methods.  getValue and setValue
     // are the only methods here used by the register collection
-    // (RegisterFile, Coprocessor0, Coprocessor1) methods.
+    // (RegisterFile, CSRs, FPRegisters) methods.
     private volatile Number value;
       
     /**

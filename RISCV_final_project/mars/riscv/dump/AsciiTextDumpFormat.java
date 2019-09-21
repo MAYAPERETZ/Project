@@ -83,17 +83,13 @@ public class AsciiTextDumpFormat extends AbstractDumpFormat {
 	*/
 	public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
 		throws AddressErrorException, IOException {
-		PrintStream out = new PrintStream(new FileOutputStream(file));
-		try {
+		try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
 			for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = add(address, Memory.WORD_LENGTH_BYTES)) {
-			   Number temp = Globals.memory.getRawWordOrNull(address);
-			   if (temp == null)
-				  break;
-			   out.println(Binary.intToAscii(temp.intValue()));
+				Number temp = Globals.memory.getRawWordOrNull(address);
+				if (temp == null)
+					break;
+				out.println(Binary.intToAscii(temp.intValue()));
 			}
-		}
-		finally {
-			out.close();
 		}
 	}
 

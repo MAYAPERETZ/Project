@@ -521,8 +521,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      instruction = substitute(instruction, "NR"+op, ""+(regNumber+1));
                   } 
                }
-                   catch (NullPointerException e) { // not in RegisterFile, must be Coprocessor1 register
-                     regNumber = Coprocessor1.getRegisterNumber(token);
+                   catch (NullPointerException e) { // not in RegisterFile, must be FPRegisters register
+                     regNumber = FPRegisters.getRegisterNumber(token);
                      if (regNumber>=0) {
                         instruction = substitute(instruction, "NR"+op,"$f"+(regNumber+1));
                      }

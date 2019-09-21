@@ -21,10 +21,9 @@ public class U_type extends BasicInstruction.WithImmediateField{
 	U_type(String example, String description, String operMask, Number y) {
 		this(example, description, operMask,
 				statement -> {
-					  Number[] operands = statement.getOperands();
-					  Number sum = GenMath.aui(y, operands[1]);
-					  RVIRegisters.updateRegister(operands[0].intValue(), sum);
-
+					Number[] operands = statement.getOperands();
+					Number sum = GenMath.aui(y, operands[1]);
+					RVIRegisters.updateRegister(operands[0].intValue(), sum);
 				});
 	}
 

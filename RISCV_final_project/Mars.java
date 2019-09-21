@@ -40,7 +40,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public class Mars {
 
     	
-    	 public static void main(String args[]) {
+    	 public static void main(String[] args) {
 
 
 			 JFrame.setDefaultLookAndFeelDecorated(true);

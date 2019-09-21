@@ -1,11 +1,11 @@
 <html>
-<title>MARS 4.5 help contents
+<title>MARS 1.0 help contents
 </title>
 <body>
 <center>
-<h3>MARS - Mips Assembly and Runtime Simulator</h3>
-<h4>Release 4.5</h4>
-<h4>August 2014</h4>
+<h3>MARS - RISCV Assembly and Runtime Simulator</h3>
+<h4>Release 1.0</h4>
+<h4>September 2019</h4>
 <h4>Using MARS through its Integrated Development Environment (IDE)</h4>
 </center>
 
@@ -20,7 +20,7 @@ If the function of a toolbar icon is not obvious, just hover the mouse over it a
 a tool tip will soon appear.  Nearly all menu items also have keyboard shortcuts.
 Any menu item not appropriate in a given situation is disabled.</li>
 <li><b>Editor</b>: MARS includes two integrated text editors.  The default editor, new
-in Release 4.0, features syntax-aware color highlighting of most MIPS language elements
+in Release 4.0 in MIPS's MARS, features syntax-aware color highlighting of most language elements
 and popup instruction guides.  The original, generic, text editor without these features
 is still available and can be selected in the Editor Settings dialog. It supports a single 
 font which can be modified in the Editor Settings dialog.  
@@ -36,18 +36,18 @@ You have the option of entering console input into a pop-up dialog then echoes t
 The <i>MARS Messages</i> tab is used for other messages such as assembly or
 runtime errors and informational messages.  You can click on assembly error messages to
 select the corresponding line of code in the editor.
-<li><b>MIPS Registers</b>: MIPS registers are displayed at all times, even
+<li><b>RISCV Registers</b>: RISCV registers are displayed at all times, even
 when you are editing and not running a program.  While writing your program,
 this serves as a useful reference for register names and their conventional
 uses (hover mouse over the register name to see tool tips).  There are three
-register tabs: the Register File (integer registers $0 through $31 plus LO,
-HI and the Program Counter), selected Coprocesor 0 registers (exceptions and
-interrupts), and Coprocessor 1 floating point registers.
+register tabs: the Register File (integer registers 0 through 31 the Program Counter),
+    selected CSR registers (exceptions and
+interrupts), and FP Registers floating point registers (plus FCSR register).
+    Please see limitations regarding the registers.
 
 <li><b>Assembly</b>: Select <i>Assemble</i> from the <i>Run</i> menu or the
 corresponding toolbar icon to assemble the file currently in the Edit tab.
-Prior to Release 3.1, only one file could be assembled and run at a time.
-Releases 3.1 and later provide a primitive Project capability.  To use it, go to the
+    To use it, go to the
 <i>Settings</i> menu and check <i>Assemble operation applies to all 
 files in current directory.</i>  Subsequently, the assembler will assemble
 the current file as the "main" program and also assemble all other assembly
@@ -55,12 +55,10 @@ files (*.asm; *.s)
 in the same directory.  The results are linked and if all these 
 operations were successful the program can be executed.  Labels that are
 declared global with the ".globl" directive may be referenced in any of the
-other files in the project.  There is also a setting that permits
-automatic loading and assembly of a selected exception handler file.  MARS uses
-the MIPS32 starting address for exception handlers: 0x80000180.
+other files in the project.
 
 
-<li><b>Execution</b>: Once a MIPS program successfully assembles, the
+<li><b>Execution</b>: Once a RISCV program successfully assembles, the
 registers are initialized and three windows
 in the Execute tab are filled: <i>Text Segment</i>, <i>Data Segment</i>,
 and <i>Program Labels</i>.  The major execution-time features are described below.

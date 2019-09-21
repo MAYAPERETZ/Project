@@ -54,8 +54,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.mips.instructions.syscalls"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.mips.instructions.syscalls"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.ecalls"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.ecalls"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../index.html?mars/mips/instructions/syscalls/SyscallPrintString.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="SyscallPrintString.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -87,20 +87,20 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== START OF CLASS DATA ======== -->
 <H2>
 <FONT SIZE="-1">
-mars.mips.instructions.syscalls</FONT>
+    mars.riscv.instructions.ecalls</FONT>
 <BR>
 Class SyscallPrintString</H2>
 <PRE>
 <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.mips.instructions.syscalls">mars.mips.instructions.syscalls.AbstractSyscall</A>
-      <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>mars.mips.instructions.syscalls.SyscallPrintString</B>
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">mars.riscv.instructions.ecalls.AbstractEcall</A>
+      <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>mars.riscv.instructions.ecalls.EcallPrintString</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <B>SyscallPrintString</B><DT>extends <A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.mips.instructions.syscalls">AbstractSyscall</A></DL>
+<DT><PRE>public class <B>SyscallPrintString</B><DT>extends <A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A></DL>
 </PRE>
 
 <P>
@@ -124,7 +124,7 @@ Service to display string stored starting at address in $a0 onto the console.
 <TD><CODE><B><A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintString.html#SyscallPrintString()">SyscallPrintString</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build an instance of the Print String syscall.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Build an instance of the Print String ecall.</TD>
 </TR>
 </TABLE>
 &nbsp;
@@ -142,13 +142,13 @@ Service to display string stored starting at address in $a0 onto the console.
 <TD><CODE><B><A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintString.html#simulate(mars.ProgramStatement)">simulate</A></B>(<A HREF="../../../../mars/ProgramStatement.html" title="class in mars">ProgramStatement</A>&nbsp;statement)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs syscall function to print string stored starting at address in $a0.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs ecall function to print string stored starting at address in $a0.</TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_mars.mips.instructions.syscalls.AbstractSyscall"><!-- --></A>
+&nbsp;<A NAME="methods_inherited_from_class_mars.riscv.instructions.ecalls.AbstractEcall"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class mars.mips.instructions.syscalls.<A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.mips.instructions.syscalls">AbstractSyscall</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class mars.riscv.instructions.ecalls.<A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html#getName()">getName</A>, <A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html#getNumber()">getNumber</A>, <A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html#setNumber(int)">setNumber</A></CODE></TD>
@@ -181,7 +181,7 @@ SyscallPrintString</H3>
 <PRE>
 public <B>SyscallPrintString</B>()</PRE>
 <DL>
-<DD>Build an instance of the Print String syscall.  Default service number
+<DD>Build an instance of the Print String ecall.  Default service number
  is 4 and name is "PrintString".
 <P>
 </DL>
@@ -202,13 +202,13 @@ simulate</H3>
 public void <B>simulate</B>(<A HREF="../../../../mars/ProgramStatement.html" title="class in mars">ProgramStatement</A>&nbsp;statement)
               throws <A HREF="../../../../mars/ProcessingException.html" title="class in mars">ProcessingException</A></PRE>
 <DL>
-<DD>Performs syscall function to print string stored starting at address in $a0.
+<DD>Performs ecall function to print string stored starting at address in $a0.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#simulate(mars.ProgramStatement)">simulate</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html#simulate(mars.ProgramStatement)">simulate</A></CODE> in class <CODE><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.mips.instructions.syscalls">AbstractSyscall</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#simulate(mars.ProgramStatement)">simulate</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html#simulate(mars.ProgramStatement)">simulate</A></CODE> in class <CODE><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>statement</CODE> - ProgramStatement object for this syscall instruction.
+<DT><B>Parameters:</B><DD><CODE>statement</CODE> - ProgramStatement object for this ecall instruction.
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="../../../../mars/ProcessingException.html" title="class in mars">ProcessingException</A></CODE></DL>
 </DD>
@@ -243,8 +243,8 @@ public void <B>simulate</B>(<A HREF="../../../../mars/ProgramStatement.html" tit
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.mips.instructions.syscalls"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.mips.instructions.syscalls"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.ecalls"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.ecalls"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../index.html?mars/mips/instructions/syscalls/SyscallPrintString.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="SyscallPrintString.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

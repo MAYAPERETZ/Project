@@ -193,7 +193,7 @@ Collection of globally-available data structures.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../mars/mips/instructions/InstructionSet.html" title="class in mars.mips.instructions">InstructionSet</A></CODE></FONT></TD>
+<CODE>static&nbsp;<A HREF="../mars/mips/instructions/InstructionSet.html" title="class in mars.riscv.instructions">InstructionSet</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../mars/Globals.html#instructionSet">instructionSet</A></B></CODE>
 
 <BR>
@@ -225,7 +225,7 @@ Collection of globally-available data structures.
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../mars/mips/hardware/Memory.html" title="class in mars.mips.hardware">Memory</A></CODE></FONT></TD>
+<CODE>static&nbsp;<A HREF="../mars/mips/hardware/Memory.html" title="class in mars.riscv.hardware">Memory</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../mars/Globals.html#memory">memory</A></B></CODE>
 
 <BR>
@@ -360,7 +360,7 @@ Collection of globally-available data structures.
 <TD><CODE><B><A HREF="../mars/Globals.html#getSyscallOverrides()">getSyscallOverrides</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read any syscall number assignment overrides from config file.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Read any ecall number assignment overrides from config file.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -404,7 +404,7 @@ Collection of globally-available data structures.
 <A NAME="instructionSet"><!-- --></A><H3>
 instructionSet</H3>
 <PRE>
-public static <A HREF="../mars/mips/instructions/InstructionSet.html" title="class in mars.mips.instructions">InstructionSet</A> <B>instructionSet</B></PRE>
+public static <A HREF="../mars/mips/instructions/InstructionSet.html" title="class in mars.riscv.instructions">InstructionSet</A> <B>instructionSet</B></PRE>
 <DL>
 <DD>The set of implemented MIPS instructions.
 <P>
@@ -440,7 +440,7 @@ public static <A HREF="../mars/assembler/SymbolTable.html" title="class in mars.
 <A NAME="memory"><!-- --></A><H3>
 memory</H3>
 <PRE>
-public static <A HREF="../mars/mips/hardware/Memory.html" title="class in mars.mips.hardware">Memory</A> <B>memory</B></PRE>
+public static <A HREF="../mars/mips/hardware/Memory.html" title="class in mars.riscv.hardware">Memory</A> <B>memory</B></PRE>
 <DL>
 <DD>Simulated MIPS memory component.
 <P>
@@ -771,7 +771,7 @@ getSyscallOverrides</H3>
 <PRE>
 public <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/ArrayList.html?is-external=true" title="class or interface in java.util">ArrayList</A> <B>getSyscallOverrides</B>()</PRE>
 <DL>
-<DD>Read any syscall number assignment overrides from config file.
+<DD>Read any ecall number assignment overrides from config file.
 <P>
 <DD><DL>
 

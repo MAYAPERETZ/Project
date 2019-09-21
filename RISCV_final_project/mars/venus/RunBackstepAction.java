@@ -1,8 +1,8 @@
 package mars.venus;
 
 import mars.Globals;
-import mars.riscv.hardware.Coprocessor0;
-import mars.riscv.hardware.Coprocessor1;
+import mars.riscv.hardware.CSRs;
+import mars.riscv.hardware.FPRegisters;
 import mars.riscv.hardware.RVIRegisters;
 import mars.riscv.hardware.memory.Memory;
 import javax.swing.*;
@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /**
-* Action  for the Run -> Backstep menu item
+* Action  for the Run - Backstep menu item
 */
 public class RunBackstepAction extends RunAction {
 
@@ -67,8 +67,8 @@ public class RunBackstepAction extends RunAction {
             boolean inDelaySlot = Globals.program.getBackStepper().inDelaySlot(); // Added 25 June 2007
             Memory.getInstance().addObserver(executePane.getDataSegmentWindow());
             RVIRegisters.addRegistersObserver(executePane.getRegistersWindow());
-            Coprocessor0.addRegistersObserver(executePane.getCoprocessor0Window());
-            Coprocessor1.addRegistersObserver(executePane.getCoprocessor1Window());
+            CSRs.addRegistersObserver(executePane.getCoprocessor0Window());
+            FPRegisters.addRegistersObserver(executePane.getCoprocessor1Window());
             Globals.program.getBackStepper().backStep();
             Memory.getInstance().deleteObserver(executePane.getDataSegmentWindow());
             RVIRegisters.deleteRegistersObserver(executePane.getRegistersWindow());

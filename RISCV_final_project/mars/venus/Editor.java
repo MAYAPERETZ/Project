@@ -128,7 +128,7 @@ public class Editor {
    	
     /**
     * Generates a default file name
-    * @return returns string mipsN.asm, where N is 1,2,3,...
+    * @return returns string riscv.asm, where N is 1,2,3,...
     */
     public String getNextDefaultFilename() {
         newUsageCount++;
@@ -219,8 +219,8 @@ public class Editor {
     * loss of editing changes.  Specifically: if there is a current
     * file open for editing and its modify flag is {@code true}, then give user
     * a dialog box with choice to save, discard edits, or cancel and
-    * carry out the decision.  This applies to File->New, File->Open,
-    * File->Close, and File->Exit.
+    * carry out the decision.  This applies to File-New, File-Open,
+    * File-Close, and File-Exit.
     * @return false means user selected Cancel so caller should do that.
     * Return of {@code true} means caller can proceed (edits were saved or discarded).
     */

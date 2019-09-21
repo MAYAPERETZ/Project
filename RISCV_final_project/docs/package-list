@@ -4,7 +4,7 @@ mars.assembler
 mars.riscv.dump
 mars.riscv.hardware
 mars.riscv.instructions
-mars.riscv.instructions.syscalls
+mars.riscv.instructions.ecalls
 mars.simulator
 mars.tools
 mars.util

@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
 /**
-* Action class for the Settings menu item to control use of popup dialog for input syscalls.
+* Action class for the Settings menu item to control use of popup dialog for input ecalls.
 */
 public class SettingsPopupInputAction extends GuiAction  {
 

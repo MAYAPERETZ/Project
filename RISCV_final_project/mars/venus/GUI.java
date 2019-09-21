@@ -352,9 +352,9 @@ public class GUI extends JFrame{
               									  "Toggle visibility of Labels window (symbol table) in the Execute tab",
               									  null,null,
               									  mainUI);
-           settingsPopupInputAction = new SettingsPopupInputAction("Popup dialog for input syscalls (5,6,7,8,12)",
+           settingsPopupInputAction = new SettingsPopupInputAction("Popup dialog for input ecalls (5,6,7,8,12)",
                                            null,
-              									  "If set, use popup dialog for input syscalls (5,6,7,8,12) instead of cursor in Run I/O window",
+              									  "If set, use popup dialog for input ecalls (5,6,7,8,12) instead of cursor in Run I/O window",
               									  null,null,
               									  mainUI);
         
@@ -822,9 +822,9 @@ public class GUI extends JFrame{
     }
 	
     /**
-    * Return reference to the Run->Assemble item's action.  Needed by File->Open in case
+    * Return reference to the Run-Assemble item's action.  Needed by File-Open in case
     * assemble-upon-open flag is set.
-    * @return the Action object for the Run->Assemble operation.
+    * @return the Action object for the Run-Assemble operation.
     */
     public Action getRunAssembleAction() {
         return runAssembleAction;

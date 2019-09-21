@@ -81,23 +81,26 @@ public class Exceptions {
 		// Set CAUSE register bits 2 thru 6 to cause value.  The "& 0xFFFFFC83" will set bits 2-6 and 8-9 to 0 while
 		// keeping all the others.  Left-shift by 2 to put cause value into position then OR it in.  Bits 8-9 used to
 		// identify devices for External Interrupt (8=keyboard,9=display).
-		Coprocessor0.updateRegister(Coprocessor0.CAUSE,(Coprocessor0.getValue(Coprocessor0.CAUSE) & 0xFFFFFC83 | (cause << 2)));
+		CSRs.updateRegister(CSRs.CAUSE,(CSRs.getValue(CSRs.CAUSE) & 0xFFFFFC83 | (cause << 2)));
 		// When exception occurred, PC had already been incremented so need to subtract 4 here.
-		Coprocessor0.updateRegister(Coprocessor0.EPC, GenMath.sub(RVIRegisters.getProgramCounter(), Instruction.INSTRUCTION_LENGTH));
+		CSRs.updateRegister(CSRs.EPC, GenMath.sub(RVIRegisters.getProgramCounter(), Instruction.INSTRUCTION_LENGTH));
 		// Set EXL (Exception Level) bit, bit position 1, in STATUS register to 1.
-		Coprocessor0.updateRegister(Coprocessor0.STATUS, Binary.setBit(Coprocessor0.getValue(Coprocessor0.STATUS), Coprocessor0.EXCEPTION_LEVEL));
+		CSRs.updateRegister(CSRs.STATUS, Binary.setBit(CSRs.getValue(CSRs.STATUS), CSRs.EXCEPTION_LEVEL));
 	}
 
 	// Added by Maya Peretz in September 2019
-
 	/**
 	* Set the cause for which an the exception was thrown in the FCSR register
 	* @param cause the cause for which an the exception was thrown in the FCSR register
 	*/
 	public static void setFCSRRegister(int cause) {
-		Coprocessor1.setFCSRValue(cause);
+		FPRegisters.setFCSRValue(cause);
 	}
 
+	/*
+		FIXME: The implementaion is in accordance to MIPS version.
+				Need to adjust it to RISCV's
+	 */
 	/**
 	*  Given MIPS exception cause code and bad address, place the bad address into VADDR
 	*  register ($8) then call overloaded setRegisters with the cause code to do the rest.
@@ -106,7 +109,7 @@ public class Exceptions {
 	*  @param addr The address that caused the exception.
 	*/
 	public static void  setRegisters(int cause, long addr) {
-	  Coprocessor0.updateRegister(Coprocessor0.VADDR,(int)addr);
+	  CSRs.updateRegister(CSRs.VADDR,(int)addr);
 	  setRegisters(cause);
 	}
 	

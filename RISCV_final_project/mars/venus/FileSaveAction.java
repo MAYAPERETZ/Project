@@ -1,7 +1,7 @@
-   package mars.venus;
+package mars.venus;
 
-   import javax.swing.*;
-   import java.awt.event.ActionEvent;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
  
  /*
 Copyright (c) 2003-2006,  Pete Sanderson and Kenneth Vollmar
@@ -32,7 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
 /**
-* Action  for the File -> Save menu item
+* Action  for the File - Save menu item
 */
 public class FileSaveAction extends ChangeableAction{
 

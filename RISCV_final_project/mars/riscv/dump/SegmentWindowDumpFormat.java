@@ -95,66 +95,60 @@ public class SegmentWindowDumpFormat extends AbstractDumpFormat {
 
         PrintStream out = new PrintStream(new FileOutputStream(file));
 
-        boolean hexAddresses = Globals.getSettings().getDisplayAddressesInHex();
-
         // If address in data segment, print in same format as Data Segment Window
-        if (Memory.getInstance().getDataTable().inSegment(firstAddress)) {
-            boolean hexValues = Globals.getSettings().getDisplayValuesInHex();
-            Number offset = 0;
-            String string="";
-            try {
-                for (Number address = firstAddress; !Math2.isLt(lastAddress, address);
-                address = add(address, Memory.WORD_LENGTH_BYTES)) {
-                    if (Math2.isEqz(GenMath.rem(offset, Binary.sizeof(address))))
-                        string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.toUnsignedNumber(address))  + "    ";
-
-                    add(offset, 1);
-                    Number temp = Globals.memory.getRawWordOrNull(address);
-                    if (temp == null)
-                        break;
-                    string += ((hexValues) ? Binary.intToHexString(temp.intValue())
-                    : ("           "+temp).substring(temp.toString().length())) + " ";
-                    if (Math2.isEqz(GenMath.rem(offset, Binary.sizeof(address)))) {
-                        out.println(string);
-                        string = "";
-                    }
-                }
-            }
-            finally {
-            out.close();
-            }
-            return;
-        }
-
-        if (!Memory.getInstance().getTextTable().inSegment(firstAddress))
-            return;
 
         // If address in text segment, print in same format as Text Segment Window
-        out.println(" Address    Code        Basic                     Source");
         //           12345678901234567890123456789012345678901234567890
         //                    1         2         3         4         5
-        out.println();
-        String string;
-        try {
+        try (out) {
+            boolean hexAddresses = Globals.getSettings().getDisplayAddressesInHex();
+            if (Memory.getInstance().getDataTable().inSegment(firstAddress)) {
+                boolean hexValues = Globals.getSettings().getDisplayValuesInHex();
+                Number offset = 0;
+                String string = "";
+                try {
+                    for (Number address = firstAddress; !Math2.isLt(lastAddress, address);
+                         address = add(address, Memory.WORD_LENGTH_BYTES)) {
+                        if (Math2.isEqz(GenMath.rem(offset, Binary.sizeof(address))))
+                            string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.toUnsignedNumber(address)) + "    ";
+
+                        add(offset, 1);
+                        Number temp = Globals.memory.getRawWordOrNull(address);
+                        if (temp == null)
+                            break;
+                        string += ((hexValues) ? Binary.intToHexString(temp.intValue())
+                                : ("           " + temp).substring(temp.toString().length())) + " ";
+                        if (Math2.isEqz(GenMath.rem(offset, Binary.sizeof(address)))) {
+                            out.println(string);
+                            string = "";
+                        }
+                    }
+                } finally {
+                    out.close();
+                }
+                return;
+            }
+            if (!Memory.getInstance().getTextTable().inSegment(firstAddress))
+                return;
+            out.println(" Address    Code        Basic                     Source");
+            out.println();
+            String string;
             for (Number address = firstAddress; !Math2.isLt(lastAddress, address);
-            address = add(address, Memory.WORD_LENGTH_BYTES)) {
-                string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.toUnsignedNumber(address))  + "  ";
+                 address = add(address, Memory.WORD_LENGTH_BYTES)) {
+                string = ((hexAddresses) ? Binary.currentNumToHexString(address) : Binary.toUnsignedNumber(address)) + "  ";
                 Number temp = Globals.memory.getRawWordOrNull(address);
                 if (temp == null)
                     break;
                 string += Binary.intToHexString(temp.intValue()) + "  ";
                 try {
                     ProgramStatement ps = Globals.memory.getStatement(address);
-                    string += (ps.getPrintableBasicAssemblyStatement()+"                      ").substring(0,22);
-                    string += (((ps.getSource().equals("")) ? "" : Integer.toString(ps.getSourceLine()))+"     ").substring(0,5);
+                    string += (ps.getPrintableBasicAssemblyStatement() + "                      ").substring(0, 22);
+                    string += (((ps.getSource().equals("")) ? "" : Integer.toString(ps.getSourceLine())) + "     ").substring(0, 5);
                     string += ps.getSource();
+                } catch (AddressErrorException ignored) {
                 }
-                catch (AddressErrorException ignored) { }
                 out.println(string);
             }
-        }
-        finally {
-            out.close();
         }
     }
 

@@ -90,7 +90,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
     */
     public Object[][] setupWindow(){
         int valueBase = NumberDisplayBaseChooser.getBase(settings.getDisplayValuesInHex());
-        registers = Coprocessor1.getRegisters();
+        registers = FPRegisters.getRegisters();
         this.highlighting = false;
         tableData = new Object[registers.size()+1][3];
         for(int i=0; i< registers.size(); i++){
@@ -102,7 +102,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
         // Added by Maya Peretz in September 2019 to support FCSR register.
         tableData[32][0]= "fcsr";
         tableData[32][1]= "";
-        tableData[32][2]= NumberDisplayBaseChooser.formatUnsignedInteger((int)(Coprocessor1.getFCSR().getValue().intValue()),valueBase);
+        tableData[32][2]= NumberDisplayBaseChooser.formatUnsignedInteger((int)(FPRegisters.getFCSR().getValue().intValue()),valueBase);
         return tableData;
     }
       
@@ -111,7 +111,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
     */
     public void clearWindow() {
         this.clearHighlighting();
-        Coprocessor1.resetRegisters();
+        FPRegisters.resetRegisters();
         this.updateRegisters(Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase());
     }
     
@@ -145,13 +145,13 @@ public class Coprocessor1Window extends JPanel implements Observer {
     * @param base number base for display (10 or 16)
     */
     public void updateRegisters(int base) {
-        registers = Coprocessor1.getRegisters();
+        registers = FPRegisters.getRegisters();
         for (Register.FPRegister register : registers)
             ((RegTableModel) table.getModel()).setDisplayAndModelValueAt(
                     NumberDisplayBaseChooser.formatNumber(register, base), register.getNumber(), VALUE_COLUMN);
         ((RegTableModel)table.getModel()).setDisplayAndModelValueAt(
-            NumberDisplayBaseChooser.formatUnsignedInteger(Coprocessor1.getFCSR().getValue().intValue(),base)
-            , Coprocessor1.getFCSR().getNumber(), VALUE_COLUMN);
+            NumberDisplayBaseChooser.formatUnsignedInteger(FPRegisters.getFCSR().getValue().intValue(),base)
+            , FPRegisters.getFCSR().getNumber(), VALUE_COLUMN);
     }
    
     /**
@@ -162,7 +162,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
     public void updateDoubleRegisterValue(int number,int base){
         long val = 0;
 
-        val = Coprocessor1.getLongValue(registers.get(number).getName());
+        val = FPRegisters.getLongValue(registers.get(number).getName());
 
         ((RegTableModel)table.getModel()).setDisplayAndModelValueAt(
         NumberDisplayBaseChooser.formatNumber(val,base), number, VALUE_COLUMN);
@@ -185,13 +185,13 @@ public class Coprocessor1Window extends JPanel implements Observer {
                // Simulated RISCV execution starts.  Respond to memory changes if running in timed
             	// or stepped mode.
                if (notice.getRunSpeed() != RunSpeedPanel.UNLIMITED_SPEED || Math2.isEq(notice.getMaxSteps(),1)) {
-                  Coprocessor1.addRegistersObserver(this);
+                  FPRegisters.addRegistersObserver(this);
                   this.highlighting = true;
                }
             } 
             else {
                // Simulated RISCV execution stops.  Stop responding.
-               Coprocessor1.deleteRegistersObserver(this);
+               FPRegisters.deleteRegistersObserver(this);
             }
          } 
          else if (obj instanceof RegisterAccessNotice) { 
@@ -321,7 +321,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
                      synchronized (Globals.memoryAndRegistersLock) {
-                        Coprocessor1.updateRegister(row, lVal);
+                        FPRegisters.updateRegister(row, lVal);
                      }
                      data[row][col] =
                            NumberDisplayBaseChooser.formatNumber(registers.get(row), valueBase);
@@ -331,7 +331,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
                      //  Assures that if changed during MIPS program execution, the update will
                      //  occur only between MIPS instructions.
                      synchronized (Globals.memoryAndRegistersLock) {
-                        Coprocessor1.updateRegister(row, dVal);
+                        FPRegisters.updateRegister(row, dVal);
                      }
                      data[row][col] =
                            NumberDisplayBaseChooser.formatNumber(registers.get(row), valueBase);
@@ -344,7 +344,7 @@ public class Coprocessor1Window extends JPanel implements Observer {
                     try{
                         lVal = Binary.stringToLong(sVal);
                         synchronized (Globals.memoryAndRegistersLock) {
-                            Coprocessor1.updateRegister(row, lVal);
+                            FPRegisters.updateRegister(row, lVal);
                         }
                         data[row][col] =
                                 NumberDisplayBaseChooser.formatNumber(registers.get(row), valueBase);

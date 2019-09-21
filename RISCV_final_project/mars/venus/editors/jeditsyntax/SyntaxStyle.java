@@ -57,6 +57,7 @@
    
    /**
     * Returns true if no font styles are enabled.
+    * @return true if no font styles are enabled.
     */
        public boolean isPlain()
       {
@@ -65,6 +66,7 @@
    
    /**
     * Returns true if italics is enabled for this style.
+    * @return true if italics is enabled for this style.
     */
        public boolean isItalic()
       {
@@ -73,6 +75,7 @@
    
    /**
     * Returns true if boldface is enabled for this style.
+    * @return true if boldface is enabled for this style.
     */
        public boolean isBold()
       {
@@ -81,6 +84,8 @@
    
    /**
     * Returns the specified font, but with the style's bold and
+    * italic flags applied.
+    * @return Returns the specified font, but with the style's bold and
     * italic flags applied.
     */
        public Font getStyledFont(Font font)
@@ -100,6 +105,7 @@
    
    /**
     * Returns the font metrics for the styled font.
+    * @return the font metrics for the styled font.
     */
        public FontMetrics getFontMetrics(Font font)
       {

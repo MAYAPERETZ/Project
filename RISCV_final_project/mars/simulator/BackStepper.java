@@ -156,16 +156,16 @@ public class BackStepper {
                     RVIRegisters.setProgramCounter(step.param1);
                     break;
                  case COPROC0_REGISTER_RESTORE :
-                    Coprocessor0.updateRegister(Long.toHexString(step.param1.longValue()), step.param2);
+                    CSRs.updateRegister(Long.toHexString(step.param1.longValue()), step.param2);
                     break;
                  case COPROC1_REGISTER_RESTORE :
-                    Coprocessor1.updateRegister(step.param1.longValue(), step.param2.longValue());
+                    FPRegisters.updateRegister(step.param1.longValue(), step.param2.longValue());
                     break;
                  case MEMORY_RESTORE_DOUBLE_WORD :
                      Globals.memory.setDoubleWord(step.param1, step.param2);
                      break;
                  case FCSR_RESTORE :
-                     Coprocessor1.setFCSR(step.param1.intValue());
+                     FPRegisters.setFCSR(step.param1.intValue());
                      break;
                  case DO_NOTHING :
                     break;

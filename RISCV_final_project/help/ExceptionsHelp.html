@@ -111,7 +111,7 @@ the one that triggered the exception, then the program terminates normally.
 main:
    teqi $t0,0     # immediately trap because $t0 contains 0
    li   $v0, 10   # After return from exception handler, specify exit service
-   syscall        # terminate normally
+   ecall        # terminate normally
 
 # Trap handler in the standard MIPS32 kernel text segment
 
@@ -120,7 +120,7 @@ main:
    move $k1,$a0   # Save $a0 value
    la   $a0, msg  # address of string to print
    li   $v0, 4    # Print String service
-   syscall
+   ecall
    move $v0,$k0   # Restore $v0
    move $a0,$k1   # Restore $a0
    mfc0 $k0,$14   # Coprocessor 0 register $14 has address of trapping instruction
@@ -141,8 +141,6 @@ contains directives that it does not
 recognize, but as long as the setting "Assembler warnings are
 considered errors" is <i>not</i> set this will not cause any
 problems.
-
-
 
 
 </body>

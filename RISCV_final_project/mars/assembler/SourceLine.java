@@ -68,7 +68,6 @@ public class SourceLine {
     /** Retrieve name of file containing source statement
     *  @return File name as String
     */
-   	 
     public String getFilename() {
         return filename;
     }
@@ -76,7 +75,6 @@ public class SourceLine {
     /** Retrieve line number of source statement
     *  @return Line number of source statement
     */
-   	 
     public int getLineNumber() {
         return lineNumber;
     }
@@ -84,7 +82,6 @@ public class SourceLine {
     /** Retrieve RISCVprogram object containing source statement
     *  @return program as RISCVprogram object
     */
-   	 
     public RISCVprogram getRISCVprogram() {
         return riscVprogram;
     }

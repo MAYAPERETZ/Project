@@ -55,7 +55,7 @@ function windowTitle()
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.mips.instructions.syscalls"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.riscv.instructions.ecalls"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../index.html?mars/mips/instructions/syscalls/AbstractSyscall.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="AbstractSyscall.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -87,34 +87,34 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== START OF CLASS DATA ======== -->
 <H2>
 <FONT SIZE="-1">
-mars.mips.instructions.syscalls</FONT>
+    mars.riscv.instructions.ecalls</FONT>
 <BR>
 Class AbstractSyscall</H2>
 <PRE>
 <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>mars.mips.instructions.syscalls.AbstractSyscall</B>
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>mars.riscv.instructions.ecalls.AbstractEcall</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></DD>
 </DL>
 <DL>
-<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.mips.instructions.syscalls">SyscallClose</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.mips.instructions.syscalls">SyscallConfirmDialog</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.mips.instructions.syscalls">SyscallExit</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.mips.instructions.syscalls">SyscallExit2</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.mips.instructions.syscalls">SyscallInputDialogDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.mips.instructions.syscalls">SyscallInputDialogFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.mips.instructions.syscalls">SyscallInputDialogInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.mips.instructions.syscalls">SyscallInputDialogString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.mips.instructions.syscalls">SyscallMessageDialog</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.mips.instructions.syscalls">SyscallMessageDialogDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.mips.instructions.syscalls">SyscallMessageDialogFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.mips.instructions.syscalls">SyscallMessageDialogInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.mips.instructions.syscalls">SyscallMessageDialogString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.mips.instructions.syscalls">SyscallMidiOut</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.mips.instructions.syscalls">SyscallMidiOutSync</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.mips.instructions.syscalls">SyscallOpen</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.mips.instructions.syscalls">SyscallPrintChar</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.mips.instructions.syscalls">SyscallPrintDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.mips.instructions.syscalls">SyscallPrintFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.mips.instructions.syscalls">SyscallPrintInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.mips.instructions.syscalls">SyscallPrintIntBinary</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.mips.instructions.syscalls">SyscallPrintIntHex</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.mips.instructions.syscalls">SyscallPrintIntUnsigned</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.mips.instructions.syscalls">SyscallPrintString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.mips.instructions.syscalls">SyscallRandDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.mips.instructions.syscalls">SyscallRandFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.mips.instructions.syscalls">SyscallRandInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.mips.instructions.syscalls">SyscallRandIntRange</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.mips.instructions.syscalls">SyscallRandSeed</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.mips.instructions.syscalls">SyscallRead</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.mips.instructions.syscalls">SyscallReadChar</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.mips.instructions.syscalls">SyscallReadDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.mips.instructions.syscalls">SyscallReadFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.mips.instructions.syscalls">SyscallReadInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.mips.instructions.syscalls">SyscallReadString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.mips.instructions.syscalls">SyscallSbrk</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.mips.instructions.syscalls">SyscallSleep</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.mips.instructions.syscalls">SyscallTime</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.mips.instructions.syscalls">SyscallWrite</A></DD>
+<DT><B>Direct Known Subclasses:</B> <DD><A HREF="../../../../mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.riscv.instructions.ecalls">SyscallClose</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.riscv.instructions.ecalls">SyscallConfirmDialog</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.riscv.instructions.ecalls">SyscallExit</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.riscv.instructions.ecalls">SyscallExit2</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialog</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.riscv.instructions.ecalls">SyscallMidiOut</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.ecalls">SyscallMidiOutSync</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.ecalls">SyscallOpen</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintChar</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntBinary</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntHex</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntUnsigned</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallRandDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallRandFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.riscv.instructions.ecalls">SyscallRandInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.riscv.instructions.ecalls">SyscallRandIntRange</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.riscv.instructions.ecalls">SyscallRandSeed</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.riscv.instructions.ecalls">SyscallRead</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.riscv.instructions.ecalls">SyscallReadChar</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallReadDouble</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallReadFloat</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.riscv.instructions.ecalls">SyscallReadInt</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.riscv.instructions.ecalls">SyscallReadString</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.riscv.instructions.ecalls">SyscallSbrk</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.riscv.instructions.ecalls">SyscallSleep</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.riscv.instructions.ecalls">SyscallTime</A>, <A HREF="../../../../mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.riscv.instructions.ecalls">SyscallWrite</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public abstract class <B>AbstractSyscall</B><DT>extends <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></DL>
+<DT><PRE>public abstract class <B>AbstractSyscall</B><DT>extends <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</A><DT>implements <A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></DL>
 </PRE>
 
 <P>
-Abstract class that a MIPS syscall system service may extend.  A qualifying service
-  must be a class in the mars.mips.instructions.syscalls package that 
-  implements the Syscall interface, must be compiled into a .class file, 
-  and its .class file must be in the same folder as Syscall.class.
-  Mars will detect a qualifying syscall upon startup, create an instance 
-  using its no-argument constructor and add it to its syscall list.  
-  When its service is invoked at runtime ("syscall" instruction
-  with its service number stored in register $v0), its simulate()
-  method will be invoked.
+    Abstract class that a MIPS ecall system service may extend. A qualifying service
+    must be a class in the mars.riscv.instructions.ecalls package that
+    implements the Syscall interface, must be compiled into a .class file,
+    and its .class file must be in the same folder as Syscall.class.
+    Mars will detect a qualifying ecall upon startup, create an instance
+    using its no-argument constructor and add it to its ecall list.
+    When its service is invoked at runtime ("ecall" instruction
+    with its service number stored in register $v0), its simulate()
+    method will be invoked.
 <P>
 
 <P>
@@ -153,7 +153,7 @@ Abstract class that a MIPS syscall system service may extend.  A qualifying serv
 <TD><CODE><B><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html#getName()">getName</A></B>()</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Return the name you have chosen for this syscall.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Return the name you have chosen for this ecall.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -177,7 +177,7 @@ Abstract class that a MIPS syscall system service may extend.  A qualifying serv
 <TD><CODE><B><A HREF="../../../../mars/mips/instructions/syscalls/AbstractSyscall.html#simulate(mars.ProgramStatement)">simulate</A></B>(<A HREF="../../../../mars/ProgramStatement.html" title="class in mars">ProgramStatement</A>&nbsp;statement)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs syscall function.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Performs ecall function.</TD>
 </TR>
 </TABLE>
 &nbsp;<A NAME="methods_inherited_from_class_java.lang.Object"><!-- --></A>
@@ -229,12 +229,12 @@ getName</H3>
 <PRE>
 public <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getName</B>()</PRE>
 <DL>
-<DD>Return the name you have chosen for this syscall.  This can be used by a MARS
+<DD>Return the name you have chosen for this ecall.  This can be used by a MARS
   user to refer to the service when choosing to override its default service
   number in the configuration file.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#getName()">getName</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#getName()">getName</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></CODE></DL>
 </DD>
 <DD><DL>
 
@@ -252,7 +252,7 @@ public void <B>setNumber</B>(int&nbsp;num)</PRE>
  to override the default service number.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#setNumber(int)">setNumber</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#setNumber(int)">setNumber</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>num</CODE> - specified service number to override the default.</DL>
@@ -269,7 +269,7 @@ public int <B>getNumber</B>()</PRE>
  must store into $v0 before issuing the SYSCALL instruction.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#getNumber()">getNumber</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#getNumber()">getNumber</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></CODE></DL>
 </DD>
 <DD><DL>
 
@@ -284,14 +284,14 @@ simulate</H3>
 public abstract void <B>simulate</B>(<A HREF="../../../../mars/ProgramStatement.html" title="class in mars">ProgramStatement</A>&nbsp;statement)
                        throws <A HREF="../../../../mars/ProcessingException.html" title="class in mars">ProcessingException</A></PRE>
 <DL>
-<DD>Performs syscall function.  It will be invoked when the service is invoked
+<DD>Performs ecall function.  It will be invoked when the service is invoked
  at simulation time.  Service is identified by value stored in $v0.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#simulate(mars.ProgramStatement)">simulate</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.mips.instructions.syscalls">Syscall</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html#simulate(mars.ProgramStatement)">simulate</A></CODE> in interface <CODE><A HREF="../../../../mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A></CODE></DL>
 </DD>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>statement</CODE> - ProgramStatement object for this syscall instruction.
+<DT><B>Parameters:</B><DD><CODE>statement</CODE> - ProgramStatement object for this ecall instruction.
 <DT><B>Throws:</B>
 <DD><CODE><A HREF="../../../../mars/ProcessingException.html" title="class in mars">ProcessingException</A></CODE></DL>
 </DD>
@@ -327,7 +327,7 @@ public abstract void <B>simulate</B>(<A HREF="../../../../mars/ProgramStatement.
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
 &nbsp;PREV CLASS&nbsp;
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.mips.instructions.syscalls"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.riscv.instructions.ecalls"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../index.html?mars/mips/instructions/syscalls/AbstractSyscall.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="AbstractSyscall.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

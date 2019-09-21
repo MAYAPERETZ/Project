@@ -91,7 +91,7 @@ public class Coprocessor0Window extends JPanel implements Observer {
     *   @return The array object with the data for the window.
     */
     public Object[][] setupWindow(){
-        registers = Coprocessor0.getRegisters();
+        registers = CSRs.getRegisters();
         tableData = new Object[registers.length][3];
         rowGivenRegNumber = new int[32]; // maximum number of registers
         for(int i=0; i< registers.length; i++){
@@ -108,7 +108,7 @@ public class Coprocessor0Window extends JPanel implements Observer {
     */
     public void clearWindow() {
         this.clearHighlighting();
-        Coprocessor0.resetRegisters();
+        CSRs.resetRegisters();
         this.updateRegisters(Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase());
     }
 
@@ -143,7 +143,7 @@ public class Coprocessor0Window extends JPanel implements Observer {
     * @param base  number base for display (10 or 16)
     */
     public void updateRegisters(int base) {
-        registers = Coprocessor0.getRegisters();
+        registers = CSRs.getRegisters();
         for (Register register : registers)
             this.updateRegisterValue(register.getNumber(), register.getValue(), base);
     }
@@ -174,12 +174,12 @@ public class Coprocessor0Window extends JPanel implements Observer {
            // Simulated MIPS execution starts.  Respond to memory changes if running in timed
             // or stepped mode.
            if (notice.getRunSpeed() != RunSpeedPanel.UNLIMITED_SPEED || Math2.isEq(notice.getMaxSteps(), 1)) {
-              Coprocessor0.addRegistersObserver(this);
+              CSRs.addRegistersObserver(this);
               this.highlighting = true;
            }
         }
         else // Simulated RISCV execution stops.  Stop responding.
-           Coprocessor0.deleteRegistersObserver(this);
+           CSRs.deleteRegistersObserver(this);
         }
         else if (obj instanceof RegisterAccessNotice) {
             // NOTE: each register is a separate Observable
@@ -204,7 +204,7 @@ public class Coprocessor0Window extends JPanel implements Observer {
     *  @param register Register object corresponding to row to be selected.
     */
     void highlightCellForRegister(Register register) {
-        int registerRow    = Coprocessor0.getRegisterPosition(register);
+        int registerRow    = CSRs.getRegisterPosition(register);
         if (registerRow < 0)
             return; // not valid coprocessor0 register
         this.highlightRow = registerRow;
@@ -313,7 +313,7 @@ public class Coprocessor0Window extends JPanel implements Observer {
          	//  Assures that if changed during MIPS program execution, the update will
          	//  occur only between MIPS instructions.
             synchronized (Globals.memoryAndRegistersLock) {
-               Coprocessor0.updateRegister(registers[row].getNumber(), val);
+               CSRs.updateRegister(registers[row].getNumber(), val);
             }
             int valueBase = Globals.getGui().getMainPane().getExecutePane().getValueDisplayBase();
             data[row][col] = NumberDisplayBaseChooser.formatIntNumber(val, valueBase); 

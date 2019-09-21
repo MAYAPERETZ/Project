@@ -578,7 +578,7 @@ getInputString</H3>
 public <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getInputString</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;prompt)</PRE>
 <DL>
 <DD>Method used by the SystemIO class to get interactive user input
-  requested by a running MIPS program (e.g. syscall #5 to read an
+  requested by a running MIPS program (e.g. ecall #5 to read an
   integer).  SystemIO knows whether simulator is being run at 
   command line by the user, or by the GUI. If run at command line, 
   it gets input from System.in rather than here.
@@ -599,7 +599,7 @@ getInputString</H3>
 public <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>getInputString</B>(int&nbsp;maxLen)</PRE>
 <DL>
 <DD>Method used by the SystemIO class to get interactive user input
-  requested by a running MIPS program (e.g. syscall #5 to read an
+  requested by a running MIPS program (e.g. ecall #5 to read an
   integer).  SystemIO knows whether simulator is being run at 
   command line by the user, or by the GUI. If run at command line, 
   it gets input from System.in rather than here.

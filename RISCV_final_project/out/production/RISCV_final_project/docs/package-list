@@ -1,10 +1,10 @@
 
 mars
 mars.assembler
-mars.mips.dump
-mars.mips.hardware
-mars.mips.instructions
-mars.mips.instructions.syscalls
+mars.riscv.dump
+mars.riscv.hardware
+mars.riscv.instructions
+mars.riscv.instructions.ecalls
 mars.simulator
 mars.tools
 mars.util

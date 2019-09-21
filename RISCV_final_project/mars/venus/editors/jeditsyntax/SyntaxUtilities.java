@@ -89,6 +89,7 @@
     * Returns the default style table. This can be passed to the
     * <code>setStyles()</code> method of <code>SyntaxDocument</code>
     * to use the default syntax styles.
+    * @return the default style table
     */
        public static SyntaxStyle[] getDefaultSyntaxStyles()
       {
@@ -117,6 +118,7 @@
     * to use the current syntax styles.  If changes have been made
     * via MARS Settings menu, the current settings will not be the 
     * same as the default settings.
+    * @return the CURRENT style table
     */
        public static SyntaxStyle[] getCurrentSyntaxStyles()
       {
@@ -157,8 +159,7 @@
       {
          Font defaultFont = gfx.getFont();
          Color defaultColor = gfx.getColor();
-      
-         int offset = 0;
+
          for(;;)
          {
             byte id = tokens.id;
@@ -211,8 +212,7 @@
          			
             x = Utilities.drawTabbedText(line,x,y,gfx,expander,0);
             line.offset += length;
-            offset += length;
-         
+
             tokens = tokens.next;
          }
       

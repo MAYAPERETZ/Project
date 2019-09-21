@@ -59,8 +59,8 @@ public class Macro {
       program = null;
       fromLine = toLine = 0;
       origFromLine = origToLine = 0;
-      args = new ArrayList<String>();
-      labels = new ArrayList<String>();
+      args = new ArrayList<>();
+      labels = new ArrayList<>();
    }
 
    public String getName() {
@@ -210,7 +210,6 @@ public class Macro {
    * returns whether <code>tokenValue</code> is macro parameter or not
    * @param tokenValue
    * @param acceptSpimStyleParameters accepts SPIM-style parameters which begin with '$' if true
-   * @return
    */
    public static boolean tokenIsMacroParameter(String tokenValue, boolean acceptSpimStyleParameters) {
       return tokenValue.length() > 1 && tokenValue.charAt(0) == '%';

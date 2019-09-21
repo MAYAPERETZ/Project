@@ -32,7 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Base class to represent member of MIPS instruction set.
+ * Base class to represent member of RISCV instruction set.
  * 
  * @author Pete Sanderson and Ken Vollmar
  * @version August 2003
@@ -40,8 +40,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 public abstract class Instruction {
     /**
-    *  Length in bytes of a machine instruction.  MIPS is a RISC architecture
-    *  so all instructions are the same length.  Currently set to 4.
+    *  Length in bytes of a machine instruction.
+    *  Currently set to 4.
     */
 	public static final int INSTRUCTION_LENGTH       =  4;
 	public static final int INSTRUCTION_LENGTH_BITS  = 32;

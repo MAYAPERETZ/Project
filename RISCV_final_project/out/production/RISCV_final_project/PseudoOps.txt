@@ -142,6 +142,10 @@ sltz t1,t2	slt RG1, RG2, 0	#Set if Less Than Zero : Writes 1 to t1 if t2 is less
 
 snez t1,t2	sltu RG1, 0, RG2	#Set if Not Equal to Zero : Writes 0 to t1 if t2 equals 0, or 1 if not.
 
+li t1,-100	addi RG1, 0, VL2	#Load Immediate : Set t1 to 16-bit immediate (sign-extended)
+li t1,100	ori RG1, 0, VL2U	#Load Immediate : Set t1 to unsigned 16-bit immediate (zero-extended)
+li t1,100000	lui 1, VHL2	ori RG1, 1, VL2U	#Load Immediate : Set t1 to 32-bit immediate
+
 
 #########################  load/store pseudo-ops start here  ##########################
 #
@@ -152,8 +156,8 @@ snez t1,t2	sltu RG1, 0, RG2	#Set if Not Equal to Zero : Writes 0 to t1 if t2 equ
 la t1,(t2)	addi RG1, RG3, 0	#Load Address : Set t1 to contents of t2
 la t1,-100	addiu RG1, 0, VL2	#Load Address : Set t1 to 16-bit immediate (sign-extended) 
 la t1,100	ori RG1, 0, VL2U	#Load Address : Set $t1 to 16-bit immediate (zero-extended) 
-la t1,100000	lui RG1, VHL2	ori RG1, RG1, VL2U	#Load Address : Set $t1 to 32-bit immediate
-la t1,100(t2)	ori RG1, 0, VL2U	add RG1, RG4, x8	#Load Address : Set $t1 to sum (of t2 and 16-bit immediate)
+la t1,100000	lui RG1, VHL2	ori RG1, RG1, VL2U	#Load Address : Set t1 to 32-bit immediate
+la t1,100(t2)	ori RG1, 0, VL2U	add RG1, RG4, x8	#Load Address : Set t1 to sum (of t2 and 16-bit immediate)
 la t1,100000(t2)	lui RG1, VHL2	ori RG1, RG1, VL2U	add RG1, RG4, RG1	#Load Address : Set $t1 to sum (of t2 and 32-bit immediate)
 la t1,label	auipc RG1, LHL	addi RG1, RG1 LL2U	#Load Address : Set t1 to label's address
 la t1,label(t2)	lui RG1, LHL	ori x8, x8, LL2U	add RG1, RG4, RG1	COMPACT	addi RG1, RG4, LL2	#Load Address : Set t1 to sum (of t2 and label's address)

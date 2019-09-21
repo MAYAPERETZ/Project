@@ -54,8 +54,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../mars/mips/dump/AsciiTextDumpFormat.html" title="class in mars.mips.dump"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../mars/mips/dump/BinaryTextDumpFormat.html" title="class in mars.mips.dump"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../mars/mips/dump/AsciiTextDumpFormat.html" title="class in mars.riscv.dump"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../mars/mips/dump/BinaryTextDumpFormat.html" title="class in mars.riscv.dump"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?mars/mips/dump/BinaryDumpFormat.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="BinaryDumpFormat.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -87,20 +87,20 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== START OF CLASS DATA ======== -->
 <H2>
 <FONT SIZE="-1">
-mars.mips.dump</FONT>
+    mars.riscv.dump</FONT>
 <BR>
 Class BinaryDumpFormat</H2>
 <PRE>
 <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.mips.dump">mars.mips.dump.AbstractDumpFormat</A>
-      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>mars.mips.dump.BinaryDumpFormat</B>
+  <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.riscv.dump">mars.riscv.dump.AbstractDumpFormat</A>
+      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>mars.riscv.dump.BinaryDumpFormat</B>
 </PRE>
 <DL>
-<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../mars/mips/dump/DumpFormat.html" title="interface in mars.mips.dump">DumpFormat</A></DD>
+<DT><B>All Implemented Interfaces:</B> <DD><A HREF="../../../mars/mips/dump/DumpFormat.html" title="interface in mars.riscv.dump">DumpFormat</A></DD>
 </DL>
 <HR>
 <DL>
-<DT><PRE>public class <B>BinaryDumpFormat</B><DT>extends <A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.mips.dump">AbstractDumpFormat</A></DL>
+<DT><PRE>public class <B>BinaryDumpFormat</B><DT>extends <A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.riscv.dump">AbstractDumpFormat</A></DL>
 </PRE>
 
 <P>
@@ -153,10 +153,10 @@ Class that represents the "binary" memory dump format.  The output
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Write MIPS memory contents in pure binary format.</TD>
 </TR>
 </TABLE>
-&nbsp;<A NAME="methods_inherited_from_class_mars.mips.dump.AbstractDumpFormat"><!-- --></A>
+&nbsp;<A NAME="methods_inherited_from_class_mars.riscv.dump.AbstractDumpFormat"><!-- --></A>
 <TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#EEEEFF" CLASS="TableSubHeadingColor">
-<TH ALIGN="left"><B>Methods inherited from class mars.mips.dump.<A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.mips.dump">AbstractDumpFormat</A></B></TH>
+<TH ALIGN="left"><B>Methods inherited from class mars.riscv.dump.<A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.riscv.dump">AbstractDumpFormat</A></B></TH>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD><CODE><A HREF="../../../mars/mips/dump/AbstractDumpFormat.html#getCommandDescriptor()">getCommandDescriptor</A>, <A HREF="../../../mars/mips/dump/AbstractDumpFormat.html#getDescription()">getDescription</A>, <A HREF="../../../mars/mips/dump/AbstractDumpFormat.html#getFileExtension()">getFileExtension</A>, <A HREF="../../../mars/mips/dump/AbstractDumpFormat.html#toString()">toString</A></CODE></TD>
@@ -209,7 +209,7 @@ dumpMemoryRange</H3>
 public void <B>dumpMemoryRange</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/io/File.html?is-external=true" title="class or interface in java.io">File</A>&nbsp;file,
                             int&nbsp;firstAddress,
                             int&nbsp;lastAddress)
-                     throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A>,
+                     throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A>,
                             <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></PRE>
 <DL>
 <DD>Write MIPS memory contents in pure binary format.  One byte at a time
@@ -217,14 +217,14 @@ public void <B>dumpMemoryRange</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/
   code written by Greg Gibeling.
 <P>
 <DD><DL>
-<DT><B>Specified by:</B><DD><CODE><A HREF="../../../mars/mips/dump/DumpFormat.html#dumpMemoryRange(java.io.File, int, int)">dumpMemoryRange</A></CODE> in interface <CODE><A HREF="../../../mars/mips/dump/DumpFormat.html" title="interface in mars.mips.dump">DumpFormat</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../mars/mips/dump/AbstractDumpFormat.html#dumpMemoryRange(java.io.File, int, int)">dumpMemoryRange</A></CODE> in class <CODE><A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.mips.dump">AbstractDumpFormat</A></CODE></DL>
+<DT><B>Specified by:</B><DD><CODE><A HREF="../../../mars/mips/dump/DumpFormat.html#dumpMemoryRange(java.io.File, int, int)">dumpMemoryRange</A></CODE> in interface <CODE><A HREF="../../../mars/mips/dump/DumpFormat.html" title="interface in mars.riscv.dump">DumpFormat</A></CODE><DT><B>Specified by:</B><DD><CODE><A HREF="../../../mars/mips/dump/AbstractDumpFormat.html#dumpMemoryRange(java.io.File, int, int)">dumpMemoryRange</A></CODE> in class <CODE><A HREF="../../../mars/mips/dump/AbstractDumpFormat.html" title="class in mars.riscv.dump">AbstractDumpFormat</A></CODE></DL>
 </DD>
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>file</CODE> - File in which to store MIPS memory contents.<DD><CODE>firstAddress</CODE> - first (lowest) memory address to dump.  In bytes but
   must be on word boundary.<DD><CODE>lastAddress</CODE> - last (highest) memory address to dump.  In bytes but
   must be on word boundary.  Will dump the word that starts at this address.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - if firstAddress is invalid or not on a word boundary.
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - if firstAddress is invalid or not on a word boundary.
 <DD><CODE><A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</A></CODE> - if error occurs during file output.</DL>
 </DD>
 </DL>
@@ -258,8 +258,8 @@ public void <B>dumpMemoryRange</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../mars/mips/dump/AsciiTextDumpFormat.html" title="class in mars.mips.dump"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../mars/mips/dump/BinaryTextDumpFormat.html" title="class in mars.mips.dump"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../mars/mips/dump/AsciiTextDumpFormat.html" title="class in mars.riscv.dump"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../mars/mips/dump/BinaryTextDumpFormat.html" title="class in mars.riscv.dump"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?mars/mips/dump/BinaryDumpFormat.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="BinaryDumpFormat.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

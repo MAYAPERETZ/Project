@@ -35,7 +35,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
 /**
-* Action  for the File -> Print menu item
+* Action  for the File - Print menu item
 */
 public class FilePrintAction extends GuiAction {
 

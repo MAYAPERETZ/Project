@@ -49,13 +49,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 public class BinaryTextDumpFormat extends AbstractDumpFormat {
    
-   /**
-   *  Constructor.  There is no standard file extension for this format.
-   */
-       public BinaryTextDumpFormat() {
-         super("Binary Text", "BinaryText", "Written as '0' and '1' characters to text file", null);
-      }
-   
+    /**
+    *  Constructor.  There is no standard file extension for this format.
+    */
+    public BinaryTextDumpFormat() {
+        super("Binary Text", "BinaryText", "Written as '0' and '1' characters to text file", null);
+    }
    
     /**
     *  Write MIPS memory contents in binary text format.  Each line of
@@ -73,9 +72,8 @@ public class BinaryTextDumpFormat extends AbstractDumpFormat {
     */
     public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
     throws AddressErrorException, IOException {
-        PrintStream out = new PrintStream(new FileOutputStream(file));
-        String string = null;
-        try {
+        try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
+            String string;
             for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = GenMath.add(address, Memory.WORD_LENGTH_BYTES)) {
                 Number temp = Globals.memory.getRawWordOrNull(address);
                 if (temp == null)
@@ -85,9 +83,6 @@ public class BinaryTextDumpFormat extends AbstractDumpFormat {
                     string = '0' + string;
                 out.println(string);
             }
-        }
-        finally {
-            out.close();
         }
     }
 

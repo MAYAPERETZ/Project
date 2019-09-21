@@ -32,7 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
 /**
-* Action  for the File -> Close menu item
+* Action  for the File - Close menu item
 */
 public class FileCloseAction extends ChangeableAction{
 
@@ -42,8 +42,9 @@ public class FileCloseAction extends ChangeableAction{
     }
 
     public void actionPerformed(ActionEvent e){
-        if(mainUI.mainPane.editTabbedPane.getTabCount() == 1)
+        if(mainUI.mainPane.editTabbedPane.getTabCount() == 1) {
             mainUI.mainPane.editTabbedPane.setVisible(false);
             mainUI.editor.close();
         }
+    }
 }

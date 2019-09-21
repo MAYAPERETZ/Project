@@ -100,7 +100,7 @@ Class SystemIO</H2>
 </PRE>
 
 <P>
-Provides standard i/o services needed to simulate the MIPS syscall
+Provides standard i/o services needed to simulate the MIPS ecall
  routines.  These methods will detect whether the simulator is being
  run from the command line or through the GUI, then do I/O to
  System.in and System.out in the former situation, and interact with
@@ -204,7 +204,7 @@ Provides standard i/o services needed to simulate the MIPS syscall
 <TD><CODE><B><A HREF="../../mars/util/SystemIO.html#printString(java.lang.String)">printString</A></B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;string)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements syscall having 4 in $v0, to print a string.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements ecall having 4 in $v0, to print a string.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -212,7 +212,7 @@ Provides standard i/o services needed to simulate the MIPS syscall
 <TD><CODE><B><A HREF="../../mars/util/SystemIO.html#readChar(int)">readChar</A></B>(int&nbsp;serviceNumber)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements syscall having 12 in $v0, to read a char value.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements ecall having 12 in $v0, to read a char value.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -220,7 +220,7 @@ Provides standard i/o services needed to simulate the MIPS syscall
 <TD><CODE><B><A HREF="../../mars/util/SystemIO.html#readDouble(int)">readDouble</A></B>(int&nbsp;serviceNumber)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements syscall to read a double value.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements ecall to read a double value.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -228,7 +228,7 @@ Provides standard i/o services needed to simulate the MIPS syscall
 <TD><CODE><B><A HREF="../../mars/util/SystemIO.html#readFloat(int)">readFloat</A></B>(int&nbsp;serviceNumber)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements syscall to read a float value.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements ecall to read a float value.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -246,7 +246,7 @@ Provides standard i/o services needed to simulate the MIPS syscall
 <TD><CODE><B><A HREF="../../mars/util/SystemIO.html#readInteger(int)">readInteger</A></B>(int&nbsp;serviceNumber)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements syscall to read an integer value.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements ecall to read an integer value.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -255,7 +255,7 @@ Provides standard i/o services needed to simulate the MIPS syscall
            int&nbsp;maxLength)</CODE>
 
 <BR>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements syscall to read a string.</TD>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implements ecall to read a string.</TD>
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
@@ -365,11 +365,11 @@ readInteger</H3>
 <PRE>
 public static int <B>readInteger</B>(int&nbsp;serviceNumber)</PRE>
 <DL>
-<DD>Implements syscall to read an integer value.  
+<DD>Implements ecall to read an integer value.
  Client is responsible for catching NumberFormatException.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Int syscall (default 5)
+<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Int ecall (default 5)
 <DT><B>Returns:</B><DD>int value corresponding to user input</DL>
 </DD>
 </DL>
@@ -380,11 +380,11 @@ readFloat</H3>
 <PRE>
 public static float <B>readFloat</B>(int&nbsp;serviceNumber)</PRE>
 <DL>
-<DD>Implements syscall to read a float value.
+<DD>Implements ecall to read a float value.
  Client is responsible for catching NumberFormatException.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Float syscall (default 6)
+<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Float ecall (default 6)
 <DT><B>Returns:</B><DD>float value corresponding to user input
  Feb 14 2005 Ken Vollmar</DL>
 </DD>
@@ -396,11 +396,11 @@ readDouble</H3>
 <PRE>
 public static double <B>readDouble</B>(int&nbsp;serviceNumber)</PRE>
 <DL>
-<DD>Implements syscall to read a double value.
+<DD>Implements ecall to read a double value.
  Client is responsible for catching NumberFormatException.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Double syscall (default 7)
+<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Double ecall (default 7)
 <DT><B>Returns:</B><DD>double value corresponding to user input
  1 Aug 2005 DPS, based on Ken Vollmar's readFloat</DL>
 </DD>
@@ -412,7 +412,7 @@ printString</H3>
 <PRE>
 public static void <B>printString</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A>&nbsp;string)</PRE>
 <DL>
-<DD>Implements syscall having 4 in $v0, to print a string.
+<DD>Implements ecall having 4 in $v0, to print a string.
 <P>
 <DD><DL>
 </DL>
@@ -426,10 +426,10 @@ readString</H3>
 public static <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</A> <B>readString</B>(int&nbsp;serviceNumber,
                                 int&nbsp;maxLength)</PRE>
 <DL>
-<DD>Implements syscall to read a string.
+<DD>Implements ecall to read a string.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read String syscall (default 8)<DD><CODE>maxLength</CODE> - the maximum string length
+<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read String ecall (default 8)<DD><CODE>maxLength</CODE> - the maximum string length
 <DT><B>Returns:</B><DD>the entered string, truncated to maximum length if necessary</DL>
 </DD>
 </DL>
@@ -440,10 +440,10 @@ readChar</H3>
 <PRE>
 public static int <B>readChar</B>(int&nbsp;serviceNumber)</PRE>
 <DL>
-<DD>Implements syscall having 12 in $v0, to read a char value.
+<DD>Implements ecall having 12 in $v0, to read a char value.
 <P>
 <DD><DL>
-<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Char syscall (default 12)
+<DT><B>Parameters:</B><DD><CODE>serviceNumber</CODE> - the number assigned to Read Char ecall (default 12)
 <DT><B>Returns:</B><DD>int value with lowest byte corresponding to user input</DL>
 </DD>
 </DL>

@@ -98,7 +98,7 @@ public class DelayedBranch {
 	*  delay slot and at the end of THAT cycle, the trigger will be detected and the
 	*  branch carried out.  This method has package visibility.
 	*  Precondition: DelayedBranch.isRegistered()
-	*  Postcondition: DelayedBranch.isTriggered() && !DelayedBranch.isRegistered()
+	*  Postcondition: DelayedBranch.isTriggered() and !DelayedBranch.isRegistered()
 	*
 	*/
 	static void trigger() {

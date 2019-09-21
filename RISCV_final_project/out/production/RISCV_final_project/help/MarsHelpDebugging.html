@@ -1,11 +1,11 @@
 <html>
-<title>MARS 4.5 help contents
+<title>MARS 1.0 help contents
 </title>
 <body>
 <center>
-<h3>MARS - Mips Assembly and Runtime Simulator</h3>
-<h4>Release 4.5</h4>
-<h4>August 2014</h4>
+<h3>MARS - RISCV Assembly and Runtime Simulator</h3>
+<h4>Release 1.0</h4>
+<h4>September 2019</h4>
 <h4>Interactive Debugging Features</h4>
 </center>
 
@@ -25,27 +25,16 @@ in the Text Segment window.  <i>New in Release 3.8:</i> You can temporarily susp
 using Toggle Breakpoints in the Run menu or by clicking the "Bkpt" column header in the Text Segment
 window.  Repeat, to re-activate.</li>
 
-<li>When running in the <i>Go</i> mode, you can select the simulation
-speed using the Run Speed slider.  Available speeds range
-from .05 instructions per second (20 seconds between steps) up to 30
-instructions per second, then above this offers an "unlimited" speed.
-When using "unlimited" speed, code highlighting and memory display updating 
-are turned off while simulating (but it executes really fast!).  
-When a breakpoint is reached, highlighting and updating occur.
-Run speed can be adjusted while the program is running.</li>
-
 <li>When running in the <i>Go</i> mode, you can pause or stop
 simulation at any time using the <i>Pause</i> or <i>Stop</i> features.
 The former will pause execution and update the display, as if you
 were stepping or at a breakpoint.  The latter will terminate execution
-and display final memory and register values.  If running at "unlimited"
-speed, the system may not respond immediately but it will respond.</li>
-
+and display final memory and register values.</li>
 
 <li>You have the ability to interactively step "backward" through program execution 
 one instruction at a time to "undo" execution steps.  It will buffer up to 2000 of the most 
 recent execution steps (this limit is stored in a properties file and can be changed).
-It will undo changes made to MIPS memory, registers or condition flags,
+It will undo changes made to RISCV memory, registers or condition flags,
 but not console or file I/O.  This should be a great debugging aid.  
 It is available anytime execution is paused and at termination (even if terminated due to 
 exception).  
@@ -65,12 +54,12 @@ at a time (with scrolling) starting with the data segment base address (0x100100
 Navigation buttons are provided to change the display to the next 
 section of memory, the previous, or back to the initial (home) range.  A combo box is 
 also provided to view memory contents in the vicinity of the stack pointer 
-(contents of MIPS $sp register), global pointer (contents of MIPS $gp register),
+(contents of RISCV sp register), global pointer (contents of RISCV gp register),
 the heap base address (0x10040000), .extern globals (0x10000000),
 the kernel data segment (0x90000000), or memory-mapped IO (MMIO, 0xFFFF0000).
 <em>Starting with Mars 4.4,</em> raw text segment contents can also be displayed.</li>
 
-<li>Contents of any data segment memory word and almost any MIPS register can be modified by 
+<li>Contents of any data segment memory word and almost any RISCV register can be modified by
 editing its displayed table cell.  Double-click on a cell to edit it and press the Enter key
 when finished typing the new value.  If you
 enter an invalid 32-bit integer, the word INVALID appears in the cell

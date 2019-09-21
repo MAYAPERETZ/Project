@@ -44,7 +44,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
     public class SystemIO
    {
-    /** Buffer size for syscalls for file I/O */
+    /** Buffer size for ecalls for file I/O */
       public static final int SYSCALL_BUFSIZE = 128;
     /** Maximum number of files that can be open */
       public static final int SYSCALL_MAXFILES = 32;

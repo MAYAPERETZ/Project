@@ -138,7 +138,7 @@ public final class TokenTypes {
         }
        // See if it is a floating point register
        
-        reg = Coprocessor1.getRegister(value);
+        reg = FPRegisters.getRegister(value);
         if (reg != null)
             return TokenTypes.FP_REGISTER_NAME;
        

@@ -32,7 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Interface to represent the method for simulating the execution of a specific MIPS basic
+ * Interface to represent the method for simulating the execution of a specific RISCV basic
  * instruction.  It will be implemented by the anonymous class created in the last
  * argument to the BasicInstruction constructor.
  * 
@@ -44,11 +44,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 public interface SimulationCode {
 
     /**
-     * Method to simulate the execution of a specific MIPS basic instruction.
+     * Method to simulate the execution of a specific RISCV basic instruction.
      * 
-     * @param statement A ProgramStatement representing the MIPS instruction to simulate. 
+     * @param statement A ProgramStatement representing the RISCV instruction to simulate. 
      * @throws ProcessingException This is a run-time exception generated during simulation.
      **/
-
     void simulate(ProgramStatement statement) throws ProcessingException;
 }

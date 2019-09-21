@@ -37,7 +37,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @version August 2003
  **/
 
-    public class ErrorList {
+public class ErrorList {
       private ArrayList messages;
       private int errorCount;
       private int warningCount;
@@ -104,12 +104,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             return;
          }
          messages.add(index, mess);
-         if (mess.isWarning()) {
+         if (mess.isWarning())
             warningCount++;
-         } 
-         else {
-            errorCount++;
-         }
+         else errorCount++;
+
       }
        
    
@@ -178,21 +176,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        private String generateReport(boolean isWarning) {
          StringBuffer report = new StringBuffer("");
          String reportLine;
-         for (int i = 0; i < messages.size(); i++) {
-            ErrorMessage m = (ErrorMessage) messages.get(i);
-            if  ((isWarning && m.isWarning()) || (!isWarning && !m.isWarning())) {
-               reportLine = ((isWarning) ? WARNING_MESSAGE_PREFIX : ERROR_MESSAGE_PREFIX) + FILENAME_PREFIX;
-               if (m.getFilename().length() > 0) 
-                  reportLine = reportLine + (new File(m.getFilename()).getPath()); //.getName());
-               if (m.getLine() > 0)
-                  reportLine = reportLine + LINE_PREFIX  +m.getMacroExpansionHistory()+ m.getLine();
-               if (m.getPosition() > 0)
-                  reportLine = reportLine + POSITION_PREFIX + m.getPosition();
-               reportLine = reportLine + MESSAGE_SEPARATOR + m.getMessage() + "\n";
-               report.append(reportLine);
-            }
-         }
+           for (Object message : messages) {
+               ErrorMessage m = (ErrorMessage) message;
+               if ((isWarning && m.isWarning()) || (!isWarning && !m.isWarning())) {
+                   reportLine = ((isWarning) ? WARNING_MESSAGE_PREFIX : ERROR_MESSAGE_PREFIX) + FILENAME_PREFIX;
+                   if (m.getFilename().length() > 0)
+                       reportLine = reportLine + (new File(m.getFilename()).getPath()); //.getName());
+                   if (m.getLine() > 0)
+                       reportLine = reportLine + LINE_PREFIX + m.getMacroExpansionHistory() + m.getLine();
+                   if (m.getPosition() > 0)
+                       reportLine = reportLine + POSITION_PREFIX + m.getPosition();
+                   reportLine = reportLine + MESSAGE_SEPARATOR + m.getMessage() + "\n";
+                   report.append(reportLine);
+               }
+           }
          return report.toString();
-      }
-   }  // ErrorList
+    }
+}  // ErrorList
 

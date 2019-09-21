@@ -32,7 +32,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
 /**
-* Action  for the File -> New menu item
+* Action  for the File - New menu item
 */
 public class FileNewAction extends ChangeableAction {
 

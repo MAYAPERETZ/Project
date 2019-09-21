@@ -281,7 +281,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 						// because it assumes the bad address comes from an operand so the ProgramCounter has already been
 						// incremented.  In this case, bad address is the instruction fetch itself so Program Counter has
 						// not yet been incremented.  We'll set the EPC directly here.  DPS 8-July-2013
-                  Coprocessor0.updateRegister(Coprocessor0.EPC, RVIRegisters.getProgramCounter());
+                  CSRs.updateRegister(CSRs.EPC, RVIRegisters.getProgramCounter());
                   this.constructReturnReason = EXCEPTION;
                   this.done = true;
                   SystemIO.resetFiles(); // close any files opened in MIPS program
@@ -451,7 +451,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 						   // because it assumes the bad address comes from an operand so the ProgramCounter has already been
 						   // incremented.  In this case, bad address is the instruction fetch itself so Program Counter has
 						   // not yet been incremented.  We'll set the EPC directly here.  DPS 8-July-2013
-                     Coprocessor0.updateRegister(Coprocessor0.EPC, RVIRegisters.getProgramCounter());
+                     CSRs.updateRegister(CSRs.EPC, RVIRegisters.getProgramCounter());
                      this.constructReturnReason = EXCEPTION;
                      this.done = true;
                      SystemIO.resetFiles(); // close any files opened in MIPS program

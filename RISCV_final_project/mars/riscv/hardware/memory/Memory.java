@@ -202,6 +202,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
     /**
     * Returns the unique Memory instance, which becomes in essence global.
+    * @return the unique Memory instance, which becomes in essence global.
     */
     public static Memory getInstance() {
      return uniqueMemoryInstance;
@@ -304,6 +305,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param address Starting address of Memory address to be set.
     *  @param value Value to be stored starting at that address.
     *  @param length Number of bytes to be written.
+    *  @throws AddressErrorException
     *  @return old value that was replaced by the set operation
     **/
 
@@ -531,6 +533,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *
     * @param address Starting address of Memory address to be read.
     * @param length Number of bytes to be read.
+    * @throws AddressErrorException
     * @return  Value stored starting at that address.
     */
     public Number get(Number address, int length) throws AddressErrorException {
@@ -662,6 +665,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  This method was developed by Greg Giberling of UC Berkeley to support the memory
     *  dump feature that he implemented in Fall 2007.
     *  @param address Starting address of word to be read.
+     * @param shift the shift amount (3 or 2)
     *  @return  Word/Double-word (4 or 8 byte value respectively) stored starting at that address as a/n Integer/Long.
     *  Conditions that cause return value null are described above.
     *  @throws AddressErrorException If address is not on word/double-word boundary.
@@ -808,6 +812,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     /**
     *  Reads specified Memory byte into low order 8 bits of int.
     *  @param address Address of Memory byte to be read.
+     * @throws AddressErrorException
     *  @return Value stored at that address.  Only low order 8 bits used.
     */
     public Number getByte(Number address) throws AddressErrorException {

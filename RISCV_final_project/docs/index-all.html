@@ -97,8 +97,8 @@ Constructor for class mars.tools.<A HREF="./mars/tools/AbstractMarsToolAndApplic
 <DT><A HREF="./mars/tools/AbstractMarsToolAndApplication.EnterKeyListener.html" title="class in mars.tools"><B>AbstractMarsToolAndApplication.EnterKeyListener</B></A> - Class in <A HREF="./mars/tools/package-summary.html">mars.tools</A><DD>&nbsp;<DT><A HREF="./mars/tools/AbstractMarsToolAndApplication.EnterKeyListener.html#AbstractMarsToolAndApplication.EnterKeyListener(javax.swing.AbstractButton)"><B>AbstractMarsToolAndApplication.EnterKeyListener(AbstractButton)</B></A> - 
 Constructor for class mars.tools.<A HREF="./mars/tools/AbstractMarsToolAndApplication.EnterKeyListener.html" title="class in mars.tools">AbstractMarsToolAndApplication.EnterKeyListener</A>
 <DD>&nbsp;
-<DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.syscalls"><B>AbstractSyscall</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Abstract class that a MIPS syscall system service may extend.<DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html#AbstractSyscall(int, java.lang.String)"><B>AbstractSyscall(int, String)</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.syscalls">AbstractSyscall</A>
+<DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls"><B>AbstractSyscall</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Abstract class that a MIPS ecall system service may extend.<DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html#AbstractSyscall(int, java.lang.String)"><B>AbstractSyscall(int, String)</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A>
 <DD>Constructor is provided so subclass may initialize instance variables.
 <DT><A HREF="./mars/mips/hardware/AccessNotice.html#accessIsFromGUI()"><B>accessIsFromGUI()</B></A> - 
 Method in class mars.riscv.hardware.<A HREF="./mars/mips/hardware/AccessNotice.html" title="class in mars.riscv.hardware">AccessNotice</A>
@@ -2724,13 +2724,13 @@ Method in class mars.riscv.hardware.<A HREF="./mars/mips/hardware/Register.html"
 Method in class mars.riscv.instructions.<A HREF="./mars/mips/instructions/Instruction.html" title="class in mars.riscv.instructions">Instruction</A>
 <DD>Get operation mnemonic
 <DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html#getName()"><B>getName()</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.syscalls">AbstractSyscall</A>
-<DD>Return the name you have chosen for this syscall.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A>
+<DD>Return the name you have chosen for this ecall.
 <DT><A HREF="./mars/mips/instructions/syscalls/Syscall.html#getName()"><B>getName()</B></A> - 
-Method in interface mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.syscalls">Syscall</A>
-<DD>Return a name you have chosen for this syscall.
+Method in interface mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A>
+<DD>Return a name you have chosen for this ecall.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html#getName()"><B>getName()</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.syscalls">SyscallNumberOverride</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.ecalls">SyscallNumberOverride</A>
 <DD>Get the service name as a String.
 <DT><A HREF="./mars/tools/AbstractMarsToolAndApplication.html#getName()"><B>getName()</B></A> - 
 Method in class mars.tools.<A HREF="./mars/tools/AbstractMarsToolAndApplication.html" title="class in mars.tools">AbstractMarsToolAndApplication</A>
@@ -2797,13 +2797,13 @@ Method in class mars.riscv.hardware.<A HREF="./mars/mips/hardware/Register.html"
 Static method in class mars.riscv.hardware.<A HREF="./mars/mips/hardware/RegisterFile.html" title="class in mars.riscv.hardware">RegisterFile</A>
 <DD>For getting the number representation of the register.
 <DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html#getNumber()"><B>getNumber()</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.syscalls">AbstractSyscall</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A>
 <DD>Return the assigned service number.
 <DT><A HREF="./mars/mips/instructions/syscalls/Syscall.html#getNumber()"><B>getNumber()</B></A> - 
-Method in interface mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.syscalls">Syscall</A>
+Method in interface mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A>
 <DD>Return the assigned service number.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html#getNumber()"><B>getNumber()</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.syscalls">SyscallNumberOverride</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.ecalls">SyscallNumberOverride</A>
 <DD>Get the new service number as an int.
 <DT><A HREF="./mars/mips/instructions/BasicInstruction.html#getOpcodeMask()"><B>getOpcodeMask()</B></A> - 
 Method in class mars.riscv.instructions.<A HREF="./mars/mips/instructions/BasicInstruction.html" title="class in mars.riscv.instructions">BasicInstruction</A>
@@ -3138,7 +3138,7 @@ Method in class mars.venus.editors.jeditsyntax.<A HREF="./mars/venus/editors/jed
 <DD>Return any relevant tool tip text for token at specified position.
 <DT><A HREF="./mars/Globals.html#getSyscallOverrides()"><B>getSyscallOverrides()</B></A> - 
 Method in class mars.<A HREF="./mars/Globals.html" title="class in mars">Globals</A>
-<DD>Read any syscall number assignment overrides from config file.
+<DD>Read any ecall number assignment overrides from config file.
 <DT><A HREF="./mars/tools/BHTSimGUI.html#getTabBHT()"><B>getTabBHT()</B></A> - 
 Method in class mars.tools.<A HREF="./mars/tools/BHTSimGUI.html" title="class in mars.tools">BHTSimGUI</A>
 <DD>Returns the table representing the BHT.
@@ -4158,7 +4158,7 @@ Method in class mars.venus.editors.jeditsyntax.tokenmarker.<A HREF="./mars/venus
 <DT><A HREF="./mars/package-summary.html"><B>mars</B></A> - package mars<DD>&nbsp;<DT><A HREF="./Mars.html" title="class in &lt;Unnamed&gt;"><B>Mars</B></A> - Class in <A HREF="./package-summary.html">&lt;Unnamed&gt;</A><DD>Portal to Mars<DT><A HREF="./Mars.html#Mars()"><B>Mars()</B></A> - 
 Constructor for class <A HREF="./Mars.html" title="class in &lt;Unnamed&gt;">Mars</A>
 <DD>&nbsp;
-<DT><A HREF="./mars/assembler/package-summary.html"><B>mars.assembler</B></A> - package mars.assembler<DD>&nbsp;<DT><A HREF="./mars/mips/dump/package-summary.html"><B>mars.riscv.dump</B></A> - package mars.riscv.dump<DD>&nbsp;<DT><A HREF="./mars/mips/hardware/package-summary.html"><B>mars.riscv.hardware</B></A> - package mars.riscv.hardware<DD>&nbsp;<DT><A HREF="./mars/mips/instructions/package-summary.html"><B>mars.riscv.instructions</B></A> - package mars.riscv.instructions<DD>&nbsp;<DT><A HREF="./mars/mips/instructions/syscalls/package-summary.html"><B>mars.riscv.instructions.syscalls</B></A> - package mars.riscv.instructions.syscalls<DD>&nbsp;<DT><A HREF="./mars/simulator/package-summary.html"><B>mars.simulator</B></A> - package mars.simulator<DD>&nbsp;<DT><A HREF="./mars/tools/package-summary.html"><B>mars.tools</B></A> - package mars.tools<DD>&nbsp;<DT><A HREF="./mars/util/package-summary.html"><B>mars.util</B></A> - package mars.util<DD>&nbsp;<DT><A HREF="./mars/venus/package-summary.html"><B>mars.venus</B></A> - package mars.venus<DD>&nbsp;<DT><A HREF="./mars/venus/editors/package-summary.html"><B>mars.venus.editors</B></A> - package mars.venus.editors<DD>&nbsp;<DT><A HREF="./mars/venus/editors/generic/package-summary.html"><B>mars.venus.editors.generic</B></A> - package mars.venus.editors.generic<DD>&nbsp;<DT><A HREF="./mars/venus/editors/jeditsyntax/package-summary.html"><B>mars.venus.editors.jeditsyntax</B></A> - package mars.venus.editors.jeditsyntax<DD>&nbsp;<DT><A HREF="./mars/venus/editors/jeditsyntax/tokenmarker/package-summary.html"><B>mars.venus.editors.jeditsyntax.tokenmarker</B></A> - package mars.venus.editors.jeditsyntax.tokenmarker<DD>&nbsp;<DT><A HREF="./mars/tools/MarsBot.html" title="class in mars.tools"><B>MarsBot</B></A> - Class in <A HREF="./mars/tools/package-summary.html">mars.tools</A><DD>Simple Demo of Mars tool capability<DT><A HREF="./mars/tools/MarsBot.html#MarsBot()"><B>MarsBot()</B></A> -
+<DT><A HREF="./mars/assembler/package-summary.html"><B>mars.assembler</B></A> - package mars.assembler<DD>&nbsp;<DT><A HREF="./mars/mips/dump/package-summary.html"><B>mars.riscv.dump</B></A> - package mars.riscv.dump<DD>&nbsp;<DT><A HREF="./mars/mips/hardware/package-summary.html"><B>mars.riscv.hardware</B></A> - package mars.riscv.hardware<DD>&nbsp;<DT><A HREF="./mars/mips/instructions/package-summary.html"><B>mars.riscv.instructions</B></A> - package mars.riscv.instructions<DD>&nbsp;<DT><A HREF="./mars/mips/instructions/syscalls/package-summary.html"><B>mars.riscv.instructions.ecalls</B></A> - package mars.riscv.instructions.ecalls<DD>&nbsp;<DT><A HREF="./mars/simulator/package-summary.html"><B>mars.simulator</B></A> - package mars.simulator<DD>&nbsp;<DT><A HREF="./mars/tools/package-summary.html"><B>mars.tools</B></A> - package mars.tools<DD>&nbsp;<DT><A HREF="./mars/util/package-summary.html"><B>mars.util</B></A> - package mars.util<DD>&nbsp;<DT><A HREF="./mars/venus/package-summary.html"><B>mars.venus</B></A> - package mars.venus<DD>&nbsp;<DT><A HREF="./mars/venus/editors/package-summary.html"><B>mars.venus.editors</B></A> - package mars.venus.editors<DD>&nbsp;<DT><A HREF="./mars/venus/editors/generic/package-summary.html"><B>mars.venus.editors.generic</B></A> - package mars.venus.editors.generic<DD>&nbsp;<DT><A HREF="./mars/venus/editors/jeditsyntax/package-summary.html"><B>mars.venus.editors.jeditsyntax</B></A> - package mars.venus.editors.jeditsyntax<DD>&nbsp;<DT><A HREF="./mars/venus/editors/jeditsyntax/tokenmarker/package-summary.html"><B>mars.venus.editors.jeditsyntax.tokenmarker</B></A> - package mars.venus.editors.jeditsyntax.tokenmarker<DD>&nbsp;<DT><A HREF="./mars/tools/MarsBot.html" title="class in mars.tools"><B>MarsBot</B></A> - Class in <A HREF="./mars/tools/package-summary.html">mars.tools</A><DD>Simple Demo of Mars tool capability<DT><A HREF="./mars/tools/MarsBot.html#MarsBot()"><B>MarsBot()</B></A> -
 Constructor for class mars.tools.<A HREF="./mars/tools/MarsBot.html" title="class in mars.tools">MarsBot</A>
 <DD>&nbsp;
 <DT><A HREF="./mars/MarsLaunch.html" title="class in mars"><B>MarsLaunch</B></A> - Class in <A HREF="./mars/package-summary.html">mars</A><DD>Launch the Mars application<DT><A HREF="./mars/MarsLaunch.html#MarsLaunch(java.lang.String[])"><B>MarsLaunch(String[])</B></A> - 
@@ -4672,7 +4672,7 @@ Static variable in class mars.venus.<A HREF="./mars/venus/HardcopyWriter.html" t
 <DD>&nbsp;
 <DT><A HREF="./mars/util/SystemIO.html#printString(java.lang.String)"><B>printString(String)</B></A> - 
 Static method in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
-<DD>Implements syscall having 4 in $v0, to print a string.
+<DD>Implements ecall having 4 in $v0, to print a string.
 <DT><A HREF="./mars/ProcessingException.html" title="class in mars"><B>ProcessingException</B></A> - Exception in <A HREF="./mars/package-summary.html">mars</A><DD>Class to represent error that occurs while assembling or running a MIPS program.<DT><A HREF="./mars/ProcessingException.html#ProcessingException(mars.ErrorList)"><B>ProcessingException(ErrorList)</B></A> - 
 Constructor for exception mars.<A HREF="./mars/ProcessingException.html" title="class in mars">ProcessingException</A>
 <DD>Constructor for ProcessingException.
@@ -4774,35 +4774,35 @@ Static variable in class mars.assembler.<A HREF="./mars/assembler/TokenTypes.htm
 <DT><A HREF="./mars/mips/instructions/BasicInstructionFormat.html#R_FORMAT"><B>R_FORMAT</B></A> - 
 Static variable in class mars.riscv.instructions.<A HREF="./mars/mips/instructions/BasicInstructionFormat.html" title="class in mars.riscv.instructions">BasicInstructionFormat</A>
 <DD>&nbsp;
-<DT><A HREF="./mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.riscv.instructions.syscalls"><B>RandomStreams</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>This small class serves only to hold a static HashMap for storing
+<DT><A HREF="./mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.riscv.instructions.ecalls"><B>RandomStreams</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>This small class serves only to hold a static HashMap for storing
  random number generators for use by all the random number generator
  syscalls.<DT><A HREF="./mars/mips/instructions/syscalls/RandomStreams.html#RandomStreams()"><B>RandomStreams()</B></A> - 
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.riscv.instructions.syscalls">RandomStreams</A>
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/RandomStreams.html" title="class in mars.riscv.instructions.ecalls">RandomStreams</A>
 <DD>&nbsp;
 <DT><A HREF="./mars/mips/hardware/AccessNotice.html#READ"><B>READ</B></A> - 
 Static variable in class mars.riscv.hardware.<A HREF="./mars/mips/hardware/AccessNotice.html" title="class in mars.riscv.hardware">AccessNotice</A>
 <DD>Indicates the purpose of access was to read.
 <DT><A HREF="./mars/util/SystemIO.html#readChar(int)"><B>readChar(int)</B></A> - 
 Static method in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
-<DD>Implements syscall having 12 in $v0, to read a char value.
+<DD>Implements ecall having 12 in $v0, to read a char value.
 <DT><A HREF="./mars/util/SystemIO.html#readDouble(int)"><B>readDouble(int)</B></A> - 
 Static method in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
-<DD>Implements syscall to read a double value.
+<DD>Implements ecall to read a double value.
 <DT><A HREF="./mars/util/SystemIO.html#readFloat(int)"><B>readFloat(int)</B></A> - 
 Static method in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
-<DD>Implements syscall to read a float value.
+<DD>Implements ecall to read a float value.
 <DT><A HREF="./mars/util/SystemIO.html#readFromFile(int, byte[], int)"><B>readFromFile(int, byte[], int)</B></A> - 
 Static method in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
 <DD>Read bytes from file.
 <DT><A HREF="./mars/util/SystemIO.html#readInteger(int)"><B>readInteger(int)</B></A> - 
 Static method in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
-<DD>Implements syscall to read an integer value.
+<DD>Implements ecall to read an integer value.
 <DT><A HREF="./mars/MIPSprogram.html#readSource(java.lang.String)"><B>readSource(String)</B></A> - 
 Method in class mars.<A HREF="./mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>
 <DD>Reads MIPS source code from file into structure.
 <DT><A HREF="./mars/util/SystemIO.html#readString(int, int)"><B>readString(int, int)</B></A> - 
 Static method in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
-<DD>Implements syscall to read a string.
+<DD>Implements ecall to read a string.
 <DT><A HREF="./mars/assembler/Macro.html#readyForCommit()"><B>readyForCommit()</B></A> - 
 Method in class mars.assembler.<A HREF="./mars/assembler/Macro.html" title="class in mars.assembler">Macro</A>
 <DD>Operations to be done on this macro before it is committed in macro pool.
@@ -5559,10 +5559,10 @@ Method in class mars.assembler.<A HREF="./mars/assembler/Macro.html" title="clas
 Static method in class mars.venus.<A HREF="./mars/venus/FileStatus.html" title="class in mars.venus">FileStatus</A>
 <DD>Changes the value of name to the parameter given.
 <DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html#setNumber(int)"><B>setNumber(int)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.syscalls">AbstractSyscall</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A>
 <DD>Set the service number.
 <DT><A HREF="./mars/mips/instructions/syscalls/Syscall.html#setNumber(int)"><B>setNumber(int)</B></A> - 
-Method in interface mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.syscalls">Syscall</A>
+Method in interface mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A>
 <DD>Set the service number.
 <DT><A HREF="./mars/venus/editors/jeditsyntax/JEditTextArea.html#setOrigin(int, int)"><B>setOrigin(int, int)</B></A> - 
 Method in class mars.venus.editors.jeditsyntax.<A HREF="./mars/venus/editors/jeditsyntax/JEditTextArea.html" title="class in mars.venus.editors.jeditsyntax">JEditTextArea</A>
@@ -5885,129 +5885,129 @@ Method in class mars.<A HREF="./mars/MarsSplashScreen.html" title="class in mars
 Method in interface mars.riscv.instructions.<A HREF="./mars/mips/instructions/SimulationCode.html" title="interface in mars.riscv.instructions">SimulationCode</A>
 <DD>Method to simulate the execution of a specific MIPS basic instruction.
 <DT><A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.syscalls">AbstractSyscall</A>
-<DD>Performs syscall function.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/AbstractSyscall.html" title="class in mars.riscv.instructions.ecalls">AbstractSyscall</A>
+<DD>Performs ecall function.
 <DT><A HREF="./mars/mips/instructions/syscalls/Syscall.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in interface mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.syscalls">Syscall</A>
-<DD>Performs syscall function.
+Method in interface mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls">Syscall</A>
+<DD>Performs ecall function.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallClose.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.riscv.instructions.syscalls">SyscallClose</A>
-<DD>Performs syscall function to close file descriptor given in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.riscv.instructions.ecalls">SyscallClose</A>
+<DD>Performs ecall function to close file descriptor given in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.riscv.instructions.syscalls">SyscallConfirmDialog</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.riscv.instructions.ecalls">SyscallConfirmDialog</A>
 <DD>System call to display a message to user.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.riscv.instructions.syscalls">SyscallExit</A>
-<DD>Performs syscall function to exit the MIPS program.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.riscv.instructions.ecalls">SyscallExit</A>
+<DD>Performs ecall function to exit the MIPS program.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.riscv.instructions.syscalls">SyscallExit2</A>
-<DD>Performs syscall function to exit the MIPS program with return value given in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.riscv.instructions.ecalls">SyscallExit2</A>
+<DD>Performs ecall function to exit the MIPS program with return value given in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogDouble</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogDouble</A>
 <DD>System call to input data.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogFloat</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogFloat</A>
 <DD>System call to input data.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogInt</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogInt</A>
 <DD>System call to input data.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogString</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogString</A>
 <DD>System call to input data.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialog</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialog</A>
 <DD>System call to display a message to user.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogDouble</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogDouble</A>
 <DD>System call to display a message to user.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogFloat</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogFloat</A>
 <DD>System call to display a message to user.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogInt</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogInt</A>
 <DD>System call to display a message to user.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogString</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogString</A>
 <DD>System call to display a message to user.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.riscv.instructions.syscalls">SyscallMidiOut</A>
-<DD>Performs syscall function to send MIDI output to sound card.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.riscv.instructions.ecalls">SyscallMidiOut</A>
+<DD>Performs ecall function to send MIDI output to sound card.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.syscalls">SyscallMidiOutSync</A>
-<DD>Performs syscall function to send MIDI output to sound card.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.ecalls">SyscallMidiOutSync</A>
+<DD>Performs ecall function to send MIDI output to sound card.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.syscalls">SyscallOpen</A>
-<DD>Performs syscall function to open file name specified by $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.ecalls">SyscallOpen</A>
+<DD>Performs ecall function to open file name specified by $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintChar</A>
-<DD>Performs syscall function to print on the console the character stored in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintChar</A>
+<DD>Performs ecall function to print on the console the character stored in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintDouble</A>
-<DD>Performs syscall function to print double whose bits are stored in $f12 & $f13.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintDouble</A>
+<DD>Performs ecall function to print double whose bits are stored in $f12 & $f13.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintFloat</A>
-<DD>Performs syscall function to display float whose bits are stored in $f12
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintFloat</A>
+<DD>Performs ecall function to display float whose bits are stored in $f12
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintInt</A>
-<DD>Performs syscall function to print on the console the integer stored in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintInt</A>
+<DD>Performs ecall function to print on the console the integer stored in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintIntBinary</A>
-<DD>Performs syscall function to print on the console the integer stored in $a0, in hexadecimal format.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntBinary</A>
+<DD>Performs ecall function to print on the console the integer stored in $a0, in hexadecimal format.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintIntHex</A>
-<DD>Performs syscall function to print on the console the integer stored in $a0, in hexadecimal format.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntHex</A>
+<DD>Performs ecall function to print on the console the integer stored in $a0, in hexadecimal format.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintIntUnsigned</A>
-<DD>Performs syscall function to print on the console the integer stored in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntUnsigned</A>
+<DD>Performs ecall function to print on the console the integer stored in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintString</A>
-<DD>Performs syscall function to print string stored starting at address in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintString</A>
+<DD>Performs ecall function to print string stored starting at address in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallRandDouble</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallRandDouble</A>
 <DD>System call to the random number generator.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallRandFloat</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallRandFloat</A>
 <DD>System call to the random number generator.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.riscv.instructions.syscalls">SyscallRandInt</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.riscv.instructions.ecalls">SyscallRandInt</A>
 <DD>System call to the random number generator.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.riscv.instructions.syscalls">SyscallRandIntRange</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.riscv.instructions.ecalls">SyscallRandIntRange</A>
 <DD>System call to the random number generator, with an upper range specified.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.riscv.instructions.syscalls">SyscallRandSeed</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.riscv.instructions.ecalls">SyscallRandSeed</A>
 <DD>Set the seed of the underlying Java pseudorandom number generator.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallRead.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.riscv.instructions.syscalls">SyscallRead</A>
-<DD>Performs syscall function to read from file descriptor given in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.riscv.instructions.ecalls">SyscallRead</A>
+<DD>Performs ecall function to read from file descriptor given in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.riscv.instructions.syscalls">SyscallReadChar</A>
-<DD>Performs syscall function to read a character from input console into $a0
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.riscv.instructions.ecalls">SyscallReadChar</A>
+<DD>Performs ecall function to read a character from input console into $a0
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallReadDouble</A>
-<DD>Performs syscall function to read the bits of input double into $f0 and $f1.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallReadDouble</A>
+<DD>Performs ecall function to read the bits of input double into $f0 and $f1.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallReadFloat</A>
-<DD>Performs syscall function to read the bits of input float into $f0
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallReadFloat</A>
+<DD>Performs ecall function to read the bits of input float into $f0
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.riscv.instructions.syscalls">SyscallReadInt</A>
-<DD>Performs syscall function to read an integer from input console into $v0
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.riscv.instructions.ecalls">SyscallReadInt</A>
+<DD>Performs ecall function to read an integer from input console into $v0
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.riscv.instructions.syscalls">SyscallReadString</A>
-<DD>Performs syscall function to read console input string into buffer starting at address in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.riscv.instructions.ecalls">SyscallReadString</A>
+<DD>Performs ecall function to read console input string into buffer starting at address in $a0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.riscv.instructions.syscalls">SyscallSbrk</A>
-<DD>Performs syscall function to allocate amount of heap memory specified in $a0, putting address into $v0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.riscv.instructions.ecalls">SyscallSbrk</A>
+<DD>Performs ecall function to allocate amount of heap memory specified in $a0, putting address into $v0.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.riscv.instructions.syscalls">SyscallSleep</A>
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.riscv.instructions.ecalls">SyscallSleep</A>
 <DD>System call to cause the MARS Java thread to sleep for (at least) the specified number of milliseconds.
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallTime.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.riscv.instructions.syscalls">SyscallTime</A>
-<DD>Performs syscall function to place current system time into $a0 (low order 32 bits)
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.riscv.instructions.ecalls">SyscallTime</A>
+<DD>Performs ecall function to place current system time into $a0 (low order 32 bits)
  and $a1 (high order 32 bits).
 <DT><A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html#simulate(mars.ProgramStatement)"><B>simulate(ProgramStatement)</B></A> - 
-Method in class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.riscv.instructions.syscalls">SyscallWrite</A>
-<DD>Performs syscall function to write to file descriptor given in $a0.
+Method in class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.riscv.instructions.ecalls">SyscallWrite</A>
+<DD>Performs ecall function to write to file descriptor given in $a0.
 <DT><A HREF="./mars/MIPSprogram.html#simulate(int[])"><B>simulate(int[])</B></A> - 
 Method in class mars.<A HREF="./mars/MIPSprogram.html" title="class in mars">MIPSprogram</A>
 <DD>Simulates execution of the MIPS program.
@@ -6150,7 +6150,7 @@ Constructor for class mars.venus.editors.jeditsyntax.<A HREF="./mars/venus/edito
 Constructor for class mars.venus.editors.jeditsyntax.<A HREF="./mars/venus/editors/jeditsyntax/SyntaxStyle.html" title="class in mars.venus.editors.jeditsyntax">SyntaxStyle</A>
 <DD>Creates a new SyntaxStyle.
 <DT><A HREF="./mars/venus/editors/jeditsyntax/SyntaxUtilities.html" title="class in mars.venus.editors.jeditsyntax"><B>SyntaxUtilities</B></A> - Class in <A HREF="./mars/venus/editors/jeditsyntax/package-summary.html">mars.venus.editors.jeditsyntax</A><DD>Class with several utility functions used by jEdit's syntax colorizing
- subsystem.<DT><A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.syscalls"><B>Syscall</B></A> - Interface in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Interface for any MIPS syscall system service.<DT><A HREF="./mars/util/SystemIO.html#SYSCALL_BUFSIZE"><B>SYSCALL_BUFSIZE</B></A> -
+ subsystem.<DT><A HREF="./mars/mips/instructions/syscalls/Syscall.html" title="interface in mars.riscv.instructions.ecalls"><B>Syscall</B></A> - Interface in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Interface for any MIPS ecall system service.<DT><A HREF="./mars/util/SystemIO.html#SYSCALL_BUFSIZE"><B>SYSCALL_BUFSIZE</B></A> -
 Static variable in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
 <DD>Buffer size for syscalls for file I/O
 <DT><A HREF="./mars/simulator/Exceptions.html#SYSCALL_EXCEPTION"><B>SYSCALL_EXCEPTION</B></A> - 
@@ -6159,128 +6159,128 @@ Static variable in class mars.simulator.<A HREF="./mars/simulator/Exceptions.htm
 <DT><A HREF="./mars/util/SystemIO.html#SYSCALL_MAXFILES"><B>SYSCALL_MAXFILES</B></A> - 
 Static variable in class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
 <DD>Maximum number of files that can be open
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallClose</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to close file descriptor given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallClose.html#SyscallClose()"><B>SyscallClose()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.riscv.instructions.syscalls">SyscallClose</A>
-<DD>Build an instance of the Close syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallConfirmDialog</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html#SyscallConfirmDialog()"><B>SyscallConfirmDialog()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.riscv.instructions.syscalls">SyscallConfirmDialog</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallExit</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to exit the MIPS program.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit.html#SyscallExit()"><B>SyscallExit()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.riscv.instructions.syscalls">SyscallExit</A>
-<DD>Build an instance of the Exit syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallExit2</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to exit the MIPS program with return value given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html#SyscallExit2()"><B>SyscallExit2()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.riscv.instructions.syscalls">SyscallExit2</A>
-<DD>Build an instance of the Exit2 syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallInputDialogDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html#SyscallInputDialogDouble()"><B>SyscallInputDialogDouble()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogDouble</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallInputDialogFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html#SyscallInputDialogFloat()"><B>SyscallInputDialogFloat()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogFloat</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallInputDialogInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html#SyscallInputDialogInt()"><B>SyscallInputDialogInt()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogInt</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallInputDialogString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html#SyscallInputDialogString()"><B>SyscallInputDialogString()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.riscv.instructions.syscalls">SyscallInputDialogString</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallMessageDialog</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html#SyscallMessageDialog()"><B>SyscallMessageDialog()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialog</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallMessageDialogDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html#SyscallMessageDialogDouble()"><B>SyscallMessageDialogDouble()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogDouble</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallMessageDialogFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html#SyscallMessageDialogFloat()"><B>SyscallMessageDialogFloat()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogFloat</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallMessageDialogInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html#SyscallMessageDialogInt()"><B>SyscallMessageDialogInt()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogInt</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallMessageDialogString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html#SyscallMessageDialogString()"><B>SyscallMessageDialogString()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.riscv.instructions.syscalls">SyscallMessageDialogString</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallMidiOut</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to output simulated MIDI tone to sound card.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html#SyscallMidiOut()"><B>SyscallMidiOut()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.riscv.instructions.syscalls">SyscallMidiOut</A>
-<DD>Build an instance of the MIDI (simulated) out syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallMidiOutSync</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to output simulated MIDI tone to sound card.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html#SyscallMidiOutSync()"><B>SyscallMidiOutSync()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.syscalls">SyscallMidiOutSync</A>
-<DD>Build an instance of the MIDI (simulated) out syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallNumberOverride</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Represents User override of default syscall number assignment.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html#SyscallNumberOverride(java.lang.String, java.lang.String)"><B>SyscallNumberOverride(String, String)</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.syscalls">SyscallNumberOverride</A>
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallClose</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to close file descriptor given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallClose.html#SyscallClose()"><B>SyscallClose()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallClose.html" title="class in mars.riscv.instructions.ecalls">SyscallClose</A>
+<DD>Build an instance of the Close ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallConfirmDialog</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html#SyscallConfirmDialog()"><B>SyscallConfirmDialog()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallConfirmDialog.html" title="class in mars.riscv.instructions.ecalls">SyscallConfirmDialog</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallExit</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to exit the MIPS program.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit.html#SyscallExit()"><B>SyscallExit()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit.html" title="class in mars.riscv.instructions.ecalls">SyscallExit</A>
+<DD>Build an instance of the Exit ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallExit2</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to exit the MIPS program with return value given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html#SyscallExit2()"><B>SyscallExit2()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallExit2.html" title="class in mars.riscv.instructions.ecalls">SyscallExit2</A>
+<DD>Build an instance of the Exit2 ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallInputDialogDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html#SyscallInputDialogDouble()"><B>SyscallInputDialogDouble()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogDouble</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallInputDialogFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html#SyscallInputDialogFloat()"><B>SyscallInputDialogFloat()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogFloat</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallInputDialogInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html#SyscallInputDialogInt()"><B>SyscallInputDialogInt()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogInt.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogInt</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallInputDialogString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to input data.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html#SyscallInputDialogString()"><B>SyscallInputDialogString()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallInputDialogString.html" title="class in mars.riscv.instructions.ecalls">SyscallInputDialogString</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallMessageDialog</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html#SyscallMessageDialog()"><B>SyscallMessageDialog()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialog.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialog</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallMessageDialogDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html#SyscallMessageDialogDouble()"><B>SyscallMessageDialogDouble()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogDouble</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallMessageDialogFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html#SyscallMessageDialogFloat()"><B>SyscallMessageDialogFloat()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogFloat</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallMessageDialogInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html#SyscallMessageDialogInt()"><B>SyscallMessageDialogInt()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogInt</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallMessageDialogString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display a message to user.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html#SyscallMessageDialogString()"><B>SyscallMessageDialogString()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMessageDialogString.html" title="class in mars.riscv.instructions.ecalls">SyscallMessageDialogString</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallMidiOut</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to output simulated MIDI tone to sound card.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html#SyscallMidiOut()"><B>SyscallMidiOut()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOut.html" title="class in mars.riscv.instructions.ecalls">SyscallMidiOut</A>
+<DD>Build an instance of the MIDI (simulated) out ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallMidiOutSync</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to output simulated MIDI tone to sound card.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html#SyscallMidiOutSync()"><B>SyscallMidiOutSync()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.ecalls">SyscallMidiOutSync</A>
+<DD>Build an instance of the MIDI (simulated) out ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallNumberOverride</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Represents User override of default ecall number assignment.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html#SyscallNumberOverride(java.lang.String, java.lang.String)"><B>SyscallNumberOverride(String, String)</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallNumberOverride.html" title="class in mars.riscv.instructions.ecalls">SyscallNumberOverride</A>
 <DD>Constructor is called with two strings: service name and desired
  number.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallOpen</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to open file name specified by $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html#SyscallOpen()"><B>SyscallOpen()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.syscalls">SyscallOpen</A>
-<DD>Build an instance of the Open file syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintChar</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display character stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html#SyscallPrintChar()"><B>SyscallPrintChar()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintChar</A>
-<DD>Build an instance of the Print Char syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display double whose bits are stored in $f12 & $f13 onto the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html#SyscallPrintDouble()"><B>SyscallPrintDouble()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintDouble</A>
-<DD>Build an instance of the Print Double syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display on the console float whose bits are stored in $f12<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html#SyscallPrintFloat()"><B>SyscallPrintFloat()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintFloat</A>
-<DD>Build an instance of the Print Float syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display integer stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html#SyscallPrintInt()"><B>SyscallPrintInt()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintInt</A>
-<DD>Build an instance of the Print Integer syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintIntBinary</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display integer stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html#SyscallPrintIntBinary()"><B>SyscallPrintIntBinary()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintIntBinary</A>
-<DD>Build an instance of the Print Integer syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintIntHex</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display integer stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html#SyscallPrintIntHex()"><B>SyscallPrintIntHex()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintIntHex</A>
-<DD>Build an instance of the Print Integer syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintIntUnsigned</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display integer stored in $a0 on the console as unsigned decimal.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html#SyscallPrintIntUnsigned()"><B>SyscallPrintIntUnsigned()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintIntUnsigned</A>
-<DD>Build an instance of the Print Integer Unsigned syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallPrintString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to display string stored starting at address in $a0 onto the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html#SyscallPrintString()"><B>SyscallPrintString()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.riscv.instructions.syscalls">SyscallPrintString</A>
-<DD>Build an instance of the Print String syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallRandDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to return a random floating point value.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html#SyscallRandDouble()"><B>SyscallRandDouble()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallRandDouble</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallRandFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to return a random floating point value.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html#SyscallRandFloat()"><B>SyscallRandFloat()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallRandFloat</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallRandInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to return a random integer.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html#SyscallRandInt()"><B>SyscallRandInt()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.riscv.instructions.syscalls">SyscallRandInt</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallRandIntRange</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to return a random integer in a specified range.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html#SyscallRandIntRange()"><B>SyscallRandIntRange()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.riscv.instructions.syscalls">SyscallRandIntRange</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallRandSeed</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to set seed for the underlying Java pseudorandom number generator.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html#SyscallRandSeed()"><B>SyscallRandSeed()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.riscv.instructions.syscalls">SyscallRandSeed</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallRead</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to read from file descriptor given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRead.html#SyscallRead()"><B>SyscallRead()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.riscv.instructions.syscalls">SyscallRead</A>
-<DD>Build an instance of the Read file syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallReadChar</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to read a character from input console into $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html#SyscallReadChar()"><B>SyscallReadChar()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.riscv.instructions.syscalls">SyscallReadChar</A>
-<DD>Build an instance of the Read Char syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallReadDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to read the bits of console input double into $f0 and $f1.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html#SyscallReadDouble()"><B>SyscallReadDouble()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.riscv.instructions.syscalls">SyscallReadDouble</A>
-<DD>Build an instance of the Read Double syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallReadFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to read the bits of input float into $f0<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html#SyscallReadFloat()"><B>SyscallReadFloat()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.riscv.instructions.syscalls">SyscallReadFloat</A>
-<DD>Build an instance of the Read Float syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallReadInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to read an integer from input console into $v0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html#SyscallReadInt()"><B>SyscallReadInt()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.riscv.instructions.syscalls">SyscallReadInt</A>
-<DD>Build an instance of the Read Integer syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallReadString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to read console input string into buffer starting at address in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html#SyscallReadString()"><B>SyscallReadString()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.riscv.instructions.syscalls">SyscallReadString</A>
-<DD>Build an instance of the Read String syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallSbrk</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to allocate amount of heap memory specified in $a0, putting address into $v0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html#SyscallSbrk()"><B>SyscallSbrk()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.riscv.instructions.syscalls">SyscallSbrk</A>
-<DD>Build an instance of the Sbrk syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallSleep</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to cause the MARS Java thread to sleep for (at least) the specified number of milliseconds.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html#SyscallSleep()"><B>SyscallSleep()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.riscv.instructions.syscalls">SyscallSleep</A>
-<DD>Build an instance of the syscall with its default service number and name.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallTime</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to read a character from input console into $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallTime.html#SyscallTime()"><B>SyscallTime()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.riscv.instructions.syscalls">SyscallTime</A>
-<DD>Build an instance of the Read Char syscall.
-<DT><A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.riscv.instructions.syscalls"><B>SyscallWrite</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.syscalls</A><DD>Service to write to file descriptor given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html#SyscallWrite()"><B>SyscallWrite()</B></A> -
-Constructor for class mars.riscv.instructions.syscalls.<A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.riscv.instructions.syscalls">SyscallWrite</A>
-<DD>Build an instance of the Write file syscall.
-<DT><A HREF="./mars/util/SystemIO.html" title="class in mars.util"><B>SystemIO</B></A> - Class in <A HREF="./mars/util/package-summary.html">mars.util</A><DD>Provides standard i/o services needed to simulate the MIPS syscall
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallOpen</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to open file name specified by $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html#SyscallOpen()"><B>SyscallOpen()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.ecalls">SyscallOpen</A>
+<DD>Build an instance of the Open file ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintChar</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display character stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html#SyscallPrintChar()"><B>SyscallPrintChar()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintChar.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintChar</A>
+<DD>Build an instance of the Print Char ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display double whose bits are stored in $f12 & $f13 onto the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html#SyscallPrintDouble()"><B>SyscallPrintDouble()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintDouble</A>
+<DD>Build an instance of the Print Double ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display on the console float whose bits are stored in $f12<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html#SyscallPrintFloat()"><B>SyscallPrintFloat()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintFloat</A>
+<DD>Build an instance of the Print Float ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display integer stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html#SyscallPrintInt()"><B>SyscallPrintInt()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintInt.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintInt</A>
+<DD>Build an instance of the Print Integer ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintIntBinary</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display integer stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html#SyscallPrintIntBinary()"><B>SyscallPrintIntBinary()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntBinary</A>
+<DD>Build an instance of the Print Integer ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintIntHex</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display integer stored in $a0 on the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html#SyscallPrintIntHex()"><B>SyscallPrintIntHex()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntHex.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntHex</A>
+<DD>Build an instance of the Print Integer ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintIntUnsigned</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display integer stored in $a0 on the console as unsigned decimal.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html#SyscallPrintIntUnsigned()"><B>SyscallPrintIntUnsigned()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintIntUnsigned</A>
+<DD>Build an instance of the Print Integer Unsigned ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallPrintString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to display string stored starting at address in $a0 onto the console.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html#SyscallPrintString()"><B>SyscallPrintString()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallPrintString.html" title="class in mars.riscv.instructions.ecalls">SyscallPrintString</A>
+<DD>Build an instance of the Print String ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallRandDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to return a random floating point value.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html#SyscallRandDouble()"><B>SyscallRandDouble()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallRandDouble</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallRandFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to return a random floating point value.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html#SyscallRandFloat()"><B>SyscallRandFloat()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallRandFloat</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallRandInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to return a random integer.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html#SyscallRandInt()"><B>SyscallRandInt()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandInt.html" title="class in mars.riscv.instructions.ecalls">SyscallRandInt</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallRandIntRange</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to return a random integer in a specified range.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html#SyscallRandIntRange()"><B>SyscallRandIntRange()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandIntRange.html" title="class in mars.riscv.instructions.ecalls">SyscallRandIntRange</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallRandSeed</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to set seed for the underlying Java pseudorandom number generator.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html#SyscallRandSeed()"><B>SyscallRandSeed()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRandSeed.html" title="class in mars.riscv.instructions.ecalls">SyscallRandSeed</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallRead</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to read from file descriptor given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallRead.html#SyscallRead()"><B>SyscallRead()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallRead.html" title="class in mars.riscv.instructions.ecalls">SyscallRead</A>
+<DD>Build an instance of the Read file ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallReadChar</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to read a character from input console into $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html#SyscallReadChar()"><B>SyscallReadChar()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadChar.html" title="class in mars.riscv.instructions.ecalls">SyscallReadChar</A>
+<DD>Build an instance of the Read Char ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallReadDouble</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to read the bits of console input double into $f0 and $f1.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html#SyscallReadDouble()"><B>SyscallReadDouble()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadDouble.html" title="class in mars.riscv.instructions.ecalls">SyscallReadDouble</A>
+<DD>Build an instance of the Read Double ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallReadFloat</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to read the bits of input float into $f0<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html#SyscallReadFloat()"><B>SyscallReadFloat()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadFloat.html" title="class in mars.riscv.instructions.ecalls">SyscallReadFloat</A>
+<DD>Build an instance of the Read Float ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallReadInt</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to read an integer from input console into $v0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html#SyscallReadInt()"><B>SyscallReadInt()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadInt.html" title="class in mars.riscv.instructions.ecalls">SyscallReadInt</A>
+<DD>Build an instance of the Read Integer ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallReadString</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to read console input string into buffer starting at address in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html#SyscallReadString()"><B>SyscallReadString()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallReadString.html" title="class in mars.riscv.instructions.ecalls">SyscallReadString</A>
+<DD>Build an instance of the Read String ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallSbrk</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to allocate amount of heap memory specified in $a0, putting address into $v0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html#SyscallSbrk()"><B>SyscallSbrk()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSbrk.html" title="class in mars.riscv.instructions.ecalls">SyscallSbrk</A>
+<DD>Build an instance of the Sbrk ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallSleep</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to cause the MARS Java thread to sleep for (at least) the specified number of milliseconds.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html#SyscallSleep()"><B>SyscallSleep()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallSleep.html" title="class in mars.riscv.instructions.ecalls">SyscallSleep</A>
+<DD>Build an instance of the ecall with its default service number and name.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallTime</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to read a character from input console into $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallTime.html#SyscallTime()"><B>SyscallTime()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallTime.html" title="class in mars.riscv.instructions.ecalls">SyscallTime</A>
+<DD>Build an instance of the Read Char ecall.
+<DT><A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.riscv.instructions.ecalls"><B>SyscallWrite</B></A> - Class in <A HREF="./mars/mips/instructions/syscalls/package-summary.html">mars.riscv.instructions.ecalls</A><DD>Service to write to file descriptor given in $a0.<DT><A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html#SyscallWrite()"><B>SyscallWrite()</B></A> -
+Constructor for class mars.riscv.instructions.ecalls.<A HREF="./mars/mips/instructions/syscalls/SyscallWrite.html" title="class in mars.riscv.instructions.ecalls">SyscallWrite</A>
+<DD>Build an instance of the Write file ecall.
+<DT><A HREF="./mars/util/SystemIO.html" title="class in mars.util"><B>SystemIO</B></A> - Class in <A HREF="./mars/util/package-summary.html">mars.util</A><DD>Provides standard i/o services needed to simulate the MIPS ecall
  routines.<DT><A HREF="./mars/util/SystemIO.html#SystemIO()"><B>SystemIO()</B></A> - 
 Constructor for class mars.util.<A HREF="./mars/util/SystemIO.html" title="class in mars.util">SystemIO</A>
 <DD>&nbsp;

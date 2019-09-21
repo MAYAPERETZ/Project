@@ -1,1 +1,0 @@
-typeSearchIndex = [{"p":"mars.mips.instructions","l":"InstructionSet"}]

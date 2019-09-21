@@ -54,8 +54,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.syscalls"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.syscalls"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.ecalls"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.ecalls"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../index.html?mars/mips/instructions/syscalls/SyscallNumberOverride.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="SyscallNumberOverride.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -87,12 +87,12 @@ DETAIL:&nbsp;FIELD&nbsp;|&nbsp;<A HREF="#constructor_detail">CONSTR</A>&nbsp;|&n
 <!-- ======== START OF CLASS DATA ======== -->
 <H2>
 <FONT SIZE="-1">
-    mars.riscv.instructions.syscalls</FONT>
+    mars.riscv.instructions.ecalls</FONT>
 <BR>
 Class SyscallNumberOverride</H2>
 <PRE>
 <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
-  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>mars.riscv.instructions.syscalls.SyscallNumberOverride</B>
+  <IMG SRC="../../../../resources/inherit.gif" ALT="extended by "><B>mars.riscv.instructions.ecalls.SyscallNumberOverride</B>
 </PRE>
 <HR>
 <DL>
@@ -100,7 +100,7 @@ Class SyscallNumberOverride</H2>
 </PRE>
 
 <P>
-Represents User override of default syscall number assignment.
+Represents User override of default ecall number assignment.
  Such overrides are specified in the config.txt file read when
  MARS starts up.
 <P>
@@ -186,8 +186,8 @@ public <B>SyscallNumberOverride</B>(<A HREF="http://docs.oracle.com/javase/1.5.0
  not check validity of the service name or number.
 <P>
 <DL>
-<DT><B>Parameters:</B><DD><CODE>serviceName</CODE> - a String containing syscall service mnemonic.<DD><CODE>value</CODE> - a String containing its reassigned syscall service number. 
- If this number is previously assigned to a different syscall which does not
+<DT><B>Parameters:</B><DD><CODE>serviceName</CODE> - a String containing ecall service mnemonic.<DD><CODE>value</CODE> - a String containing its reassigned ecall service number.
+ If this number is previously assigned to a different ecall which does not
  also receive a new number, then an error for duplicate numbers will
  be issued at MARS launch.</DL>
 </DL>
@@ -258,8 +258,8 @@ public int <B>getNumber</B>()</PRE>
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.syscalls"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.syscalls"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallMidiOutSync.html" title="class in mars.riscv.instructions.ecalls"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../../mars/mips/instructions/syscalls/SyscallOpen.html" title="class in mars.riscv.instructions.ecalls"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../../index.html?mars/mips/instructions/syscalls/SyscallNumberOverride.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="SyscallNumberOverride.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

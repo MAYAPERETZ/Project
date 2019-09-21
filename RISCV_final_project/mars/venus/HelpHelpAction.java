@@ -39,7 +39,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /**
-* Action  for the Help -> Help menu item
+* Action  for the Help - Help menu item
 */
 public class HelpHelpAction extends GuiAction {
     public  HelpHelpAction(String name, Icon icon, String descrip,
@@ -66,7 +66,7 @@ public class HelpHelpAction extends GuiAction {
     */
    public void actionPerformed(ActionEvent e) {
      JTabbedPane tabbedPane = new JTabbedPane();
-     tabbedPane.addTab("MIPS", createMipsHelpInfoPanel());
+     tabbedPane.addTab("RISCV", createMipsHelpInfoPanel());
      tabbedPane.addTab("MARS", createMarsHelpInfoPanel());
      tabbedPane.addTab("License", createCopyrightInfoPanel());
      tabbedPane.addTab("Bugs/Comments", createHTMLHelpPanel("BugReportingHelp.html"));
@@ -178,8 +178,6 @@ public class HelpHelpAction extends GuiAction {
      tabbedPane.addTab("IDE", createHTMLHelpPanel("MarsHelpIDE.html"));
      tabbedPane.addTab("Debugging", createHTMLHelpPanel("MarsHelpDebugging.html"));
      tabbedPane.addTab("Settings", createHTMLHelpPanel("MarsHelpSettings.html"));
-     tabbedPane.addTab("Tools", createHTMLHelpPanel("MarsHelpTools.html"));
-     tabbedPane.addTab("Command", createHTMLHelpPanel("MarsHelpCommand.html"));
      tabbedPane.addTab("Limits", createHTMLHelpPanel("MarsHelpLimits.html"));
      tabbedPane.addTab("History", createHTMLHelpPanel("MarsHelpHistory.html"));
      marsHelpInfo.add(tabbedPane);
@@ -200,13 +198,13 @@ public class HelpHelpAction extends GuiAction {
         "<tr>"+
            "<td><tt>label, target</tt></td><td>any textual label</td>"+
         "</tr><tr>"+
-           "<td><tt>$t1, $t2, $t3</tt></td><td>any integer register</td>" +
+           "<td><tt>t1, t2, t3</tt></td><td>any integer register</td>" +
         "</tr><tr>"+
-           "<td><tt>$f2, $f4, $f6</tt></td><td><i>even-numbered</i> floating point register</td>"+
+           "<td><tt>f2, f4, f6</tt></td><td><i>even-numbered</i> floating point register</td>"+
         "</tr><tr>"+
-           "<td><tt>$f0, $f1, $f3</tt></td><td><i>any</i> floating point register</td>"+
+           "<td><tt>f0, f1, $f3</tt></td><td><i>any</i> floating point register</td>"+
         "</tr><tr>"+
-           "<td><tt>$8</tt></td><td>any Coprocessor 0 register</td>"+
+           "<td><tt>8</tt></td><td>any Coprocessor 0 register</td>"+
         "</tr><tr>"+
            "<td><tt>1</tt></td><td>condition flag (0 to 7)</td>" +
         "</tr><tr>"+
@@ -221,12 +219,12 @@ public class HelpHelpAction extends GuiAction {
         "</tr><tr>" +
            "<td colspan=2><b><i><font size=+1>Load & Store addressing mode, basic instructions</font></i></b></td>" +
         "</tr><tr>" +
-           "<td><tt>-100($t2)</tt></td><td>sign-extended 16-bit integer added to contents of $t2</td>" +
+           "<td><tt>-100(t2)</tt></td><td>sign-extended 16-bit integer added to contents of t2</td>" +
         "</tr><tr>" +
         "</tr><tr>" +
            "<td colspan=2><b><i><font size=+1>Load & Store addressing modes, pseudo instructions</font></i></b></td>" +
         "</tr><tr>" +
-           "<td><tt>($t2)</tt></td><td>contents of $t2</td>" +
+           "<td><tt>(t2)</tt></td><td>contents of $t2</td>" +
         "</tr><tr>" +
            "<td><tt>-100</tt></td><td>signed 16-bit integer</td>" +
         "</tr><tr>" +
@@ -234,17 +232,17 @@ public class HelpHelpAction extends GuiAction {
         "</tr><tr>" +
            "<td><tt>100000</tt></td><td>signed 32-bit integer</td>" +
         "</tr><tr>" +
-           "<td><tt>100($t2)</tt></td><td>zero-extended unsigned 16-bit integer added to contents of $t2</td>" +
+           "<td><tt>100(t2)</tt></td><td>zero-extended unsigned 16-bit integer added to contents of t2</td>" +
         "</tr><tr>" +
-           "<td><tt>100000($t2)</tt></td><td>signed 32-bit integer added to contents of $t2</td>" +
+           "<td><tt>100000(t2)</tt></td><td>signed 32-bit integer added to contents of t2</td>" +
         "</tr><tr>" +
            "<td><tt>label</tt></td><td>32-bit address of label</td>" +
         "</tr><tr>" +
-           "<td><tt>label($t2)</tt></td><td>32-bit address of label added to contents of $t2</td>" +
+           "<td><tt>label(t2)</tt></td><td>32-bit address of label added to contents of t2</td>" +
         "</tr><tr>" +
            "<td><tt>label+100000</tt></td><td>32-bit integer added to label's address</td>" +
         "</tr><tr>" +
-           "<td><tt>label+100000($t2)&nbsp;&nbsp;&nbsp;</tt></td><td>sum of 32-bit integer, label's address, and contents of $t2</td>"+
+           "<td><tt>label+100000(t2)&nbsp;&nbsp;&nbsp;</tt></td><td>sum of 32-bit integer, label's address, and contents of t2</td>"+
         "</tr>" +
         "</table></center></html>";
     // Original code:         mipsHelpInfo.add(new JLabel(helpRemarks, JLabel.CENTER), BorderLayout.NORTH);
@@ -259,9 +257,11 @@ public class HelpHelpAction extends GuiAction {
      tabbedPane.addTab("Basic Instructions", createMipsInstructionHelpPane("mars.riscv.instructions.BasicInstruction"));
      tabbedPane.addTab("Extended (pseudo) Instructions", createMipsInstructionHelpPane("mars.riscv.instructions.ExtendedInstruction"));
      tabbedPane.addTab("Directives", createMipsDirectivesHelpPane());
-     tabbedPane.addTab("Syscalls", createHTMLHelpPanel("SyscallHelp.html"));
-     tabbedPane.addTab("Exceptions", createHTMLHelpPanel("ExceptionsHelp.html"));
-     tabbedPane.addTab("Macros", createHTMLHelpPanel("MacrosHelp.html"));
+     tabbedPane.addTab("Ecalls", createHTMLHelpPanel("SyscallHelp.html"));
+     // FIXME: need to adjust the exceotions to RISCV
+     //tabbedPane.addTab("Exceptions", createHTMLHelpPanel("ExceptionsHelp.html"));
+        // FIXME: need to adjust the macros to RISCV
+     //tabbedPane.addTab("Macros", createHTMLHelpPanel("MacrosHelp.html"));
      operandsScrollPane.setPreferredSize(new Dimension((int)this.getSize().getWidth(), (int) (this.getSize().getHeight()*.2)));
      operandsScrollPane.getVerticalScrollBar().setUnitIncrement(10);
      tabbedPane.setPreferredSize(new Dimension((int)this.getSize().getWidth(), (int) (this.getSize().getHeight()*.6)));
@@ -273,7 +273,7 @@ public class HelpHelpAction extends GuiAction {
      return mipsHelpInfo;
   }
 
-///////////////  Methods to construct MIPS help tabs from internal MARS objects  //////////////
+///////////////  Methods to construct RISCV help tabs from internal MARS objects  //////////////
 
    /////////////////////////////////////////////////////////////////////////////
    private JScrollPane createMipsDirectivesHelpPane() {

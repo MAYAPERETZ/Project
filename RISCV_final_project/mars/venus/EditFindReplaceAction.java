@@ -34,7 +34,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /**
-* Action  for the Edit -> Find/Replace menu item
+* Action  for the Edit - Find/Replace menu item
 */
 public class EditFindReplaceAction extends ChangeableAction{
 private static String searchString = "";

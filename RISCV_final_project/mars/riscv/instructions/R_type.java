@@ -10,7 +10,7 @@ import mars.util.Binary;
 /**
  * This class represents the R-type instructions of RISCV.
  * @author Maya Peretz
- * @Version September 2019
+ * @version September 2019
  */
 public class R_type extends BasicInstruction{
 

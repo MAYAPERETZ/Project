@@ -2,6 +2,11 @@ package mars.riscv.instructions;
 
 import mars.util.Binary;
 
+/**
+ * Some util class.
+ * @author Maya Peretz
+ * @version September 2019
+ */
 public class InstCodeUtil {
 	
 	static final int mask1 = 0x0000007f;

@@ -52,6 +52,8 @@
    /**
     * Returns a new TextAreaDefaults object with the default values filled
     * in.
+    * @return a new TextAreaDefaults object with the default values filled
+    * in
     */
        public static TextAreaDefaults getDefaults()
       {

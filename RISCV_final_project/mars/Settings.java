@@ -104,7 +104,7 @@ public class Settings extends Observable {
     public static final int EDITOR_CURRENT_LINE_HIGHLIGHTING = 15;
     /** Flag to control whether or not editor will provide popup instruction guidance while typing */
     public static final int POPUP_INSTRUCTION_GUIDANCE = 16;
-    /** Flag to control whether or not simulator will use popup dialog for input syscalls */
+    /** Flag to control whether or not simulator will use popup dialog for input ecalls */
     public static final int POPUP_SYSCALL_INPUT = 17;
     /** Flag to control whether or not to use generic text editor instead of language-aware styled editor */
     public static final int GENERIC_TEXT_EDITOR = 18;
@@ -572,7 +572,7 @@ public class Settings extends Observable {
 
     /**
     * Setting concerning whether or not highlighting is applied to Registers,
-    * Coprocessor0, and Coprocessor1 windows.
+    * CSRs, and FPRegisters windows.
     * @return true if highlighting is to be applied, false otherwise.
     *  @deprecated Use <code>getBooleanSetting(int id)</code> with the appropriate boolean setting ID
     *  (e.g. <code>Settings.REGISTERS_HIGHLIGHTING</code>)
@@ -915,7 +915,7 @@ public class Settings extends Observable {
 
     /**
     * Establish setting for whether highlighting is to be applied to
-    * Registers, Coprocessor0 and Coprocessor1 windows.
+    * Registers, CSRs and FPRegisters windows.
     * @param value True if highlighting is to be applied, false otherwise.
     *  @deprecated Use <code>setBooleanSetting(int id, boolean value)</code> with the appropriate boolean setting ID
     *  (e.g. <code>Settings.REGISTERS_HIGHLIGHTING</code>)

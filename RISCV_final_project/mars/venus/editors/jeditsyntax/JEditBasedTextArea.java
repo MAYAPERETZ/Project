@@ -6,7 +6,6 @@
    import mars.*;
    import java.awt.*;
    import javax.swing.event.*;
-   import javax.swing.text.*;
    import javax.swing.undo.*;
    import javax.swing.*;
 
@@ -58,7 +57,7 @@
             };
          this.getDocument().addUndoableEditListener(undoableEditListener); 
          this.setFont(Globals.getSettings().getEditorFont());
-         this.setTokenMarker(new MIPSTokenMarker());
+         this.setTokenMarker(new RISCVTokenMarker());
       	
          addCaretListener(this);
       }

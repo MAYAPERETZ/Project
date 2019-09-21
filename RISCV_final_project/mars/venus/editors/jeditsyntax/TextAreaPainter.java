@@ -123,6 +123,7 @@
    
    /**
     * Returns the caret color.
+    * @return the caret color.
     */
        public final Color getCaretColor()
       {
@@ -141,6 +142,7 @@
    
    /**
     * Returns the selection color.
+    * @return the selection color.
     */
        public final Color getSelectionColor()
       {
@@ -159,6 +161,7 @@
    
    /**
     * Returns the line highlight color.
+    * @return the line highlight color.
     */
        public final Color getLineHighlightColor()
       {
@@ -196,6 +199,7 @@
    
    /**
     * Returns the bracket highlight color.
+    * @return the bracket highlight color.
     */
        public final Color getBracketHighlightColor()
       {
@@ -216,6 +220,7 @@
     * Returns true if bracket highlighting is enabled, false otherwise.
     * When bracket highlighting is enabled, the bracket matching the
     * one before the caret (if any) is highlighted.
+    * @return  true if bracket highlighting is enabled, false otherwise.
     */
        public final boolean isBracketHighlightEnabled()
       {
@@ -292,6 +297,8 @@
    
    /**
     * Returns true if invalid lines are painted as red tildes (~),
+    * false otherwise.
+    * @return true if invalid lines are painted as red tildes (~),
     * false otherwise.
     */
        public boolean getInvalidLinesPainted()
@@ -379,6 +386,7 @@
       }
    /**
     * Returns the font metrics used by this component.
+    * @return the font metrics used by this component.
     */
        public FontMetrics getFontMetrics()
       {

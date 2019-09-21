@@ -22,12 +22,12 @@
 		from the MARS IDE, you will use system call 10, <tt>exit</tt>.  The instruction sequence is pretty easy</p>
 		<pre>
 		li $v0,10
-		syscall		</pre>
+		ecall		</pre>
 		but still tedious.  You can define a macro, let's call it <tt>done</tt>, to represent this sequence
 		<pre>
 		.macro done
 		li $v0,10
-		syscall
+		ecall
 		.end_macro		</pre>
 		then invoke it whenever you wish with the statement
 		<pre>
@@ -36,17 +36,17 @@
 		sequence
 		<pre>
 		li $v0,10
-		syscall		</pre>
+		ecall		</pre>
 		This is the macro expansion.  The runtime simulator is unaware of macros or macro expansion.</p>
 		
 		<p>If running MARS from the command line, perhaps you want to return a termination value.  This can be done
-		with syscall 17, <tt>exit2</tt>, which takes the termination value as an argument.  An equivalent macro,
+		with ecall 17, <tt>exit2</tt>, which takes the termination value as an argument.  An equivalent macro,
 		let's call it <tt>terminate</tt>  would be
 		<pre>
 		.macro terminate (%termination_value)
 		li $a0, %termination_value
 		li $v0, 17
-		syscall
+		ecall
 		.end_macro		</pre>
 		This macro defines a <i>formal parameter</i> to represent the termination value.  You would invoke it 
 		with the statement
@@ -57,7 +57,7 @@
 		<pre>
 		li $a0, 1
 		li $v0, 17
-		syscall		</pre>
+		ecall		</pre>
 		The <i>argument value</i>, 1, is substituted wherever the formal parameter <tt>%termination_value</tt> appears
 		in the macro body.
 		This is a textual substitution.  Note that in this example the argument value must be an integer, not a 
@@ -132,7 +132,7 @@
 				<pre><tt>	.macro print_int (%x)
 	li $v0, 1
 	add $a0, $zero, %x
-	syscall
+	ecall
 	.end_macro
 	
 	print_int ($s0)
@@ -147,7 +147,7 @@ myLabel: .asciiz %str
 	.text
 	li $v0, 4
 	la $a0, myLabel
-	syscall
+	ecall
 	.end_macro
 	
 	print_str ("test1")	#"test1" will be labeled with name "myLabel_M0"
@@ -203,7 +203,7 @@ then you can refer to them in subsequent code:
        li $v0,1
        CLEAR_CTR
 loop:  move $a0, CTR
-       syscall
+       ecall
        add   CTR, CTR, 1
        blt   CTR, LIMIT, loop
        CLEAR_CTR</pre>
@@ -212,7 +212,7 @@ During assembly pre-processing, the <tt>.eqv</tt> substitutions will be applied.
        li   $v0,1
        add  $t2, $zero, 0
 loop:  move $a0, $t2
-       syscall
+       ecall
        add  $t2, $t2, 1
        blt  $t2, 20, loop
        add  $t2, $zero, 0</pre>
@@ -249,7 +249,7 @@ in which it is defined, and must be defined prior to use.  Macro bodies can cont
  		<pre>
 		.macro done
 		li $v0,10
-		syscall
+		ecall
 		.end_macro		</pre>
  
  You could then include it in a different source file something like this:
@@ -260,20 +260,20 @@ value:		.word	 13
 		.text
 		li	 $v0, 1
 		lw	 $a0, value
-		syscall
+		ecall
 		done		</pre>
 <p>During assembly preprocessing, this would be expanded to
   		<pre>
 		.macro done
 		li $v0,10
-		syscall
+		ecall
 		.end_macro	
 		.data
 value:		.word	 13
 		.text
 		li	 $v0, 1
 		lw	 $a0, value
-		syscall
+		ecall
 		done		</pre>
 <p>The assembler will then perform the appropriate macro expansion.
 

@@ -42,11 +42,10 @@ public class IntelHexDumpFormat extends AbstractDumpFormat {
    */
    public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
    throws AddressErrorException, IOException {
-      PrintStream out = new PrintStream(new FileOutputStream(file));
-      String string;
-      try {
+      try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
+         String string;
          for (Number address = firstAddress; !Math2.isLt(lastAddress, address);
-         address = add(address, Memory.WORD_LENGTH_BYTES)) {
+              address = add(address, Memory.WORD_LENGTH_BYTES)) {
             Number temp = Globals.memory.getRawWordOrNull(address);
             if (temp == null)
                break;
@@ -54,30 +53,27 @@ public class IntelHexDumpFormat extends AbstractDumpFormat {
             while (string.length() < 8)
                string = '0' + string;
 
-            String addr = Binary.currentNumToHexString(sub(address,firstAddress));
+            String addr = Binary.currentNumToHexString(sub(address, firstAddress));
             while (addr.length() < 4)
                addr = '0' + addr;
 
             String chksum;
             Number tmp_chksum = 0;
-            tmp_chksum = add(tmp_chksum,4);
+            tmp_chksum = add(tmp_chksum, 4);
             tmp_chksum = add(tmp_chksum, (and(0xFF, sub(address, firstAddress))));
-            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),8)))));
+            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address, firstAddress), 8)))));
             tmp_chksum = and(0xFF, temp);
-            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),8)))));
-            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),16)))));
-            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address,firstAddress),24)))));
+            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address, firstAddress), 8)))));
+            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address, firstAddress), 16)))));
+            tmp_chksum = add(tmp_chksum, (and(0xFF, (sra(sub(address, firstAddress), 24)))));
             tmp_chksum = rem(tmp_chksum, 256);
             tmp_chksum = add(neg(tmp_chksum), 1);
             chksum = Binary.currentNumToHexString(and(0xFF, tmp_chksum));
-            if(chksum.length()==1) chksum = '0' + chksum;
-            String finalstr = ":04"+addr+"00"+string+chksum;
+            if (chksum.length() == 1) chksum = '0' + chksum;
+            String finalstr = ":04" + addr + "00" + string + chksum;
             out.println(finalstr.toUpperCase());
          }
          out.println(":00000001FF");
-      }
-      finally {
-         out.close();
       }
 
    }

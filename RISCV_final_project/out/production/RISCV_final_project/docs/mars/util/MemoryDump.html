@@ -313,7 +313,7 @@ getAddressOfFirstNull</H3>
 <PRE>
 public static int <B>getAddressOfFirstNull</B>(int&nbsp;baseAddress,
                                         int&nbsp;limitAddress)
-                                 throws <A HREF="../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                                 throws <A HREF="../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Look for first "null" memory value in an address range.  For text segment (binary code), this
   represents a word that does not contain an instruction.  Normally use this to find the end of 
@@ -324,7 +324,7 @@ public static int <B>getAddressOfFirstNull</B>(int&nbsp;baseAddress,
 <DT><B>Parameters:</B><DD><CODE>baseAddress</CODE> - lowest MIPS address to be searched; the starting point<DD><CODE>limitAddress</CODE> - highest MIPS address to be searched
 <DT><B>Returns:</B><DD>lowest address within specified range that contains "null" value as described above.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - if the base address is not on a word boundary</DL>
+<DD><CODE><A HREF="../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - if the base address is not on a word boundary</DL>
 </DD>
 </DL>
 <!-- ========= END OF CLASS DATA ========= -->

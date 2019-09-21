@@ -34,7 +34,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 /**
- * Class to represent error that occurs while assembling or running a MIPS program.
+ * Class to represent error that occurs while assembling or running a RISCV program.
  * 
  * @author Pete Sanderson
  * @version August 2003
@@ -109,8 +109,8 @@ public class ProcessingException extends Exception {
     /**
     * Constructor for ProcessingException.
     *
-    * No parameter and thus no error list.  Use this for normal MIPS
-    * program termination (e.g. syscall 10 for exit).
+    * No parameter and thus no error list.  Use this for normal RISCV
+    * program termination (e.g. ecall 10 for exit).
     **/
     public ProcessingException() {
         errs = null;

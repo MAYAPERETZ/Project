@@ -59,7 +59,8 @@ public class B_type extends BasicInstruction.WithImmediateField{
 	}
 	
     private static void processBranch(Number displacement) {
-    	displacement = (displacement instanceof Number) ? displacement.longValue() : displacement.intValue();
+		assert displacement != null;
+		displacement = displacement.longValue();
         if (Globals.getSettings().getDelayedBranchingEnabled()) {
            // Register the branch target address (absolute Number address).
         	

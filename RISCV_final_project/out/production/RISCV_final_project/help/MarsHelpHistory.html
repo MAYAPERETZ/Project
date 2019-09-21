@@ -120,8 +120,8 @@ It will now work like SPIM, which accepts any operand value but truncates high-e
 needed to fit the 1 (byte) or 2 (half) byte field.  We'll still issue a warning
 but not an error.
 </li>
-<li>For file reads, syscall 14, file descriptor 0 is always open for standard input.  For file
-writes, syscall 15, file descriptors 1 and 2 are always open for standard output and 
+<li>For file reads, ecall 14, file descriptor 0 is always open for standard input.  For file
+writes, ecall 15, file descriptors 1 and 2 are always open for standard output and
 standard error, respectively.  This permits you to write I/O code that will
 work either with files or standard I/O.  When using the IDE, standard input and output 
 are performed in the Run I/O tab.  File descriptors for regular files are
@@ -143,7 +143,7 @@ additional project files.  Previously, the open or tab selection would
 invalidate the assemble operation and any paused execution state or
 breakpoints would be lost.
 </li>
-<li>The Read String syscall (syscall 8) has been fortified to prevent Java exceptions from occurring 
+<li>The Read String ecall (ecall 8) has been fortified to prevent Java exceptions from occurring
 when invalid values are placed in $a1.
 </li>
 <li>Will now perform runtime test for unaligned doubleword address in 
@@ -235,7 +235,7 @@ Command shortcuts, e.g. Command-s for save, did not
 function and also inserted the character into the text. 
 </li>
 
-<li>A bug in Syscall 54 (InputDialogString) has been fixed.  This syscall is
+<li>A bug in Syscall 54 (InputDialogString) has been fixed.  This ecall is
 the GUI equivalent of Syscall 8 (ReadString), which follows the semantics
 of UNIX 'fgets'.  Syscall 54 has been modified to also follow the 'fgets'
 semantics.
@@ -321,7 +321,7 @@ basic instructions are no more than 16 bits long, their hexadecimal display incl
 <li>Instruction mnemonics can now be used as labels, e.g. "<tt>b:</tt>".
 </li>
 
-<li>New syscall 36 will display an integer as an unsigned decimal.
+<li>New ecall 36 will display an integer as an unsigned decimal.
 </li>
 
 <li>A new tool, Digital Lab Sim, contributed by Didier Teifreto (dteifreto@lifc.univ-fcomte.fr).  This tool
@@ -439,7 +439,7 @@ adaptations to the Keyboard and Display Simulator Tool that allow it to be used 
 Memory Mapped I/O (MMIO) even under the compact memory model, where the MMIO base address
 is 0x00007f00 instead of 0xffff0000.  Highlighting is not perfect in this scenario.</li>
 
-<li>Bug Fix:  The syscall for Open File (13) reversed the meanings of the
+<li>Bug Fix:  The ecall for Open File (13) reversed the meanings of the
 terms <i>mode</i> and <i>flag</i>.  Flags are used to indicate the intended
 use of the file (read/write).  Mode is used to set file permissions in specific situations.
 MARS implements selected flags as supported by Java file streams, 
@@ -492,7 +492,7 @@ recompile and produce a new jar for local use.  <tt>CreatMarsJar.bat</tt> contai
 <li>The Help window now includes a tab for Acknowledgements.  This recognizes MARS contributors
 and correspondents.</li>
 
-<li>We've added a new system call (syscall) for generating MIDI tones synchronously, syscall 33.
+<li>We've added a new system call (ecall) for generating MIDI tones synchronously, ecall 33.
 The original MIDI call returns immediately when the tone is generated.  The new one will not return
 until the tone output is complete regardless of its duration.
 
@@ -574,7 +574,7 @@ original was based on a misprint in Appendix A of <i>Computer Organization and D
 MARS would not execute from the executable Mars.jar file if it was stored in a directory
 path those directory names contain any non-ASCII characters.  This has been corrected.  Thanks to
 Felipe Lessa for pointing this out and offering a solution.
-MARS will now correctly detect the EOF condition when reading from a file using syscall 14.
+MARS will now correctly detect the EOF condition when reading from a file using ecall 14.
 Thanks to David Reimann for bringing this to our attention.
 </ul>
 
@@ -599,7 +599,7 @@ li, sub and subi.  These modifications were suggested by Eric Shade of Missouri 
 <p>Mars 3.4 was released in January 2008.  Major enhancements are:
 <ul>
 
-<li>A new syscall (32) to support pauses of specified length in milliseconds (sleep) during simulated execution.
+<li>A new ecall (32) to support pauses of specified length in milliseconds (sleep) during simulated execution.
 
 <li>Five new syscalls (40-44) to support the use of pseudo-random number generators.  An unlimited number of these generators are available,
 each identified by an integer value, and for each you have the ability to: set the seed value, generate a 32 bit integer value from the Java
@@ -607,7 +607,7 @@ int range, generate a 32 bit integer value between 0 (inclusive) and a specified
 and generate a 64-bit double value between 0 (inclusive) and 1 (exclusive).  All are based on the <tt>java.util.Random</tt> class.
 
 <li>Ten new syscalls (50-59) to support message dialog windows and data input dialog windows.  The latter are distinguished from
-the standard data input syscalls in that a prompting message is specified as a syscall argument and displayed in the input dialog. 
+the standard data input syscalls in that a prompting message is specified as a ecall argument and displayed in the input dialog.
 All are based on the <tt>javax.swing.JOptionPane</tt> class.
 
 <li>The capability to dump <tt>.text</tt> or <tt>.data</tt> memory contents to file in various formats.  The dump can be performed
@@ -675,11 +675,11 @@ the new ordering will be remembered and applied from that time forward, even fro
 window is where source code, basic code, binary code, code addresses, and breakpoints are displayed.
 <li>If a MIPS program terminates by "running off the bottom" of the program, MARS terminates, as 
 before, without an exception, but now will display a more descriptive termination message in the
-Messages window.  Previously, the termination message was the same as that generated after executing an Exit syscall.
-<li>A new system call (syscall) to obtain the system time is now available.  It is service
+Messages window.  Previously, the termination message was the same as that generated after executing an Exit ecall.
+<li>A new system call (ecall) to obtain the system time is now available.  It is service
 30 and is not available in SPIM.  Its value is obtained from the <tt>java.util.Date.getTime()</tt> method.  
 See the Syscall tab in MIPS help for further information.  </li>
-<li>A new system call (syscall) to produce simulated MIDI sound through your sound card is now available.  
+<li>A new system call (ecall) to produce simulated MIDI sound through your sound card is now available.
 It is service 31 and is not available in SPIM.  Its implementation is based on the
 <tt>javax.sound.midi</tt> package.  It has been tested only under Windows.
 See the Syscall tab in MIPS help for further information.  </li>
@@ -729,7 +729,7 @@ could not be run from the JAR file, non-standard shortcuts for Mac users, inflex
 sometimes inappropriate sizing of
 GUI components). 
 <li>It changed the way SYSCALLs are implemented, to allow anyone to define
-new customized syscall services without modifying MARS.  
+new customized ecall services without modifying MARS.
 <li>It added a primitive
 Project capability through the "Assemble operation applies to all files in current directory." 
 setting (also available as "p" option in command mode).  The command mode also allows you

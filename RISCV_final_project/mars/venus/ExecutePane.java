@@ -32,11 +32,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 
-    /**
-    * Container for the execution-related windows.  Currently displayed as a tabbed pane.
-    * @author Sanderson and Team JSpim
-    **/
-
+/**
+* Container for the execution-related windows.  Currently displayed as a tabbed pane.
+* @author Sanderson and Team JSpim
+*/
 public class ExecutePane extends JDesktopPane implements Observer {
     private RegistersWindow registerValues;
     private Coprocessor1Window coprocessor1Values;
@@ -44,7 +43,7 @@ public class ExecutePane extends JDesktopPane implements Observer {
     private DataSegmentWindow dataSegment;
     private TextSegmentWindow  textSegment;
     private LabelsWindow labelValues;
-        private NumberDisplayBaseChooser valueDisplayBase;
+    private NumberDisplayBaseChooser valueDisplayBase;
     private NumberDisplayBaseChooser addressDisplayBase;
     private boolean labelWindowVisible;
 
@@ -81,22 +80,22 @@ public class ExecutePane extends JDesktopPane implements Observer {
         dataSegment.setVisible(true);
         labelValues.setVisible(labelWindowVisible);
         EventQueue.invokeLater(() -> {
-         int fullWidth = this.getSize().width - this.getInsets().left - this.getInsets().right;
-         int fullHeight = this.getSize().height - this.getInsets().top - this.getInsets().bottom;
-         int halfHeight = fullHeight/2;
-         Dimension textDim = new Dimension((int)(fullWidth*.75),halfHeight);
-         Dimension dataDim = new Dimension((int)(fullWidth),halfHeight);
-         Dimension lablDim = new Dimension((int)(fullWidth*.25), halfHeight);
-         Dimension textFullDim = new Dimension((int)(fullWidth), halfHeight);
-         dataSegment.setBounds(0,textDim.height+1, dataDim.width, dataDim.height);
-         if (labelWindowVisible) {
-             textSegment.setBounds(0, 0, textDim.width, textDim.height);
-             labelValues.setBounds(textDim.width+1, 0, lablDim.width, lablDim.height);
-         }
-         else {
-             textSegment.setBounds(0, 0, textFullDim.width, textFullDim.height);
-             labelValues.setBounds(0, 0, 0, 0);
-         }
+            int fullWidth = this.getSize().width - this.getInsets().left - this.getInsets().right;
+            int fullHeight = this.getSize().height - this.getInsets().top - this.getInsets().bottom;
+            int halfHeight = fullHeight/2;
+            Dimension textDim = new Dimension((int)(fullWidth*.75),halfHeight);
+            Dimension dataDim = new Dimension(fullWidth,halfHeight);
+            Dimension lablDim = new Dimension((int)(fullWidth*.25), halfHeight);
+            Dimension textFullDim = new Dimension(fullWidth, halfHeight);
+            dataSegment.setBounds(0,textDim.height+1, dataDim.width, dataDim.height);
+            if (labelWindowVisible) {
+                textSegment.setBounds(0, 0, textDim.width, textDim.height);
+                labelValues.setBounds(textDim.width+1, 0, lablDim.width, lablDim.height);
+            }
+            else {
+                textSegment.setBounds(0, 0, textFullDim.width, textFullDim.height);
+                labelValues.setBounds(0, 0, 0, 0);
+            }
         });
 
     }
@@ -120,9 +119,9 @@ public class ExecutePane extends JDesktopPane implements Observer {
         int fullHeight = this.getSize().height - this.getInsets().top - this.getInsets().bottom;
         int halfHeight = fullHeight/2;
         Dimension textDim = new Dimension((int)(fullWidth*.75),halfHeight);
-        Dimension dataDim = new Dimension((int)(fullWidth),halfHeight);
+        Dimension dataDim = new Dimension(fullWidth,halfHeight);
         Dimension lablDim = new Dimension((int)(fullWidth*.25), halfHeight);
-        Dimension textFullDim = new Dimension((int)(fullWidth), halfHeight);
+        Dimension textFullDim = new Dimension(fullWidth, halfHeight);
         dataSegment.setBounds(0,textDim.height+1, dataDim.width, dataDim.height);
         if (labelWindowVisible) {
             textSegment.setBounds(0, 0, textDim.width, textDim.height);
@@ -159,7 +158,7 @@ public class ExecutePane extends JDesktopPane implements Observer {
     /**
     *  Clears out all components of the Execute tab: text segment
     * display, data segment display, label display and register display.
-    * This will typically be done upon File->Close, Open, New.
+    * This will typically be done upon File - Close, Open, New.
     */
     public void clearPane() {
         this.getTextSegmentWindow().clearWindow();

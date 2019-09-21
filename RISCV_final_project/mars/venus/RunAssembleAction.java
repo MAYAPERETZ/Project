@@ -38,7 +38,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
  
    /**
-    * Action class for the Run -> Assemble menu item (and toolbar icon)
+    * Action class for the Run - Assemble menu item (and toolbar icon)
     */
     public class RunAssembleAction extends RunAction {
    	 
@@ -106,8 +106,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                FileStatus.setAssembled(true);
                FileStatus.set(FileStatus.RUNNABLE);
                RVIRegisters.resetRegisters();
-               Coprocessor1.resetRegisters();
-               Coprocessor0.resetRegisters();
+               FPRegisters.resetRegisters();
+               CSRs.resetRegisters();
                executePane.getTextSegmentWindow().setupTable();
                executePane.getDataSegmentWindow().setupTable();
                executePane.getDataSegmentWindow().highlightCellForAddress(Memory.getInstance().getDataTable().getBaseAddress()); 

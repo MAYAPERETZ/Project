@@ -2,9 +2,286 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="472a2a93-7200-4a0f-a61f-7d142a0b19c9" name="Default Changelist" comment="17/08/19 latest changes2">
+      <change afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallExit2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallOpen.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallReadString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ALUcontrolDatapath.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mars.java" beforeDir="false" afterPath="$PROJECT_DIR$/Mars.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MipsXRayOpcode.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PseudoOps.txt" beforeDir="false" afterPath="$PROJECT_DIR$/PseudoOps.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Syscall.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Syscall.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controlDatapath.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/allclasses-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/allclasses-noframe.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/constant-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-all.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index-all.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/Globals.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/Globals.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/ProcessingException.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/ProcessingException.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/hardware/Coprocessor0.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/hardware/Coprocessor0.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/hardware/Coprocessor1.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/hardware/Coprocessor1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/AbstractSyscall.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/AbstractSyscall.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/RandomStreams.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/RandomStreams.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/Syscall.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/Syscall.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallClose.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallClose.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallConfirmDialog.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallConfirmDialog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallExit.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallExit.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallExit2.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallExit2.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogDouble.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogFloat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogInt.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogInt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogString.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallInputDialogString.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialog.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialog.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogDouble.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogFloat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogInt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogString.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMessageDialogString.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMidiOut.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMidiOut.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMidiOutSync.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallMidiOutSync.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallNumberOverride.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallNumberOverride.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallOpen.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallOpen.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintChar.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintChar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintDouble.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintDouble.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintFloat.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintFloat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintInt.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintInt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintIntBinary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintIntHex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintIntHex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintIntUnsigned.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintString.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallPrintString.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandDouble.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandDouble.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandFloat.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandFloat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandInt.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandInt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandIntRange.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandIntRange.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandSeed.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRandSeed.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRead.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallRead.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadChar.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadChar.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadDouble.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadDouble.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadFloat.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadFloat.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadInt.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadInt.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadString.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallReadString.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallSbrk.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallSbrk.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallSleep.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallSleep.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallTime.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallTime.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallWrite.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/SyscallWrite.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/package-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/package-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/package-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/mips/instructions/syscalls/package-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/util/SystemIO.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/util/SystemIO.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/util/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/util/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/venus/MessagesPane.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/venus/MessagesPane.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/mars/venus/editors/jeditsyntax/tokenmarker/MIPSTokenMarker.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/mars/venus/editors/jeditsyntax/tokenmarker/MIPSTokenMarker.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/overview-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/overview-frame.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/overview-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/overview-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/overview-tree.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/package-list" beforeDir="false" afterPath="$PROJECT_DIR$/docs/package-list" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/Acknowledgements.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/Acknowledgements.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/help/ExceptionsHelp.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/ExceptionsHelp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MIPSInstructionSetSong.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MacrosHelp.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/MacrosHelp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpDebugging.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/MarsHelpDebugging.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpHistory.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/MarsHelpHistory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpIDE.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/MarsHelpIDE.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpIntro.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/MarsHelpIntro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpLimits.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/MarsHelpLimits.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpSettings.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/MarsHelpSettings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/MarsHelpTools.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/SyscallHelp.html" beforeDir="false" afterPath="$PROJECT_DIR$/help/SyscallHelp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/help/mipsref.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/Mars.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/allclasses-frame.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/allclasses-noframe.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/constant-values.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/deprecated-list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/help-doc.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/index-files/index-1.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/index-files/index-2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/index-files/index-3.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/index-files/index-4.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/index-files/index-5.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/external/jquery/jquery.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_flat_0_aaaaaa_40x100.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_flat_75_ffffff_40x100.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_glass_55_fbf9ee_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_glass_65_ffffff_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_glass_75_dadada_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_glass_75_e6e6e6_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_glass_95_fef1ec_1x400.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-bg_highlight-soft_75_cccccc_1x100.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-icons_222222_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-icons_2e83ff_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-icons_454545_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-icons_888888_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/images/ui-icons_cd0a0a_256x240.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jquery-1.10.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jquery-ui.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jquery-ui.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jquery-ui.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jquery-ui.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jquery-ui.structure.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jquery-ui.structure.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jszip-utils/dist/jszip-utils-ie.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jszip-utils/dist/jszip-utils-ie.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jszip-utils/dist/jszip-utils.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jszip-utils/dist/jszip-utils.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jszip/dist/jszip.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/jquery/jszip/dist/jszip.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/Assembler.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/DataTypes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/Directives.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/Macro.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/MacroPool.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/OperandFormat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/SourceLine.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/Symbol.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/SymbolTable.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/Token.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/TokenList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/TokenTypes.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/assembler/Tokenizer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/mips/instructions/InstructionSet.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/mips/instructions/class-use/InstructionSet.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/mips/instructions/package-frame.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/mips/instructions/package-summary.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/mips/instructions/package-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/mars/mips/instructions/package-use.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/member-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/member-search-index.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/overview-tree.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/package-list" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/package-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/package-search-index.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/resources/glass.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/resources/x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/search.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/stylesheet.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/type-search-index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/javaDoc/type-search-index.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/ErrorList.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/ErrorList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/ErrorMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/ErrorMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/Globals.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/Globals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/ProcessingException.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/ProcessingException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/ProgramStatement.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/ProgramStatement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/RISCVprogram.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/RISCVprogram.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/Settings.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/Settings.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/assembler/Macro.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/assembler/Macro.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/assembler/SourceLine.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/assembler/SourceLine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/assembler/TokenTypes.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/assembler/TokenTypes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/dump/AsciiTextDumpFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/dump/AsciiTextDumpFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/dump/BinaryDumpFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/dump/BinaryDumpFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/dump/BinaryTextDumpFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/dump/BinaryTextDumpFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/dump/DumpFormatLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/dump/DumpFormatLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/dump/HexTextDumpFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/dump/HexTextDumpFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/dump/IntelHexDumpFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/dump/IntelHexDumpFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/dump/SegmentWindowDumpFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/dump/SegmentWindowDumpFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/hardware/Coprocessor0.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/hardware/CSRs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/hardware/Coprocessor1.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/hardware/FPRegisters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/hardware/MemoryConfigurations.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/hardware/MemoryConfigurations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/hardware/Register.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/hardware/Register.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/hardware/memory/Memory.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/hardware/memory/Memory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/B_type.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/B_type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/ExtendedInstruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ExtendedInstruction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/InstCodeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/InstCodeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/Instruction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/Instruction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/InstructionSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/InstructionSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/R_type.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/R_type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/SimulationCode.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/SimulationCode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/SyscallLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/EcallLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/U_type.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/U_type.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/AbstractSyscall.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/AbstractEcall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/RandomStreams.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/RandomStreams.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/Syscall.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/Ecall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallClose.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallClose.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallExit.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallExit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallExit2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallInputDialogDouble.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallNumberOverride.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/SyscallNumberOverride.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallOpen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintChar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintDouble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintFloat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintFloat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintIntHex.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintIntHex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintIntUnsigned.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintIntUnsigned.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintNumber.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintNumber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintNumberBinary.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintNumberBinary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallPrintString.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallRandDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallRandDouble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallRandFloat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallRandFloat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallRandInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallRandInt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallRandIntRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallRandIntRange.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallRandSeed.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallRandSeed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallRead.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallRead.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallReadChar.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallReadChar.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallReadDouble.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallReadDouble.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallReadFloat.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallReadFloat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallReadInt.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallReadInt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallReadString.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallSbrk.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallSbrk.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallSleep.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallSleep.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/SyscallWrite.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallWrite.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/riscv/instructions/syscalls/ToneGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/riscv/instructions/ecalls/ToneGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/simulator/BackStepper.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/simulator/BackStepper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/simulator/DelayedBranch.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/simulator/DelayedBranch.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/simulator/Exceptions.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/simulator/Exceptions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/simulator/Simulator.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/simulator/Simulator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/util/Binary.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/util/Binary.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/util/GenMath.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/util/GenMath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/util/MemoryDump.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/util/MemoryDump.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/util/PropertiesFile.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/util/PropertiesFile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/util/SystemIO.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/util/SystemIO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/Coprocessor0Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/Coprocessor0Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/Coprocessor1Window.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/Coprocessor1Window.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/EditCopyAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/EditCopyAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/EditCutAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/EditCutAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/EditFindReplaceAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/EditFindReplaceAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/EditPasteAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/EditPasteAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/EditRedoAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/EditRedoAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/EditSelectAllAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/EditSelectAllAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/Editor.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/Editor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/ExecutePane.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/ExecutePane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/FileCloseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/FileCloseAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/FileExitAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/FileExitAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/FileNewAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/FileNewAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/FileOpenAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/FileOpenAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/FilePrintAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/FilePrintAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/FileSaveAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/FileSaveAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/FileSaveAsAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/FileSaveAsAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/HelpAboutAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/HelpAboutAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/HelpHelpAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/HelpHelpAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/LabelsWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/LabelsWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/MessagesPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/MessagesPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/RegistersPane.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/RegistersPane.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/RunAssembleAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/RunAssembleAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/RunBackstepAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/RunBackstepAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/RunPauseAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/RunPauseAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/RunResetAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/RunResetAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/RunStepAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/RunStepAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/SettingsEditorAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/SettingsEditorAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/SettingsMemoryConfigurationAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/SettingsMemoryConfigurationAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/SettingsPopupInputAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/SettingsPopupInputAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/JEditBasedTextArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/JEditBasedTextArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/JEditTextArea.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/JEditTextArea.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/KeywordMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/KeywordMap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxDocument.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxDocument.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxStyle.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxStyle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxUtilities.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxUtilities.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaDefaults.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaDefaults.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaPainter.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaPainter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/tokenmarker/MIPSTokenMarker.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/tokenmarker/RISCVTokenMarker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/tokenmarker/TokenMarker.java" beforeDir="false" afterPath="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/tokenmarker/TokenMarker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mips1.asm" beforeDir="false" afterPath="$PROJECT_DIR$/riscv1.asm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mips2.asm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mips3.asm" beforeDir="false" afterPath="$PROJECT_DIR$/riscv2.asm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/PseudoOps.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/PseudoOps.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/Syscall.properties" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/Syscall.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/allclasses-frame.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/allclasses-noframe.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/constant-values.html" afterDir="false" />
@@ -107,12 +384,29 @@
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/tools/KeyboardAndDisplaySimulator.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/tools/KeyboardAndDisplaySimulator.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/tools/MemoryReferenceVisualization.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/tools/MemoryReferenceVisualization.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/util/MemoryDump.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/util/MemoryDump.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/util/SystemIO.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/util/SystemIO.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/util/package-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/util/package-summary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/venus/MessagesPane.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/venus/MessagesPane.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/venus/editors/jeditsyntax/tokenmarker/MIPSTokenMarker.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/mars/venus/editors/jeditsyntax/tokenmarker/MIPSTokenMarker.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/overview-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/overview-frame.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/overview-summary.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/overview-summary.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/overview-tree.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/package-list" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/package-list" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/docs/serialized-form.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpTools.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpTools.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/Acknowledgements.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/Acknowledgements.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/ExceptionsHelp.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/ExceptionsHelp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MIPSInstructionSetSong.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MacrosHelp.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MacrosHelp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpCommand.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpDebugging.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpDebugging.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpHistory.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpHistory.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpIDE.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpIDE.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpIntro.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpIntro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpLimits.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpLimits.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpSettings.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpSettings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/MarsHelpTools.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/SyscallHelp.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/help/SyscallHelp.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/help/mipsref.pdf" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/allclasses-frame.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/allclasses-frame.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/allclasses-noframe.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/allclasses-noframe.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/index-files/index-1.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/index-files/index-1.html" afterDir="false" />
@@ -129,6 +423,7 @@
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/mars/mips/instructions/package-use.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/mars/mips/instructions/package-use.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/overview-tree.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/overview-tree.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/package-list" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RISCV_final_project/javaDoc/package-list" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/registerDatapath.xml" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/src/" />
@@ -147,96 +442,101 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mars/venus/EditRedoAction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-57">
-              <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mars/venus/EditPasteAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+            <state relative-caret-position="117">
+              <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mars/venus/EditTabbedPane.java">
+        <entry file="file://$PROJECT_DIR$/mars/venus/EditSelectAllAction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="737" column="16" selection-start-line="737" selection-start-column="16" selection-end-line="737" selection-end-column="16" />
+            <state relative-caret-position="109">
+              <caret line="33" selection-start-line="33" selection-end-line="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mars/venus/EditCutAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-38">
+              <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mars/venus/ExecutePane.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="109">
+              <caret line="160" selection-start-line="160" selection-end-line="160" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mars/venus/Editor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="109">
+              <caret line="221" selection-start-line="221" selection-end-line="221" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mars/util/Binary.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="109">
+              <caret line="230" column="23" selection-start-line="230" selection-start-column="23" selection-end-line="230" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/AddressErrorException.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1628">
-              <caret line="77" column="20" selection-start-line="77" selection-start-column="20" selection-end-line="77" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/Coprocessor0.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="858">
-              <caret line="40" column="74" selection-start-line="40" selection-start-column="74" selection-end-line="40" selection-end-column="74" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mars/simulator/BackStepper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3410">
-              <caret line="167" column="21" selection-start-line="167" selection-start-column="21" selection-end-line="167" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mars/simulator/Simulator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="147" column="25" selection-start-line="147" selection-start-column="25" selection-end-line="147" selection-end-column="25" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/docs/mars/MIPSprogram.html">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/help/ExceptionsHelp.html">
+        <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/Memory.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="375">
-              <caret line="138" column="39" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="39" />
+            <state relative-caret-position="87">
+              <caret line="204" column="74" selection-start-line="204" selection-start-column="74" selection-end-line="204" selection-end-column="74" />
+              <folding>
+                <element signature="e#10375#10376#0" expanded="true" />
+                <element signature="e#10415#10416#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mars/venus/GUI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="109">
+              <caret line="824" column="74" lean-forward="true" selection-start-line="824" selection-start-column="74" selection-end-line="824" selection-end-column="74" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mars/venus/HelpHelpAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mars/venus/FilePrintAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="117">
+              <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -254,26 +554,9 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>out of</find>
-      <find>2144088456</find>
-      <find>maxSteps</find>
-      <find>observer</find>
-      <find>maxs</find>
-      <find>initializ</find>
-      <find>COPROC1_REGISTER_RESTORE</find>
-      <find>addmemo</find>
-      <find>setProgramCounter</find>
-      <find>settingsDelayedBranching</find>
-      <find>OBSERVER</find>
-      <find>sw</find>
-      <find>setWor</find>
-      <find>setw</find>
-      <find>DataBlockTable</find>
-      <find>kernelDataBlockTable</find>
       <find>rep</find>
       <find>helper's</find>
       <find>round</find>
-      <find>not</find>
       <find>not</find>
       <find>bgez</find>
       <find>j</find>
@@ -284,9 +567,30 @@
       <find>sys</find>
       <find>dump</find>
       <find>true</find>
+      <find>SYSC</find>
+      <find>SYSCA</find>
+      <find>SYS</find>
+      <find>SYSCAK</find>
+      <find>name</find>
+      <find>S</find>
+      <find>SYSCALL</find>
+      <find>LL2U</find>
+      <find>lui</find>
+      <find>U</find>
+      <find>U_</find>
+      <find>li</find>
+      <find>VHL2</find>
+      <find>MIPS</find>
+      <find>syscall</find>
+      <find>$s6</find>
+      <find>&quot;</find>
     </findStrings>
     <replaceStrings>
       <replace>Register.FPRegister</replace>
+      <replace>RISCV</replace>
+      <replace>ecall</replace>
+      <replace>a3</replace>
+      <replace>s6</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -296,57 +600,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/mars/venus/SettingsProgramArgumentsAction.java" />
-        <option value="$PROJECT_DIR$/mars/venus/SettingsMemoryConfigurationAction.java" />
-        <option value="$PROJECT_DIR$/mars/mips/hardware/memory/Memory.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/InstCodeUtil.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/Instruction.java" />
-        <option value="$PROJECT_DIR$/mars/venus/ChangeableAction.java" />
-        <option value="$PROJECT_DIR$/mars/venus/NumberDisplayBaseChooser.java" />
-        <option value="$PROJECT_DIR$/mars/util/FilenameFinder.java" />
-        <option value="$PROJECT_DIR$/mars/venus/EditUndoAction.java" />
-        <option value="$PROJECT_DIR$/mars/venus/ToolBarComponent.java" />
-        <option value="$PROJECT_DIR$/mars/venus/GUI.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/SyscallLoader.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/BasicInstruction.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/U_type.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/I_typeShift.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/J_type.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/I_type.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/R_type.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/S_type.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/B_type.java" />
-        <option value="$PROJECT_DIR$/mars/util/Math2.java" />
-        <option value="$PROJECT_DIR$/mars/util/GenMath.java" />
+        <option value="$PROJECT_DIR$/mars/assembler/SourceLine.java" />
+        <option value="$PROJECT_DIR$/help/SyscallHelp.html" />
+        <option value="$PROJECT_DIR$/help/MarsHelpSettings.html" />
+        <option value="$PROJECT_DIR$/help/MarsHelpIntro.html" />
+        <option value="$PROJECT_DIR$/help/MarsHelpIDE.html" />
+        <option value="$PROJECT_DIR$/help/MarsHelpDebugging.html" />
+        <option value="$PROJECT_DIR$/mars/Globals.java" />
+        <option value="$PROJECT_DIR$/mars/riscv/instructions/R_type.java" />
+        <option value="$PROJECT_DIR$/mars/riscv/instructions/InstCodeUtil.java" />
+        <option value="$PROJECT_DIR$/mars/riscv/instructions/B_type.java" />
+        <option value="$PROJECT_DIR$/mars/simulator/Exceptions.java" />
+        <option value="$PROJECT_DIR$/Mars.java" />
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/help/MarsHelpLimits.html" />
         <option value="$PROJECT_DIR$/mars/venus/RegistersPane.java" />
-        <option value="$PROJECT_DIR$/mars/venus/RunAction.java" />
-        <option value="$PROJECT_DIR$/mars/mips/hardware/Coprocessor0.java" />
-        <option value="$PROJECT_DIR$/mars/mips/hardware/MemoryConfigurations.java" />
-        <option value="$PROJECT_DIR$/mars/mips/hardware/Register.java" />
-        <option value="$PROJECT_DIR$/mars/mips/hardware/RVIRegisters.java" />
-        <option value="$PROJECT_DIR$/mars/mips/hardware/Coprocessor1.java" />
-        <option value="$PROJECT_DIR$/mars/mips/instructions/InstructionSet.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/AbstractDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/AsciiTextDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/BinaryDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/BinaryTextDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/DumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/DumpFormatLoader.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/HexTextDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/IntelHexDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/MIFDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/mips/dump/SegmentWindowDumpFormat.java" />
-        <option value="$PROJECT_DIR$/mars/venus/FileCloseAllAction.java" />
-        <option value="$PROJECT_DIR$/mars/venus/RegistersWindow.java" />
-        <option value="$PROJECT_DIR$/mars/venus/Coprocessor1Window.java" />
-        <option value="$PROJECT_DIR$/mars/venus/Coprocessor0Window.java" />
-        <option value="$PROJECT_DIR$/PseudoOps.txt" />
-        <option value="$PROJECT_DIR$/mars/venus/GuiAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/tokenmarker/TokenMarker.java" />
+        <option value="$PROJECT_DIR$/mars/simulator/DelayedBranch.java" />
+        <option value="$PROJECT_DIR$/mars/ProgramStatement.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaPainter.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxStyle.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/KeywordMap.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxDocument.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/JEditTextArea.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxUtilities.java" />
+        <option value="$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaDefaults.java" />
+        <option value="$PROJECT_DIR$/mars/RISCVprogram.java" />
+        <option value="$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintDouble.java" />
+        <option value="$PROJECT_DIR$/mars/venus/FileSaveAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/FileCloseAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/FileNewAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/HelpAboutAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/RunPauseAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/EditCopyAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/FileSaveAsAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/RunStepAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/EditRedoAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/FileExitAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/EditFindReplaceAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/FileOpenAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/RunBackstepAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/RunAssembleAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/HelpHelpAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/FilePrintAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/EditPasteAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/EditSelectAllAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/EditCutAction.java" />
+        <option value="$PROJECT_DIR$/mars/venus/ExecutePane.java" />
+        <option value="$PROJECT_DIR$/mars/venus/GUI.java" />
         <option value="$PROJECT_DIR$/mars/venus/Editor.java" />
-        <option value="$PROJECT_DIR$/mars/venus/EditPane.java" />
-        <option value="$PROJECT_DIR$/mars/venus/EditTabbedPane.java" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/help/ExceptionsHelp.html" />
+        <option value="$PROJECT_DIR$/mars/util/Binary.java" />
+        <option value="$PROJECT_DIR$/mars/riscv/hardware/memory/Memory.java" />
       </list>
     </option>
   </component>
@@ -362,6 +666,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -377,52 +682,36 @@
             <path>
               <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
-              <item name=".settings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
               <item name="help" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="javaDoc" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="javaDoc" type="462c0819:PsiDirectoryNode" />
-              <item name="index-files" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="javaDoc" type="462c0819:PsiDirectoryNode" />
-              <item name="jquery" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="javaDoc" type="462c0819:PsiDirectoryNode" />
-              <item name="mars" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="javaDoc" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
               <item name="mars" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="mars" type="462c0819:PsiDirectoryNode" />
+              <item name="assembler" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
               <item name="mars" type="462c0819:PsiDirectoryNode" />
               <item name="riscv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="mars" type="462c0819:PsiDirectoryNode" />
+              <item name="riscv" type="462c0819:PsiDirectoryNode" />
+              <item name="dump" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
@@ -435,7 +724,34 @@
               <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
               <item name="mars" type="462c0819:PsiDirectoryNode" />
+              <item name="riscv" type="462c0819:PsiDirectoryNode" />
+              <item name="hardware" type="462c0819:PsiDirectoryNode" />
+              <item name="memory" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="mars" type="462c0819:PsiDirectoryNode" />
+              <item name="riscv" type="462c0819:PsiDirectoryNode" />
+              <item name="instructions" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="mars" type="462c0819:PsiDirectoryNode" />
               <item name="simulator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="mars" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="RISCV_final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="mars" type="462c0819:PsiDirectoryNode" />
+              <item name="venus" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="RISCV_final_project" type="b2602c69:ProjectViewProjectNode" />
@@ -446,7 +762,6 @@
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -570,7 +885,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568745256693</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="17/08/19 latest changes2">
+      <created>1568745402966</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1568745402966</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TodoView">
@@ -586,7 +908,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4968652" visible="true" weight="0.22014925" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4968652" visible="true" weight="0.22228146" />
       <window_info id="Structure" order="1" sideWeight="0.5031348" side_tool="true" weight="0.22014925" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -595,12 +917,12 @@
       <window_info id="Favorites" order="6" sideWeight="0.50082916" side_tool="true" weight="0.2196162" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" x="22" y="375" width="1876" height="290" id="Run" order="2" sideWeight="0.6865672" visible="true" weight="0.23666666" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.20222223" />
+      <window_info active="true" anchor="bottom" x="22" y="375" width="1876" height="290" id="Run" order="2" sideWeight="0.6865672" visible="true" weight="0.5822222" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49946696" weight="0.37666667" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" show_stripe_button="false" sideWeight="0.49946696" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4946695" weight="0.101111114" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4946695" weight="0.37666667" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.53944564" side_tool="true" weight="0.30222222" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.4968017" weight="0.033333335" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.46055436" weight="0.30222222" />
@@ -716,6 +1038,18 @@
   <component name="debuggerHistoryManager">
     <expressions id="evaluateCodeFragment">
       <expression>
+        <expression-string>GenMath.add(x, GenMath.sll(
+					GenMath.and(10000, 0xfffff000), 12))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
+        <expression-string>GenMath.add(x, GenMath.sll(
+					GenMath.and(y, 0xfffff000), 12))</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+      <expression>
         <expression-string>GenMath.or(GenMath.sll(GenMath.and(GenMath.srl(sourceValue, GenMath.sub(24, GenMath.sll(NumberPosInSource, 3))), 255), GenMath.sub(24, GenMath.sll(NumberPosInDest, 3))), GenMath.and(destValue, GenMath.neg(GenMath.sll(255, GenMath.sub(24, GenMath.sll(NumberPosInDest, 3))))));</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
@@ -747,16 +1081,6 @@
       </expression>
       <expression>
         <expression-string>GenMath.sub(24, GenMath.sll(NumberPosInDest, 3)</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>GenMath.sub(24, GenMath.sll(NumberPosInDest, 3))</expression-string>
-        <language-id>JAVA</language-id>
-        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
-      </expression>
-      <expression>
-        <expression-string>GenMath.sll(GenMath.and(GenMath.srl(sourceValue, GenMath.sub(24, GenMath.sll(NumberPosInSource, 3))), 255), GenMath.sub(24, GenMath.sll(NumberPosInDest, 3))</expression-string>
         <language-id>JAVA</language-id>
         <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
       </expression>
@@ -811,398 +1135,417 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mars/venus/SettingsPopupInputAction.java">
+    <entry file="file://$PROJECT_DIR$/help/MarsHelpIDE.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
+        <state relative-caret-position="442">
+          <caret line="74" column="40" selection-start-line="74" selection-start-column="40" selection-end-line="74" selection-end-column="40" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/FileNewAction.java">
+    <entry file="file://$PROJECT_DIR$/help/MarsHelpLimits.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/FileSaveAllAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/FileStatus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/FileCloseAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/Memory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4899">
-          <caret line="58" column="17" selection-start-line="58" selection-start-column="17" selection-end-line="58" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/AbstractBlockTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/BlockTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/MemoryAccessNotice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/StackBlockTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/TextBlockTable.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/MemoryConfigurations.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3894">
-          <caret line="3" column="19" selection-start-line="3" selection-start-column="19" selection-end-line="3" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/MemoryConfiguration.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/FloatingPointException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/Register.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="33" column="23" selection-start-line="33" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/Coprocessor1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="44" selection-start-line="44" selection-end-line="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#15564#15565#0" expanded="true" />
-            <element signature="e#15616#15617#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/AccessNotice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-134">
-          <caret line="36" column="2" lean-forward="true" selection-start-line="36" selection-start-column="2" selection-end-line="36" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/instructions/syscalls/AbstractSyscall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="44" column="26" selection-start-line="44" selection-start-column="26" selection-end-line="44" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/instructions/InstructionSet.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4645">
-          <caret line="897" column="61" selection-start-line="897" selection-start-column="61" selection-end-line="897" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/AbstractDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="41" selection-start-line="41" selection-end-line="45" selection-end-column="3" />
-          <folding>
-            <element signature="e#2879#2880#0" expanded="true" />
-            <element signature="e#2911#2912#0" expanded="true" />
-            <element signature="e#3236#3237#0" expanded="true" />
-            <element signature="e#3270#3271#0" expanded="true" />
-            <element signature="e#3407#3408#0" expanded="true" />
-            <element signature="e#3434#3435#0" expanded="true" />
-            <element signature="e#3685#3686#0" expanded="true" />
-            <element signature="e#3725#3726#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/AsciiTextDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="55" lean-forward="true" selection-start-line="55" selection-end-line="55" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/BinaryDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="49" column="3" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/BinaryTextDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-412">
-          <caret line="48" column="3" selection-start-line="48" selection-start-column="3" selection-end-line="48" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/DumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="46" column="3" selection-start-line="46" selection-start-column="3" selection-end-line="46" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/DumpFormatLoader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="249">
-          <caret line="41" selection-start-line="41" selection-end-line="45" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/HexTextDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="51" column="3" selection-start-line="51" selection-start-column="3" selection-end-line="51" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/RVIRegisters.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="41" column="69" selection-start-line="41" selection-start-column="69" selection-end-line="41" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/MIFDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/IntelHexDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/dump/SegmentWindowDumpFormat.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2734">
-          <caret line="151" column="14" selection-start-line="151" selection-start-column="14" selection-end-line="151" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/RegisterAccessNotice.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/FileCloseAllAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-16">
-          <caret line="21" column="50" selection-start-line="21" selection-start-column="50" selection-end-line="21" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/RegistersWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="76" selection-start-line="76" selection-end-line="78" selection-end-column="77" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/Coprocessor1Window.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="74" column="77" selection-start-line="74" selection-start-column="77" selection-end-line="74" selection-end-column="77" />
+        <state relative-caret-position="66">
+          <caret line="16" column="8" lean-forward="true" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mars/venus/Coprocessor0Window.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5530">
-          <caret line="69" column="24" selection-start-line="69" selection-start-column="24" selection-end-line="69" selection-end-column="24" />
+        <state relative-caret-position="177">
+          <caret line="83" column="32" selection-start-line="83" selection-start-column="31" selection-end-line="83" selection-end-column="32" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PseudoOps.txt">
+    <entry file="file://$PROJECT_DIR$/mars/venus/RegistersPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="25" selection-start-line="25" selection-end-line="25" />
+        <state relative-caret-position="-330">
+          <caret line="68" column="24" lean-forward="true" selection-start-line="68" selection-start-column="24" selection-end-line="68" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/SettingsExtendedAction.java">
+    <entry file="file://$PROJECT_DIR$/mars/venus/NewObservable.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="550">
-          <caret line="36" column="48" selection-start-line="36" selection-start-column="48" selection-end-line="36" selection-end-column="48" />
+        <state relative-caret-position="88">
+          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/GUI.java">
+    <entry file="file://$PROJECT_DIR$/mars/venus/NumberDisplayBaseChooser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="385">
-          <caret line="243" column="83" selection-start-line="243" selection-start-column="75" selection-end-line="243" selection-end-column="83" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="195">
+          <caret line="45" column="13" selection-start-line="45" selection-start-column="13" selection-end-line="45" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/GuiAction.java">
+    <entry file="file://$PROJECT_DIR$/mars/venus/PopupListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="52" column="46" selection-start-line="52" selection-start-column="46" selection-end-line="52" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/Editor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="170" column="60" selection-start-line="170" selection-start-column="47" selection-end-line="170" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/EditPane.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-190">
-          <caret line="566" column="60" selection-start-line="566" selection-start-column="60" selection-end-line="566" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/EditRedoAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="38" column="13" selection-start-line="38" selection-start-column="13" selection-end-line="38" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mars/venus/EditPasteAction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+        <state relative-caret-position="836">
+          <caret line="39" column="13" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mars/venus/EditTabbedPane.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="737" column="16" selection-start-line="737" selection-start-column="16" selection-end-line="737" selection-end-column="16" />
+        <state relative-caret-position="195">
+          <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/riscv/instructions/S_type.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="106" column="4" selection-start-line="106" selection-start-column="4" selection-end-line="106" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileSaveAllAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="265">
+          <caret line="36" column="13" selection-start-line="36" selection-start-column="13" selection-end-line="36" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/GuiAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="813">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/AddressErrorException.java">
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/tokenmarker/TokenMarker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1628">
-          <caret line="77" column="20" selection-start-line="77" selection-start-column="20" selection-end-line="77" selection-end-column="20" />
+        <state relative-caret-position="109">
+          <caret line="204" selection-start-line="204" selection-end-line="204" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/simulator/DelayedBranch.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="100" selection-start-line="100" selection-end-line="100" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/ProgramStatement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3409">
+          <caret line="457" column="66" selection-start-line="457" selection-start-column="66" selection-end-line="457" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxDocument.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-15">
+          <caret line="30" column="7" selection-start-line="30" selection-start-column="7" selection-end-line="30" selection-end-column="7" />
+          <folding>
+            <element signature="e#958#959#0" expanded="true" />
+            <element signature="e#983#984#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/JEditTextArea.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-155">
+          <caret line="1053" column="29" selection-start-line="1053" selection-start-column="29" selection-end-line="1053" selection-end-column="29" />
+          <folding>
+            <element signature="e#2625#2626#0" expanded="true" />
+            <element signature="e#2687#2688#0" expanded="true" />
+            <element signature="e#7273#7274#0" expanded="true" />
+            <element signature="e#7332#7333#0" expanded="true" />
+            <element signature="e#10924#10925#0" expanded="true" />
+            <element signature="e#10960#10961#0" expanded="true" />
+            <element signature="e#21025#21026#0" expanded="true" />
+            <element signature="e#21053#21054#0" expanded="true" />
+            <element signature="e#22294#22295#0" expanded="true" />
+            <element signature="e#22364#22365#0" expanded="true" />
+            <element signature="e#26189#26190#0" expanded="true" />
+            <element signature="e#26223#26224#0" expanded="true" />
+            <element signature="e#27292#27293#0" expanded="true" />
+            <element signature="e#27340#27341#0" expanded="true" />
+            <element signature="e#27429#27430#0" expanded="true" />
+            <element signature="e#27461#27462#0" expanded="true" />
+            <element signature="e#28894#28895#0" expanded="true" />
+            <element signature="e#28964#28965#0" expanded="true" />
+            <element signature="e#29142#29143#0" expanded="true" />
+            <element signature="e#29204#29205#0" expanded="true" />
+            <element signature="e#39308#39309#0" expanded="true" />
+            <element signature="e#39337#39338#0" expanded="true" />
+            <element signature="e#40412#40413#0" expanded="true" />
+            <element signature="e#40443#40444#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/KeywordMap.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="93" selection-start-line="93" selection-end-line="93" />
+          <folding>
+            <element signature="e#2895#2896#0" expanded="true" />
+            <element signature="e#2931#2932#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/PopupHelpItem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="75" column="51" lean-forward="true" selection-start-line="75" selection-start-column="51" selection-end-line="75" selection-end-column="51" />
+          <folding>
+            <element signature="e#3262#3263#0" expanded="true" />
+            <element signature="e#3302#3303#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxStyle.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/SyntaxUtilities.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1145">
+          <caret line="120" column="37" selection-start-line="120" selection-start-column="37" selection-end-line="120" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaDefaults.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-544">
+          <caret line="55" column="8" lean-forward="true" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/editors/jeditsyntax/TextAreaPainter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="162" selection-start-line="162" selection-end-line="162" />
+          <folding>
+            <element signature="e#3431#3432#0" expanded="true" />
+            <element signature="e#3463#3464#0" expanded="true" />
+            <element signature="e#3905#3906#0" expanded="true" />
+            <element signature="e#3941#3942#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/Settings.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="1022" selection-start-line="1022" selection-end-line="1022" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/RISCVprogram.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="369" selection-start-line="369" selection-end-line="369" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileDumpMemoryAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/RunGoAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileCloseAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileNewAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/HelpAboutAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="35" column="24" lean-forward="true" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/RunPauseAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="36" column="28" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/EditCopyAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="33" column="24" lean-forward="true" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/RunStepAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="37" column="23" lean-forward="true" selection-start-line="37" selection-start-column="23" selection-end-line="37" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/EditRedoAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="36" column="24" lean-forward="true" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileSaveAsAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileExitAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="34" column="24" lean-forward="true" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/EditFindReplaceAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="36" column="24" lean-forward="true" selection-start-line="36" selection-start-column="24" selection-end-line="36" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileOpenAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/FileSaveAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/riscv/instructions/ecalls/EcallPrintDouble.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="36" selection-start-line="36" selection-end-line="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/RunAssembleAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="40" column="32" selection-start-line="40" selection-start-column="32" selection-end-line="40" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/RunBackstepAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-221">
+          <caret line="40" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/HelpHelpAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="41" column="24" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/Coprocessor0.java">
+    <entry file="file://$PROJECT_DIR$/mars/venus/FilePrintAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="40" column="74" selection-start-line="40" selection-start-column="74" selection-end-line="40" selection-end-column="74" />
+        <state relative-caret-position="117">
+          <caret line="37" column="24" selection-start-line="37" selection-start-column="24" selection-end-line="37" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/simulator/BackStepper.java">
+    <entry file="file://$PROJECT_DIR$/mars/venus/EditPasteAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3410">
-          <caret line="167" column="21" selection-start-line="167" selection-start-column="21" selection-end-line="167" selection-end-column="21" />
+        <state relative-caret-position="117">
+          <caret line="33" column="24" selection-start-line="33" selection-start-column="24" selection-end-line="33" selection-end-column="24" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mars/simulator/Simulator.java">
+    <entry file="file://$PROJECT_DIR$/mars/venus/EditSelectAllAction.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="147" column="25" selection-start-line="147" selection-start-column="25" selection-end-line="147" selection-end-column="25" />
+        <state relative-caret-position="109">
+          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/EditCutAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-38">
+          <caret line="34" column="24" selection-start-line="34" selection-start-column="24" selection-end-line="34" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/GUI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="824" column="74" lean-forward="true" selection-start-line="824" selection-start-column="74" selection-end-line="824" selection-end-column="74" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/ExecutePane.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="160" selection-start-line="160" selection-end-line="160" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/venus/Editor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="221" selection-start-line="221" selection-end-line="221" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mars/util/Binary.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="109">
+          <caret line="230" column="23" selection-start-line="230" selection-start-column="23" selection-end-line="230" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
+    <entry file="file://$PROJECT_DIR$/mars/riscv/hardware/memory/Memory.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/docs/mars/MIPSprogram.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/help/ExceptionsHelp.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="138" column="39" selection-start-line="138" selection-start-column="39" selection-end-line="138" selection-end-column="39" />
+        <state relative-caret-position="87">
+          <caret line="204" column="74" selection-start-line="204" selection-start-column="74" selection-end-line="204" selection-end-column="74" />
+          <folding>
+            <element signature="e#10375#10376#0" expanded="true" />
+            <element signature="e#10415#10416#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

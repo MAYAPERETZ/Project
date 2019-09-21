@@ -31,7 +31,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 	
 /**
-* Action  for the Edit -> Paste menu item
+* Action  for the Edit - Paste menu item
 */
 public class EditPasteAction extends ChangeableAction{
 

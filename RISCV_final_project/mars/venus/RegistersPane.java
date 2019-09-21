@@ -63,8 +63,8 @@ public class RegistersPane extends JInternalFrame {
 	   cop0Tab.setVisible(true);
 	   jTabbedPane = new JTabbedPane();
 	   jTabbedPane.addTab( "Registers",  regsTab);
-	   jTabbedPane.addTab("Coproc 1",  cop1Tab);
-	   jTabbedPane.addTab( "Coproc 0",  cop0Tab);
+	   jTabbedPane.addTab("FP Registers",  cop1Tab);
+	   jTabbedPane.addTab( "CSRs",  cop0Tab);
 	   add(jTabbedPane);
 	   setVisible(true);
 

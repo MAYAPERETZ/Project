@@ -54,8 +54,8 @@ function windowTitle()
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../mars/mips/hardware/MemoryAccessNotice.html" title="class in mars.mips.hardware"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../mars/mips/hardware/MemoryAccessNotice.html" title="class in mars.riscv.hardware"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?mars/mips/hardware/Memory.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Memory.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;
@@ -87,13 +87,13 @@ DETAIL:&nbsp;<A HREF="#field_detail">FIELD</A>&nbsp;|&nbsp;CONSTR&nbsp;|&nbsp;<A
 <!-- ======== START OF CLASS DATA ======== -->
 <H2>
 <FONT SIZE="-1">
-mars.mips.hardware</FONT>
+    mars.riscv.hardware</FONT>
 <BR>
 Class Memory</H2>
 <PRE>
 <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">java.lang.Object</A>
   <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observable.html?is-external=true" title="class or interface in java.util">java.util.Observable</A>
-      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>mars.mips.hardware.Memory</B>
+      <IMG SRC="../../../resources/inherit.gif" ALT="extended by "><B>mars.riscv.hardware.Memory</B>
 </PRE>
 <HR>
 <DL>
@@ -458,7 +458,7 @@ Represents MIPS memory.  Different segments are represented by different data st
 </TR>
 <TR BGCOLOR="white" CLASS="TableRowColor">
 <TD ALIGN="right" VALIGN="top" WIDTH="1%"><FONT SIZE="-1">
-<CODE>static&nbsp;<A HREF="../../../mars/mips/hardware/Memory.html" title="class in mars.mips.hardware">Memory</A></CODE></FONT></TD>
+<CODE>static&nbsp;<A HREF="../../../mars/mips/hardware/Memory.html" title="class in mars.riscv.hardware">Memory</A></CODE></FONT></TD>
 <TD><CODE><B><A HREF="../../../mars/mips/hardware/Memory.html#getInstance()">getInstance</A></B>()</CODE>
 
 <BR>
@@ -891,7 +891,7 @@ public static final int <B>WORD_LENGTH_BYTES</B></PRE>
 <DD>MIPS word length in bytes.
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#mars.mips.hardware.Memory.WORD_LENGTH_BYTES">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#mars.riscv.hardware.Memory.WORD_LENGTH_BYTES">Constant Field Values</A></DL>
 </DL>
 <HR>
 
@@ -904,7 +904,7 @@ public static final boolean <B>LITTLE_ENDIAN</B></PRE>
             numbered byte is right most [3][2][1][0].
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#mars.mips.hardware.Memory.LITTLE_ENDIAN">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#mars.riscv.hardware.Memory.LITTLE_ENDIAN">Constant Field Values</A></DL>
 </DL>
 <HR>
 
@@ -917,7 +917,7 @@ public static final boolean <B>BIG_ENDIAN</B></PRE>
             numbered byte is left most [0][1][2][3].
 <P>
 <DL>
-<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#mars.mips.hardware.Memory.BIG_ENDIAN">Constant Field Values</A></DL>
+<DT><B>See Also:</B><DD><A HREF="../../../constant-values.html#mars.riscv.hardware.Memory.BIG_ENDIAN">Constant Field Values</A></DL>
 </DL>
 <HR>
 
@@ -1003,7 +1003,7 @@ public static int <B>memoryMapLimitAddress</B></PRE>
 <A NAME="getInstance()"><!-- --></A><H3>
 getInstance</H3>
 <PRE>
-public static <A HREF="../../../mars/mips/hardware/Memory.html" title="class in mars.mips.hardware">Memory</A> <B>getInstance</B>()</PRE>
+public static <A HREF="../../../mars/mips/hardware/Memory.html" title="class in mars.riscv.hardware">Memory</A> <B>getInstance</B>()</PRE>
 <DL>
 <DD>Returns the unique Memory instance, which becomes in essence global.
 <P>
@@ -1107,7 +1107,7 @@ set</H3>
 public int <B>set</B>(int&nbsp;address,
                int&nbsp;value,
                int&nbsp;length)
-        throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+        throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given address, write the given value over the given number of bytes.
  This one does not check for word boundaries, and copies one byte at a time.
@@ -1117,7 +1117,7 @@ public int <B>set</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be set.<DD><CODE>value</CODE> - Value to be stored starting at that address.<DD><CODE>length</CODE> - Number of bytes to be written.
 <DT><B>Returns:</B><DD>old value that was replaced by the set operation
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -1127,7 +1127,7 @@ setRawWord</H3>
 <PRE>
 public int <B>setRawWord</B>(int&nbsp;address,
                       int&nbsp;value)
-               throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+               throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, write the given value over 4 bytes (a word).  
   It must be written as is, without adjusting for byte order (little vs big endian).
@@ -1137,7 +1137,7 @@ public int <B>setRawWord</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be set.<DD><CODE>value</CODE> - Value to be stored starting at that address.
 <DT><B>Returns:</B><DD>old value that was replaced by the set operation.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1147,7 +1147,7 @@ setWord</H3>
 <PRE>
 public int <B>setWord</B>(int&nbsp;address,
                    int&nbsp;value)
-            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, write the given value over 4 bytes (a word).  
   The address must be word-aligned.
@@ -1156,7 +1156,7 @@ public int <B>setWord</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be set.<DD><CODE>value</CODE> - Value to be stored starting at that address.
 <DT><B>Returns:</B><DD>old value that was replaced by setWord operation.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1166,7 +1166,7 @@ setHalf</H3>
 <PRE>
 public int <B>setHalf</B>(int&nbsp;address,
                    int&nbsp;value)
-            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given halfword address, write the lower 16 bits of given value 
   into 2 bytes (a halfword).
@@ -1175,7 +1175,7 @@ public int <B>setHalf</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be set.<DD><CODE>value</CODE> - Value to be stored starting at that address.  Only low order 16 bits used.
 <DT><B>Returns:</B><DD>old value that was replaced by setHalf operation.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on halfword boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on halfword boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1185,7 +1185,7 @@ setByte</H3>
 <PRE>
 public int <B>setByte</B>(int&nbsp;address,
                    int&nbsp;value)
-            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Writes low order 8 bits of given value into specified Memory byte.
 <P>
@@ -1193,7 +1193,7 @@ public int <B>setByte</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Address of Memory byte to be set.<DD><CODE>value</CODE> - Value to be stored at that address.  Only low order 8 bits used.
 <DT><B>Returns:</B><DD>old value that was replaced by setByte operation.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -1203,7 +1203,7 @@ setDouble</H3>
 <PRE>
 public double <B>setDouble</B>(int&nbsp;address,
                         double&nbsp;value)
-                 throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                 throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Writes 64 bit double value starting at specified Memory address.  Note that 
   high-order 32 bits are stored in higher (second) memory word regardless
@@ -1213,7 +1213,7 @@ public double <B>setDouble</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be set.<DD><CODE>value</CODE> - Value to be stored at that address.
 <DT><B>Returns:</B><DD>old value that was replaced by setDouble operation.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -1223,7 +1223,7 @@ setStatement</H3>
 <PRE>
 public void <B>setStatement</B>(int&nbsp;address,
                          <A HREF="../../../mars/ProgramStatement.html" title="class in mars">ProgramStatement</A>&nbsp;statement)
-                  throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                  throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Stores ProgramStatement in Text Segment.
 <P>
@@ -1231,7 +1231,7 @@ public void <B>setStatement</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be set.  Must be word boundary.<DD><CODE>statement</CODE> - Machine code to be stored starting at that address -- for simulation
  purposes, actually stores reference to ProgramStatement instead of 32-bit machine code.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary or is outside Text Segment.<DT><B>See Also:</B><DD><A HREF="../../../mars/ProgramStatement.html" title="class in mars"><CODE>ProgramStatement</CODE></A></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary or is outside Text Segment.<DT><B>See Also:</B><DD><A HREF="../../../mars/ProgramStatement.html" title="class in mars"><CODE>ProgramStatement</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -1241,7 +1241,7 @@ get</H3>
 <PRE>
 public int <B>get</B>(int&nbsp;address,
                int&nbsp;length)
-        throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+        throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, read the given number of bytes (max 4).
  This one does not check for word boundaries, and copies one byte at a time.
@@ -1251,7 +1251,7 @@ public int <B>get</B>(int&nbsp;address,
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be read.<DD><CODE>length</CODE> - Number of bytes to be read.
 <DT><B>Returns:</B><DD>Value stored starting at that address.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -1260,7 +1260,7 @@ public int <B>get</B>(int&nbsp;address,
 getRawWord</H3>
 <PRE>
 public int <B>getRawWord</B>(int&nbsp;address)
-               throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+               throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, read a 4 byte word as an int.  
   It transfers the 32 bit value "raw" as stored in memory, and does not adjust 
@@ -1270,7 +1270,7 @@ public int <B>getRawWord</B>(int&nbsp;address)
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of word to be read.
 <DT><B>Returns:</B><DD>Word (4-byte value) stored starting at that address.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1279,7 +1279,7 @@ public int <B>getRawWord</B>(int&nbsp;address)
 getRawWordOrNull</H3>
 <PRE>
 public <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Integer.html?is-external=true" title="class or interface in java.lang">Integer</A> <B>getRawWordOrNull</B>(int&nbsp;address)
-                         throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                         throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, read a 4 byte word as an int and return Integer.  
   It transfers the 32 bit value "raw" as stored in memory, and does not adjust 
@@ -1298,7 +1298,7 @@ public <A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/Integer.h
 <DT><B>Returns:</B><DD>Word (4-byte value) stored starting at that address as an Integer.  Conditions
  that cause return value null are described above.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1308,7 +1308,7 @@ getAddressOfFirstNull</H3>
 <PRE>
 public int <B>getAddressOfFirstNull</B>(int&nbsp;baseAddress,
                                  int&nbsp;limitAddress)
-                          throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                          throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Look for first "null" memory value in an address range.  For text segment (binary code), this
   represents a word that does not contain an instruction.  Normally use this to find the end of 
@@ -1319,7 +1319,7 @@ public int <B>getAddressOfFirstNull</B>(int&nbsp;baseAddress,
 <DT><B>Parameters:</B><DD><CODE>baseAddress</CODE> - lowest MIPS address to be searched; the starting point<DD><CODE>limitAddress</CODE> - highest MIPS address to be searched
 <DT><B>Returns:</B><DD>lowest address within specified range that contains "null" value as described above.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - if the base address is not on a word boundary</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - if the base address is not on a word boundary</DL>
 </DD>
 </DL>
 <HR>
@@ -1328,7 +1328,7 @@ public int <B>getAddressOfFirstNull</B>(int&nbsp;baseAddress,
 getWord</H3>
 <PRE>
 public int <B>getWord</B>(int&nbsp;address)
-            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, read a 4 byte word as an int.  
   Does not use "get()"; we can do it faster here knowing we're working only 
@@ -1338,7 +1338,7 @@ public int <B>getWord</B>(int&nbsp;address)
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of word to be read.
 <DT><B>Returns:</B><DD>Word (4-byte value) stored starting at that address.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1347,7 +1347,7 @@ public int <B>getWord</B>(int&nbsp;address)
 getWordNoNotify</H3>
 <PRE>
 public int <B>getWordNoNotify</B>(int&nbsp;address)
-                    throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                    throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, read a 4 byte word as an int.  
   Does not use "get()"; we can do it faster here knowing we're working only 
@@ -1357,7 +1357,7 @@ public int <B>getWordNoNotify</B>(int&nbsp;address)
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of word to be read.
 <DT><B>Returns:</B><DD>Word (4-byte value) stored starting at that address.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1366,7 +1366,7 @@ public int <B>getWordNoNotify</B>(int&nbsp;address)
 getHalf</H3>
 <PRE>
 public int <B>getHalf</B>(int&nbsp;address)
-            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Starting at the given word address, read a 2 byte word into lower 16 bits of int.
 <P>
@@ -1374,7 +1374,7 @@ public int <B>getHalf</B>(int&nbsp;address)
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of word to be read.
 <DT><B>Returns:</B><DD>Halfword (2-byte value) stored starting at that address, stored in lower 16 bits.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on halfword boundary.</DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on halfword boundary.</DL>
 </DD>
 </DL>
 <HR>
@@ -1383,7 +1383,7 @@ public int <B>getHalf</B>(int&nbsp;address)
 getByte</H3>
 <PRE>
 public int <B>getByte</B>(int&nbsp;address)
-            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+            throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Reads specified Memory byte into low order 8 bits of int.
 <P>
@@ -1391,7 +1391,7 @@ public int <B>getByte</B>(int&nbsp;address)
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Address of Memory byte to be read.
 <DT><B>Returns:</B><DD>Value stored at that address.  Only low order 8 bits used.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -1400,7 +1400,7 @@ public int <B>getByte</B>(int&nbsp;address)
 getStatement</H3>
 <PRE>
 public <A HREF="../../../mars/ProgramStatement.html" title="class in mars">ProgramStatement</A> <B>getStatement</B>(int&nbsp;address)
-                              throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                              throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Gets ProgramStatement from Text Segment.
 <P>
@@ -1408,7 +1408,7 @@ public <A HREF="../../../mars/ProgramStatement.html" title="class in mars">Progr
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be read.  Must be word boundary.
 <DT><B>Returns:</B><DD>reference to ProgramStatement object associated with that address, or null if none.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary or is outside Text Segment.<DT><B>See Also:</B><DD><A HREF="../../../mars/ProgramStatement.html" title="class in mars"><CODE>ProgramStatement</CODE></A></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary or is outside Text Segment.<DT><B>See Also:</B><DD><A HREF="../../../mars/ProgramStatement.html" title="class in mars"><CODE>ProgramStatement</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -1417,7 +1417,7 @@ public <A HREF="../../../mars/ProgramStatement.html" title="class in mars">Progr
 getStatementNoNotify</H3>
 <PRE>
 public <A HREF="../../../mars/ProgramStatement.html" title="class in mars">ProgramStatement</A> <B>getStatementNoNotify</B>(int&nbsp;address)
-                                      throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                                      throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Gets ProgramStatement from Text Segment without notifying observers.
 <P>
@@ -1425,7 +1425,7 @@ public <A HREF="../../../mars/ProgramStatement.html" title="class in mars">Progr
 <DT><B>Parameters:</B><DD><CODE>address</CODE> - Starting address of Memory address to be read.  Must be word boundary.
 <DT><B>Returns:</B><DD>reference to ProgramStatement object associated with that address, or null if none.
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE> - If address is not on word boundary or is outside Text Segment.<DT><B>See Also:</B><DD><A HREF="../../../mars/ProgramStatement.html" title="class in mars"><CODE>ProgramStatement</CODE></A></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE> - If address is not on word boundary or is outside Text Segment.<DT><B>See Also:</B><DD><A HREF="../../../mars/ProgramStatement.html" title="class in mars"><CODE>ProgramStatement</CODE></A></DL>
 </DD>
 </DL>
 <HR>
@@ -1581,7 +1581,7 @@ addObserver</H3>
 <PRE>
 public void <B>addObserver</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observer.html?is-external=true" title="class or interface in java.util">Observer</A>&nbsp;obs,
                         int&nbsp;addr)
-                 throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                 throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Method to accept registration from observer for specific address.  This includes
   the memory word starting at the given address. Note to observers: this class delegates Observable operations
@@ -1590,7 +1590,7 @@ public void <B>addObserver</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>obs</CODE> - the observer<DD><CODE>addr</CODE> - the memory address which must be on word boundary
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -1601,7 +1601,7 @@ addObserver</H3>
 public void <B>addObserver</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs/api/java/util/Observer.html?is-external=true" title="class or interface in java.util">Observer</A>&nbsp;obs,
                         int&nbsp;startAddr,
                         int&nbsp;endAddr)
-                 throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></PRE>
+                 throws <A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></PRE>
 <DL>
 <DD>Method to accept registration from observer for specific address range.  The 
   last byte included in the address range is the last byte of the word specified
@@ -1611,7 +1611,7 @@ public void <B>addObserver</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/docs
 <DD><DL>
 <DT><B>Parameters:</B><DD><CODE>obs</CODE> - the observer<DD><CODE>startAddr</CODE> - the low end of memory address range, must be on word boundary<DD><CODE>endAddr</CODE> - the high end of memory address range, must be on word boundary
 <DT><B>Throws:</B>
-<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.mips.hardware">AddressErrorException</A></CODE></DL>
+<DD><CODE><A HREF="../../../mars/mips/hardware/AddressErrorException.html" title="class in mars.riscv.hardware">AddressErrorException</A></CODE></DL>
 </DD>
 </DL>
 <HR>
@@ -1732,8 +1732,8 @@ public void <B>notifyObservers</B>(<A HREF="http://docs.oracle.com/javase/1.5.0/
 
 <TR>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
-&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.mips.hardware"><B>PREV CLASS</B></A>&nbsp;
-&nbsp;<A HREF="../../../mars/mips/hardware/MemoryAccessNotice.html" title="class in mars.mips.hardware"><B>NEXT CLASS</B></A></FONT></TD>
+&nbsp;<A HREF="../../../mars/mips/hardware/InvalidRegisterAccessException.html" title="class in mars.riscv.hardware"><B>PREV CLASS</B></A>&nbsp;
+&nbsp;<A HREF="../../../mars/mips/hardware/MemoryAccessNotice.html" title="class in mars.riscv.hardware"><B>NEXT CLASS</B></A></FONT></TD>
 <TD BGCOLOR="white" CLASS="NavBarCell2"><FONT SIZE="-2">
   <A HREF="../../../index.html?mars/mips/hardware/Memory.html" target="_top"><B>FRAMES</B></A>  &nbsp;
 &nbsp;<A HREF="Memory.html" target="_top"><B>NO FRAMES</B></A>  &nbsp;

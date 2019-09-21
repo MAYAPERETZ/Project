@@ -2,8 +2,8 @@ package mars.venus;
 
 import mars.Globals;
 import mars.ProcessingException;
-import mars.riscv.hardware.Coprocessor0;
-import mars.riscv.hardware.Coprocessor1;
+import mars.riscv.hardware.CSRs;
+import mars.riscv.hardware.FPRegisters;
 import mars.riscv.hardware.RVIRegisters;
 import mars.riscv.hardware.memory.Memory;
 import mars.util.SystemIO;
@@ -76,8 +76,8 @@ public class RunResetAction extends RunAction {
            return;
         }
         RVIRegisters.resetRegisters();
-        Coprocessor1.resetRegisters();
-        Coprocessor0.resetRegisters();
+        FPRegisters.resetRegisters();
+        CSRs.resetRegisters();
 
         executePane.getRegistersWindow().clearHighlighting();
         executePane.getRegistersWindow().updateRegisters();

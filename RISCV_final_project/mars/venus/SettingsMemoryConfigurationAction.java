@@ -81,7 +81,7 @@ public class SettingsMemoryConfigurationAction extends ChangeableAction{
         JLabel[] nameDisplay;
         ConfigurationButton selectedConfigurationButton, initialConfigurationButton;
 
-        public MemoryConfigurationDialog(Frame owner, String title, boolean modality) {
+        MemoryConfigurationDialog(Frame owner, String title, boolean modality) {
             super(owner, title, modality);
             this.setContentPane(buildDialogPanel());
             this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -263,7 +263,7 @@ public class SettingsMemoryConfigurationAction extends ChangeableAction{
     private class ConfigurationButton extends JRadioButton {
         private MemoryConfiguration configuration;
 
-        public ConfigurationButton(MemoryConfiguration config) {
+        ConfigurationButton(MemoryConfiguration config) {
             super(config.getConfigurationName(), config == MemoryConfigurations.getCurrentConfiguration());
             this.configuration = config;
         }

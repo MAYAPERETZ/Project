@@ -52,23 +52,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 	  *   @author Sanderson and Team JSpim
 	  **/
     
-    public class LabelsWindow extends JInternalFrame{
-      private Container contentPane;
-      private JPanel labelPanel;      // holds J
-      private JCheckBox dataLabels, textLabels;
-      private ArrayList listOfLabelsForSymbolTable;
-      private LabelsWindow labelsWindow;
-      private static final int MAX_DISPLAYED_CHARS = 24;
-      private static final int PREFERRED_NAME_COLUMN_WIDTH = 60;
-      private static final int PREFERRED_ADDRESS_COLUMN_WIDTH = 60;
-      private static final int LABEL_COLUMN = 0;
-      private static final int ADDRESS_COLUMN = 1;
-      private static final String[] columnToolTips = {
-               /* LABEL_COLUMN */   "Programmer-defined label (identifier).",
-               /* ADDRESS_COLUMN */ "Text or data segment address at which label is defined."
-               };
-      private static String [] columnNames;
-      private Comparator tableSortComparator;
+public class LabelsWindow extends JInternalFrame{
+    private Container contentPane;
+    private JPanel labelPanel;      // holds J
+    private JCheckBox dataLabels, textLabels;
+    private ArrayList listOfLabelsForSymbolTable;
+    private LabelsWindow labelsWindow;
+    private static final int MAX_DISPLAYED_CHARS = 24;
+    private static final int PREFERRED_NAME_COLUMN_WIDTH = 60;
+    private static final int PREFERRED_ADDRESS_COLUMN_WIDTH = 60;
+    private static final int LABEL_COLUMN = 0;
+    private static final int ADDRESS_COLUMN = 1;
+    private static final String[] columnToolTips = {
+           /* LABEL_COLUMN */   "Programmer-defined label (identifier).",
+           /* ADDRESS_COLUMN */ "Text or data segment address at which label is defined."
+           };
+    private static String [] columnNames;
+    private Comparator tableSortComparator;
 
    	
    	/////////////////////////////////////////////////////////////////////////////////////
@@ -86,19 +86,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	// "Click Addr" column shows which state to go to when Addr column is clicked.
    	//////////////////////////////////////////////////////////////////////////////////////
 		// The array of comparators; index corresponds to state in table above.
-      private final Comparator[] tableSortingComparators = {
-         /*  0  */  new LabelAddressAscendingComparator(),
-         /*  1  */  new DescendingComparator(new LabelAddressAscendingComparator()),
-         /*  2  */  new LabelAddressAscendingComparator(),
-         /*  3  */  new DescendingComparator(new LabelAddressAscendingComparator()),
-         /*  4  */  new LabelNameAscendingComparator(),
-         /*  5  */  new LabelNameAscendingComparator(),
-         /*  6  */  new DescendingComparator(new LabelNameAscendingComparator()),
-         /*  7  */  new DescendingComparator(new LabelNameAscendingComparator())
-         };
-      // The array of state transitions; primary index corresponds to state in table above,
-   	// secondary index corresponds to table columns (0==label name, 1==address).
-      private static final int[][] sortStateTransitions = {
+    private final Comparator[] tableSortingComparators = {
+     /*  0  */  new LabelAddressAscendingComparator(),
+     /*  1  */  new DescendingComparator(new LabelAddressAscendingComparator()),
+     /*  2  */  new LabelAddressAscendingComparator(),
+     /*  3  */  new DescendingComparator(new LabelAddressAscendingComparator()),
+     /*  4  */  new LabelNameAscendingComparator(),
+     /*  5  */  new LabelNameAscendingComparator(),
+     /*  6  */  new DescendingComparator(new LabelNameAscendingComparator()),
+     /*  7  */  new DescendingComparator(new LabelNameAscendingComparator())
+     };
+    // The array of state transitions; primary index corresponds to state in table above,
+    // secondary index corresponds to table columns (0==label name, 1==address).
+    private static final int[][] sortStateTransitions = {
          /*  0  */  { 4, 1 },
          /*  1  */  { 5, 0 },
          /*  2  */  { 6, 3 },
@@ -108,91 +108,88 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          /*  6  */  { 4, 2 },
          /*  7  */  { 5, 3 }
          };
-   	// The array of column headings; index corresponds to state in table above.
-      private static final char ASCENDING_SYMBOL = '\u25b2'; //triangle with base at bottom ("points" up, to indicate ascending sort)
-      private static final char DESCENDING_SYMBOL = '\u25bc';//triangle with base at top ("points" down, to indicate descending sort)
-      private static final String[][] sortColumnHeadings = { 
-         /*  0  */  {"Label", "Address  "+ASCENDING_SYMBOL},
-         /*  1  */  {"Label", "Address  "+DESCENDING_SYMBOL},
-         /*  2  */  {"Label", "Address  "+ASCENDING_SYMBOL},
-         /*  3  */  {"Label", "Address  "+DESCENDING_SYMBOL},
-         /*  4  */  {"Label  "+ASCENDING_SYMBOL, "Address"},
-         /*  5  */  {"Label  "+ASCENDING_SYMBOL, "Address"},
-         /*  6  */  {"Label  "+DESCENDING_SYMBOL, "Address"},
-         /*  7  */  {"Label  "+DESCENDING_SYMBOL, "Address"}
-         };
-   
-   	// Current sort state (0-7, see table above).  Will be set from saved Settings in construtor.
-      private int sortState = 0;
+    // The array of column headings; index corresponds to state in table above.
+    private static final char ASCENDING_SYMBOL = '\u25b2'; //triangle with base at bottom ("points" up, to indicate ascending sort)
+    private static final char DESCENDING_SYMBOL = '\u25bc';//triangle with base at top ("points" down, to indicate descending sort)
+    private static final String[][] sortColumnHeadings = {
+     /*  0  */  {"Label", "Address  "+ASCENDING_SYMBOL},
+     /*  1  */  {"Label", "Address  "+DESCENDING_SYMBOL},
+     /*  2  */  {"Label", "Address  "+ASCENDING_SYMBOL},
+     /*  3  */  {"Label", "Address  "+DESCENDING_SYMBOL},
+     /*  4  */  {"Label  "+ASCENDING_SYMBOL, "Address"},
+     /*  5  */  {"Label  "+ASCENDING_SYMBOL, "Address"},
+     /*  6  */  {"Label  "+DESCENDING_SYMBOL, "Address"},
+     /*  7  */  {"Label  "+DESCENDING_SYMBOL, "Address"}
+     };
+
+    // Current sort state (0-7, see table above).  Will be set from saved Settings in construtor.
+    private int sortState = 0;
    	
     /**
       *  Constructor for the Labels (symbol table) window.
    	**/
    
-       public LabelsWindow (){
-         super("Labels", true, false, true, true);
-         try {
+    public LabelsWindow (){
+        super("Labels", true, false, true, true);
+        try {
             sortState = Integer.parseInt(Globals.getSettings().getLabelSortState());
-         } 
-             catch (NumberFormatException nfe) {
-               sortState = 0;
-            }
-         setFrameIcon(null);
-         columnNames = sortColumnHeadings[sortState]; 
-         tableSortComparator = tableSortingComparators[sortState];
-         labelsWindow = this;
-         contentPane = this.getContentPane();
-         labelPanel = new JPanel(new GridLayout(1,2,10,0));
-         JPanel features = new JPanel();
-         dataLabels = new JCheckBox("Data", true);
-         textLabels = new JCheckBox("Text", true);
-         dataLabels.addItemListener(new LabelItemListener());
-         textLabels.addItemListener(new LabelItemListener());
-         dataLabels.setToolTipText("If checked, will display labels defined in data segment");
-         textLabels.setToolTipText("If checked, will display labels defined in text segment");
-         features.add(dataLabels);
-         features.add(textLabels);
-         contentPane.add(features, BorderLayout.SOUTH);
-         contentPane.add(labelPanel);
-      }  
+        }
+         catch (NumberFormatException nfe) {
+            sortState = 0;
+        }
+        setFrameIcon(null);
+        columnNames = sortColumnHeadings[sortState];
+        tableSortComparator = tableSortingComparators[sortState];
+        labelsWindow = this;
+        contentPane = this.getContentPane();
+        labelPanel = new JPanel(new GridLayout(1,2,10,0));
+        JPanel features = new JPanel();
+        dataLabels = new JCheckBox("Data", true);
+        textLabels = new JCheckBox("Text", true);
+        dataLabels.addItemListener(new LabelItemListener());
+        textLabels.addItemListener(new LabelItemListener());
+        dataLabels.setToolTipText("If checked, will display labels defined in data segment");
+        textLabels.setToolTipText("If checked, will display labels defined in text segment");
+        features.add(dataLabels);
+        features.add(textLabels);
+        contentPane.add(features, BorderLayout.SOUTH);
+        contentPane.add(labelPanel);
+    }
+
+    /**
+    * Initialize table of labels (symbol table)
+    */
+    public synchronized void setupTable(){
+        labelPanel.removeAll();
+        labelPanel.add(generateLabelScrollPane());
+        notifyAll();
+    }
    	
-   	/**
-   	 * Initialize table of labels (symbol table)
-   	 */
-       public synchronized void setupTable(){
-         labelPanel.removeAll();
-         labelPanel.add(generateLabelScrollPane());
-         notifyAll();
-      }
-   	
-      /**
-   	 * Clear the window
-   	 */
-       public void clearWindow() {
-         labelPanel.removeAll();
-      }
-   	
-   	//
-       private JScrollPane generateLabelScrollPane() {
-         listOfLabelsForSymbolTable = new ArrayList();
-         listOfLabelsForSymbolTable.add(new LabelsForSymbolTable(null));// global symtab
-         ArrayList MIPSprogramsAssembled = RunAssembleAction.getMIPSprogramsToAssemble();
-         Box allSymtabTables = Box.createVerticalBox();
-         for (int i=0; i<MIPSprogramsAssembled.size(); i++) {
-            listOfLabelsForSymbolTable.add(new LabelsForSymbolTable(
-                        (RISCVprogram) MIPSprogramsAssembled.get(i)));
-         }
-         ArrayList tableNames = new ArrayList();
-         JTableHeader tableHeader = null;
-         for (int i=0; i<listOfLabelsForSymbolTable.size(); i++) {
-            LabelsForSymbolTable symtab = (LabelsForSymbolTable)listOfLabelsForSymbolTable.get(i);
-            if (symtab.hasSymbols()) {
+    /**
+    * Clear the window
+    */
+    public void clearWindow() {
+        labelPanel.removeAll();
+    }
+
+    private JScrollPane generateLabelScrollPane() {
+        listOfLabelsForSymbolTable = new ArrayList();
+        listOfLabelsForSymbolTable.add(new LabelsForSymbolTable(null));// global symtab
+        ArrayList MIPSprogramsAssembled = RunAssembleAction.getMIPSprogramsToAssemble();
+        Box allSymtabTables = Box.createVerticalBox();
+        for (Object o : MIPSprogramsAssembled)
+           listOfLabelsForSymbolTable.add(new LabelsForSymbolTable((RISCVprogram) o));
+        ArrayList tableNames = new ArrayList();
+        JTableHeader tableHeader = null;
+        for (Object o : listOfLabelsForSymbolTable) {
+           LabelsForSymbolTable symtab = (LabelsForSymbolTable) o;
+           if (symtab.hasSymbols()) {
                String name = symtab.getSymbolTableName();
                if (name.length() > MAX_DISPLAYED_CHARS) {
-                  name = name.substring(0,MAX_DISPLAYED_CHARS-3)+"...";
+                   name = name.substring(0, MAX_DISPLAYED_CHARS - 3) + "...";
                }
-            	// To get left-justified, put file name into first slot of horizontal Box, then glue.
-               JLabel nameLab = new JLabel(name,JLabel.LEFT);
+               // To get left-justified, put file name into first slot of horizontal Box, then glue.
+               JLabel nameLab = new JLabel(name, JLabel.LEFT);
                Box nameLabel = Box.createHorizontalBox();
                nameLabel.add(nameLab);
                nameLabel.add(Box.createHorizontalGlue());
@@ -201,76 +198,70 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                allSymtabTables.add(nameLabel);
                JTable table = symtab.generateLabelTable();
                tableHeader = table.getTableHeader();
-            	// The following is selfish on my part.  Column re-ordering doesn't work correctly when
-            	// displaying multiple symbol tables; the headers re-order but the columns do not.
-            	// Given the low perceived benefit of reordering displayed symbol table information
-            	// versus the perceived effort to make reordering work for multiple symbol tables,
-            	// I am taking the easy way out here.  PS 19 July 2007.
+               // The following is selfish on my part.  Column re-ordering doesn't work correctly when
+               // displaying multiple symbol tables; the headers re-order but the columns do not.
+               // Given the low perceived benefit of reordering displayed symbol table information
+               // versus the perceived effort to make reordering work for multiple symbol tables,
+               // I am taking the easy way out here.  PS 19 July 2007.
                tableHeader.setReorderingAllowed(false);
                table.setSelectionBackground(table.getBackground());
                // Sense click on label/address and scroll Text/Data segment display to it.
                table.addMouseListener(new LabelDisplayMouseListener());
                allSymtabTables.add(table);
-            }
-         }
-         JScrollPane labelScrollPane = new JScrollPane(allSymtabTables,
-                                               ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, 
-            											  ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-      	// Set file name label's max width to scrollpane's viewport width, max height to small.
-      	// Does it do any good?  Addressing problem that occurs when label (filename) is wider than
-      	// the table beneath it -- the table column widths are stretched to attain the same width and
-      	// the address information requires scrolling to see.  All because of a long file name.
-         for (int i=0;i<tableNames.size(); i++) {
-            JComponent nameLabel = (JComponent)tableNames.get(i);
-            nameLabel.setMaximumSize(new Dimension(
-               labelScrollPane.getViewport().getViewSize().width,
-               (int) (1.5*nameLabel.getFontMetrics(nameLabel.getFont()).getHeight())));
-         }
-         labelScrollPane.setColumnHeaderView(tableHeader);
-         return labelScrollPane;
-      }
+           }
+        }
+        JScrollPane labelScrollPane = new JScrollPane(allSymtabTables,
+                                           ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                                                      ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        // Set file name label's max width to scrollpane's viewport width, max height to small.
+        // Does it do any good?  Addressing problem that occurs when label (filename) is wider than
+        // the table beneath it -- the table column widths are stretched to attain the same width and
+        // the address information requires scrolling to see.  All because of a long file name.
+        for (Object tableName : tableNames) {
+           JComponent nameLabel = (JComponent) tableName;
+           nameLabel.setMaximumSize(new Dimension(
+                   labelScrollPane.getViewport().getViewSize().width,
+                   (int) (1.5 * nameLabel.getFontMetrics(nameLabel.getFont()).getHeight())));
+        }
+        labelScrollPane.setColumnHeaderView(tableHeader);
+        return labelScrollPane;
+    }
    	
-      /**
-       * Method to update display of label addresses.  Since label information doesn't change,
-       * this should only be done when address base is changed.
-       *  (e.g. between base 16 hex and base 10 dec).
-       */
-       public synchronized void updateLabelAddresses() {
-    	   while (listOfLabelsForSymbolTable == null) {
-    		   try {
-    			   wait();
-    		   } catch (InterruptedException e) {
-    			   // TODO Auto-generated catch block
-    			   e.printStackTrace();
-    		   }
-    	   }
-           for (int i=0; i<listOfLabelsForSymbolTable.size(); i++) {
-              ((LabelsForSymbolTable)listOfLabelsForSymbolTable.get(i)).updateLabelAddresses();
-           }      
-         
-      }
-   	
-      
-      ///////////////////////////////////////////////////////////////
-   	//   Listener class to respond to "Text" or "Data" checkbox click 
-       private class LabelItemListener implements ItemListener {
-          public void itemStateChanged(ItemEvent ie) {
-            for (int i=0; i<listOfLabelsForSymbolTable.size(); i++) {
-               ((LabelsForSymbolTable)listOfLabelsForSymbolTable.get(i)).generateLabelTable();
-            }     			 
-         }
-      }
-      
-   	
-      /////////////////////////////////////////////////////////////////
-   	//  Private listener class to sense clicks on a table entry's 
-   	//  Label or Address.  This will trigger action by Text or Data
-   	//  segment to scroll to the corresponding label/address.
-   	//  Suggested by Ken Vollmar, implemented by Pete Sanderson
-   	//  July 2007.
-   	
-       private class LabelDisplayMouseListener extends MouseAdapter {
-          public void mouseClicked(MouseEvent e) {
+    /**
+    * Method to update display of label addresses.  Since label information doesn't change,
+    * this should only be done when address base is changed.
+    *  (e.g. between base 16 hex and base 10 dec).
+    */
+    public synchronized void updateLabelAddresses() {
+       while (listOfLabelsForSymbolTable == null) {
+           try {
+               wait();
+           } catch (InterruptedException e) {
+               e.printStackTrace();
+           }
+       }
+       for (Object o : listOfLabelsForSymbolTable)
+           ((LabelsForSymbolTable) o).updateLabelAddresses();
+
+    }
+
+    ///////////////////////////////////////////////////////////////
+    //   Listener class to respond to "Text" or "Data" checkbox click
+    private class LabelItemListener implements ItemListener {
+        public void itemStateChanged(ItemEvent ie) {
+          for (Object o : listOfLabelsForSymbolTable)
+              ((LabelsForSymbolTable) o).generateLabelTable();
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////
+    //  Private listener class to sense clicks on a table entry's
+    //  Label or Address.  This will trigger action by Text or Data
+    //  segment to scroll to the corresponding label/address.
+    //  Suggested by Ken Vollmar, implemented by Pete Sanderson
+    //  July 2007.
+    private class LabelDisplayMouseListener extends MouseAdapter {
+        public void mouseClicked(MouseEvent e) {
             JTable table = (JTable) e.getSource();
             int row = table.rowAtPoint(e.getPoint());
             int column = table.columnAtPoint(e.getPoint());
@@ -283,36 +274,33 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             try {
                address = Binary.stringToInt((String) data);
             } 
-                catch (NumberFormatException nfe) {
-               // Cannot happen because address is generated internally.
-               } 
-                catch (ClassCastException cce) {
-               // Cannot happen because table contains only strings.
-               }
-         	// Scroll to this address, either in Text Segment display or Data Segment display
-            if (Memory.getInstance().getTextTable().inSegment(address) || Memory.getInstance().getKernelTextTable().inSegment(address)) {
-               Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow().selectStepAtAddress(address);
-            } 
-            else { 
-               Globals.getGui().getMainPane().getExecutePane().getDataSegmentWindow().selectCellForAddress(address);
+            catch (NumberFormatException nfe) {
+                // Cannot happen because address is generated internally.
             }
-         }
-      }
-   	
-   	
-   		 
+            catch (ClassCastException cce) {
+                // Cannot happen because table contains only strings.
+            }
+         	// Scroll to this address, either in Text Segment display or Data Segment display
+            if (Memory.getInstance().getTextTable().inSegment(address) || Memory.getInstance().getKernelTextTable().inSegment(address))
+               Globals.getGui().getMainPane().getExecutePane().getTextSegmentWindow().selectStepAtAddress(address);
+            else
+               Globals.getGui().getMainPane().getExecutePane().getDataSegmentWindow().selectCellForAddress(address);
+
+        }
+    }
+
    ///////////////////////////////////////////////////////////////////
    // Represents one symbol table for the display.
-       private class LabelsForSymbolTable {
-         private RISCVprogram myRISCVprogram;
-         private Object[][] labelData;
-         private JTable labelTable;	 
-         private ArrayList symbols;
-         private SymbolTable symbolTable;
-         private String tableName;
-      	
+    private class LabelsForSymbolTable {
+        private RISCVprogram myRISCVprogram;
+        private Object[][] labelData;
+        private JTable labelTable;
+        private ArrayList symbols;
+        private SymbolTable symbolTable;
+        private String tableName;
+
       	// Associated RISCVprogram object.  If null, this represents global symbol table.
-          public LabelsForSymbolTable(RISCVprogram myRISCVprogram) {
+        LabelsForSymbolTable(RISCVprogram myRISCVprogram) {
             this.myRISCVprogram = myRISCVprogram;
             symbolTable = (myRISCVprogram == null)
                            ? Globals.symbolTable
@@ -322,56 +310,47 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                	       : new File(myRISCVprogram.getFilename()).getName();
          }
       	 
-      	 // Returns file name of associated file for local symbol table or "(global)"    
-          public String getSymbolTableName() {
+        // Returns file name of associated file for local symbol table or "(global)"
+        String getSymbolTableName() {
             return tableName;
-         }
+        }
       	
-          public boolean hasSymbols() {
+        boolean hasSymbols() {
             return symbolTable.getSize()!=0;
-         }
-      
+        }
       	
           // builds the Table containing labels and addresses for this symbol table.
-          private JTable generateLabelTable() {
-            SymbolTable symbolTable = (myRISCVprogram == null)
-                                      ? Globals.symbolTable
-               							  : myRISCVprogram.getLocalSymbolTable();
+        private JTable generateLabelTable() {
+            SymbolTable symbolTable = (myRISCVprogram == null) ? Globals.symbolTable
+                                          : myRISCVprogram.getLocalSymbolTable();
             int addressBase = Globals.getGui().getMainPane().getExecutePane().getAddressDisplayBase();
-            if (textLabels.isSelected() && dataLabels.isSelected()) {
+            if (textLabels.isSelected() && dataLabels.isSelected())
                symbols = symbolTable.getAllSymbols();
-            } 
-            else if (textLabels.isSelected() && !dataLabels.isSelected()) {
+            else if (textLabels.isSelected() && !dataLabels.isSelected())
                symbols = symbolTable.getTextSymbols();
-            } 
-            else if (!textLabels.isSelected() && dataLabels.isSelected()) {
+            else if (!textLabels.isSelected() && dataLabels.isSelected())
                symbols = symbolTable.getDataSymbols();
-            } 
-            else {
-               symbols = new ArrayList();
-            }
+            else symbols = new ArrayList();
+
             Collections.sort(symbols, tableSortComparator); // DPS 25 Dec 2008
             labelData = new Object[symbols.size()][2];
-         
+
             for(int i=0; i< symbols.size(); i++){//sets up the label table
                Symbol s = (Symbol)(symbols.get(i));
                labelData[i][LABEL_COLUMN] = s.getName();
                labelData[i][ADDRESS_COLUMN] = NumberDisplayBaseChooser.formatNumber(s.getAddress(), addressBase);
             }
             LabelTableModel m = new LabelTableModel(labelData, LabelsWindow.columnNames);
-            if (labelTable == null) {
-               labelTable = new MyTippedJTable(m); 
-            } 
-            else {
-               labelTable.setModel(m);
-            }
+            if (labelTable == null)
+               labelTable = new MyTippedJTable(m);
+            else labelTable.setModel(m);
+
             labelTable.getColumnModel().getColumn(ADDRESS_COLUMN).setCellRenderer(new MonoRightCellRenderer());
             return labelTable;
-         }
+        }
       
-      
-          public void updateLabelAddresses() {
-            if (labelPanel.getComponentCount() == 0) 
+        public void updateLabelAddresses() {
+            if (labelPanel.getComponentCount() == 0)
                return; // ignore if no content to change
             int addressBase = Globals.getGui().getMainPane().getExecutePane().getAddressDisplayBase();
             Number address;
@@ -382,157 +361,134 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                formattedAddress = NumberDisplayBaseChooser.formatNumber(address, addressBase);
                labelTable.getModel().setValueAt(formattedAddress, i, ADDRESS_COLUMN);
             }
-         }
-      }   
+        }
+    }
    	//////////////////////  end of LabelsForOneSymbolTable class //////////////////  
-   
-   
+
    	
-      ///////////////////////////////////////////////////////////////      
-      // Class representing label table data 
-       class LabelTableModel extends AbstractTableModel {
-         String[] columns;
-         Object[][] data;         
-         
-          public LabelTableModel(Object[][] d, String [] n){
+    ///////////////////////////////////////////////////////////////
+    // Class representing label table data
+    class LabelTableModel extends AbstractTableModel {
+    String[] columns;
+    Object[][] data;
+
+        LabelTableModel(Object[][] d, String[] n){
             data=d;
             columns= n;
-         }
-         
-          public int getColumnCount() {
+        }
+
+        public int getColumnCount() {
             return columns.length;
-         }
-         
-          public int getRowCount() {
+        }
+
+        public int getRowCount() {
             return data.length;
-         }
-         
-          public String getColumnName(int col) {
+        }
+
+        public String getColumnName(int col) {
             return columns[col];
-         }
-         
-          public Object getValueAt(int row, int col) {
-            return data[row][col];
-         }
-         
-         /*
-         * JTable uses this method to determine the default renderer/
-         * editor for each cell.  
-         */
-          public Class getColumnClass(int c) {
-            return getValueAt(0, c).getClass();
-         }
-         
-         /*
-         * Don't need to implement this method unless your table's
-         * data can change.
-         */
-          public void setValueAt(Object value, int row, int col) {
+        }
+
+        public Object getValueAt(int row, int col) {
+        return data[row][col];
+        }
+
+        /*
+        * JTable uses this method to determine the default renderer/
+        * editor for each cell.
+        */
+        public Class getColumnClass(int c) {
+        return getValueAt(0, c).getClass();
+        }
+
+        /*
+        * Don't need to implement this method unless your table's
+        * data can change.
+        */
+        public void setValueAt(Object value, int row, int col) {
             data[row][col] = value;
             fireTableCellUpdated(row, col);
-         }
-         
-          private void printDebugData() {
-            int numRows = getRowCount();
-            int numCols = getColumnCount();
-            
-            for (int i=0; i < numRows; i++) {
-               System.out.print("    row " + i + ":");
-               for (int j=0; j < numCols; j++) {
-                  System.out.print("  " + data[i][j]);
-               }
-               System.out.println();
-            }
-            System.out.println("--------------------------");
-         }
-      }  
-      
-       ///////////////////////////////////////////////////////////////////
-       //
-       // JTable subclass to provide custom tool tips for each of the
-       // label table column headers. From Sun's JTable tutorial.
-       // http://java.sun.com/docs/books/tutorial/uiswing/components/table.html
-       //
-       private class MyTippedJTable extends JTable {
-          MyTippedJTable(LabelTableModel m) {
-            super(m);
-         }       
-         
-      
-      
-          //Implement table header tool tips. 
-          protected JTableHeader createDefaultTableHeader() {
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////
+    //
+    // JTable subclass to provide custom tool tips for each of the
+    // label table column headers. From Sun's JTable tutorial.
+    // http://java.sun.com/docs/books/tutorial/uiswing/components/table.html
+    //
+    private class MyTippedJTable extends JTable {
+        MyTippedJTable(LabelTableModel m) {
+    super(m);
+    }
+
+        //Implement table header tool tips.
+        protected JTableHeader createDefaultTableHeader() {
             return new SymbolTableHeader(columnModel);
-         }
-         
-      	// Implement cell tool tips.  All of them are the same (although they could be customized).
-          public Component prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) { 
-            Component c = super.prepareRenderer(renderer, rowIndex, vColIndex); 
-            if (c instanceof JComponent) { 
-               JComponent jc = (JComponent)c; 
-               jc.setToolTipText("Click on label or address to view it in Text/Data Segment"); 
-            } 
-            return c; 
-         }
-         
-      	
-      	 /////////////////////////////////////////////////////////////////
-      	 //
-      	 // Customized table header that will both display tool tip when
-      	 // mouse hovers over each column, and also sort the table when
-      	 // mouse is clicked on each column.  The tool tip and sort are
-      	 // customized based on the column under the mouse.
-      	 
-          private class SymbolTableHeader extends JTableHeader {
+        }
+
+        // Implement cell tool tips.  All of them are the same (although they could be customized).
+        public Component prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) {
+            Component c = super.prepareRenderer(renderer, rowIndex, vColIndex);
+            if (c instanceof JComponent) {
+                JComponent jc = (JComponent)c;
+                jc.setToolTipText("Click on label or address to view it in Text/Data Segment");
+            }
+            return c;
+        }
+
+        /////////////////////////////////////////////////////////////////
+        //
+        // Customized table header that will both display tool tip when
+        // mouse hovers over each column, and also sort the table when
+        // mouse is clicked on each column.  The tool tip and sort are
+        // customized based on the column under the mouse.
+
+        private class SymbolTableHeader extends JTableHeader {
           
-             public SymbolTableHeader(TableColumnModel cm) {
-               super(cm);
-               this.addMouseListener(new SymbolTableHeaderMouseListener());
+            SymbolTableHeader(TableColumnModel cm) {
+                super(cm);
+                this.addMouseListener(new SymbolTableHeaderMouseListener());
             }
-            
-             public String getToolTipText(MouseEvent e) {
-               Point p = e.getPoint();
-               int index = columnModel.getColumnIndexAtX(p.x);
-               int realIndex = columnModel.getColumn(index).getModelIndex();
-               return columnToolTips[realIndex];
+
+            public String getToolTipText(MouseEvent e) {
+                Point p = e.getPoint();
+                int index = columnModel.getColumnIndexAtX(p.x);
+                int realIndex = columnModel.getColumn(index).getModelIndex();
+                return columnToolTips[realIndex];
             }
-         
-         
-          /////////////////////////////////////////////////////////////////////
-          // When user clicks on table column header, system will sort the
-          // table based on that column then redraw it.
-             private class SymbolTableHeaderMouseListener implements MouseListener {
+
+            /////////////////////////////////////////////////////////////////////
+            // When user clicks on table column header, system will sort the
+            // table based on that column then redraw it.
+            private class SymbolTableHeaderMouseListener implements MouseListener {
                 public void mouseClicked(MouseEvent e) {
-                  Point p = e.getPoint();
-                  int index = columnModel.getColumnIndexAtX(p.x);
-                  int realIndex = columnModel.getColumn(index).getModelIndex();
-                  sortState = sortStateTransitions[sortState][realIndex];
-                  tableSortComparator = tableSortingComparators[sortState]; 
-                  columnNames = sortColumnHeadings[sortState];   
-                  Globals.getSettings().setLabelSortState(new Integer(sortState).toString());
-                  setupTable();
-                 //Globals.getGui().getMainPane().getExecutePane().setLabelWindowVisibility(false);
-                  //Globals.getGui().getMainPane().getExecutePane().setLabelWindowVisibility(true);
-               }
+                    Point p = e.getPoint();
+                    int index = columnModel.getColumnIndexAtX(p.x);
+                    int realIndex = columnModel.getColumn(index).getModelIndex();
+                    sortState = sortStateTransitions[sortState][realIndex];
+                    tableSortComparator = tableSortingComparators[sortState];
+                    columnNames = sortColumnHeadings[sortState];
+                    Globals.getSettings().setLabelSortState(Integer.toString(sortState));
+                    setupTable();
+                }
                 public void mouseEntered(MouseEvent e) {}
                 public void mouseExited(MouseEvent e) {}
                 public void mousePressed(MouseEvent e) {}
                 public void mouseReleased(MouseEvent e) {}
             }
-         }
+        }
       }
-   	
    	
    	////////////////////////////////////////////////////////////////////////////
    	//
    	//  Comparator class used to sort in ascending order a List of symbols alphabetically by name
-       private class LabelNameAscendingComparator implements java.util.Comparator {
-          public int compare(Object a, Object b) {
+    private class LabelNameAscendingComparator implements java.util.Comparator {
+        public int compare(Object a, Object b) {
             return ((Symbol)a).getName().toLowerCase().compareTo(((Symbol)b).getName().toLowerCase());
-         }
-      }
-   	
-   
+        }
+    }
+
    	////////////////////////////////////////////////////////////////////////////
    	//
    	//  Comparator class used to sort in ascending order a List of symbols numerically
@@ -542,18 +498,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	//  Remember, if not equal then any value with correct sign will work.
    	//  If both have same sign, a-b will yield correct result.
    	//  If signs differ, b will yield correct result (think about it).
-       private class LabelAddressAscendingComparator implements java.util.Comparator {
-          public int compare(Object a, Object b) {
-            Number addrA = ((Symbol)a).getAddress();
-            Number addrB = ((Symbol)b).getAddress();
-          
-            
-          //  return (addrA >= 0 && addrB >= 0 || addrA < 0 && addrB < 0) ? (addrA-addrB) : addrB ;
-            return (addrA instanceof Long) ? Long.compareUnsigned(addrA.longValue(), addrB.longValue())
-            		: Integer.compareUnsigned(addrA.intValue(), addrB.intValue());
-          }
-      }		
-   
+    private class LabelAddressAscendingComparator implements java.util.Comparator {
+        public int compare(Object a, Object b) {
+        Number addrA = ((Symbol)a).getAddress();
+        Number addrB = ((Symbol)b).getAddress();
+
+        return (addrA instanceof Long) ? Long.compareUnsigned(addrA.longValue(), addrB.longValue())
+                : Integer.compareUnsigned(addrA.intValue(), addrB.intValue());
+        }
+    }
    	
    	////////////////////////////////////////////////////////////////////////////
    	//
@@ -562,16 +515,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	//  Comparator object provided as the argument constructor.  This works because it
    	//  is implemented by returning the result of the Ascending comparator when
    	//  arguments are reversed.
-       private class DescendingComparator implements java.util.Comparator {
-         private Comparator opposite;
-          private DescendingComparator(Comparator opposite) {
-            this.opposite = opposite;
-         }
-          public int compare(Object a, Object b) {
-            return opposite.compare(b,a);
-         }
-      }
-   
+    private class DescendingComparator implements java.util.Comparator {
+        private Comparator opposite;
+        private DescendingComparator(Comparator opposite) {
+        this.opposite = opposite;
+        }
+        public int compare(Object a, Object b) {
+        return opposite.compare(b,a);
+        }
+    }
    	
-   }
+}
 	   	

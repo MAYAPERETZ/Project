@@ -2,7 +2,7 @@ package mars.riscv.instructions;
 
 import mars.simulator.*;
 import mars.riscv.hardware.*;
-import mars.riscv.instructions.syscalls.*;
+import mars.riscv.instructions.ecalls.*;
 import mars.*;
 import mars.util.*;
 import java.util.*;
@@ -47,38 +47,36 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * @version September 2019
  */
 
-    public class InstructionSet {
-      private ArrayList instructionList;
-	  private ArrayList opcodeMatchMaps;
-      private SyscallLoader syscallLoader;
+public class InstructionSet {
+    private ArrayList instructionList;
+    private ArrayList opcodeMatchMaps;
+    private EcallLoader ecallLoader;
 
-      /**
-     * Creates a new InstructionSet object.
-     */
-       public InstructionSet()
-      {
-         instructionList = new ArrayList();
-      
-      }
-
-       /**
-        * Retrieve the current instruction set.
-        * @return instructionList
-        */
-       public ArrayList getInstructionList()
-      {
-         return instructionList;
-      
-      }
     /**
-     * Adds all instructions to the set.  A given extended instruction may have
-     * more than one Instruction object, depending on how many formats it can have.
-     * @see Instruction
-     * @see BasicInstruction
-     * @see ExtendedInstruction
-     */
-       public void populate()
-      {
+    * Creates a new InstructionSet object.
+    */
+    public InstructionSet() {
+    instructionList = new ArrayList();
+
+    }
+
+    /**
+    * Retrieve the current instruction set.
+    * @return instructionList
+    */
+    public ArrayList getInstructionList() {
+        return instructionList;
+    }
+
+    /**
+    * Adds all instructions to the set.  A given extended instruction may have
+    * more than one Instruction object, depending on how many formats it can have.
+    * @see Instruction
+    * @see BasicInstruction
+    * @see ExtendedInstruction
+    */
+
+    public void populate() {
         /* Here is where the parade begins.  Every instruction is added to the set here.*/
       
         // ////////////////////////////////////   BASIC INSTRUCTIONS START HERE ////////////////////////////////
@@ -318,10 +316,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                           "ttttttttttttsssss011fffff0110011", GenMath::ltu));
 
          instructionList.add(
-                new BasicInstruction("syscall", 
-            	 "Issue a system call : Execute the system call specified by value in $v0",
+                new BasicInstruction("ecall",
+            	 "Environment call : Make a request of the execution environment by raising Environment Call Exception",
             	 
-                "000000 00000 00000 00000 00000 001100",
+                "0000000000000000000000001110011",
                         statement -> findAndSimulateSyscall(RVIRegisters.getValue(2).intValue(),statement)));
 
          instructionList.add(
@@ -395,17 +393,17 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "0000000tttttsssssxxxfffff1010011",
                         statement -> {
                            Number[] operands = statement.getOperands();
-                           float add1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
-                           float add2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
+                           float add1 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[1]));
+                           float add2 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[2]));
                            float sum = add1 + add2;
                            // overflow detected when sum is positive or negative infinity.
                            if (Float.isInfinite(sum)) {
-                               Coprocessor1.updateRegister(operands[0], Coprocessor1.round(sum));
+                               FPRegisters.updateRegister(operands[0], FPRegisters.round(sum));
 
                                throw new FloatingPointException(Exceptions.FLOATING_POINT_OVERFLOW);
                            }
 
-                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum));
+                           FPRegisters.updateRegisterWithExecptions(operands[0], FPRegisters.round(sum));
 
                         }));
          
@@ -415,14 +413,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "0000100tttttsssssxxxfffff1010011",
                         statement -> {
                            Number[] operands = statement.getOperands();
-                           float sub1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
-                           float sub2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
+                           float sub1 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[1]));
+                           float sub2 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[2]));
                            float diff = sub1 - sub2;
-                           if(Coprocessor1.isUnderflow(diff, Coprocessor1.getFclass(diff))) {
+                           if(FPRegisters.isUnderflow(diff, FPRegisters.getFclass(diff))) {
                                throw new FloatingPointException(Exceptions.FLOATING_POINT_UNDERFLOW);
                            }
                            else
-                               Coprocessor1.updateRegisterWithExecptions(operands[0].intValue(), Coprocessor1.round(diff));
+                               FPRegisters.updateRegisterWithExecptions(operands[0].intValue(), FPRegisters.round(diff));
 
                         }));
          instructionList.add(
@@ -431,10 +429,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "0001100tttttsssssxxxfffff1010011",
                         statement -> {
                            Number[] operands = statement.getOperands();
-                           float mul1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
-                           float mul2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
+                           float mul1 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[1]));
+                           float mul2 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[2]));
                            float prod = mul1 * mul2;
-                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(prod));
+                           FPRegisters.updateRegisterWithExecptions(operands[0], FPRegisters.round(prod));
                         }));
          instructionList.add(
                 new R_type.WithRmField("fdiv.s ft1,ft2,ft3",
@@ -442,14 +440,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "0001000tttttsssssxxxfffff1010011",
                         statement -> {
                            Number[] operands = statement.getOperands();
-                           float div1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
-                           float div2 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[2]));
+                           float div1 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[1]));
+                           float div2 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[2]));
                            if(div2 == 0){
                                throw new FloatingPointException(Exceptions.DIVIDE_BY_ZERO_EXCEPTION);
                            }
                            else {
                                float quot = div1 / div2;
-                               Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(quot));
+                               FPRegisters.updateRegisterWithExecptions(operands[0], FPRegisters.round(quot));
                            }
                        }));
          instructionList.add(
@@ -458,18 +456,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  "010110000000sssssxxxfffff1010011",
                         statement -> {
                            Number[] operands = statement.getOperands();
-                           float value = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
+                           float value = Float.intBitsToFloat(FPRegisters.getIntValue(operands[1]));
                            int floatSqrt = 0;
-                           if ((Coprocessor1.getIntValue(operands[1])&0x80000000) == 1 ) {
+                           if ((FPRegisters.getIntValue(operands[1])&0x80000000) == 1 ) {
                                // doesn't check ifNaN as well, since if it is, it will raise an exception as it is
                               floatSqrt = Float.floatToIntBits( Float.NaN);
-                              Coprocessor1.updateRegister(operands[0], Coprocessor1.round(floatSqrt));
+                              FPRegisters.updateRegister(operands[0], FPRegisters.round(floatSqrt));
                              // throw new ProcessingException(statement, "Invalid Operation: sqrt of negative number");
                            }
                            else {
                               floatSqrt = Float.floatToIntBits( (float) Math.sqrt(value));
                            }
-                           Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(floatSqrt));
+                           FPRegisters.updateRegisterWithExecptions(operands[0], FPRegisters.round(floatSqrt));
                          }));
 
          instructionList.add(
@@ -478,17 +476,15 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 "ssssssssssssttttt010fffff0000111",
                         statement -> {
                            Number[] operands = statement.getOperands();
-                           try
-                           {
-                              Coprocessor1.updateRegister(operands[0],
+                           try {
+                              FPRegisters.updateRegister(operands[0],
                                   Globals.memory.getWord(
                                   RVIRegisters.getValue(operands[2]).intValue() + operands[1].intValue()
                                   ).intValue());
                            }
-                               catch (AddressErrorException e)
-                              {
+                           catch (AddressErrorException e) {
                                  throw new ProcessingException(statement, e);
-                              }
+                           }
                         }));
          
          instructionList.add(
@@ -502,7 +498,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                            {
                               Globals.memory.setWord(
                                   RVIRegisters.getValue(operands[2]).intValue() + operands[1].intValue(),
-                                  Coprocessor1.getIntValue(operands[0]));
+                                  FPRegisters.getIntValue(operands[0]));
                            }
                                catch (AddressErrorException e)
                               {
@@ -516,10 +512,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          statement -> {
                             Number[] operands = statement.getOperands();
 
-                            int firstOperand = Coprocessor1.getIntValue(operands[1]);
-                            int secondOperand = Coprocessor1.getIntValue(operands[2]);
+                            int firstOperand = FPRegisters.getIntValue(operands[1]);
+                            int secondOperand = FPRegisters.getIntValue(operands[2]);
                             int newspfp = ((firstOperand&0x80000000)|(secondOperand&0x7fffffff));
-                            Coprocessor1.updateRegister(operands[0].intValue(), newspfp);
+                            FPRegisters.updateRegister(operands[0].intValue(), newspfp);
 
                          }));
          instructionList.add(
@@ -529,10 +525,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          statement -> {
                             Number[] operands = statement.getOperands();
 
-                            int firstOperand = Coprocessor1.getIntValue(operands[1]);
-                            int secondOperand = Coprocessor1.getIntValue(operands[2]);
+                            int firstOperand = FPRegisters.getIntValue(operands[1]);
+                            int secondOperand = FPRegisters.getIntValue(operands[2]);
                             int newspfp = (((~firstOperand)&0x80000000)|(secondOperand&0x7fffffff));
-                            Coprocessor1.updateRegister(operands[0].intValue(), newspfp);
+                            FPRegisters.updateRegister(operands[0].intValue(), newspfp);
 
                          }));
          instructionList.add(
@@ -542,10 +538,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          statement -> {
                            Number[] operands = statement.getOperands();
 
-                           int firstOperand = Coprocessor1.getIntValue(operands[1]);
-                           int secondOperand = Coprocessor1.getIntValue(operands[2]);
+                           int firstOperand = FPRegisters.getIntValue(operands[1]);
+                           int secondOperand = FPRegisters.getIntValue(operands[2]);
                            int newspfp = (((firstOperand^secondOperand)&0x80000000)|(secondOperand&0x7fffffff));
-                           Coprocessor1.updateRegister(operands[0], newspfp);
+                           FPRegisters.updateRegister(operands[0], newspfp);
 
                         }));
          instructionList.add(
@@ -555,7 +551,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          statement -> {
                            Number[] operands = statement.getOperands();
 
-                           Coprocessor1.updateRegister(operands[0],
+                           FPRegisters.updateRegister(operands[0],
                                    Integer.min(operands[1].intValue(), operands[2].intValue()));
 
                         }));
@@ -566,7 +562,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          statement -> {
                            Number[] operands = statement.getOperands();
 
-                           Coprocessor1.updateRegister(operands[0],
+                           FPRegisters.updateRegister(operands[0],
                                    Integer.max(operands[1].intValue(), operands[2].intValue()));
 
                         }));
@@ -575,7 +571,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  new R_type("fmv.x.w t1,ft2",
                  "Floating-point Move Word to Integer, Single-Presicion.",
                  "111100000000sssss000fffff1010011",
-                         e->e, Coprocessor1::getIntValue, RVIRegisters::updateRegister));
+                         e->e, FPRegisters::getIntValue, RVIRegisters::updateRegister));
 
          
          instructionList.add(
@@ -587,7 +583,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
                            int equals = (Binary.highOrderLongToInt(operands[1]) ==
                                    Binary.highOrderLongToInt(operands[2]))? 1 : 0;
-                               Coprocessor1.updateRegister(operands[0], equals);
+                               FPRegisters.updateRegister(operands[0], equals);
 
                         }));
 
@@ -600,7 +596,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
                            int equals = (Binary.highOrderLongToInt(operands[1])
                                    < Binary.highOrderLongToInt(operands[2]))? 1 : 0;
-                               Coprocessor1.updateRegister(operands[0], equals);
+                               FPRegisters.updateRegister(operands[0], equals);
 
                         }));
 
@@ -613,7 +609,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
                            int equals = (Binary.highOrderLongToInt(operands[1]) <=
                                    Binary.highOrderLongToInt(operands[2]))? 1 : 0;
-                               Coprocessor1.updateRegister(operands[0], equals);
+                               FPRegisters.updateRegister(operands[0], equals);
 
                         }));
          
@@ -623,8 +619,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  "111000000000sssss001fffff1010011",
                          statement -> {
                            Number[] operands = statement.getOperands();
-                           float rs1 = Float.intBitsToFloat(Coprocessor1.getIntValue(operands[1]));
-                           Coprocessor1.updateRegister(operands[0], Coprocessor1.getFclass(rs1));
+                           float rs1 = Float.intBitsToFloat(FPRegisters.getIntValue(operands[1]));
+                           FPRegisters.updateRegister(operands[0], FPRegisters.getFclass(rs1));
                         }));
 
           instructionList.add(
@@ -635,9 +631,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                               Number[] operands = statement.getOperands();
                               Number rs1;
                               try {
-                                   rs1 = Integer.parseInt(""+Coprocessor1.getFloatValue(operands[1]));
+                                   rs1 = Integer.parseInt(""+ FPRegisters.getFloatValue(operands[1]));
                               }catch (NumberFormatException nfe){
-                                  rs1 = Coprocessor1.getFCVTOutput(Coprocessor1.getFloatValue(operands[1]));
+                                  rs1 = FPRegisters.getFCVTOutput(FPRegisters.getFloatValue(operands[1]));
                                   RVIRegisters.updateRegister(operands[0], rs1);
                                   throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
                               }
@@ -654,11 +650,11 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                               float rs1;
                               try {
                                   rs1 = Integer.parseUnsignedInt(""+
-                                          Coprocessor1.getFloatValue(operands[1]));
+                                          FPRegisters.getFloatValue(operands[1]));
                               }catch (NumberFormatException nfe){
                                   rs1 = Integer.parseUnsignedInt(""+
-                                          Coprocessor1.getFCVTOutputUnsigned(
-                                          Coprocessor1.getFloatValue(operands[1])));
+                                          FPRegisters.getFCVTOutputUnsigned(
+                                          FPRegisters.getFloatValue(operands[1])));
                                   RVIRegisters.updateRegister(operands[0], rs1);
                                   throw new FloatingPointException(Exceptions.FLOATING_POINT_INVALID_OP);
                               }
@@ -673,7 +669,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                               Number[] operands = statement.getOperands();
                               Float rs1;
                               rs1 = Float.intBitsToFloat(RVIRegisters.getValue(operands[1]).intValue());
-                              Coprocessor1.updateRegister(operands[0], Coprocessor1.round(rs1));
+                              FPRegisters.updateRegister(operands[0], FPRegisters.round(rs1));
                           }));
 
 
@@ -711,7 +707,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
                            try
                            {
-                              Coprocessor1.updateRegister(operands[0],
+                              FPRegisters.updateRegister(operands[0],
                                   Globals.memory.getDoubleWord(
                                   (RVIRegisters.getValue(GenMath.add(operands[2]
                                           , Binary.signExtend(operands[1], 12, 64).longValue())))));
@@ -742,7 +738,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                               Globals.memory.setDoubleWord(
                                   (GenMath.add(RVIRegisters.getValue(operands[2]),
                                           Binary.signExtend(operands[1], 12, 64))),
-                                  Coprocessor1.getIntValue(operands[0]));
+                                  FPRegisters.getIntValue(operands[0]));
                            }
                                catch (AddressErrorException e)
                               {
@@ -756,10 +752,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  "0010001tttttsssss000fffff1010011",
                          statement -> {
                             Number[] operands = statement.getOperands();
-                            long firstOperand = Coprocessor1.getLongValue(operands[1]);
-                            long secondOperand = Coprocessor1.getLongValue(operands[2]);
+                            long firstOperand = FPRegisters.getLongValue(operands[1]);
+                            long secondOperand = FPRegisters.getLongValue(operands[2]);
                             long newspfp = ((firstOperand&0x8000000000000000L)|(secondOperand&0x7fffffffffffffffL));
-                            Coprocessor1.updateRegister(operands[0], newspfp);
+                            FPRegisters.updateRegister(operands[0], newspfp);
 
                          }));
 
@@ -769,10 +765,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  "0010001tttttsssss001fffff1010011",
                          statement -> {
                               Number[] operands = statement.getOperands();
-                              long firstOperand = Coprocessor1.getLongValue(operands[1]);
-                              long secondOperand = Coprocessor1.getLongValue(operands[2]);
+                              long firstOperand = FPRegisters.getLongValue(operands[1]);
+                              long secondOperand = FPRegisters.getLongValue(operands[2]);
                               long newspfp = ((~(firstOperand&0x8000000000000000L))|(secondOperand&0x7fffffffffffffffL));
-                              Coprocessor1.updateRegister(operands[0], newspfp);
+                              FPRegisters.updateRegister(operands[0], newspfp);
                          }));
 
          instructionList.add(
@@ -781,10 +777,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  "0010001tttttsssss010fffff1010011",
                          statement -> {
                             Number[] operands = statement.getOperands();
-                            long firstOperand = Coprocessor1.getLongValue(operands[1]);
-                            long secondOperand = Coprocessor1.getLongValue(operands[2]);
+                            long firstOperand = FPRegisters.getLongValue(operands[1]);
+                            long secondOperand = FPRegisters.getLongValue(operands[2]);
                             long newspfp = (((firstOperand^secondOperand)&0x8000000000000000L)|(secondOperand&0x7fffffffffffffffL));
-                            Coprocessor1.updateRegister(operands[0], newspfp);
+                            FPRegisters.updateRegister(operands[0], newspfp);
 
                          }));
 
@@ -795,7 +791,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          statement -> {
                             Number[] operands = statement.getOperands();
 
-                            Coprocessor1.updateRegister(operands[0],
+                            FPRegisters.updateRegister(operands[0],
                                     Long.min(operands[1].longValue(), operands[2].longValue()));
 
                          }));
@@ -808,7 +804,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          statement -> {
                             Number[] operands = statement.getOperands();
 
-                            Coprocessor1.updateRegister(operands[0],
+                            FPRegisters.updateRegister(operands[0],
                                     Long.max(operands[1].longValue(), operands[2].longValue()));
 
                          }));
@@ -821,7 +817,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                             Number[] operands = statement.getOperands();
 
                             int equals = (operands[1].doubleValue() == operands[2].doubleValue())? 1 : 0;
-                                Coprocessor1.updateRegister(operands[0], equals);
+                                FPRegisters.updateRegister(operands[0], equals);
 
                          }));
 
@@ -833,7 +829,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                             Number[] operands = statement.getOperands();
 
                             int equals = (operands[1].doubleValue() < operands[2].doubleValue())? 1 : 0;
-                                Coprocessor1.updateRegister(operands[0], equals);
+                                FPRegisters.updateRegister(operands[0], equals);
 
                          }));
 
@@ -845,7 +841,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                             Number[] operands = statement.getOperands();
 
                             int equals = (operands[1].doubleValue() <= operands[2].doubleValue())? 1 : 0;
-                                Coprocessor1.updateRegister(operands[0], equals);
+                                FPRegisters.updateRegister(operands[0], equals);
 
                          }));
          
@@ -855,8 +851,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                  "111000100000sssss001fffff1010011",
                          statement -> {
                             Number[] operands = statement.getOperands();
-                            double rs1 = Double.longBitsToDouble(Coprocessor1.getIntValue(operands[1]));
-                            Coprocessor1.updateRegister(operands[0], Coprocessor1.getFclass(rs1));
+                            double rs1 = Double.longBitsToDouble(FPRegisters.getIntValue(operands[1]));
+                            FPRegisters.updateRegister(operands[0], FPRegisters.getFclass(rs1));
                          }));
 
           instructionList.add(
@@ -865,16 +861,16 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                           "0000001tttttsssssxxxfffff1010011",
                           statement -> {
                               Number[] operands = statement.getOperands();
-                              double add1 = Double.longBitsToDouble(Coprocessor1.getLongValue(operands[1]));
-                              double add2 = Double.longBitsToDouble(Coprocessor1.getLongValue(operands[2]));
+                              double add1 = Double.longBitsToDouble(FPRegisters.getLongValue(operands[1]));
+                              double add2 = Double.longBitsToDouble(FPRegisters.getLongValue(operands[2]));
                               double sum = add1 + add2;
                               // overflow detected when sum is positive or negative infinity.
                               if (Double.isInfinite(sum)) {
-                                  Coprocessor1.updateRegister(operands[0], Coprocessor1.round(sum));
+                                  FPRegisters.updateRegister(operands[0], FPRegisters.round(sum));
                                   throw new FloatingPointException(Exceptions.FLOATING_POINT_OVERFLOW);
                               }
 
-                              Coprocessor1.updateRegisterWithExecptions(operands[0], Coprocessor1.round(sum));
+                              FPRegisters.updateRegisterWithExecptions(operands[0], FPRegisters.round(sum));
                           }));
                 /*
                     TODO: FCVT.S.D, FCVT.D.S, FMV.W.D, FCVT.WU.D, FCVT.D.W, FMV.D.WU
@@ -894,12 +890,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          addPseudoInstructions();
 
          /*
-            FIXME: Have not checked the syscalls. Just modified the files so they won't have
+            FIXME: Have not checked the ecalls. Just modified the files so they won't have
                     unresolved references. Need to implement.
           */
         ////////////// GET AND CREATE LIST OF SYSCALL FUNCTION OBJECTS ////////////////////
-         syscallLoader = new SyscallLoader();
-         syscallLoader.loadSyscalls();
+         ecallLoader = new EcallLoader();
+         ecallLoader.loadEcalls();
       	
         // Initialization step.  Create token list for each instruction example.  This is
         // used by parser to determine user program correct syntax.
@@ -993,21 +989,18 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                          ? new ExtendedInstruction(pseudoOp, template, description)
                      	 : new ExtendedInstruction(pseudoOp, firstTemplate, template, description);
                   instructionList.add(inst);
-               	//if (firstTemplate != null) System.out.println("\npseudoOp: "+pseudoOp+"\ndefault template:\n"+firstTemplate+"\ncompact template:\n"+template);
                }
             }
             in.close();
          } 
-             catch (IOException ioe)
-            {
+            catch (IOException ioe) {
                System.out.println(
-                    "Internal Error: MIPS pseudo-instructions could not be loaded.");
+                    "Internal Error: RISCV pseudo-instructions could not be loaded.");
                System.exit(0);
             } 
-             catch (Exception ioe)
-            {
+            catch (Exception ioe) {
                System.out.println(
-                    "Error: Invalid MIPS pseudo-instruction specification.");
+                    "Error: Invalid RISCV pseudo-instruction specification.");
                System.exit(0);
             }
       
@@ -1058,12 +1051,12 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    	/*
    	 * Method to find and invoke a syscall given its service number.  Each syscall
    	 * function is represented by an object in an array list.  Each object is of
-   	 * a class that implements Syscall or extends AbstractSyscall.
+   	 * a class that implements Ecall or extends AbstractEcall.
    	 */
    	 
        private void findAndSimulateSyscall(int number, ProgramStatement statement) 
                                                         throws ProcessingException {
-         Syscall service = syscallLoader.findSyscall(number);
+         Ecall service = ecallLoader.findEcall(number);
          if (service != null) {
             service.simulate(statement);
             return;

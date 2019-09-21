@@ -75,9 +75,8 @@ public class HexTextDumpFormat extends AbstractDumpFormat {
     */
     public void dumpMemoryRange(File file, Number firstAddress, Number lastAddress)
     throws AddressErrorException, IOException {
-        PrintStream out = new PrintStream(new FileOutputStream(file));
-        String string;
-        try {
+        try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
+            String string;
             for (Number address = firstAddress; !Math2.isLt(lastAddress, address); address = GenMath.add(address, Memory.WORD_LENGTH_BYTES)) {
                 Number temp = Globals.memory.getRawWordOrNull(address);
                 if (temp == null)
@@ -88,9 +87,6 @@ public class HexTextDumpFormat extends AbstractDumpFormat {
                     string = '0' + string;
                 out.println(string);
             }
-        }
-        finally {
-            out.close();
         }
     }
 

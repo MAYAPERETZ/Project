@@ -3,8 +3,8 @@ package mars.util;
 import mars.Globals;
 import mars.riscv.hardware.AddressErrorException;
 import mars.riscv.hardware.memory.Memory;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 	/*
 Copyright (c) 2003-2009,  Pete Sanderson and Kenneth Vollmar
@@ -34,26 +34,23 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 (MIT license, http://www.opensource.org/licenses/mit-license.html)
  */
 
-    public class MemoryDump {
-   
+public class MemoryDump {
+
       /** A list of segmentname/dumpformat/filename triples which should be dumped */
       public static ArrayList dumpTriples = null;
-      
-      /** A mapping from segments names (like ".text") to the base and limit for that segment. */
-      private static final HashMap segmentBoundMap = new HashMap();
-      
-      private static final String[] segmentNames = { ".text", ".data" };
+
+        private static final String[] segmentNames = { ".text", ".data" };
       private static Number[] baseAddresses = new Number[2];
       private static Number[] limitAddresses = new Number[2];
-   
-   
+
+
       /**
-   	 * Return array with segment address bounds for specified segment.
-   	 * @param segment String with segment name (initially ".text" and ".data")
-   	 * @return array of two Integer, the base and limit address for that segment.  Null if parameter
-   	 * name does not match a known segment name.
-   	 */
-   	 
+     * Return array with segment address bounds for specified segment.
+     * @param segment String with segment name (initially ".text" and ".data")
+     * @return array of two Integer, the base and limit address for that segment.  Null if parameter
+     * name does not match a known segment name.
+     */
+
        public static Number[] getSegmentBounds(String segment) {
          for (int i=0; i< segmentNames.length; i++) {
             if (segmentNames[i].equals(segment)) {
@@ -65,8 +62,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          return null;
       }
-   
-   	   
+
+
     /**
     * Get the names of segments available for memory dump.
     * @return array of Strings, each string is segment name (e.g. ".text", ".data")
@@ -74,7 +71,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     public static String[] getSegmentNames() {
         return segmentNames;
     }
-   		
+
     /**
     * Get the RISCV memory base address(es) of the specified segment name(s).
     * If invalid segment name is provided, will throw NullPointerException, so
@@ -87,7 +84,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         baseAddresses[1] = Memory.getInstance().getDataTable().getBaseAddress();
         return baseAddresses;
     }
-   	
+
     /**
     * Get the MIPS memory limit address(es) of the specified segment name(s).
     * If invalid segment name is provided, will throw NullPointerException, so
@@ -101,7 +98,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
         limitAddresses[1] = Memory.getInstance().getDataTable().getLimitAddress();
         return limitAddresses;
     }
-   
+
     /**
     *  Look for first "null" memory value in an address range.  For text segment (binary code), this
     *  represents a word that does not contain an instruction.  Normally use this to find the end of
@@ -120,6 +117,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                    break;
             }
         return address;
-    }
+}
    
 }

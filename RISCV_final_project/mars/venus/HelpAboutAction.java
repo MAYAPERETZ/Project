@@ -33,7 +33,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 /**
-* Action  for the Help -> About menu item
+* Action  for the Help - About menu item
 */
 public class HelpAboutAction extends GuiAction {
 	public  HelpAboutAction(String name, Icon icon, String descrip,
@@ -45,14 +45,16 @@ public class HelpAboutAction extends GuiAction {
 	  JOptionPane.showMessageDialog(mainUI,
 					  "MARS "+Globals.version+"    Copyright "+Globals.copyrightYears+"\n"+
 						  Globals.copyrightHolders+"\n"+
-						  "MARS is the Mips Assembler and Runtime Simulator.\n\n"+
+						  "MARS is the RISCV Assembler and Runtime Simulator.\n\n"+
 						  "Mars image courtesy of NASA/JPL.\n"+
 						  "Toolbar and menu icons are from:\n"+
 						  "  *  Tango Desktop Project (tango.freedesktop.org),\n"+
 						  "  *  glyFX (www.glyfx.com) Common Toolbar Set,\n"+
 						  "  *  KDE-Look (www.kde-look.org) crystalline-blue-0.1,\n"+
 						  "  *  Icon-King (www.icon-king.com) Nuvola 1.0.\n"+
-						  "Print feature adapted from HardcopyWriter class in David Flanagan's\n"+
+						  "	 *  Pichon Desktop App(https://icons8.com/app)\n" +
+						  "	 *	Radiance libraries(https://github.com/kirill-grouchnikov/radiance.git) "+
+							  	"SubstanceBusinessBlackSteelLookAndFeel\n"+
 						  "Java Examples in a Nutshell 3rd Edition, O'Reilly, ISBN 0-596-00620-9.",
 						  "About Mars",
 						  JOptionPane.INFORMATION_MESSAGE,
