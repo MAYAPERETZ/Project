@@ -44,6 +44,10 @@ public class MemoryAccessNotice extends AccessNotice {
 
     /** Constructor will be called only within this package, so assume
     *  address and length are in valid ranges.
+     * @param type
+     * @param address
+     * @param length
+     * @param value
     */
     MemoryAccessNotice(int type, Number address, int length, Number value) {
         super(type);

@@ -32,6 +32,8 @@
     * @param text The segment
     * @param offset The offset into the segment
     * @param match The string to match
+    * @return {@code true} if a subregion of a <code>Segment</code> is equal to a string;
+    *         {@code false} otherwise
     */
        public static boolean regionMatches(boolean ignoreCase, Segment text,
        			    int offset, String match)
@@ -98,13 +100,13 @@
       // SyntaxStyle constructor params: color, italic?, bold?
       // All need to be assigned even if not used by language (no gaps in array)
          styles[Token.NULL]     = new SyntaxStyle(Color.black,false,false);
-         styles[Token.COMMENT1] = new SyntaxStyle(new Color(0x00CC33),true,false);//(Color.black,true,false);
+         styles[Token.COMMENT1] = new SyntaxStyle(new Color(0x468C40),true,false);//(Color.black,true,false);
          styles[Token.COMMENT2] = new SyntaxStyle(new Color(0x990033),true,false);
          styles[Token.KEYWORD1] = new SyntaxStyle(Color.blue,false,false);//(Color.black,false,true);
          styles[Token.KEYWORD2] = new SyntaxStyle(Color.magenta,false,false);
          styles[Token.KEYWORD3] = new SyntaxStyle(Color.red,false,false);//(new Color(0x009600),false,false);
-         styles[Token.LITERAL1] = new SyntaxStyle(new Color(0x00CC33),false,false);//(new Color(0x650099),false,false);
-         styles[Token.LITERAL2] = new SyntaxStyle(new Color(0x00CC33),false,false);//(new Color(0x650099),false,true);
+         styles[Token.LITERAL1] = new SyntaxStyle(new Color(0x468C40),false,false);//(new Color(0x650099),false,false);
+         styles[Token.LITERAL2] = new SyntaxStyle(new Color(0x468C40),false,false);//(new Color(0x650099),false,true);
          styles[Token.LABEL]    = new SyntaxStyle(Color.black,true,false);//(new Color(0x990033),false,true);
          styles[Token.OPERATOR] = new SyntaxStyle(Color.black,false,true);
          styles[Token.INVALID]  = new SyntaxStyle(Color.red,false,false);
@@ -139,36 +141,35 @@
          return styles;
       }
    
-   /**
-    * Paints the specified line onto the graphics context. Note that this
-    * method munges the offset and count values of the segment.
-    * @param line The line segment
-    * @param tokens The token list for the line
-    * @param styles The syntax style list
-    * @param expander The tab expander used to determine tab stops. May
-    * be null
-    * @param gfx The graphics context
-    * @param x The x co-ordinate
-    * @param y The y co-ordinate
-    * @return The x co-ordinate, plus the width of the painted string
-    */ public static boolean popupShowing = false;
-      public static Popup popup;
-       public static int paintSyntaxLine(Segment line, Token tokens,
-       SyntaxStyle[] styles, TabExpander expander, Graphics gfx,
-       int x, int y)
-      {
-         Font defaultFont = gfx.getFont();
-         Color defaultColor = gfx.getColor();
 
-         for(;;)
-         {
+     public static boolean popupShowing = false;
+      public static Popup popup;
+
+   /**
+   * Paints the specified line onto the graphics context. Note that this
+   * method munges the offset and count values of the segment.
+   * @param line The line segment
+   * @param tokens The token list for the line
+   * @param styles The syntax style list
+   * @param expander The tab expander used to determine tab stops. May
+   * be null
+   * @param gfx The graphics context
+   * @param x The x co-ordinate
+   * @param y The y co-ordinate
+   * @return The x co-ordinate, plus the width of the painted string
+   */
+   public static int paintSyntaxLine(Segment line, Token tokens, SyntaxStyle[] styles,
+                                  TabExpander expander, Graphics gfx, int x, int y) {
+      Font defaultFont = gfx.getFont();
+      Color defaultColor = gfx.getColor();
+
+      for(;;){
             byte id = tokens.id;
             if(id == Token.END)
                break;
          
             int length = tokens.length;
-            if(id == Token.NULL)
-            {
+            if(id == Token.NULL) {
                if(!defaultColor.equals(gfx.getColor()))
                   gfx.setColor(defaultColor);
                if(!defaultFont.equals(gfx.getFont()))
@@ -176,39 +177,7 @@
             }
             else
                styles[id].setGraphicsFlags(gfx,defaultFont);
-            line.count = length; 
-         
-            if (id == Token.KEYWORD1){ 
-               //System.out.println("Instruction: "+line);
-               if (!popupShowing) {// System.out.println("creating popup");
-//                   JComponent paintArea = (JComponent) expander;
-//                   JToolTip tip = paintArea.createToolTip();
-//                   tip.setTipText("Instruction: "+line);
-//                   Point screenLocation = paintArea.getLocationOnScreen();
-//                   PopupFactory popupFactory = PopupFactory.getSharedInstance();
-//                   popup = popupFactory.getPopup(paintArea, tip, screenLocation.x + x, screenLocation.y + y); 
-//                   popupShowing = true;
-//                   popup.show();
-//                   int delay = 200; //milliseconds 
-//                   ActionListener taskPerformer = 
-//                       new ActionListener() { 
-//                          public void actionPerformed(ActionEvent evt) { 
-//                            //popupShowing = false;
-//                            if (popup!= null) {
-//                               popup.hide();
-//                            }
-//                         } 
-//                      }; 
-//                   Timer popupTimer = new Timer(delay, taskPerformer);
-//                   popupTimer.setRepeats(false);
-//                   popupTimer.start();
-               
-               }	
-            
-              // ToolTipManager.sharedInstance().mouseMoved(
-            //	   new MouseEvent((Component)expander, MouseEvent.MOUSE_MOVED, new java.util.Date().getTime(), 0, x, y, 0, false));
-              //    new InstructionMouseEvent((Component)expander, x, y, line));
-            }
+            line.count = length;
          			
             x = Utilities.drawTabbedText(line,x,y,gfx,expander,0);
             line.offset += length;

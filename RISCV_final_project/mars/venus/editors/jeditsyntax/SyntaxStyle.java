@@ -85,6 +85,7 @@
    /**
     * Returns the specified font, but with the style's bold and
     * italic flags applied.
+    * @param font the font
     * @return Returns the specified font, but with the style's bold and
     * italic flags applied.
     */

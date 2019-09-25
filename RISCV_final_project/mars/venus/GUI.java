@@ -257,11 +257,12 @@ public class GUI extends JFrame{
               									  "Dump machine code or data in an available format", KeyEvent.VK_D,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_D, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()),
              									  mainUI);
-              									  	
-           filePrintAction = new FilePrintAction("Print ...",
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print22.gif"))),
-              									  "Print current file", KeyEvent.VK_P,
-              									  null, mainUI);
+
+                //TODO: Need to implement this action. Should not differ from MIPS's version, but could not check
+//           filePrintAction = new FilePrintAction("Print ...",
+//                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print22.gif"))),
+//              									  "Print current file", KeyEvent.VK_P,
+//              									  null, mainUI);
 
            fileExitAction = new FileExitAction("Exit", null,
               	                         "Exit", KeyEvent.VK_X,
@@ -312,12 +313,12 @@ public class GUI extends JFrame{
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F5, 0),
               									  mainUI, observable);	
            runStepAction = new RunStepAction("Step", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "resume_button.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_more_than_25px.png"))),
               									  "Run one step at a time", KeyEvent.VK_T,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F7, 0),
               									  mainUI, observable);	
            runBackstepAction = new RunBackstepAction("Backstep", 
-                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "previous.png"))),
+                                           new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath + "icons8_back_25px.png"))),
               									  "Undo the last step", KeyEvent.VK_B,
               									  KeyStroke.getKeyStroke( KeyEvent.VK_F8, 0), 
               									  mainUI, observable);	
@@ -393,9 +394,9 @@ public class GUI extends JFrame{
               									  "If set, assembler will initialize Program Counter to text address globally labeled 'main', if defined.",
               									  null,null,
               									  mainUI);
-           settingsProgramArgumentsAction = new SettingsProgramArgumentsAction("Program arguments provided to MIPS program",
+           settingsProgramArgumentsAction = new SettingsProgramArgumentsAction("Program arguments provided to RISCV program",
                                            null,
-              									  "If set, program arguments for MIPS program can be entered in border of Text Segment window.",
+              									  "If set, program arguments for RISCV program can be entered in border of Text Segment window.",
               									  null,null,
               									  mainUI);
            settingsDelayedBranchingAction  = new SettingsDelayedBranchingAction("Delayed branching",
@@ -469,23 +470,23 @@ public class GUI extends JFrame{
         // slight bug: user typing alt-H activates help menu item directly, not help menu
 
         JMenuItem fileNew = new JMenuItem(fileNewAction);
-        fileNew.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"New16.png"))));
+        fileNew.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_new_file_16px.png"))));
         JMenuItem fileOpen = new JMenuItem(fileOpenAction);
-        fileOpen.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Open16.png"))));
+        fileOpen.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_open_document_16px.png"))));
         JMenuItem fileClose = new JMenuItem(fileCloseAction);
         fileClose.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         JMenuItem fileCloseAll = new JMenuItem(fileCloseAllAction);
         fileCloseAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         JMenuItem fileSave = new JMenuItem(fileSaveAction);
-        fileSave.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Save16.png"))));
+        fileSave.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_save_16px.png"))));
         JMenuItem fileSaveAs = new JMenuItem(fileSaveAsAction);
-        fileSaveAs.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"SaveAs16.png"))));
+        fileSaveAs.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_save_as_16px.png"))));
         JMenuItem fileSaveAll = new JMenuItem(fileSaveAllAction);
-        fileSaveAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
+        fileSaveAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_stop_circled_16px.png"))));
         JMenuItem fileDumpMemory = new JMenuItem(fileDumpMemoryAction);
         fileDumpMemory.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Dump16.png"))));
-        JMenuItem filePrint = new JMenuItem(filePrintAction);
-        filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
+        //JMenuItem filePrint = new JMenuItem(filePrintAction);
+        //filePrint.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Print16.gif"))));
         JMenuItem fileExit = new JMenuItem(fileExitAction);
         fileExit.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         file.add(fileNew);
@@ -499,22 +500,22 @@ public class GUI extends JFrame{
         if (new mars.riscv.dump.DumpFormatLoader().loadDumpFormats().size() > 0)
             file.add(fileDumpMemory);
         file.addSeparator();
-        file.add(filePrint);
+        //file.add(filePrint);
         file.addSeparator();
         file.add(fileExit);
 
         JMenuItem editUndo = new JMenuItem(editUndoAction);
-        editUndo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Undo16.png"))));//"Undo16.gif"))));
+        editUndo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_undo_16px.png"))));//"Undo16.gif"))));
         JMenuItem editRedo = new JMenuItem(editRedoAction);
-        editRedo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Redo16.png"))));//"Redo16.gif"))));
+        editRedo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_redo_16px.png"))));//"Redo16.gif"))));
         JMenuItem editCut = new JMenuItem(editCutAction);
-        editCut.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Cut16.gif"))));
+        editCut.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_cut_16px.png"))));
         JMenuItem editCopy = new JMenuItem(editCopyAction);
-        editCopy.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Copy16.png"))));//"Copy16.gif"))));
+        editCopy.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_copy_16px.png"))));//"Copy16.gif"))));
         JMenuItem editPaste = new JMenuItem(editPasteAction);
-        editPaste.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Paste16.png"))));//"Paste16.gif"))));
+        editPaste.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_paste_16px.png"))));//"Paste16.gif"))));
         JMenuItem editFindReplace = new JMenuItem(editFindReplaceAction);
-        editFindReplace.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Find16.png"))));//"Paste16.gif"))));
+        editFindReplace.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_find_and_replace_filled_16px.png"))));//"Paste16.gif"))));
         JMenuItem editSelectAll = new JMenuItem(editSelectAllAction);
         editSelectAll.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         edit.add(editUndo);
@@ -528,19 +529,19 @@ public class GUI extends JFrame{
         edit.add(editSelectAll);
 
         JMenuItem runAssemble = new JMenuItem(runAssembleAction);
-        runAssemble.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Assemble16.png"))));//"MyAssemble16.gif"))));
+        runAssemble.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_puzzle_16px.png"))));//"MyAssemble16.gif"))));
         JMenuItem runGo = new JMenuItem(runGoAction);
-        runGo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Play16.png"))));//"Play16.gif"))));
+        runGo.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_play_button_circled_16px.png"))));//"Play16.gif"))));
         JMenuItem runStep = new JMenuItem(runStepAction);
-        runStep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepForward16.png"))));//"MyStepForward16.gif"))));
+        runStep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_more_than_16px.png"))));//"MyStepForward16.gif"))));
         JMenuItem runBackstep = new JMenuItem(runBackstepAction);
-        runBackstep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"StepBack16.png"))));//"MyStepBack16.gif"))));
+        runBackstep.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_back_16px.png"))));//"MyStepBack16.gif"))));
         JMenuItem runReset = new JMenuItem(runResetAction);
-        runReset.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Reset16.png"))));//"MyReset16.gif"))));
+        runReset.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_rewind_16px.png"))));//"MyReset16.gif"))));
         JMenuItem runStop = new JMenuItem(runStopAction);
-        //  runStop.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Stop16.png"))));//"Stop16.gif"))));
+        runStop.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_stop_circled_16px.png"))));//"Stop16.gif"))));
         JMenuItem runPause = new JMenuItem(runPauseAction);
-        runPause.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Pause16.png"))));//"Pause16.gif"))));
+        runPause.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_circled_pause_16px.png"))));//"Pause16.gif"))));
         JMenuItem runClearBreakpoints = new JMenuItem(runClearBreakpointsAction);
         runClearBreakpoints.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         JMenuItem runToggleBreakpoints = new JMenuItem(runToggleBreakpointsAction);
@@ -611,7 +612,7 @@ public class GUI extends JFrame{
         settings.add(settingsMemoryConfiguration);
 
         JMenuItem helpHelp = new JMenuItem(helpHelpAction);
-        helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help16.png"))));//"Help16.gif"))));
+        helpHelp.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"icons8_help_16px.png"))));//"Help16.gif"))));
         JMenuItem helpAbout = new JMenuItem(helpAboutAction);
         helpAbout.setIcon(new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"MyBlank16.gif"))));
         help.add(helpHelp);
@@ -641,7 +642,6 @@ public class GUI extends JFrame{
       toolBar.setBorderPainted(false);
         ToolBarComponent aNew = new ToolBarComponent(fileNewAction);
       aNew.setText("");
-      //New.setOpaque(false);
       aNew.setIconTextGap(0);
 
         ToolBarComponent open = new ToolBarComponent(fileOpenAction);
@@ -650,10 +650,10 @@ public class GUI extends JFrame{
       save.setText("");
         ToolBarComponent saveAs = new ToolBarComponent(fileSaveAsAction);
       saveAs.setText("");
-    //  DumpMemory = new ToolBarComponent(fileDumpMemoryAction);
-    //  DumpMemory.setText("");
-    //    Print= new ToolBarComponent(filePrintAction);
-    // Print.setText("");
+        //  DumpMemory = new ToolBarComponent(fileDumpMemoryAction);
+        //  DumpMemory.setText("");
+        //Print= new ToolBarComponent(filePrintAction);
+        //Print.setText("");
 
         // components of the toolbar
         ToolBarComponent undo = new ToolBarComponent(editUndoAction);
@@ -708,8 +708,8 @@ public class GUI extends JFrame{
         //    if (new mars.riscv.dump.DumpFormatLoader().loadDumpFormats().size() > 0) {
         //      toolBar.add(DumpMemory);
         //   }
-        // toolBar.add(Print);
-        //  toolBar.add(new JToolBar.Separator());
+         //toolBar.add(Print);
+         toolBar.add(new JToolBar.Separator());
       toolBar.add(undo);
       toolBar.add(redo);
       toolBar.add(cut);
@@ -834,7 +834,7 @@ public class GUI extends JFrame{
     * Have the menu request keyboard focus.  DPS 5-4-10
     */
     public void haveMenuRequestFocus() {
-    this.menu.requestFocus();
+        this.menu.requestFocus();
     }
 	
     /**

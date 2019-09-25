@@ -83,8 +83,8 @@ public abstract class AccessNotice {
 	*/
 	// Thread to execute the RISCV program is instantiated in SwingWorker.java.
 	// There it is given the name "MIPS" to replace the default "Thread-x".
-	public boolean accessIsFromMIPS() {
-		return thread.getName().startsWith("MIPS");
+	public boolean accessIsFromRISCV() {
+		return thread.getName().startsWith("RISCV");
 	}
 	
 }

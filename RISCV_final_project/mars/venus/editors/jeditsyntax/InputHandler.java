@@ -7,13 +7,13 @@
  * remains intact in all source distributions of this package.
  */
 
-   package mars.venus.editors.jeditsyntax;
+package mars.venus.editors.jeditsyntax;
 
-   import javax.swing.text.*;
-   import javax.swing.JPopupMenu;
-   import java.awt.event.*;
-   import java.awt.Component;
-   import java.util.*;
+import javax.swing.text.*;
+import javax.swing.JPopupMenu;
+import java.awt.event.*;
+import java.awt.Component;
+import java.util.*;
 
 /**
  * An input handler converts the user's key strokes into concrete actions.
@@ -191,7 +191,7 @@
    /**
     * Grabs the next key typed event and invokes the specified
     * action with the key as a the action command.
-    * @param action The action
+    * @param listener The action
     */
        public void grabNextKeyStroke(ActionListener listener)
       {
@@ -219,7 +219,8 @@
       }
    
    /**
-    * Returns the number of times the next action will be repeated.
+    * Returns  copy of this input handler that shares the same
+    * @return copy of this input handler that shares the same
     */
        public int getRepeatCount()
       {
@@ -238,6 +239,7 @@
    /**
     * Returns the macro recorder. If this is non-null, all executed
     * actions should be forwarded to the recorder.
+    * @return the macro recorder.
     */
        public InputHandler.MacroRecorder getMacroRecorder()
       {
@@ -258,6 +260,8 @@
     * Returns a copy of this input handler that shares the same
     * key bindings. Setting key bindings in the copy will also
     * set them in the original.
+    * @return copy of this input handler that shares the same
+    *          key bindings
     */
        public abstract InputHandler copy();
    
@@ -327,6 +331,7 @@
    /**
     * Returns the text area that fired the specified event.
     * @param evt The event
+    * @return the text area that fired the specified event.
     */
        public static JEditTextArea getTextArea(EventObject evt)
       {
@@ -366,8 +371,7 @@
     * the appropriate key event. It executes the grab action with
     * the typed character as the parameter.
     */
-       protected void handleGrabAction(KeyEvent evt)
-      {
+       protected void handleGrabAction(KeyEvent evt) {
       // Clear it *before* it is executed so that executeAction()
       // resets the repeat count
          ActionListener _grabAction = grabAction;
@@ -423,9 +427,7 @@
          
             if(textArea.getSelectionStart()
             != textArea.getSelectionEnd())
-            {
                textArea.setSelectedText("");
-            }
             else
             {
                int caret = textArea.getCaretPosition();
@@ -453,9 +455,8 @@
             JEditTextArea textArea = getTextArea(evt);
             int start = textArea.getSelectionStart();
             if(start != textArea.getSelectionEnd())
-            {
                textArea.setSelectedText("");
-            }
+
          
             int line = textArea.getCaretLine();
             int lineStart = textArea.getLineStartOffset(line);

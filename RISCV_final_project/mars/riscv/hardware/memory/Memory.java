@@ -500,27 +500,51 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    
  	
    /********************************  THE GETTER METHODS  ******************************/
-       
+
+    /**
+     * Returns the text table in memory
+     * @return the text table in memory
+     */
     public TextBlockTable getTextTable() {
         return  textBlockTable;
     }
 
+    /**
+     * Returns the kernel table in memory
+     * @return the kernel text table in memory
+     */
     public TextBlockTable getKernelTextTable() {
         return  kernelTextBlockTable;
     }
-      
+
+    /**
+     * Returns the data table in memory
+     * @return the data table in memory
+     */
     public BlockTable getDataTable() {
         return tables.get(0);
     }
-   	  
+
+    /**
+     * Returns the kernel data table in memory
+     * @return the kernel data table in memory
+     */
     public BlockTable getKernelDataTable() {
         return tables.get(1);
     }
-   	  
+
+    /**
+     * Returns the stack table in memory
+     * @return the stack table in memory
+     */
     public BlockTable getStackTable() {
         return tables.get(2);
     }
-   	  
+
+    /**
+     * Returns the memory map table
+     * @return the memory map table
+     */
     public BlockTable getMemoryMapTable() {
         return tables.get(3);
     }
@@ -582,21 +606,21 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     }
    
    /////////////////////////////////////////////////////////////////////////
-    /**
-    *  Starting at the given word address, read a 4/8 byte word/double-word as an int/long.
-    *  It transfers the 32/64 bit value "raw" as stored in memory, and does not adjust
-    *  for byte order (big or little endian).  Address must be word/double-word-aligned.
-    *
-    *  @param address Starting address of word to be read.
-    *  @return  Word/Double-word (4 or 8 byte value respectively) stored starting at that address.
-    *  @throws AddressErrorException If address is not on word/double-word boundary.
-    */
 
     // Note: the logic here is repeated in getRawWordOrNull() below.  Logic is
     // simplified by having this method just call getRawWordOrNull() then 
     // return either the int of its return value, or 0 if it returns null.
     // Doing so would be detrimental to simulation runtime performance, so
     // I decided to keep the duplicate logic.
+    /**
+     *  Starting at the given word address, read a 4/8 byte word/double-word as an int/long.
+     *  It transfers the 32/64 bit value "raw" as stored in memory, and does not adjust
+     *  for byte order (big or little endian).  Address must be word/double-word-aligned.
+     *
+     *  @param address Starting address of word to be read.
+     *  @return  Word/Double-word (4 or 8 byte value respectively) stored starting at that address.
+     *  @throws AddressErrorException If address is not on word/double-word boundary.
+     */
     public Number getRaw(Number address , final int shift) throws AddressErrorException {
         Number value = 0;
         int addressLength = (shift % 2)*WORD_LENGTH_BYTES;
@@ -930,6 +954,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  so notices will come from the delegate, not the memory object.
     *  @param obs the observer
     *  @param addr the memory address which must be on word boundary
+     * @throws AddressErrorException
     */
     public void addObserver(Observer obs, Number addr) throws AddressErrorException {
         this.addObserver(obs, addr, addr);
@@ -944,6 +969,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
     *  @param obs  the observer
     *  @param startAddr the low end of memory address range, must be on word boundary
     *  @param endAddr the high end of memory address range, must be on word boundary
+     * @throws AddressErrorException
     */
     public void addObserver(Observer obs, Number startAddr, Number endAddr) throws AddressErrorException {
         if (!isEqz(GenMath.rem(startAddr, WORD_LENGTH_BYTES)))

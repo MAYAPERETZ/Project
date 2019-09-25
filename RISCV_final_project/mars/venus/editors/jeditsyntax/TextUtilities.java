@@ -129,6 +129,7 @@ public class TextUtilities
 	 * Locates the start of the word at the specified position.
 	 * @param line The text
 	 * @param pos The position
+	 * @return The start of the word at the specified position.
 	 */
 	public static int findWordStart(String line, int pos, String noWordSep)
 	{
@@ -158,6 +159,7 @@ public class TextUtilities
 	 * Locates the end of the word at the specified position.
 	 * @param line The text
 	 * @param pos The position
+	 * @return The start of the word at the specified position.
 	 */
 	public static int findWordEnd(String line, int pos, String noWordSep)
 	{

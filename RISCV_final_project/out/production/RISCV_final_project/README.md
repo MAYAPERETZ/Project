@@ -2,7 +2,7 @@
 [MARS][1] is a lightweight interactive development environment (IDE) for programming in MIPS assembly language, intended for educational-level use with Patterson and Hennessy's Computer Organization and Design.
 
 MARS has been jointly developed by [Pete Sanderson][4] (programming) and [Ken Vollmar][5] (details and paperwork).
-
+It has started to be adjusted to RISCV architecture by Maya Peretz in September 2019.
 ## Download
 You can download the latest version [at the official website][6].
 
@@ -13,12 +13,10 @@ I'm not going to accept any pull request. This source code is not maintained by 
 
 ## Documentation (included in the repo)
  - Go to the [documentation][7].
- - In order to run or compile MARS v4.XX, **MARS requires Java J2SE 1.5 (or later) SDK installed on your computer**.
+ - In order to run or compile MARS, **MARS requires Java J2SE 9 SDK installed on your computer**.
 
 ## How to run MARS
- - **Option A**: Desktop. Save the jar file on the desktop. Run MARS by double-clicking the icon.
- - **Option B**: DOS shell using jar file. Save the jar file in some folder. Open a DOS shell in that folder. Rename the jar file to "Mars.jar" for convenience. Run MARS with the DOS command  java -jar Mars.jar
- - **Option C**: DOS shell using Java classes. Save the jar file in some folder. Open a DOS shell in that folder. Rename the jar file to "Mars.jar" for convenience. Extract MARS files with the DOS command  jar -xf Mars.jar Run MARS with the DOS command  java Mars
+ - Save the jar file on the desktop. Run MARS by double-clicking the icon.
 
 ## How to compile
  - **Windows**: execute "CreateMarsJar.bat" file to generate an executable.

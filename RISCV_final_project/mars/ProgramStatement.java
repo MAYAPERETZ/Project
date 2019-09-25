@@ -70,6 +70,7 @@ public class ProgramStatement {
     * @param strippedTokenList List of Token objects with all but operators and operands removed.
     * @param inst The Instruction object for this statement's operator.
     * @param textAddress The Text Segment address in memory where the binary machine code for this statement
+    * @param sourceLine The source line number where the statement is in
     * is stored.
     **/
     public ProgramStatement(RISCVprogram sourceRISCVprogram, String source, TokenList origTokenList, TokenList strippedTokenList,
@@ -455,7 +456,7 @@ public class ProgramStatement {
     * Produces operand value from given array position (first operand is position 0).
     *
     * @param i Operand position in array (first operand is position 0).
-    * @return Operand value at given operand array position.  If \< 0 or >= numOperands, it returns -1.
+    * @return Operand value at given operand array position.  If &lt 0 or >= numOperands, it returns -1.
     */
     public Number getOperand(int i) {
         if (i >= 0 && i < this.numOperands)

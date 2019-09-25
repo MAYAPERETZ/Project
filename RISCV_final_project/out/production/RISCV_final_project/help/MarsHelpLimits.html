@@ -10,7 +10,7 @@
 <h4>Operating Requirements</h4>
 </center>
 <p>MARS is written in Java and 
-requires release 9 of the J2SE Java Runtime Environment (JRE) to work.
+requires release 9 or later of the J2SE Java Runtime Environment (JRE) to work.
 The graphical IDE is implemented using Swing. It has been 
 tested only in Windows 10.
 
@@ -34,6 +34,10 @@ For further details about MIPS latest version limitation, see the relevant page 
 
 <li><em>TODO:</em>The current implementation was tested a lot, but yet not completely.
                   There may be some instruction which will have bugs</li>
+
+<li><em>TODO:</em>The macros and the dump files were not modified according to the RISCV architecture.
+                  The implementation of MIPS remained as is and there its behavior in the new
+                  RISCV version is unexpected</li>
 
 <li><em>Bug:</em>The FCSR is missing the inexact flag. This is because the implementation of it
                 using Java's floating point types is not possible, since Java's floating-point

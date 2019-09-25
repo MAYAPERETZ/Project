@@ -335,7 +335,7 @@ public class RISCVprogram {
     * Begins simulation at current program counter address and executes one step.
     * @param a the GUI component responsible for this call (STEP normally). Set to null if none.
     * @return true if execution completed and false otherwise
-    * @throws ProcessingException Will throw exception if errors occured while simulating.
+    * @throws ProcessingException Will throw exception if errors occurred while simulating.
     **/
     public boolean simulateStepAtPC(AbstractAction a) throws ProcessingException {
         steppedExecution = true;

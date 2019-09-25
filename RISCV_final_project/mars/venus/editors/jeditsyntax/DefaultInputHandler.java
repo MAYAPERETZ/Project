@@ -1,20 +1,20 @@
 /*
- * DefaultInputHandler.java - Default implementation of an input handler
- * Copyright (C) 1999 Slava Pestov
- *
- * You may use and modify this package for any purpose. Redistribution is
- * permitted, in both source and binary form, provided that this notice
- * remains intact in all source distributions of this package.
- */
+* DefaultInputHandler.java - Default implementation of an input handler
+* Copyright (C) 1999 Slava Pestov
+*
+* You may use and modify this package for any purpose. Redistribution is
+* permitted, in both source and binary form, provided that this notice
+* remains intact in all source distributions of this package.
+*/
+package mars.venus.editors.jeditsyntax;
 
-   package mars.venus.editors.jeditsyntax;
-
-   import javax.swing.KeyStroke;
-   import java.awt.event.*;
-   import java.awt.Toolkit;
-   import java.util.Hashtable;
-   import java.util.StringTokenizer;
-   import java.util.Properties;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 /**
  * The default input handler. It maps sequences of keystrokes into actions
@@ -180,14 +180,12 @@
             KeyStroke keyStroke = KeyStroke.getKeyStroke(keyCode, modifiers); 
             Object o = currentBindings.get(keyStroke);
             
-            if(o == null)
-            {
+            if(o == null) {
             // Don't beep if the user presses some
             // key we don't know about unless a
             // prefix is active. Otherwise it will
             // beep when caps lock is pressed, etc.
-               if(currentBindings != bindings)
-               { 
+               if(currentBindings != bindings) {
                   Toolkit.getDefaultToolkit().beep();
                // F10 should be passed on, but C+e F10
                // shouldn't
@@ -200,7 +198,6 @@
                // (mnemonic, accelerator).  DPS 4-may-2010
                mars.Globals.getGui().dispatchEventToMenu(evt);
                evt.consume();
-               return;
             }
             else if(o instanceof ActionListener)
             {  
@@ -209,13 +206,10 @@
                   evt.getSource(),null);
             
                evt.consume();
-               return;
             }
-            else if(o instanceof Hashtable)
-            {  
+            else if(o instanceof Hashtable) {
                currentBindings = (Hashtable)o;
                evt.consume();
-               return;
             }
          }
       }
@@ -324,6 +318,7 @@
     * or a keycode name from the <code>KeyEvent</code> class, without
     * the <code>VK_</code> prefix.
     * @param keyStroke A string description of the key stroke
+    * @return a keystroke created by a string
     */
        public static KeyStroke parseKeyStroke(String keyStroke)
       {
